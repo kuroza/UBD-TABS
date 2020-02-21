@@ -9,15 +9,12 @@ namespace WebApplication1.ViewModels
 {
     public class BookingDropdownViewModel
     {
-        [Required]
-        public IEnumerable<Building> Buildings { get; set; }
+        [Display(Name = "Select Building")]
+        public int BuildingId { get; set; }
 
-        public int SelectedBuildingId { get; set; }
+        [Display(Name = "Select Room")]
+        public int RoomId { get; set; }
 
-        [Required]
-        public IEnumerable<Room> Rooms { get; set; }
-
-        [Required]
         [Display(Name = "Select Date")]
         public DateTime BookingDate { get; set; }
     }

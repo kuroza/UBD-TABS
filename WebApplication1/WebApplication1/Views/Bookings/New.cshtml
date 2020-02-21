@@ -1,4 +1,4 @@
-﻿@model WebApplication1.ViewModels.BookingDropdownViewModel
+﻿@model WebApplication1.Models.Booking
 @{
     ViewData["Title"] = "New";
 }
@@ -10,18 +10,18 @@
 {
     <div class="col-md-4">
         <div class="form-group">
-            @Html.LabelFor(m => m.Buildings)
-            @Html.DropDownListFor(m => m.SelectedBuildingId, new SelectList(Model.Buildings, "Id", "Name"), "Select Building", new { @class = "form-control" })
+            @Html.LabelFor(m => m.BuildingId)
+            @Html.DropDownListFor(m => m.BuildingId, ViewBag.BuildingList as SelectList, "Select Building", new { @class = "form-control" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Rooms)
-            @Html.DropDownListFor(m => m.Rooms, new SelectList(Model.Rooms, "Id", "Name"), "Select Room", new { @class = "form-control" })
+            @Html.LabelFor(m => m.RoomId)
+            @Html.DropDownListFor(m => m.RoomId, new SelectList(""), "Select Room", new { @class = "form-control" })
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.BookingDate)
-            @Html.EditorFor(m => m.BookingDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(m => m.BookDate)
+            @Html.EditorFor(m => m.BookDate, new { htmlAttributes = new { @class = "form-control" } })
         </div>
 
         <button type="submit" class="btn btn-primary">Next</button>
@@ -29,13 +29,30 @@
 }
 
 <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
-
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 @section Scripts {
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script>
         $(document).ready(function () {
-            $("#BookingDate").datepicker().datepicker("setDate", new Date());
+            $("#BookDate").datepicker().datepicker("setDate", new Date());
         });
+
+        $(document).ready(function () {
+            $("#BuildingId").change(function () {
+                var roomId = $(this).val();
+                debugger
+                $.ajax({
+                    type: "post",
+                    url: "/Bookings/GetRoomList?BuildingId=" + roomId,
+                    contentType: "html",
+                    success: function (response) {
+                        debugger
+                        $("#RoomId").empty();
+                        $("#RoomId").append(response);
+                    }
+                })
+            })
+        })
     </script>
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApplication1.Data;
 using WebApplication1.Models;
 using WebApplication1.ViewModels;
@@ -20,38 +21,22 @@ namespace WebApplication1.Controllers
             _context = context; // connection to database
         }
 
-        public IActionResult Index()
-        {
-            var bookings = _context.Bookings.ToList();
-
-            return View(bookings);
-        }
-
         public ActionResult New() // page for selecting building, room and date
         {
-            var viewModel = new BookingDropdownViewModel // put these list into a viewmodel before sending them to view
-            {
-                Buildings = _context.Buildings.ToList(), // list the details from database using context
-                Rooms = _context.Rooms.ToList()
-            };
-
-            return View(viewModel); // returns the list from database
+            ViewBag.BuildingList = new SelectList(GetBuildingList(), "Id", "Name");
+            return View(); // returns the list from database
         }
 
-        [HttpPost]
-        public ActionResult Next(BookingDropdownViewModel model) // when the next button is clicked, then go to Next page
+        public IEnumerable<Building> GetBuildingList()
         {
-            var building = new Building
-            {
-                Id = model.SelectedBuildingId // gets the selected Id from view, then pass to building object
-            };
+            return _context.Buildings.ToList();
+        }
 
-            var viewModel = new NewBookingViewModel
-            {
-                Buildings = building // pass the building object to view model
-            };
-
-            return View(viewModel);
+        public ActionResult GetRoomList(int buildingId)
+        {
+            IEnumerable<Room> selectList = _context.Rooms.Where(x => x.BuildingId == buildingId).ToList();
+            ViewBag.Slist = new SelectList(selectList, "Id", "Name");
+            return PartialView("DisplayRooms");
         }
 
         //[HttpPost]
@@ -59,10 +44,17 @@ namespace WebApplication1.Controllers
         //{
         //    var selectedBuildingId = model.SelectedBuildingId;
 
-        //    //query from database
+        //    //insert into database
 
         //    return View();
         //}
+
+        public IActionResult Index()
+        {
+            var bookings = _context.Bookings.ToList();
+
+            return View(bookings);
+        }
 
         public ActionResult TimeSlot()
         {
