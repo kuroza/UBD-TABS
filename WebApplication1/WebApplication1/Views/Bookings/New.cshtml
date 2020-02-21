@@ -1,0 +1,41 @@
+﻿@model WebApplication1.ViewModels.BookingDropdownViewModel
+@{
+    ViewData["Title"] = "New";
+}
+
+<br />
+<h1>New Booking</h1>
+
+@using (Html.BeginForm("TimeSlot", "Bookings")) //(<target-action>, <controller-name>)
+{
+    <div class="col-md-4">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Buildings)
+            @Html.DropDownListFor(m => m.SelectedBuildingId, new SelectList(Model.Buildings, "Id", "Name"), "Select Building", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Rooms)
+            @Html.DropDownListFor(m => m.Rooms, new SelectList(Model.Rooms, "Id", "Name"), "Select Room", new { @class = "form-control" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.BookingDate)
+            @Html.EditorFor(m => m.BookingDate, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+}
+
+<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#BookingDate").datepicker().datepicker("setDate", new Date());
+        });
+    </script>
+}

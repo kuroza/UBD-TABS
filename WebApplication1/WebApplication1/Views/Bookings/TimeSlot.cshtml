@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebApplication1.Models.TimeSlot>
+
+@{
+    ViewData["Title"] = "TimeSlot";
+}
+
+<br>
+<h1>TimeSlot</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+<div class="col-md-5">
+    <table class="table table-bordered table-hover table-md">
+        <thead class="table-dark">
+            <tr>
+                <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndTime)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                @* Here write if timeslot is unavailable, disable checkbox *@
+                <tr>
+                    <td>
+                        <input type="checkbox">
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndTime)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Confirm</button>
+</div>
