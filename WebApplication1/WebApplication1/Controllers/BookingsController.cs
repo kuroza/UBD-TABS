@@ -39,15 +39,16 @@ namespace WebApplication1.Controllers
             return PartialView("DisplayRooms");
         }
 
-        //[HttpPost]
-        //public ActionResult Next(BookingDropdownViewModel model) // when the next button is clicked, then go to Next page
-        //{
-        //    var selectedBuildingId = model.SelectedBuildingId;
+        [HttpPost]
+        public ActionResult Next() // when the next button is clicked, then go to timeslot page
+        {
+            //get roomid and bookdate
+            //get from database Booking table, then compare roomid and bookdate, store the result in a list
+            //iterate the result list, get the timeslot
+            //show timeslots and check manually if the timeslot is correct
 
-        //    //insert into database
-
-        //    return View();
-        //}
+            return View();
+        }
 
         public IActionResult Index()
         {
@@ -58,6 +59,10 @@ namespace WebApplication1.Controllers
 
         public ActionResult TimeSlot()
         {
+            //forall set IsBooked=false
+            //update timeslot table according to Next()
+            //if the timeslotid appears in the Next() result, set IsBooked=true
+
             var timeSlots = _context.TimeSlots.ToList();
 
             return View(timeSlots);

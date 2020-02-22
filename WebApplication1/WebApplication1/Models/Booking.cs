@@ -28,8 +28,10 @@ namespace WebApplication1.Models
         [Display(Name = "Select Time Slot")]
         public byte TimeSlotId { get; set; } // as foreign key?
 
-        public int ModuleId { get; set; }
+        [Display(Name = "Staff Name")]
+        public string StaffName { get; set; }
 
-        public int StaffId { get; set; }
+        [Display(Name = "Module")]
+        public string ModuleCode { get; set; }
     }
 }
