@@ -1,41 +1,69 @@
 ﻿@model IEnumerable<WebApplication1.Models.Booking>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Booking List";
 }
 
-<h1>Index</h1>
+<br />
+<h1>Booking List</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
+<div>
+    <button value="Redirect" onclick="window.location='@Url.Action("New", "Bookings")'" class="btn btn-primary">Create New Booking</button>
+</div>
+<br />
+
+<table class="table table-hover">
     <thead class="table-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RoomId)
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Room.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookDate)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeSlot.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeSlot.EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StaffName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModuleCode)
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RoomId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeSlot.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeSlot.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StaffName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModuleCode)
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

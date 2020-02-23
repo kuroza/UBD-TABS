@@ -8,30 +8,36 @@ namespace WebApplication1.Models
 {
     public class Booking
     {
+        [Display(Name = "Booking Id")]
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Select Building")]
+        [Display(Name = "Building")]
         public int BuildingId { get; set; }
 
         [Required]
-        [Display(Name = "Select Room")]
         public int RoomId { get; set; }
 
         [Required]
         [Display(Name = "Select Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime BookDate { get; set; }
-
-        //public TimeSlot TimeSlot { get; set; } // TimeSlot <- navigation property, navigate from one type to another
         
         [Required]
         [Display(Name = "Select Time Slot")]
-        public byte TimeSlotId { get; set; } // as foreign key?
+        public byte TimeSlotId { get; set; }
 
         [Display(Name = "Staff Name")]
         public string StaffName { get; set; }
 
-        [Display(Name = "Module")]
+        [Display(Name = "Module Code")]
         public string ModuleCode { get; set; }
+
+        public bool IsBooked { get; set; }
+
+        public virtual Room Room { get; set; }
+
+        public virtual TimeSlot TimeSlot { get; set; }
     }
 }

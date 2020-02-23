@@ -24,6 +24,8 @@
     <Compile Remove="Data\Migrations\20200220043903_AddModuleAndStaffPropertiesToBooking.Designer.cs" />
     <Compile Remove="Data\Migrations\20200220044015_AddModuleAndStaffPropertiesToBooking.cs" />
     <Compile Remove="Data\Migrations\20200220044015_AddModuleAndStaffPropertiesToBooking.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200223052536_AddIsBookedToTimeSlotTable.cs" />
+    <Compile Remove="Data\Migrations\20200223052536_AddIsBookedToTimeSlotTable.Designer.cs" />
   </ItemGroup>
 
 

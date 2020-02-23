@@ -1,16 +1,14 @@
 ﻿@model IEnumerable<WebApplication1.Models.TimeSlot>
 
 @{
-    ViewData["Title"] = "TimeSlot";
+    ViewData["Title"] = "Time Slot";
 }
 
 <br>
-<h1>TimeSlot</h1>
+<h1>Select Time Slot</h1>
+<br />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
+@*Here write the selected room and date for staffName and module*@
 
 <div class="col-md-5">
     <table class="table table-bordered table-hover table-md">
@@ -29,22 +27,45 @@
             @foreach (var item in Model)
             {
                 @* Here write if timeslot is unavailable, disable checkbox *@
-                <tr>
-                    <td>
-                        <input type="checkbox">
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StartTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EndTime)
-                    </td>
-                </tr>
+                if (ViewData["IsBooked"].ToString() == "false")
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox">
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndTime)
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" disabled="">
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndTime)
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>
 
-    <button type="submit" class="btn btn-primary">Back</button>
+    <button onclick="goBack()" class="btn btn-secondary">Back</button>
 
-    <button type="submit" class="btn btn-primary">Confirm</button>
+    <button type="submit" class="btn btn-success">Confirm</button>
 </div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

@@ -1,12 +1,13 @@
 ﻿@model WebApplication1.Models.Booking
 @{
-    ViewData["Title"] = "New";
+    ViewData["Title"] = "New Booking";
 }
 
 <br />
-<h1>New Booking</h1>
+<h1>Create New Booking</h1>
+<br />
 
-@using (Html.BeginForm("TimeSlot", "Bookings")) //(<target-action>, <controller-name>)
+@using (Html.BeginForm("Create", "Bookings")) //in the future, change the action to Create
 {
 <div class="col-md-5">
     <div class="form-group">
@@ -25,9 +26,16 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(m => m.TimeSlotId)
+        @Html.EditorFor(m => m.TimeSlotId, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(m => m.StaffName)
         @Html.EditorFor(m => m.StaffName, new { htmlAttributes = new { @class = "form-control" } })
     </div>
+
+    @*Include faculty text box as well?*@
 
     <div class="form-group">
         @Html.LabelFor(m => m.ModuleCode)
@@ -40,16 +48,17 @@
 
 <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>*@
 
 @section Scripts {
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script>
-        $(document).ready(function () {
+        @*Datepicker*@
+        @*$(document).ready(function () {
             $("#BookDate").datepicker().datepicker("setDate", new Date());
-        })
+        })*@
 
+        @*Cascading drop down list*@
         $(document).ready(function () {
             $("#BuildingId").change(function () {
                 var roomId = $(this).val();
@@ -69,8 +78,12 @@
 
         $(document).ready(function () {
             $("#RoomId").change(function () {
+                @* Alert message displaying the selected values in browser *@
                 var displayRoomName = document.getElementById("RoomId");
                 alert("The selected room Id is: " + displayRoomName.options[displayRoomName.selectedIndex].value + " and the room name is: " + displayRoomName.options[displayRoomName.selectedIndex].text);
+                
+                @*Send RoomId selected value to controller as a parameter*@
+                @*$(this).closest("form").submit();*@
             })
         })
     </script>
