@@ -1,6 +1,10 @@
-﻿<option value="">Select Room</option>
+﻿@*@model WebApplication1.ViewModels.BookingsViewModel*@
+
+<option value="">Select Room</option>
 
 @foreach(var item in ViewBag.Slist)
 {
     <option value="@item.Value">@item.Text</option>
 }
+
+

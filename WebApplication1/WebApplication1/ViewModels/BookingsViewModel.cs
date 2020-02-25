@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,13 +10,18 @@ namespace WebApplication1.ViewModels
 {
     public class BookingsViewModel
     {
-        public Booking Bookings { get; set; }
+        public Booking Booking { get; set; }
 
-        public Room Rooms { get; set; }
+        //public Room Room { get; set; }
 
-        [Display(Name = "Book Date")]
-        public Booking BookDate { get; set; }
+        public TimeSlot TimeSlot { get; set; }
 
-        public TimeSlot TimeSlots { get; set; }
+        public IEnumerable<Booking> ConfirmedBookings { get; set; }
+
+        public IEnumerable<SelectListItem> BuildingList { get; set; }
+
+        public IEnumerable<SelectListItem> RoomList { get; set; }
+
+        //public IEnumerable<SelectListItem> SelectedRoom { get; set; }
     }
 }

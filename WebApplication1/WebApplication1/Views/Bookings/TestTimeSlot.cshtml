@@ -1,0 +1,50 @@
+﻿@model WebApplication1.ViewModels.BookingsViewModel
+
+@{
+    ViewData["Title"] = "TestTimeSlot";
+}
+
+<h1>TestTimeSlot</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="col-md-8">
+    <table class="table table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Booking.RoomId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Booking.BookDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeSlot.StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeSlot.EndTime)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ConfirmedBookings)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Room.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TimeSlot.StartTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TimeSlot.EndTime)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -11,17 +11,18 @@ namespace WebApplication1.Models
         [Display(Name = "Booking Id")]
         public int Id { get; set; }
 
-        [Required]
-        [Display(Name = "Building")]
+        [Required(ErrorMessage ="Please select a building")]
+        [Display(Name = "Select Building")]
         public int BuildingId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please select a room")]
+        [Display(Name = "Select Room")]
         public int RoomId { get; set; }
 
         [Required]
-        [Display(Name = "Select Date")]
+        [Display(Name = "Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime BookDate { get; set; }
         
         [Required]
@@ -34,8 +35,7 @@ namespace WebApplication1.Models
         [Display(Name = "Module Code")]
         public string ModuleCode { get; set; }
 
-        public bool IsBooked { get; set; }
-
+        //for timeslot
         public virtual Room Room { get; set; }
 
         public virtual TimeSlot TimeSlot { get; set; }

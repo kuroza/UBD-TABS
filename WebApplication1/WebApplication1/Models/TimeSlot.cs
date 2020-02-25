@@ -15,5 +15,7 @@ namespace WebApplication1.Models
 
         [Display(Name = "End Time")]
         public TimeSpan EndTime { get; set; }
+
+        public bool IsBooked { get; set; }
     }
 }
