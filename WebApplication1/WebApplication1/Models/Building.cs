@@ -12,6 +12,7 @@ namespace WebApplication1.Models
 
         [Required]
         [StringLength(255)]
+        [Display(Name = "Building Name")]
         public string Name { get; set; }
     }
 }

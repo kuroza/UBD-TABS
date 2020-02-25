@@ -7,28 +7,33 @@
 <h1>Create New Booking</h1>
 <br />
 
-@using (Html.BeginForm("Create", "Bookings")) //in the future, change the action to Create
+@using (Html.BeginForm("SearchRoomAndDate", "Bookings")) //in the future, change the action to Create
 {
 <div class="col-md-5">
     <div class="form-group">
         @Html.LabelFor(m => m.Booking.BuildingId)
-        @Html.DropDownListFor(m => m.Booking.BuildingId, ViewBag.BuildingList as SelectList, "Select Building", new { @class = "form-control", @id="BuildingId" })
+        @Html.DropDownListFor(m => m.Booking.BuildingId, ViewBag.BuildingList as SelectList, "Select Building", new { @class = "form-control", @id = "BuildingId" })
+        @Html.ValidationMessageFor(m => m.Booking.BuildingId)
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Booking.RoomId)
-        @Html.DropDownListFor(m => m.Booking.RoomId, new SelectList(""), "Select Room", new { @class = "form-control", @id="RoomId" })
+        @Html.DropDownListFor(m => m.Booking.RoomId, new SelectList(""), "Select Room", new { @class = "form-control", @id = "RoomId" })
+        @Html.ValidationMessageFor(m => m.Booking.RoomId)
     </div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Booking.BookDate)
         @Html.EditorFor(m => m.Booking.BookDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Booking.BookDate)
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Booking.TimeSlotId)
-        @Html.EditorFor(m => m.Booking.TimeSlotId, new { htmlAttributes = new { @class = "form-control" } })
-    </div>
+    @*
+            <div class="form-group">
+            @Html.LabelFor(m => m.Booking.TimeSlotId)
+            @Html.EditorFor(m => m.Booking.TimeSlotId, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    *@
 
     <div class="form-group">
         @Html.LabelFor(m => m.Booking.StaffName)
@@ -42,7 +47,8 @@
         @Html.EditorFor(m => m.Booking.ModuleCode, new { htmlAttributes = new { @class = "form-control" } })
     </div>
 
-    <button type="submit" class="btn btn-primary btn-lg">Next</button>
+    <button onclick="goBack()" class="btn btn-secondary">Back</button>
+    <button type="submit" class="btn btn-primary">Next</button>
 </div>
 }
 
@@ -75,6 +81,11 @@
                 })
             })
         })
+
+        @* Back button *@
+        function goBack() {
+        window.history.back();
+        }
 
         @*
         $(document).ready(function () {

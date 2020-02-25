@@ -22,7 +22,7 @@ namespace WebApplication1.Models
         [Required]
         [Display(Name = "Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime BookDate { get; set; }
         
         [Required]
@@ -37,6 +37,8 @@ namespace WebApplication1.Models
 
         //for timeslot
         public virtual Room Room { get; set; }
+
+        public virtual Building Building { get; set; }
 
         public virtual TimeSlot TimeSlot { get; set; }
     }

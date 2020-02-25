@@ -12,9 +12,16 @@ namespace WebApplication1.ViewModels
     {
         public Booking Booking { get; set; }
 
-        //public Room Room { get; set; }
+        public int BuildingId { get; set; }
+
+        public int RoomId { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}")]
+        public DateTime BookDate { get; set; }
 
         public TimeSlot TimeSlot { get; set; }
+
+        public IEnumerable<TimeSlot> TimeSlots { get; set; }
 
         public IEnumerable<Booking> ConfirmedBookings { get; set; }
 
@@ -23,5 +30,7 @@ namespace WebApplication1.ViewModels
         public IEnumerable<SelectListItem> RoomList { get; set; }
 
         //public IEnumerable<SelectListItem> SelectedRoom { get; set; }
+
+        //public Room Room { get; set; }
     }
 }

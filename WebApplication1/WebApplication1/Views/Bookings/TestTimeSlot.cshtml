@@ -6,45 +6,57 @@
 
 <h1>TestTimeSlot</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<div class="col-md-8">
-    <table class="table table-hover table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Booking.RoomId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Booking.BookDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TimeSlot.StartTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TimeSlot.EndTime)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.ConfirmedBookings)
-            {
+@using (Html.BeginForm("TestTimeSlot", "Bookings")) //in the future, change the action to Create
+{
+    <p>
+        Room Id:
+        @Html.DisplayFor(model => model.RoomId)
+        <br />
+        Book date:
+        @Html.DisplayFor(model => model.BookDate)
+    </p>
+
+    <div class="col-md-8">
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark">
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Room.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BookDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TimeSlot.StartTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TimeSlot.EndTime)
-                    </td>
+                    <th></th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TimeSlot.StartTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TimeSlot.EndTime)
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TimeSlots)
+                {
+                    @* Here put if statement *@
+                    <tr>
+                        <td>
+                            <input type="checkbox" disabled="">
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndTime)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @* Here put text that shows the selected timeslots *@
+
+        <button onclick="goBack()" class="btn btn-secondary">Back</button>
+        <button type="submit" class="btn btn-success">Confirm</button>
+    </div>
+}
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

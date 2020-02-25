@@ -25,7 +25,8 @@ namespace WebApplication1.Controllers
         // GET: Bookings
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Bookings.Include(x => x.Room).Include(x => x.TimeSlot).ToListAsync());
+            //i think in order to use BookingsViewModel in Index.cshtml, this below IEnumerable must be put in BookingsViewModel
+            return View(await _context.Bookings.Include(x => x.Building).Include(x => x.Room).Include(x => x.TimeSlot).ToListAsync());
         }
 
         public IEnumerable<Building> GetBuildingList()
@@ -35,28 +36,14 @@ namespace WebApplication1.Controllers
 
         public ActionResult GetRoomList(int buildingId)
         {
-            //IEnumerable<Room> roomList = _context.Rooms.Where(x => x.BuildingId == buildingId).ToList();
-            //IEnumerable<SelectListItem> selectRoomList = new SelectList(roomList, "Id", "Name");
-            //var viewModel = new BookingsViewModel
-            //{
-            //    RoomList = selectRoomList
-            //};
-
             IEnumerable<Room> selectList = _context.Rooms.Where(x => x.BuildingId == buildingId).ToList();
             ViewBag.Slist = new SelectList(selectList, "Id", "Name");
 
             return PartialView("DisplayRooms");
         }
 
-        public ActionResult New() // page for selecting building, room and date
+        public ActionResult New() // display page for selecting building, room and date
         {
-        //    IEnumerable<SelectListItem> buildingList = new SelectList(GetBuildingList(), "Id", "Name");
-        //    var viewModel = new BookingsViewModel
-        //    {
-        //        BuildingList = buildingList
-        //    };
-        //    return View(viewModel);
-
             ViewBag.BuildingList = new SelectList(GetBuildingList(), "Id", "Name");
             return View();
         }
@@ -65,18 +52,86 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Booking booking)
         {
-            //if (!ModelState.IsValid) //for form validation, if not valid, return same view
+            ////Can't use validation yet because BuildingList is using ViewBag
+            //if (!ModelState.IsValid)
             //{
-            //    //since I'm not using a viewmodel at New(), just return the method?
-            //    var model = new Booking
+            //    var viewModel = new BookingsViewModel
             //    {
-            //        BuildingId = booking.BuildingId,
-            //        RoomId = booking.RoomId,
-            //        BookDate = booking.BookDate
+            //        Booking = booking
             //    };
-            //    return View("New", model);
+            //    return View("New", viewModel);
             //}
 
+            _context.Bookings.Add(booking);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Bookings");
+        }
+
+        //public ActionResult TestTimeSlot() //int roomId, DateTime bookDate
+        //{
+        //    DateTime bookDate = new DateTime(2020, 02, 28);
+        //    var booking = _context.Bookings
+        //                    .Where(b => b.RoomId == 5)
+        //                    .Where(b => b.BookDate == bookDate)
+        //                    .Include(b => b.Building)
+        //                    .Include(b => b.Room) //this will help to show the room name
+        //                    .Include(b => b.TimeSlot) //this will help to show the starttime and endtime
+        //                    .OrderBy(b => b.TimeSlotId)
+        //                    .ToList();
+
+        //    var viewModel = new BookingsViewModel
+        //    {
+        //        ConfirmedBookings = booking
+        //    };
+
+        //    return View(viewModel);
+        //}
+
+        [HttpPost]
+        public ActionResult SearchRoomAndDate(Booking booking)
+        {
+            var viewModel = new BookingsViewModel
+            {
+               BuildingId  = booking.BuildingId,
+               RoomId = booking.RoomId,
+               BookDate = booking.BookDate
+            };
+
+            return RedirectToAction("TestTimeSlot", "Bookings", viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult TestTimeSlot(BookingsViewModel searchViewModel) //int roomId, DateTime bookDate
+        {
+            //DateTime bookDate = new DateTime(2020, 02, 28);
+
+            var booking = _context.Bookings
+                            .Where(b => b.RoomId == searchViewModel.RoomId)
+                            .Where(b => b.BookDate == searchViewModel.BookDate)
+                            .Include(b => b.Building)
+                            .Include(b => b.Room) //this will help to show the room name
+                            .Include(b => b.TimeSlot) //this will help to show the starttime and endtime
+                            .OrderBy(b => b.TimeSlotId)
+                            .ToList();
+
+            IEnumerable<TimeSlot> timeSlot = _context.TimeSlots.ToList();
+
+            var viewModel = new BookingsViewModel
+            {
+                TimeSlots = timeSlot,
+                ConfirmedBookings = booking, //this will actually show booked slots, not all the unavailable ones
+                BuildingId = searchViewModel.BuildingId,
+                RoomId = searchViewModel.RoomId,
+                BookDate = searchViewModel.BookDate
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult TestTimeSlot(Booking booking) //int roomId, DateTime bookDate //Booking booking
+        {
             _context.Bookings.Add(booking);
             _context.SaveChanges();
 
@@ -90,28 +145,7 @@ namespace WebApplication1.Controllers
             //iterate the result list, get the timeslot
             //show timeslots and check manually if the timeslot is correct
             IEnumerable<Booking> bookingList = _context.Bookings.Where(x => x.RoomId == RoomId).Where(x => x.BookDate == BookDate).ToList(); //get the date
-
             return View();
-        }
-
-        [HttpGet]
-        public ActionResult TestTimeSlot() //int roomId, DateTime bookDate
-        {
-            DateTime bookDate = new DateTime(2020, 02, 15);
-            var booking = _context.Bookings
-                            .Where(b => b.RoomId == 1)
-                            .Where(b => b.BookDate == bookDate)
-                            .Include(b => b.Room) //this will help to show the room name
-                            .Include(b => b.TimeSlot) //this will help to show the starttime and endtime
-                            .OrderBy(b => b.TimeSlotId)
-                            .ToList();
-
-            var viewModel = new BookingsViewModel
-            {
-                ConfirmedBookings = booking
-            };
-
-            return View(viewModel);
         }
 
         public ActionResult TimeSlot()
@@ -119,17 +153,9 @@ namespace WebApplication1.Controllers
             //forall set IsBooked=false
             //update TimeSlots table according to Next()
             //if the TimeSlotId appears in the Next() result, set IsBooked=true
-
             IEnumerable<TimeSlot> timeSlot = _context.TimeSlots.ToList(); //lists all the time slots
 
             return View(timeSlot);
         }
-
-        //public ActionResult GetConfirmedBookings()
-        //{
-        //    ViewData["IsBooked"] = "true"; 
-
-        //    return View(ViewData["IsBooked"]);
-        //}
     }
 }
