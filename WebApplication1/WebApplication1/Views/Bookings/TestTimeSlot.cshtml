@@ -16,7 +16,7 @@
         @Html.DisplayFor(model => model.BookDate)
     </p>
 
-    <div class="col-md-8">
+    <div class="col-md-6">
         <table class="table table-hover table-bordered">
             <thead class="table-dark">
                 <tr>
@@ -32,18 +32,34 @@
             <tbody>
                 @foreach (var item in Model.TimeSlots)
                 {
-                    @* Here put if statement *@
-                    <tr>
-                        <td>
-                            <input type="checkbox" disabled="">
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StartTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EndTime)
-                        </td>
-                    </tr>
+                    if (item.IsBooked == true)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" disabled="">
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndTime)
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndTime)
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>

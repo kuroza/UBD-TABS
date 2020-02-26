@@ -52,41 +52,11 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Booking booking)
         {
-            ////Can't use validation yet because BuildingList is using ViewBag
-            //if (!ModelState.IsValid)
-            //{
-            //    var viewModel = new BookingsViewModel
-            //    {
-            //        Booking = booking
-            //    };
-            //    return View("New", viewModel);
-            //}
-
             _context.Bookings.Add(booking);
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Bookings");
         }
-
-        //public ActionResult TestTimeSlot() //int roomId, DateTime bookDate
-        //{
-        //    DateTime bookDate = new DateTime(2020, 02, 28);
-        //    var booking = _context.Bookings
-        //                    .Where(b => b.RoomId == 5)
-        //                    .Where(b => b.BookDate == bookDate)
-        //                    .Include(b => b.Building)
-        //                    .Include(b => b.Room) //this will help to show the room name
-        //                    .Include(b => b.TimeSlot) //this will help to show the starttime and endtime
-        //                    .OrderBy(b => b.TimeSlotId)
-        //                    .ToList();
-
-        //    var viewModel = new BookingsViewModel
-        //    {
-        //        ConfirmedBookings = booking
-        //    };
-
-        //    return View(viewModel);
-        //}
 
         [HttpPost]
         public ActionResult SearchRoomAndDate(Booking booking)
@@ -102,25 +72,37 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet]
-        public ActionResult TestTimeSlot(BookingsViewModel searchViewModel) //int roomId, DateTime bookDate
+        public ActionResult TestTimeSlot(BookingsViewModel searchViewModel)
         {
-            //DateTime bookDate = new DateTime(2020, 02, 28);
+            IEnumerable<Booking> _booking = _context.Bookings //this will actually show booked slots, not all the unavailable ones
+                                                .Where(b => b.RoomId == searchViewModel.RoomId)
+                                                .Where(b => b.BookDate == searchViewModel.BookDate)
+                                                .Include(b => b.Building)
+                                                .Include(b => b.Room) //helps to show the room name
+                                                .Include(b => b.TimeSlot) //helps to show the starttime and endtime
+                                                .OrderBy(b => b.TimeSlotId)
+                                                .ToList();
 
-            var booking = _context.Bookings
-                            .Where(b => b.RoomId == searchViewModel.RoomId)
-                            .Where(b => b.BookDate == searchViewModel.BookDate)
-                            .Include(b => b.Building)
-                            .Include(b => b.Room) //this will help to show the room name
-                            .Include(b => b.TimeSlot) //this will help to show the starttime and endtime
-                            .OrderBy(b => b.TimeSlotId)
-                            .ToList();
+            IEnumerable<TimeSlot> _timeSlot = _context.TimeSlots.ToList();
 
-            IEnumerable<TimeSlot> timeSlot = _context.TimeSlots.ToList();
+            foreach (var slot in _timeSlot)
+            {
+                foreach(var book in _booking)
+                {
+                    if (slot.Id != book.TimeSlotId)
+                        slot.IsBooked = false;
+                    else
+                        slot.IsBooked = true;
+                }
+            }
+
+            //I think the problem of only 1 checkbox disabled lies from the foreach loop
+            //It only disabled the last 
 
             var viewModel = new BookingsViewModel
             {
-                TimeSlots = timeSlot,
-                ConfirmedBookings = booking, //this will actually show booked slots, not all the unavailable ones
+                TimeSlots = _timeSlot,
+                ConfirmedBookings = _booking,
                 BuildingId = searchViewModel.BuildingId,
                 RoomId = searchViewModel.RoomId,
                 BookDate = searchViewModel.BookDate
