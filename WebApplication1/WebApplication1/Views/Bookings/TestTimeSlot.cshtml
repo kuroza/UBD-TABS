@@ -8,14 +8,6 @@
 
 @using (Html.BeginForm("TestTimeSlot", "Bookings")) //in the future, change the action to Create
 {
-    <p>
-        Room Id:
-        @Html.DisplayFor(model => model.RoomId)
-        <br />
-        Book date:
-        @Html.DisplayFor(model => model.BookDate)
-    </p>
-
     <div class="col-md-6">
         <table class="table table-hover table-bordered">
             <thead class="table-dark">
@@ -30,19 +22,19 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.TimeSlots)
+                @foreach (var slot in Model.TimeSlotList)
                 {
-                    if (item.IsBooked == true)
+                    if (slot.IsBooked == true)
                     {
-                        <tr>
+                        <tr bgcolor="ECECEC" class="text-muted"> @* gray out row background and text *@
                             <td>
-                                <input type="checkbox" disabled="">
+                                @Html.CheckBoxFor(modelItem => slot.IsSelected, new { @disabled = "" })
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.StartTime)
+                                @Html.DisplayFor(modelItem => slot.StartTime)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.EndTime)
+                                @Html.DisplayFor(modelItem => slot.EndTime)
                             </td>
                         </tr>
                     }
@@ -50,13 +42,14 @@
                     {
                         <tr>
                             <td>
-                                <input type="checkbox">
+                                @Html.HiddenFor(modelItem => slot.Id) @* to store selected time slot's Id? *@
+                                @Html.CheckBoxFor(modelItem => slot.IsSelected)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.StartTime)
+                                @Html.DisplayFor(modelItem => slot.StartTime)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.EndTime)
+                                @Html.DisplayFor(modelItem => slot.EndTime)
                             </td>
                         </tr>
                     }
@@ -64,15 +57,41 @@
             </tbody>
         </table>
 
+        <h5>
+            Room Id:
+            @Html.DisplayFor(model => model.RoomId) <br />
+            Book date:
+            @Html.DisplayFor(model => model.BookDate) <br />
+        </h5>
+
         @* Here put text that shows the selected timeslots *@
 
-        <button onclick="goBack()" class="btn btn-secondary">Back</button>
-        <button type="submit" class="btn btn-success">Confirm</button>
+        <div>
+            <button onclick="goBack()" class="btn btn-secondary">Back</button>
+            <button type="submit" class="btn btn-success">Confirm</button>
+        </div>
     </div>
 }
+<br />
 
-<script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+@section scripts
+{
+    <script>
     function goBack() {
         window.history.back();
     }
-</script>
+
+    @* Click on row ro select checkbox *@
+    $(document).ready(function() {
+        $('.table tr').click(function(event) {
+        if (event.target.type !== 'checkbox') {
+            $(':checkbox', this).trigger('click');
+        }
+        });
+    });
+    </script>
+}
+
+

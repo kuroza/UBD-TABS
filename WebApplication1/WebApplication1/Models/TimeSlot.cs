@@ -10,12 +10,17 @@ namespace WebApplication1.Models
     {
         public byte Id { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:hh}:{0:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "Start Time")]
         public TimeSpan StartTime { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:hh}:{0:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "End Time")]
         public TimeSpan EndTime { get; set; }
 
         public bool IsBooked { get; set; }
+
+        public bool IsSelected { get; set; }
+
     }
 }

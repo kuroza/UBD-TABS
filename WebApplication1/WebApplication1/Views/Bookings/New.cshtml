@@ -9,55 +9,57 @@
 
 @using (Html.BeginForm("SearchRoomAndDate", "Bookings")) //in the future, change the action to Create
 {
-<div class="col-md-5">
-    <div class="form-group">
-        @Html.LabelFor(m => m.Booking.BuildingId)
-        @Html.DropDownListFor(m => m.Booking.BuildingId, ViewBag.BuildingList as SelectList, "Select Building", new { @class = "form-control", @id = "BuildingId" })
-        @Html.ValidationMessageFor(m => m.Booking.BuildingId)
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Booking.RoomId)
-        @Html.DropDownListFor(m => m.Booking.RoomId, new SelectList(""), "Select Room", new { @class = "form-control", @id = "RoomId" })
-        @Html.ValidationMessageFor(m => m.Booking.RoomId)
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Booking.BookDate)
-        @Html.EditorFor(m => m.Booking.BookDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(m => m.Booking.BookDate)
-    </div>
-
-    @*
-            <div class="form-group">
-            @Html.LabelFor(m => m.Booking.TimeSlotId)
-            @Html.EditorFor(m => m.Booking.TimeSlotId, new { htmlAttributes = new { @class = "form-control" } })
+    <div class="col-md-5">
+        @* @Html.ValidationSummary(true, "", new { @class = "text-danger" }) *@
+        <div class="form-group">
+            @Html.LabelFor(m => m.Booking.BuildingId)
+            @Html.DropDownListFor(m => m.Booking.BuildingId, ViewBag.BuildingList as SelectList, "Select Building", new { @class = "form-control", @id = "BuildingId" })
+            @Html.ValidationMessageFor(m => m.Booking.BuildingId)
         </div>
-    *@
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Booking.StaffName)
-        @Html.EditorFor(m => m.Booking.StaffName, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Booking.RoomId)
+            @Html.DropDownListFor(m => m.Booking.RoomId, new SelectList(""), "Select Room", new { @class = "form-control", @id = "RoomId" })
+            @Html.ValidationMessageFor(m => m.Booking.RoomId)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Booking.BookDate)
+            @Html.EditorFor(m => m.Booking.BookDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Booking.BookDate)
+        </div>
+
+        @*
+                <div class="form-group">
+                @Html.LabelFor(m => m.Booking.TimeSlotId)
+                @Html.EditorFor(m => m.Booking.TimeSlotId, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        *@
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Booking.StaffName)
+            @Html.EditorFor(m => m.Booking.StaffName, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        @*Include faculty text box as well?*@
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Booking.ModuleCode)
+            @Html.EditorFor(m => m.Booking.ModuleCode, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="float-right">
+            <button onclick="goBack()" class="btn btn-secondary">Back</button>
+            <button type="submit" class="btn btn-primary">Next</button>
+        </div>
     </div>
-
-    @*Include faculty text box as well?*@
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.Booking.ModuleCode)
-        @Html.EditorFor(m => m.Booking.ModuleCode, new { htmlAttributes = new { @class = "form-control" } })
-    </div>
-
-    <button onclick="goBack()" class="btn btn-secondary">Back</button>
-    <button type="submit" class="btn btn-primary">Next</button>
-</div>
 }
 
-<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-
 @section Scripts {
+    <link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+
     <script>
         @*jQuery Datepicker*@
         @*$(document).ready(function () {
@@ -90,10 +92,10 @@
         @*
         $(document).ready(function () {
             $("#RoomId").change(function () {
-                 Alert message displaying the selected values in browser 
+                 Alert message displaying the selected values in browser
                 var displayRoomName = document.getElementById("RoomId");
                 alert("The selected room Id is: " + displayRoomName.options[displayRoomName.selectedIndex].value + " and the room name is: " + displayRoomName.options[displayRoomName.selectedIndex].text);
-                
+
                 Send RoomId selected value to controller as a parameter
                 @*$(this).closest("form").submit();
             })

@@ -26,10 +26,13 @@
     <Compile Remove="Data\Migrations\20200220044015_AddModuleAndStaffPropertiesToBooking.Designer.cs" />
     <Compile Remove="Data\Migrations\20200223052536_AddIsBookedToTimeSlotTable.cs" />
     <Compile Remove="Data\Migrations\20200223052536_AddIsBookedToTimeSlotTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200227024642_PopulateIsSelectedInTimeSlots.cs" />
+    <Compile Remove="Data\Migrations\20200227024642_PopulateIsSelectedInTimeSlots.Designer.cs" />
   </ItemGroup>
 
 
   <ItemGroup>
+    <PackageReference Include="jquery.datatables" Version="1.10.15" />
     <PackageReference Include="jQuery.UI.Combined" Version="1.12.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />

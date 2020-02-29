@@ -21,13 +21,15 @@ namespace WebApplication1.ViewModels
 
         public TimeSlot TimeSlot { get; set; }
 
-        public IEnumerable<TimeSlot> TimeSlots { get; set; }
+        public IEnumerable<TimeSlot> TimeSlotList { get; set; }
 
-        public IEnumerable<Booking> ConfirmedBookings { get; set; }
+        //public IEnumerable<TimeSlot> SelectedTimeSlots { get; set; }
 
-        public IEnumerable<SelectListItem> BuildingList { get; set; }
+        //public IEnumerable<Booking> ConfirmedBookings { get; set; }
 
-        public IEnumerable<SelectListItem> RoomList { get; set; }
+        //public IEnumerable<SelectListItem> BuildingList { get; set; } //was used for cascading
+
+        //public IEnumerable<SelectListItem> RoomList { get; set; } //was used for cascading
 
         //public IEnumerable<SelectListItem> SelectedRoom { get; set; }
 

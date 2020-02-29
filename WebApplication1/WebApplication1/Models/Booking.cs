@@ -21,7 +21,7 @@ namespace WebApplication1.Models
 
         [Required]
         [Display(Name = "Date")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.Date)] //get date only from view
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime BookDate { get; set; }
         

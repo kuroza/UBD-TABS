@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Booking List";
+    <link href="~/DataTables/DataTables-1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 }
 
 <br />
@@ -12,11 +13,11 @@
 </div>
 <br />
 
-<table class="table table-hover">
+<table class="table table-striped table-bordered mydatatable" style="width: 100%">
     <thead class="table-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.StaffName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Building.Name)
@@ -33,37 +34,41 @@
             <th>
                 @Html.DisplayNameFor(model => model.TimeSlot.EndTime)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StaffName)
-            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Building.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Room.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BookDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeSlot.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeSlot.EndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StaffName)
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StaffName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Building.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeSlot.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeSlot.EndTime)
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/popper.min.js" integrity="sha256-O17BxFKtTt1tzzlkcYwgONw4K59H+r1iI8mSQXvSf5k=" crossorigin="anonymous"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/DataTables/DataTables-1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="~/DataTables/DataTables-1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $('.mydatatable').DataTable();
+</script>
