@@ -24,6 +24,7 @@ namespace WebApplication1.Controllers
         // GET: Rooms
         public async Task<IActionResult> Index()
         {
+            //var rooms = _context.Rooms.Where(x => x.BuildingId == buildingId);
             return View(await _context.Rooms.ToListAsync());
         }
 

@@ -48,7 +48,7 @@
             @Html.EditorFor(m => m.Booking.ModuleCode, new { htmlAttributes = new { @class = "form-control" } })
         </div>
 
-        <div class="float-right">
+        <div>
             <button onclick="goBack()" class="btn btn-secondary">Back</button>
             <button type="submit" class="btn btn-primary">Next</button>
         </div>
@@ -61,22 +61,17 @@
     <script src="~/lib/jquery-ui-1.12.1.custom/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 
     <script>
-        @*jQuery Datepicker*@
-        @*$(document).ready(function () {
-            $("#BookDate").datepicker().datepicker("setDate", new Date());
-        })*@
-
         @*Cascading drop down list*@
         $(document).ready(function () {
             $("#BuildingId").change(function () {
                 var roomId = $(this).val();
-                debugger
+                //debugger
                 $.ajax({
                     type: "post",
                     url: "/Bookings/GetRoomList?BuildingId=" + roomId,
                     contentType: "html",
                     success: function (response) {
-                        debugger
+                        //debugger
                         $("#RoomId").empty();
                         $("#RoomId").append(response);
                     }
@@ -89,17 +84,9 @@
         window.history.back();
         }
 
-        @*
-        $(document).ready(function () {
-            $("#RoomId").change(function () {
-                 Alert message displaying the selected values in browser
-                var displayRoomName = document.getElementById("RoomId");
-                alert("The selected room Id is: " + displayRoomName.options[displayRoomName.selectedIndex].value + " and the room name is: " + displayRoomName.options[displayRoomName.selectedIndex].text);
-
-                Send RoomId selected value to controller as a parameter
-                @*$(this).closest("form").submit();
-            })
-        })
-        *@
+        @*jQuery Datepicker*@
+        @*$(document).ready(function () {
+            $("#BookDate").datepicker().datepicker("setDate", new Date());
+        })*@
     </script>
 }

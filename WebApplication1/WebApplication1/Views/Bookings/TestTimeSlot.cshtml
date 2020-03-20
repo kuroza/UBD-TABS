@@ -1,10 +1,10 @@
 ﻿@model WebApplication1.ViewModels.BookingsViewModel
 
 @{
-    ViewData["Title"] = "TestTimeSlot";
+    ViewData["Title"] = "Time Slots";
 }
 
-<h1>TestTimeSlot</h1>
+<h1>Select Available Time Slots</h1>
 
 @using (Html.BeginForm("TestTimeSlot", "Bookings")) //in the future, change the action to Create
 {
@@ -26,7 +26,8 @@
                 {
                     if (slot.IsBooked == true)
                     {
-                        <tr bgcolor="ECECEC" class="text-muted"> @* gray out row background and text *@
+                        <tr bgcolor="ECECEC" class="text-muted">
+                            @* gray out row background and text *@
                             <td>
                                 @Html.CheckBoxFor(modelItem => slot.IsSelected, new { @disabled = "" })
                             </td>
@@ -42,7 +43,7 @@
                     {
                         <tr>
                             <td>
-                                @Html.HiddenFor(modelItem => slot.Id) @* to store selected time slot's Id? *@
+                                @Html.HiddenFor(modelItem => slot.Id)
                                 @Html.CheckBoxFor(modelItem => slot.IsSelected)
                             </td>
                             <td>
@@ -57,12 +58,22 @@
             </tbody>
         </table>
 
-        <h5>
+        <div>
+            @Html.HiddenFor(model => model.Booking.BuildingId)
             Room Id:
             @Html.DisplayFor(model => model.RoomId) <br />
+            @Html.HiddenFor(model => model.Booking.RoomId)
             Book date:
-            @Html.DisplayFor(model => model.BookDate) <br />
-        </h5>
+            @Html.DisplayFor(model => model.BookDate)
+            @Html.HiddenFor(model => model.Booking.BookDate)
+            <br />
+        </div>
+
+        @*<div>
+            @Html.LabelFor(model => model.Booking.TimeSlotId)
+            @Html.DropDownListFor(model => model.Booking.TimeSlotId, new SelectList(Model.AvailableTimeSlots, "Id", "StartTime"), new { @class = "form-control" })
+        </div>*@
+        <br />
 
         @* Here put text that shows the selected timeslots *@
 
@@ -83,7 +94,7 @@
         window.history.back();
     }
 
-    @* Click on row ro select checkbox *@
+    //Click on row to select checkbox
     $(document).ready(function() {
         $('.table tr').click(function(event) {
         if (event.target.type !== 'checkbox') {

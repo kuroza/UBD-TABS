@@ -27,6 +27,12 @@ namespace WebApplication1.Controllers
             return View(await _context.Buildings.ToListAsync());
         }
 
+        public ActionResult GetRooms()
+        {
+
+            return View("Index", "Rooms");
+        }
+
         // GET: Buildings/Details/5
         public async Task<IActionResult> Details(int? id)
         {

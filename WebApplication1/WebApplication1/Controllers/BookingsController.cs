@@ -20,8 +20,18 @@ namespace WebApplication1.Controllers
 
         public BookingsController(ApplicationDbContext context)
         {
-            _context = context; // connection to database
+            _context = context;
         }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create(Booking booking)
+        //{
+        //    _context.Bookings.Add(booking);
+        //    _context.SaveChanges();
+
+        //    return RedirectToAction("Index", "Bookings");
+        //}
 
         // GET: Bookings
         public async Task<IActionResult> Index()
@@ -49,44 +59,36 @@ namespace WebApplication1.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(Booking booking)
-        //{
-        //    _context.Bookings.Add(booking);
-        //    _context.SaveChanges();
-
-        //    return RedirectToAction("Index", "Bookings");
-        //}
-
         [HttpPost]
         public ActionResult SearchRoomAndDate(Booking booking)
         {
-            //var viewModel = new BookingsViewModel
-            //{
-            //   BuildingId = booking.BuildingId,
-            //   RoomId = booking.RoomId,
-            //   BookDate = booking.BookDate
-            //};
+            var viewModel = new BookingsViewModel
+            {
+                BuildingId = booking.BuildingId,
+                RoomId = booking.RoomId,
+                BookDate = booking.BookDate
+            };
 
-            return RedirectToAction("TestTimeSlot", "Bookings", booking);
+            return RedirectToAction("TestTimeSlot", "Bookings", viewModel);
         }
 
         [HttpGet]
-        public ActionResult TestTimeSlot(Booking booking)
+        public ActionResult TestTimeSlot(BookingsViewModel searchViewModel)
         {
-            //can i put all the code from searchroomdate in here?
-            IEnumerable<Booking> _booking = _context.Bookings //this will actually show booked slots, not all the unavailable ones
-                                                .Where(b => b.RoomId == booking.RoomId)
-                                                .Where(b => b.BookDate == booking.BookDate)
-                                                .Include(b => b.Building)
-                                                .Include(b => b.Room) //helps to show the room name
-                                                .Include(b => b.TimeSlot) //helps to show the starttime and endtime
+            //get all the records from Booking on RoomId and BookDate, sort by TimeSlotId, then store in an enumerable
+            IEnumerable<Booking> _booking = _context.Bookings
+                                                .Where(b => b.RoomId == searchViewModel.RoomId)
+                                                .Where(b => b.BookDate == searchViewModel.BookDate)
+                                                .Include(b => b.Building) //using eager loading to show the property names
+                                                .Include(b => b.Room)
+                                                .Include(b => b.TimeSlot)
                                                 .OrderBy(b => b.TimeSlotId)
                                                 .ToList();
 
+            //get all the records from TimeSlots and store in an enumerable
             IEnumerable<TimeSlot> _timeSlot = _context.TimeSlots.ToList();
 
+            //set IsBooked = true if the time slot is booked
             foreach (var slot in _timeSlot)
             {
                 foreach(var book in _booking)
@@ -103,81 +105,72 @@ namespace WebApplication1.Controllers
                 }
             }
 
+            //get time slots where they are not booked
+            IEnumerable<TimeSlot> availableTimeSlots = _timeSlot.Where(x => x.IsBooked == false).ToList();
+
+            //store the queries and selected values into a view model
             var viewModel = new BookingsViewModel
             {
-                TimeSlotList = _timeSlot, //to display list of time slots in view
+                TimeSlotList = _timeSlot,
+                AvailableTimeSlots = availableTimeSlots,
                 //store all individually or store directly into Booking booking?
-                //ConfirmedBookings = _booking, //where's this used?
-                BuildingId = booking.BuildingId,
-                RoomId = booking.RoomId,
-                BookDate = booking.BookDate
+                BuildingId = searchViewModel.BuildingId,
+                RoomId = searchViewModel.RoomId,
+                BookDate = searchViewModel.BookDate
             };
 
             return View(viewModel);
         }
 
-        [HttpPost] //so is the parameter for viewmodel not getting anything?
-        public ActionResult TestTimeSlot(BookingsViewModel bookingsViewModel) //int roomId, DateTime bookDate //Booking booking
-        {
-            if (bookingsViewModel.TimeSlotList.Count(x => x.IsSelected) == 0)
-            {
-                //return "You didn't select any time slot";
-                //here, return an error to view that none is selected
-                return RedirectToAction("TestTimeSlot", "Bookings");
-            }
-            else
-            {
-                //StringBuilder sb = new StringBuilder();
-                //sb.Append("You selected - ");
-                foreach (var timeSlot in bookingsViewModel.TimeSlotList) //NullReferenceException: Object reference not set to an instance of an object.
-            {
-                    if (timeSlot.IsSelected == true)
-                    {
-                        //sb.Append(timeSlot.StartTime + " to " + timeSlot.EndTime + ", ");
-                        //here, get the time slot Id, store in booking.TimeSlotId
-                        var booking = new Booking
-                        {
-                            BuildingId = bookingsViewModel.BuildingId,
-                            RoomId = bookingsViewModel.RoomId,
-                            BookDate = bookingsViewModel.BookDate,
-                            TimeSlotId = timeSlot.Id
-                        };
-                        //here, iterate to Add each booking into Bookings? or just Add 1 booking?
-                        _context.Bookings.Add(booking);
-                    }
-                }
-                //sb.Remove(sb.ToString().LastIndexOf(","), 1);
-                //return sb.ToString();
-                _context.SaveChanges();
-
-                return RedirectToAction("Index", "Bookings");
-            }
-        }
-
-        //[HttpPost]
-        //public ActionResult TestTimeSlot(Booking booking) //int roomId, DateTime bookDate //Booking booking
+        //[HttpPost] //so is the parameter for viewmodel not getting anything?
+        //public ActionResult TestTimeSlot(BookingsViewModel bookingsViewModel) //Booking booking
         //{
-        //    _context.Bookings.Add(booking);
-        //    _context.SaveChanges();
+        //    if (bookingsViewModel.TimeSlotList.Count(x => x.IsSelected) == 0)
+        //    {
+        //        //here, return an error to view that none is selected
+        //        return RedirectToAction("TestTimeSlot", "Bookings");
+        //    }
+        //    else
+        //    {
+        //        foreach (var timeSlot in bookingsViewModel.TimeSlotList) //NullReferenceException: Object reference not set to an instance of an object.
+        //        {
+        //            if (timeSlot.IsSelected == true)
+        //            {
+        //                //here, get the time slot Id, store in booking.TimeSlotId
+        //                var booking = new Booking
+        //                {
+        //                    BuildingId = bookingsViewModel.BuildingId,
+        //                    RoomId = bookingsViewModel.RoomId,
+        //                    BookDate = bookingsViewModel.BookDate,
+        //                    TimeSlotId = timeSlot.Id
+        //                };
+        //                _context.Bookings.Add(booking);
+        //            }
+        //        }
+        //        _context.SaveChanges();
 
-        //    return RedirectToAction("Index", "Bookings");
+        //        return RedirectToAction("Index", "Bookings");
+        //    }
         //}
 
-        public ActionResult Next(int RoomId, DateTime BookDate) //Next page lists all timeslots //int RoomId, DateTime BookDate
+        [HttpPost]
+        public ActionResult TestTimeSlot(Booking booking, BookingsViewModel model) //Booking booking
         {
-            //get roomid and bookdate as parameters
-            //get from database Booking table, then compare roomid and bookdate, store the result in a list
-            //iterate the result list, get the timeslot
-            //show timeslots and check manually if the timeslot is correct
-            IEnumerable<Booking> bookingList = _context.Bookings.Where(x => x.RoomId == RoomId).Where(x => x.BookDate == BookDate).ToList(); //get the date
-            return View();
+            var bk = new Booking
+            {
+                BuildingId = model.BuildingId,
+                RoomId = model.RoomId,
+                BookDate = model.BookDate,
+                TimeSlotId = booking.TimeSlotId
+            };
+            _context.Bookings.Add(bk);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Bookings");
         }
 
         public ActionResult TimeSlot()
         {
-            //forall set IsBooked=false
-            //update TimeSlots table according to Next()
-            //if the TimeSlotId appears in the Next() result, set IsBooked=true
             IEnumerable<TimeSlot> timeSlot = _context.TimeSlots.ToList(); //lists all the time slots
 
             return View(timeSlot);
