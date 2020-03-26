@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,7 +12,13 @@ namespace DotNetAngularApp.Models
 
         [Required]
         [StringLength(255)]
-        // [Display(Name = "Building Name")]
         public string Name { get; set; }
+
+        public ICollection<Room> Rooms { get; set; }
+
+        public Building()
+        {
+            Rooms = new Collection<Room>();
+        }
     }
 }
