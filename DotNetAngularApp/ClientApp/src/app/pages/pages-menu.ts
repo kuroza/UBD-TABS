@@ -2,17 +2,17 @@ import { NbMenuItem } from '@nebular/theme';
 
 export const MENU_ITEMS: NbMenuItem[] = [
   {
+    title: 'Main',
+    group: true,
+  },
+  {
     title: 'Dashboard',
     icon: 'home-outline',
     link: '/pages/dashboard',
     home: true,
   },
   {
-    title: 'FEATURES',
-    group: true,
-  },
-  {
-    title: 'Auth',
+    title: 'Profile',
     icon: 'lock-outline',
     children: [
       {
@@ -32,5 +32,81 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/auth/reset-password',
       },
     ],
+  },
+  {
+    title: 'Calendar',
+    icon: 'calendar-outline',
+    children: [
+      {
+        title: 'View calendar',
+        link: '/',
+      },
+      {
+        title: 'Add new booking',
+        link: '/',
+      },
+      {
+        title: 'View all bookings',
+        link: '/',
+      },
+    ],
+  },
+  {
+    title: 'Rooms',
+    icon: 'grid-outline',
+    children: [
+      {
+        title: 'Add room',
+        link: '/',
+      },
+      {
+        title: 'View all rooms',
+        link: '/',
+      },
+      {
+        title: 'Edit room details',
+        link: '/',
+      },
+    ],
+  },
+  {
+    title: 'Staff',
+    icon: 'people-outline',
+    children: [
+      {
+        title: 'Add staff',
+        link: '/',
+      },
+      {
+        title: 'View all staffs',
+        link: '/',
+      },
+      {
+        title: 'Edit staff details',
+        link: '/',
+      },
+    ],
+  },
+  {
+    title: 'Manage',
+    icon: 'edit-outline',
+    children: [
+      {
+        title: 'Course',
+        link: '/',
+      },
+      {
+        title: 'Faculty',
+        link: '/',
+      },
+      {
+        title: 'Time slot',
+        link: '/',
+      },
+    ],
+  },
+  {
+    title: 'Settings',
+    icon: 'settings-outline',
   },
 ];
