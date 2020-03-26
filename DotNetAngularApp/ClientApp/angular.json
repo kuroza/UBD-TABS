@@ -110,7 +110,7 @@
               "src/tsconfig.spec.json"
             ],
             "typeCheck": true,
-            "exclude": []
+            "exclude": ["**/node_modules/**/*"]
           }
         }
       }

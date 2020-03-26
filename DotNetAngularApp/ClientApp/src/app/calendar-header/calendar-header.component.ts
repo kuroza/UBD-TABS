@@ -4,7 +4,7 @@ import { CalendarView } from 'angular-calendar';
 @Component({
   selector: 'mwl-demo-utils-calendar-header',
   templateUrl: './calendar-header.component.html',
-  styleUrls: ['./calendar-header.component.scss']
+  styleUrls: ['./calendar-header.component.scss'],
 })
 export class CalendarHeaderComponent {
   @Input() view: CalendarView | 'month' | 'week' | 'day';
