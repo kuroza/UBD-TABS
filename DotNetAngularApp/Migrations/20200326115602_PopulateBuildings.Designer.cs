@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotNetAngularApp.Migrations
 {
     [DbContext(typeof(TabsDbContext))]
-    [Migration("20200326103116_PopulateBuildings")]
+    [Migration("20200326115602_PopulateBuildings")]
     partial class PopulateBuildings
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
