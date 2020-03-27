@@ -25,18 +25,15 @@ import { colors } from '../calendar-header/colors';
 })
 export class NgCalendarComponent {
   view: CalendarView = CalendarView.Month;
-
   viewDate: Date = new Date();
-
+  activeDayIsOpen: boolean; //for disabling slide animation
   events: CalendarEvent[] = [ //events inside animation
     {
       title: 'SS-1201: Programming Fundamentals',
       start: new Date(),
       color: colors.red
-    }
+    },
   ];
-
-  activeDayIsOpen: boolean; //for disabling slide animation
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void { //for disabling slide animation
     if (isSameMonth(date, this.viewDate)) {

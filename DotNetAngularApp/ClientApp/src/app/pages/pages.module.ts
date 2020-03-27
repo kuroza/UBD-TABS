@@ -5,7 +5,8 @@ import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
-import { RoomComponent } from './room/room.component';
+import { RoomsComponent } from './rooms/rooms.component';
+import { BookingsComponent } from './bookings/bookings.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { RoomComponent } from './room/room.component';
   ],
   declarations: [
     PagesComponent,
-    RoomComponent,
+    RoomsComponent,
+    BookingsComponent,
   ],
 })
 export class PagesModule {

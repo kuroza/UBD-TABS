@@ -1,10 +1,11 @@
+import { BookingFormComponent } from './../../@theme/components/booking-form/booking-form.component';
 import { FormsModule } from '@angular/forms';
-import { CalendarHeaderComponent } from '../../calendar-header/calendar-header.component';
-import { NgCalendarComponent } from './../../ng-calendar/ng-calendar.component';
+import { CalendarHeaderComponent } from '../../@theme/components/calendar-header/calendar-header.component';
+import { NgCalendarComponent } from '../../@theme/components/ng-calendar/ng-calendar.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgModule } from '@angular/core';
-import { NbCardModule } from '@nebular/theme';
+import { NbCardModule, NbTabsetModule } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
 import { DashboardComponent } from './dashboard.component';
 //CommonModule in app.module.ts
@@ -17,12 +18,14 @@ import { DashboardComponent } from './dashboard.component';
     }),
     NbCardModule,
     ThemeModule,
-    FormsModule
+    FormsModule,
+    NbTabsetModule
   ],
   declarations: [
     DashboardComponent,
     NgCalendarComponent,
-    CalendarHeaderComponent
+    CalendarHeaderComponent,
+    BookingFormComponent
   ],
 })
 export class DashboardModule { }
