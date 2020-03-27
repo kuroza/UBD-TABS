@@ -43,6 +43,7 @@
     "@nebular/eva-icons": "4.1.2",
     "@nebular/security": "4.1.2",
     "@nebular/theme": "4.1.2",
+    "@ng-bootstrap/ng-bootstrap": "~5.2.2",
     "angular-calendar": "^0.28.5",
     "bootstrap": "4.3.1",
     "classlist.js": "1.1.20150312",

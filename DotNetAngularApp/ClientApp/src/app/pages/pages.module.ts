@@ -5,8 +5,7 @@ import { ThemeModule } from '../@theme/theme.module';
 import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
-import { RoomsComponent } from './rooms/rooms.component';
-import { BookingsComponent } from './bookings/bookings.component';
+import { BookingsModule } from './bookings/bookings.module';
 
 @NgModule({
   imports: [
@@ -14,11 +13,10 @@ import { BookingsComponent } from './bookings/bookings.component';
     ThemeModule,
     NbMenuModule,
     DashboardModule,
+    BookingsModule
   ],
   declarations: [
     PagesComponent,
-    RoomsComponent,
-    BookingsComponent,
   ],
 })
 export class PagesModule {
