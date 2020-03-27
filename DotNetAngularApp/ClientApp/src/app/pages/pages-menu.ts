@@ -39,7 +39,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'View calendar',
-        link: '/',
+        link: '/pages/dashboard',
       },
       {
         title: 'Add new booking',
@@ -47,7 +47,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'View all bookings',
-        link: '/',
+        link: '/pages/bookings',
       },
     ],
   },

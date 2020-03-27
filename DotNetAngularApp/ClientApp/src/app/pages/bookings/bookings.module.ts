@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
 import { BookingsComponent } from './bookings.component';
+import { BookingTableModule } from '../../@theme/components/booking-table/booking-table.module';
 
 @NgModule({
     imports: [
@@ -11,7 +12,8 @@ import { BookingsComponent } from './bookings.component';
       ThemeModule,
       FormsModule,
       NbTabsetModule,
-      NgbdTablePaginationModule
+      NgbdTablePaginationModule,
+      BookingTableModule
     ],
     declarations: [
       BookingsComponent,
