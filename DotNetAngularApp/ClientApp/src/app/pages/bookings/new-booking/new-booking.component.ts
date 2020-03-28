@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TimeSlotService } from './../../../services/timeslot.service';
+import { BookingService } from '../../../services/booking.service';
 
 @Component({
   selector: 'new-booking',
@@ -8,10 +8,10 @@ import { TimeSlotService } from './../../../services/timeslot.service';
 export class NewBookingComponent implements OnInit {
   timeSlots: any;
 
-  constructor(private timeSlotService: TimeSlotService) { }
+  constructor(private bookingService: BookingService) { }
 
   ngOnInit() {
-    this.timeSlotService.getTimeSlots()
+    this.bookingService.getTimeSlots()
       .subscribe(timeSlots => this.timeSlots = timeSlots); //the input timeSlots, set it to this timeSlots
   }
 

@@ -1,5 +1,4 @@
-import { TimeSlotService } from './services/timeslot.service';
-import { BuildingService } from './services/building.service';
+import { BookingService } from './services/booking.service';
 import { CommonModule } from '@angular/common';
 /**
  * @license
@@ -46,8 +45,7 @@ import {
   ],
   bootstrap: [AppComponent],
   providers: [
-    BuildingService, //for dependency injection in BuildingService.ts
-    TimeSlotService
+    BookingService, //for dependency injection in BookingService.ts
   ]
 })
 export class AppModule {

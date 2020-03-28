@@ -1,5 +1,5 @@
 
-import { BuildingService } from './../../../services/building.service';
+import { BookingService } from '../../../services/booking.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,18 +9,14 @@ import { Component, OnInit } from '@angular/core';
 export class BookingFormComponent implements OnInit {
   buildings: any;
   rooms: any;
-  
   booking: any = {}; //booking object
 
   constructor(
-    private buildingService: BuildingService,
-    ) {}
+    private bookingService: BookingService) {}
 
   ngOnInit() {
-    this.buildingService.getBuildings() //get the buildings from server
+    this.bookingService.getBuildings() //get the buildings from server
       .subscribe(buildings => this.buildings = buildings); //use that to initialize this buildings field
-
-    
   }
 
   onBuildingChange() { //when the option is selected
