@@ -23,6 +23,8 @@ namespace DotNetAngularApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // services.AddControllers().AddNewtonsoftJson();
+
             services.AddAutoMapper(typeof(Startup));
 
             services.AddDbContext<TabsDbContext>(options => //services - a container for all the dependencies in the app

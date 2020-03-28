@@ -1,3 +1,5 @@
+import { TimeSlotService } from './services/timeslot.service';
+import { BuildingService } from './services/building.service';
 import { CommonModule } from '@angular/common';
 /**
  * @license
@@ -43,6 +45,10 @@ import {
     CoreModule.forRoot(),
   ],
   bootstrap: [AppComponent],
+  providers: [
+    BuildingService, //for dependency injection in BuildingService.ts
+    TimeSlotService
+  ]
 })
 export class AppModule {
 }

@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CalendarView } from 'angular-calendar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'mwl-demo-utils-calendar-header',
@@ -7,6 +8,8 @@ import { CalendarView } from 'angular-calendar';
   styleUrls: ['./calendar-header.component.scss'],
 })
 export class CalendarHeaderComponent {
+  constructor(private router: Router) {}
+
   @Input() view: CalendarView | 'month' | 'week' | 'day';
 
   @Input() viewDate: Date;

@@ -2,9 +2,10 @@
 <form>
     <!-- Building drop down list -->
     <div class="form-group">
-        <label for="building">Building</label>
-        <select id="building" class="form-control" name="building">
+        <label for="building">Building</label> <!-- 'for' when a user clicks the lable, the input field will get focused -->
+        <select id="building" class="form-control" name="building" (change)="onBuildingChange()" [(ngModel)]="booking.building"> <!-- 'form-control' is a bootstrap class. 'change' listen to changes. what building is selected, bind ddl to a field in the component -->
             <option value=""></option> <!-- empty value -->
+            <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
         </select>
     </div>
     <!-- Room drop down list -->
@@ -12,6 +13,7 @@
         <label for="room">Room</label>
         <select id="room" class="form-control">
             <option value=""></option>
+            <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
         </select>
     </div>
     <!-- Contact -->
