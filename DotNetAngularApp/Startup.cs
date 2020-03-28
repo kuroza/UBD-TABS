@@ -1,3 +1,4 @@
+using AutoMapper;
 using DotNetAngularApp.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +23,8 @@ namespace DotNetAngularApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddDbContext<TabsDbContext>(options => //services - a container for all the dependencies in the app
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
