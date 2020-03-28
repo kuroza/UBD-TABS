@@ -1,9 +1,11 @@
-import { NgbdTablePaginationModule } from './../../@theme/components/table-pagination/table-pagination.module';
+import { BookingFormModule } from './../../@theme/components/booking-form/booking-form.modules';
+import { NewBookingComponent } from './new-booking/new-booking.component';
+import { NgbdTablePaginationModule } from '../../@theme/components/table-pagination/table-pagination.module';
 import { NbCardModule, NbTabsetModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
-import { BookingsComponent } from './bookings.component';
+import { BookingsComponent } from './view-bookings/bookings.component';
 import { BookingTableModule } from '../../@theme/components/booking-table/booking-table.module';
 
 @NgModule({
@@ -13,10 +15,12 @@ import { BookingTableModule } from '../../@theme/components/booking-table/bookin
       FormsModule,
       NbTabsetModule,
       NgbdTablePaginationModule,
-      BookingTableModule
+      BookingTableModule,
+      BookingFormModule
     ],
     declarations: [
       BookingsComponent,
+      NewBookingComponent
     ],
   })
   export class BookingsModule { }

@@ -43,7 +43,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'Add new booking',
-        link: '/',
+        link: '/pages/bookings/new',
       },
       {
         title: 'View all bookings',
