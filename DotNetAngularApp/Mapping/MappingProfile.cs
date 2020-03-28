@@ -10,6 +10,7 @@ namespace DotNetAngularApp.Mapping
         {
             CreateMap<Building, BuildingResource>(); //AutoMapper scans the properties of the 2 types. if the prop names match, it'll be auto map. if not, need to supply additional config
             CreateMap<Room, RoomResource>(); //also create a map between room and room resource
+            CreateMap<TimeSlot, TimeSlotResource>();
         }
     }
 }
