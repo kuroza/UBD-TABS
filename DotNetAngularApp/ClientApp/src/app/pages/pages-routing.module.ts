@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { BookingsComponent } from './bookings/view-bookings/bookings.component';
+import { ViewBookingsComponent } from './bookings/view-bookings/view-bookings.component';
 import { NewBookingComponent } from './bookings/new-booking/new-booking.component';
+import { ViewRoomsComponent } from './rooms/view-rooms/view-rooms.component';
 
 const routes: Routes = [{
   path: '',
@@ -19,8 +20,9 @@ const routes: Routes = [{
       redirectTo: 'dashboard',
       pathMatch: 'full',
     },
-    { path: 'bookings', component: BookingsComponent }, //view all bookings / table
+    { path: 'bookings', component: ViewBookingsComponent }, //view all bookings / table
     { path: 'bookings/new', component: NewBookingComponent },
+    { path: 'rooms', component: ViewRoomsComponent },
   ],
 }];
 

@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-8">
+    <nb-card>
+      <nb-card-body>
+        Here show all the rooms in a table.
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Building Id</th>
+              <th scope="col">Building Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of buildings">
+              <th scope="row">{{ b.id }}</th>
+              <td>{{ b.name }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

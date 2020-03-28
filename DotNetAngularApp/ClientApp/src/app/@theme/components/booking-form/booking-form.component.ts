@@ -11,8 +11,7 @@ export class BookingFormComponent implements OnInit {
   rooms: any;
   booking: any = {}; //booking object
 
-  constructor(
-    private bookingService: BookingService) {}
+  constructor(private bookingService: BookingService) {}
 
   ngOnInit() {
     this.bookingService.getBuildings() //get the buildings from server

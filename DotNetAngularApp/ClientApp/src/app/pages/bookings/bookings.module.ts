@@ -5,7 +5,7 @@ import { NbCardModule, NbTabsetModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
-import { BookingsComponent } from './view-bookings/bookings.component';
+import { ViewBookingsComponent } from './view-bookings/view-bookings.component';
 import { BookingTableModule } from '../../@theme/components/booking-table/booking-table.module';
 
 @NgModule({
@@ -19,7 +19,7 @@ import { BookingTableModule } from '../../@theme/components/booking-table/bookin
       BookingFormModule
     ],
     declarations: [
-      BookingsComponent,
+      ViewBookingsComponent,
       NewBookingComponent
     ],
   })
