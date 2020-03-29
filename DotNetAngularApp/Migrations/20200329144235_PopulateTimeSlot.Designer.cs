@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DotNetAngularApp.Migrations
 {
     [DbContext(typeof(TabsDbContext))]
-    [Migration("20200329105907_ChangeTimeSlotDataType")]
-    partial class ChangeTimeSlotDataType
+    [Migration("20200329144235_PopulateTimeSlot")]
+    partial class PopulateTimeSlot
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,28 +36,6 @@ namespace DotNetAngularApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Buildings");
-                });
-
-            modelBuilder.Entity("DotNetAngularApp.Models.Module", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(255)")
-                        .HasMaxLength(255);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Modules");
                 });
 
             modelBuilder.Entity("DotNetAngularApp.Models.Room", b =>
@@ -87,8 +65,10 @@ namespace DotNetAngularApp.Migrations
 
             modelBuilder.Entity("DotNetAngularApp.Models.TimeSlot", b =>
                 {
-                    b.Property<byte>("Id")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");

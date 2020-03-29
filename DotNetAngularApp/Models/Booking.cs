@@ -1,33 +1,45 @@
-// using System;
-// using System.ComponentModel.DataAnnotations;
-// using System.ComponentModel.DataAnnotations.Schema;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-// namespace DotNetAngularApp.Models
-// {
-//     [Table("Bookings")]
-//     public class Booking
-//     {
-//         public int Id { get; set; }
+namespace DotNetAngularApp.Models
+{
+    [Table("Bookings")]
+    public class Booking
+    {
+        public int Id { get; set; }
 
-//         public Room Room { get; set; }
+        [Required]
+        public int RoomId { get; set; }
 
-//         [Required]
-//         public int RoomId { get; set; }
-
-//         public TimeSlot TimeSlot { get; set; }
+        public Room Room { get; set; }
         
-//         [Required]
-//         public byte TimeSlotId { get; set; }
+        // [Required]
+        // public int TimeSlotId { get; set; }
 
-//         [Required]
-//         // [DataType(DataType.Date)] //get date only from view?
-//         // [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-//         public DateTime BookDate { get; set; }
+        [Required]
+        public DateTime BookDate { get; set; }
 
-//         [StringLength(255)]
-//         public string StaffName { get; set; }
+        [Required]
+        [StringLength(255)]
+        public string ContactName { get; set; }
 
-//         [StringLength(255)]
-//         public string Purpose { get; set; }
-//     }
-// }
+        [StringLength(255)]
+        public string ContactEmail { get; set; }
+
+        [StringLength(255)]
+        public string ContactPhone { get; set; }
+        
+        [StringLength(255)]
+        public string Purpose { get; set; }
+
+        public ICollection<BookingTimeSlot> TimeSlots { get; set; }
+
+        public Booking()
+        {
+            TimeSlots = new Collection<BookingTimeSlot>();
+        }
+    }
+}
