@@ -6,8 +6,8 @@
         <br>
         <div *ngFor="let t of timeSlots" class="form-check">
           <input type="checkbox" class="form-check-input" id="timeSlot{{ t.id }}" (change)="onTimeSlotToggle(t.id, $event)"> <!-- can't ngModel, handle event arguments: timeSlot id and event object (tell if this checkbox is checked or not) -->
-          <label class="form-check-label" for="timeSlot{{ t.id }}">{{ t.id }}</label>
-      </div>
+          <label class="form-check-label" for="timeSlot{{ t.id }}">{{ t.startTime | date:'shortTime' }}-{{ t.endTime | date:'shortTime' }}</label>
+        </div>
       </nb-card-body>
     </nb-card>
   </div>

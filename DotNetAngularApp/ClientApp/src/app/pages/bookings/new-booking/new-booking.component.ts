@@ -14,5 +14,4 @@ export class NewBookingComponent implements OnInit {
     this.bookingService.getTimeSlots()
       .subscribe(timeSlots => this.timeSlots = timeSlots); //the input timeSlots, set it to this timeSlots
   }
-
 }

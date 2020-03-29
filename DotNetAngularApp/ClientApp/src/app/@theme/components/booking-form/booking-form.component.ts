@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class BookingFormComponent implements OnInit {
   buildings: any;
   rooms: any;
+  timeSlots: any;
   booking: any = {}; //booking object
 
   constructor(private bookingService: BookingService) {}
@@ -16,6 +17,9 @@ export class BookingFormComponent implements OnInit {
   ngOnInit() {
     this.bookingService.getBuildings() //get the buildings from server
       .subscribe(buildings => this.buildings = buildings); //use that to initialize this buildings field
+
+    this.bookingService.getTimeSlots()
+      .subscribe(timeSlots => this.timeSlots = timeSlots);
   }
 
   onBuildingChange() { //when the option is selected

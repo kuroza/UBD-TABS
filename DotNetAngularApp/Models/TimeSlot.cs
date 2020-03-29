@@ -9,11 +9,11 @@ namespace DotNetAngularApp.Models
     {
         public byte Id { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:hh}:{0:mm}", ApplyFormatInEditMode = true)]
-        public TimeSpan StartTime { get; set; }
+        //[DisplayFormat(DataFormatString = "{0:hh}:{0:mm}", ApplyFormatInEditMode = true)]
+        public DateTime StartTime { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:hh}:{0:mm}", ApplyFormatInEditMode = true)]
-        public TimeSpan EndTime { get; set; }
+        //[DisplayFormat(DataFormatString = "{0:hh}:{0:mm}", ApplyFormatInEditMode = true)]
+        public DateTime EndTime { get; set; }
 
         //public bool IsBooked { get; set; }
     }
