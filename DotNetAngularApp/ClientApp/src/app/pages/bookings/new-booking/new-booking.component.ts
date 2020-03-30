@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BookingService } from '../../../services/booking.service';
 
 @Component({
-  selector: 'new-booking',
+  selector: 'ngx-new-booking',
   templateUrl: './new-booking.component.html'
 })
 export class NewBookingComponent implements OnInit {

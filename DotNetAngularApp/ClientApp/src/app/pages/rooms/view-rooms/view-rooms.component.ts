@@ -2,7 +2,7 @@ import { BookingService } from './../../../services/booking.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'view-rooms',
+  selector: 'ngx-view-rooms',
   templateUrl: './view-rooms.component.html',
   styleUrls: ['./view-rooms.component.scss']
 })
