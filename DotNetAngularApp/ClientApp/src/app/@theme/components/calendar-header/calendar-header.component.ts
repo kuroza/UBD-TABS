@@ -3,7 +3,7 @@ import { CalendarView } from 'angular-calendar';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'mwl-demo-utils-calendar-header',
+  selector: 'ngx-mwl-demo-utils-calendar-header',
   templateUrl: './calendar-header.component.html',
   styleUrls: ['./calendar-header.component.scss'],
 })

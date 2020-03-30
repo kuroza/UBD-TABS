@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'booking-table',
+  selector: 'ngx-booking-table',
   templateUrl: './booking-table.component.html',
 })
 export class BookingTableComponent {
-  
 }

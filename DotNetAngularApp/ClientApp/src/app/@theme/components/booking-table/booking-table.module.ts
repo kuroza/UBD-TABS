@@ -7,6 +7,6 @@ import { BookingTableComponent } from './booking-table.component';
   imports: [CommonModule, FormsModule],
   declarations: [BookingTableComponent],
   exports: [BookingTableComponent],
-  bootstrap: [BookingTableComponent]
+  bootstrap: [BookingTableComponent],
 })
 export class BookingTableModule {}

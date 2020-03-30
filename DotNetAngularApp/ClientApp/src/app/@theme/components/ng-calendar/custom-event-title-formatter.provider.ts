@@ -14,7 +14,7 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
     return `<b>${new DatePipe(this.locale).transform(
       event.start,
       'h:m a',
-      this.locale
+      this.locale,
     )}</b> ${event.title}`;
   }
 
@@ -22,7 +22,7 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
     return `<b>${new DatePipe(this.locale).transform(
       event.start,
       'h:m a',
-      this.locale
+      this.locale,
     )}</b> ${event.title}`;
   }
 
@@ -30,7 +30,7 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
     return `<b>${new DatePipe(this.locale).transform(
       event.start,
       'h:m a',
-      this.locale
+      this.locale,
     )}</b> ${event.title}`;
   }
 }
