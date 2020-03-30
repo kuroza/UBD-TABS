@@ -11,7 +11,7 @@ export class BookingFormComponent implements OnInit {
   rooms: any;
   timeSlots: any;
   booking: any = { // booking object
-
+    bookDate: '',
     timeSlots: [], // change to empty array []
     contact: {},
   };
