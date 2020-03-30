@@ -25,6 +25,8 @@ namespace DotNetAngularApp
         {
             services.AddScoped<IBookingRepository, BookingRepository>();
             
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            
             services.AddControllers().AddNewtonsoftJson(); //install package first
 
             services.AddAutoMapper(typeof(Startup));

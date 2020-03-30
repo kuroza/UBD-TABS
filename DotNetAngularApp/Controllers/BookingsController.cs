@@ -12,12 +12,12 @@ namespace DotNetAngularApp.Controllers
     public class BookingsController : Controller
     {
         private readonly IMapper mapper;
-        private readonly TabsDbContext context;
         private readonly IBookingRepository repository;
-        public BookingsController(IMapper mapper, TabsDbContext context, IBookingRepository repository)
+        private readonly IUnitOfWork unitOfWork;
+        public BookingsController(IMapper mapper, IBookingRepository repository, IUnitOfWork unitOfWork)
         {
+            this.unitOfWork = unitOfWork;
             this.repository = repository;
-            this.context = context;
             this.mapper = mapper;
         }
 
@@ -29,10 +29,10 @@ namespace DotNetAngularApp.Controllers
 
             var booking = mapper.Map<SaveBookingResource, Booking>(bookingResource);
 
-            context.Bookings.Add(booking);
-            await context.SaveChangesAsync();
+            repository.Add(booking);
+            await unitOfWork.CompleteAsync();
 
-            await context.Rooms.Include(r => r.Building).SingleOrDefaultAsync(r => r.Id == booking.RoomId); //add the objects in the context, explicitly load that this booking is related to
+            // await context.Rooms.Include(r => r.Building).SingleOrDefaultAsync(r => r.Id == booking.RoomId); //add the objects in the context, explicitly load that this booking is related to
 
             //load the TimeSlots that this booking is related to
             booking = await repository.GetBooking(booking.Id);
@@ -48,15 +48,17 @@ namespace DotNetAngularApp.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var booking = await repository.GetBooking(id);
+            var booking = await repository.GetBooking(id); //1st call
 
             if (booking == null)
                 return NotFound();
 
             mapper.Map<SaveBookingResource, Booking>(bookingResource, booking); //when mapping a bookingResource to booking, use a booking object that we load from db
 
-            await context.SaveChangesAsync();
-            //missing something here, 500 internal server error
+            await unitOfWork.CompleteAsync(); //2nd call
+            
+            booking = await repository.GetBooking(booking.Id); //without this there's an error that says automapper cannot map //refetch this vehicle object //3rd call
+
             var result = mapper.Map<Booking, BookingResource>(booking); //after saving the changes, map the Booking to BookingResource
 
             return Ok(result);
@@ -65,13 +67,13 @@ namespace DotNetAngularApp.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
-            var booking = await context.Bookings.FindAsync(id); //get a booking with this id
+            var booking = await repository.GetBooking(id, includeRelated: false); //get a booking with this id
 
             if (booking == null) //check if the booking is null
                 return NotFound();
 
-            context.Remove(booking); //otherwise, remove from context
-            await context.SaveChangesAsync(); //save
+            repository.Remove(booking); //otherwise, remove from context
+            await unitOfWork.CompleteAsync(); //save
 
             return Ok(id); //return Ok with the same Id
         }

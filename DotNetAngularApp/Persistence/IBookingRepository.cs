@@ -5,6 +5,8 @@ namespace DotNetAngularApp.Persistence
 {
     public interface IBookingRepository
     {
-        Task<Booking> GetBooking(int id);
+        void Add(Booking booking);
+        Task<Booking> GetBooking(int id, bool includeRelated = true);
+        void Remove(Booking booking);
     }
 }
