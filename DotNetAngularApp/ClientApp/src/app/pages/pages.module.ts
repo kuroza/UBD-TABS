@@ -15,7 +15,7 @@ import { BookingsModule } from './bookings/bookings.module';
     NbMenuModule,
     DashboardModule,
     BookingsModule,
-    RoomsModule
+    RoomsModule,
   ],
   declarations: [
     PagesComponent,

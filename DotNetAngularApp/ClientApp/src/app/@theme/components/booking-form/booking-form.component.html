@@ -1,36 +1,55 @@
 <h5>New Booking</h5>
-<form>
+<p>
+    {{ booking | json }}
+</p>
+<form (ngSubmit)="submit()">
     <!-- Building drop down list -->
     <div class="form-group">
-        <label for="building">Building</label> <!-- 'for' when a user clicks the lable, the input field will get focused -->
-        <select id="building" class="form-control" name="building" (change)="onBuildingChange()" [(ngModel)]="booking.building"> <!-- 'form-control' is a bootstrap class. 'change' listen to changes. what building is selected, bind ddl to a field in the component -->
+        <label for="building">Building *</label> <!-- 'for' when a user clicks the lable, the input field will get focused -->
+        <select id="building" class="form-control" (change)="onBuildingChange()" [(ngModel)]="booking.buildingId" name="buildingId"> <!-- 'form-control' is a bootstrap class. 'change' listen to changes. what building is selected, bind ddl to a field in the component -->
             <option value=""></option> <!-- empty value -->
             <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
         </select>
     </div>
     <!-- Room drop down list -->
     <div class="form-group">
-        <label for="room">Room</label>
-        <select id="room" class="form-control">
+        <label for="room">Room *</label>
+        <select id="room" class="form-control" [(ngModel)]="booking.roomId" name="roomId">
             <option value=""></option>
             <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
         </select>
     </div>
-    <!-- Add datepicker here? -->
+    <!-- Add datepicker here? Or the selected date from the calendar -->
+    <!-- <div class="form-group">
+        <label for="bookDate">Date *</label>
+        <input id="bookDate" nbInput placeholder="Pick Date" [nbDatepicker]="formpicker" [(ngModel)]="booking.bookDate" name="bookDate">
+        <nb-datepicker #formpicker></nb-datepicker>
+    </div> -->
+    <!-- TimeSlot dowp down list -->
     <div class="form-group">
-        <label for="timeSlot">Time Slot</label>
-        <select id="timeSlot" class="form-control">
+        <label for="timeSlot">Time Slot *</label>
+        <select id="timeSlot" class="form-control" [(ngModel)]="booking.timeSlots" name="timeSlots">
             <option value=""></option>
             <option *ngFor="let t of timeSlots" value="{{ t.id }}">{{ t.startTime | date:'shortTime' }}-{{ t.endTime | date:'shortTime' }}</option>
         </select>
     </div>
+    <!-- Contact from -->
     <div class="form-group">
-        <label for="contactName">Staff Name</label>
-        <input id="contactName" type="text" class="form-control">
+        <label for="contactName">Name *</label>
+        <input id="contactName" type="text" class="form-control" [(ngModel)]="booking.contact.name" name="contactName">
     </div>
     <div class="form-group">
+        <label for="contactEmail">Email</label>
+        <input id="contactEmail" type="text" class="form-control" [(ngModel)]="booking.contact.email" name="contactEmail">
+    </div>
+    <div class="form-group">
+        <label for="contactPhone">Phone</label>
+        <input id="contactPhone" type="text" class="form-control" [(ngModel)]="booking.contact.phone" name="contactPhone">
+    </div>
+    <!-- Purpose form -->
+    <div class="form-group">
         <label for="purpose">Purpose</label>
-        <input id="purpose" type="text" class="form-control">
+        <input id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose">
     </div>
     <button class="btn btn-primary">Book</button>
 </form>

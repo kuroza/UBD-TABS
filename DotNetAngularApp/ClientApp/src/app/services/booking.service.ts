@@ -18,4 +18,9 @@ export class BookingService {
     return this.http.get('/api/timeslots')
       .pipe(map(response => response));
   }
+
+  create(booking) {
+    return this.http.post('/api/bookings', booking)
+      .pipe(map(response => response));
+  }
 }

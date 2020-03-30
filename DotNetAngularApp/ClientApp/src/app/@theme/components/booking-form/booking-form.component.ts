@@ -10,7 +10,11 @@ export class BookingFormComponent implements OnInit {
   buildings: any;
   rooms: any;
   timeSlots: any;
-  booking: any = {}; // booking object
+  booking: any = { // booking object
+
+    timeSlots: [], // change to empty array []
+    contact: {},
+  };
 
   constructor(private bookingService: BookingService) {}
 
@@ -23,7 +27,13 @@ export class BookingFormComponent implements OnInit {
   }
 
   onBuildingChange() { // when the option is selected
-    var selectedBuilding = this.buildings.find(b => b.id == this.booking.building); // get the selected building from db
+    var selectedBuilding = this.buildings.find(b => b.id == this.booking.buildingId); // get the selected building from db
     this.rooms = selectedBuilding ? selectedBuilding.rooms : []; // get the rooms as well?
+    delete this.booking.roomId;
+  }
+
+  submit() {
+    this.bookingService.create(this.booking)
+      .subscribe(x => console.log(x));// this booking is not sent to the server unless we subscribe to the observable
   }
 }
