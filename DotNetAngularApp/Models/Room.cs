@@ -15,6 +15,7 @@ namespace DotNetAngularApp.Models
         public int Capacity { get; set; }
 
         public Building Building { get; set; } //navigation property
+        
         public int BuildingId { get; set; } //foreign key property.. just call 'room.Building = 1'
     }
 }

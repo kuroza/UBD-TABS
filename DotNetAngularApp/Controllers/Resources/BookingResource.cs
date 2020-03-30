@@ -1,34 +1,31 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace DotNetAngularApp.Controllers.Resources
 {
-
+    //for GetBooking()
     public class BookingResource
     {
         public int Id { get; set; }
 
-        [Required]
-        public int RoomId { get; set; } //only send the Id
-        
-        // [Required]
-        // public byte TimeSlotId { get; set; }
+        // public int RoomId { get; set; } //only used as the foreign key property in domain class
 
-        [Required]
+        public RoomResource Room { get; set; }
+
+        public KeyValuePairResource Building { get; set; }
+
         public DateTime BookDate { get; set; }
 
         public ContactResource Contact { get; set; }
         
-        [StringLength(255)]
         public string Purpose { get; set; }
 
-        public ICollection<int> TimeSlots { get; set; } //can select multiple TimeSlotId
+        public ICollection<TimeSlotResource> TimeSlots { get; set; }
 
         public BookingResource()
         {
-            TimeSlots = new Collection<int>();
+            TimeSlots = new Collection<TimeSlotResource>();
         }
     }
 }

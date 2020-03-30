@@ -15,9 +15,6 @@ namespace DotNetAngularApp.Models
         public int RoomId { get; set; }
 
         public Room Room { get; set; }
-        
-        // [Required]
-        // public int TimeSlotId { get; set; }
 
         [Required]
         public DateTime BookDate { get; set; }

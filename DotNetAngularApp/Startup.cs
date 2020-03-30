@@ -23,7 +23,9 @@ namespace DotNetAngularApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddControllers().AddNewtonsoftJson();
+            services.AddScoped<IBookingRepository, BookingRepository>();
+            
+            services.AddControllers().AddNewtonsoftJson(); //install package first
 
             services.AddAutoMapper(typeof(Startup));
 
