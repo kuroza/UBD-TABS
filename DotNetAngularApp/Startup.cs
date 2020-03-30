@@ -1,4 +1,5 @@
 using AutoMapper;
+using DotNetAngularApp.Core;
 using DotNetAngularApp.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

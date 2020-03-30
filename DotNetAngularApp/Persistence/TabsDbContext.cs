@@ -1,4 +1,4 @@
-using DotNetAngularApp.Models;
+using DotNetAngularApp.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNetAngularApp.Persistence

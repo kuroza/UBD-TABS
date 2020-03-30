@@ -1,10 +1,9 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using DotNetAngularApp.Controllers.Resources;
-using DotNetAngularApp.Models;
-using DotNetAngularApp.Persistence;
+using DotNetAngularApp.Core;
+using DotNetAngularApp.Core.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DotNetAngularApp.Controllers
 {

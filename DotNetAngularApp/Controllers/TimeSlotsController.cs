@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using DotNetAngularApp.Controllers.Resources;
-using DotNetAngularApp.Models;
+using DotNetAngularApp.Core.Models;
 using DotNetAngularApp.Persistence;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

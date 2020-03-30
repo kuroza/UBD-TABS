@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using DotNetAngularApp.Models;
+using DotNetAngularApp.Core.Models;
 
-namespace DotNetAngularApp.Persistence
+namespace DotNetAngularApp.Core
 {
     public interface IBookingRepository
     {

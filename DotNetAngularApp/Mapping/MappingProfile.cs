@@ -1,7 +1,7 @@
 using System.Linq;
 using AutoMapper;
 using DotNetAngularApp.Controllers.Resources;
-using DotNetAngularApp.Models;
+using DotNetAngularApp.Core.Models;
 
 namespace DotNetAngularApp.Mapping
 {

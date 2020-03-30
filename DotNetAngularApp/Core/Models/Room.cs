@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DotNetAngularApp.Models
+namespace DotNetAngularApp.Core.Models
 {
     [Table("Rooms")]
     public class Room
