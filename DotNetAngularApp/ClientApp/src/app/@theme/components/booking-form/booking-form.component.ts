@@ -3,6 +3,8 @@ import { BookingService } from '../../../services/booking.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastyService } from 'ng2-toasty';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/Observable/forkJoin';
 
 @Component({
   selector: 'ngx-booking-form',
@@ -30,21 +32,25 @@ export class BookingFormComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.bookingService.getBooking(this.booking.id) // get the booking with the given id
-      .subscribe(b => {
-        this.booking = b; // this is more like for editing booking
-      }
-      // , err => { // i think this error is already implemented
-      //   if (err.status == 404)
-      //     this.router.navigate(['/']);
-      // }
-      );
+    var sources = [ // data sources
+      this.bookingService.getBuildings(), // get the buildings from server
+      this.bookingService.getTimeSlots(),
+    ];
 
-    this.bookingService.getBuildings() // get the buildings from server
-      .subscribe(buildings => this.buildings = buildings); // use that to initialize this buildings field
+    if (this.booking.id) // if not 0, push a new observable into sources array
+      sources.push(this.bookingService.getBooking(this.booking.id));// get the booking with the given id)
 
-    this.bookingService.getTimeSlots()
-      .subscribe(timeSlots => this.timeSlots = timeSlots);
+    // for getting Bookings
+    Observable.forkJoin(sources).subscribe(data => { // an array which includes all results from observable
+      this.buildings = data[0];
+      this.timeSlots = data[1];
+
+      if (this.booking.id)
+        this.booking = data[2];
+    }, err => { // i think this error is already implemented
+      if (err.status == 404)
+        this.router.navigate(['/']);
+    });
   }
 
   onBuildingChange() { // when the option is selected
