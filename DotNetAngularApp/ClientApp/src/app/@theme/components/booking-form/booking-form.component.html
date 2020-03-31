@@ -1,59 +1,110 @@
-<h5>New Booking</h5>
-<p>
-    {{ booking | json }}
-</p>
+<nb-card>
+  <nb-card-body>
+    <h3>Booking</h3>
+    <p>{{ booking | json }}</p>
+  </nb-card-body>
+</nb-card>
 <form #f="ngForm" (ngSubmit)="submit()" novalidate>
-    <!-- Building drop down list -->
-    <div class="form-group">
-        <label for="building">Building *</label> <!-- 'for' when a user clicks the lable, the input field will get focused -->
-        <select id="building" class="form-control" (change)="onBuildingChange()" [(ngModel)]="booking.buildingId" name="buildingId" required #building="ngModel"> <!-- 'form-control' is a bootstrap class. 'change' listen to changes. what building is selected, bind ddl to a field in the component -->
-            <option value=""></option> <!-- empty value -->
-            <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
-        </select>
-        <div class="alert alert-danger" *ngIf="building.touched && !building.valid">Please specify the building.</div>
+  <div class="row">
+    <div class="col-md-8">
+      <nb-card>
+        <nb-card-body>
+          <table class="table table-hover">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Start Time</th>
+                <th scope="col">End Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of timeSlots" class="checkbox">
+                <!-- class="form-check" -->
+                <th>
+                  <input type="checkbox" id="timeSlot{{ t.id }}" (change)="onTimeSlotToggle(t.id, $event)"
+                    [checked]="booking.timeSlots.includes(t.id)"> <!-- class="form-check-input" -->
+                </th>
+                <td>
+                  {{ t.startTime | date:'shortTime' }}
+                </td>
+                <td>
+                  {{ t.endTime | date:'shortTime' }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </nb-card-body>
+      </nb-card>
     </div>
-    <!-- Room drop down list -->
-    <div class="form-group">
-        <label for="room">Room *</label>
-        <select id="room" class="form-control" [(ngModel)]="booking.roomId" name="roomId" required #room="ngModel">
-            <option value=""></option>
-            <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
-        </select>
-        <div class="alert alert-danger" *ngIf="room.touched && !room.valid">Please specify the room.</div>
+    <div class="col-md-4">
+      <nb-card>
+        <nb-card-body>
+          <!-- Building drop down list -->
+          <div class="form-group">
+            <label for="building">Building *</label>
+            <!-- 'for' when a user clicks the lable, the input field will get focused -->
+            <select id="building" class="form-control" (change)="onBuildingChange()" [(ngModel)]="booking.buildingId"
+              name="buildingId" required #building="ngModel">
+              <!-- 'form-control' is a bootstrap class. 'change' listen to changes. what building is selected, bind ddl to a field in the component -->
+              <option value=""></option> <!-- empty value -->
+              <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
+            </select>
+            <div class="alert alert-danger" *ngIf="building.touched && !building.valid">Please specify the building.
+            </div>
+          </div>
+          <!-- Room drop down list -->
+          <div class="form-group">
+            <label for="room">Room *</label>
+            <select id="room" class="form-control" [(ngModel)]="booking.roomId" name="roomId" required #room="ngModel">
+              <option value=""></option>
+              <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
+            </select>
+            <div class="alert alert-danger" *ngIf="room.touched && !room.valid">Please specify the room.</div>
+          </div>
+          <!-- Add datepicker here? Or the selected date from the calendar -->
+          <div class="form-group">
+            <label for="bookDate">Date *</label>
+            <input id="bookDate" nbInput placeholder="Pick Date" [nbDatepicker]="formpicker"
+              [(ngModel)]="booking.bookDate" name="bookDate" required #bookDate="ngModel">
+            <nb-datepicker #formpicker></nb-datepicker>
+            <div class="alert alert-danger" *ngIf="bookDate.touched && !bookDate.valid">Please specify the date.</div>
+          </div>
+          <!-- TimeSlot drop down list -->
+          <!-- <div class="form-group">
+                        <label for="timeSlot">Time Slot *</label>
+                        <select id="timeSlot" class="form-control" [(ngModel)]="booking.timeSlots" name="timeSlots">
+                            <option value=""></option>
+                            <option *ngFor="let t of timeSlots" value="{{ t.id }}">{{ t.startTime | date:'shortTime' }}-{{ t.endTime | date:'shortTime' }}</option>
+                        </select>
+                    </div> -->
+          <!-- Contact from -->
+          <div class="form-group">
+            <label for="contactName">Name *</label>
+            <input id="contactName" type="text" class="form-control" [(ngModel)]="booking.contact.name"
+              name="contactName" required #contactName="ngModel">
+            <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">Please specify the name.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="contactEmail">Email</label>
+            <input id="contactEmail" type="text" class="form-control" [(ngModel)]="booking.contact.email"
+              name="contactEmail">
+          </div>
+          <div class="form-group">
+            <label for="contactPhone">Phone</label>
+            <input id="contactPhone" type="text" class="form-control" [(ngModel)]="booking.contact.phone"
+              name="contactPhone">
+          </div>
+          <!-- Purpose form -->
+          <div class="form-group">
+            <label for="purpose">Purpose</label>
+            <input id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose">
+          </div>
+          <button class="btn btn-primary">Save</button> <!-- [disabled]="!f.valid" -->
+          <button *ngIf="booking.id" class="btn btn-danger" type="button" (click)="delete()">Delete</button> <!-- display this delete button only for an existing booking, not when creating a new booking -->
+
+        </nb-card-body>
+      </nb-card>
     </div>
-    <!-- Add datepicker here? Or the selected date from the calendar -->
-    <div class="form-group">
-        <label for="bookDate">Date *</label>
-        <input id="bookDate" nbInput placeholder="Pick Date" [nbDatepicker]="formpicker" [(ngModel)]="booking.bookDate" name="bookDate" required #bookDate="ngModel">
-        <nb-datepicker #formpicker></nb-datepicker>
-        <div class="alert alert-danger" *ngIf="bookDate.touched && !bookDate.valid">Please specify the date.</div>
-    </div>
-    <!-- TimeSlot dowp down list -->
-    <div class="form-group">
-        <label for="timeSlot">Time Slot *</label>
-        <select id="timeSlot" class="form-control" [(ngModel)]="booking.timeSlots" name="timeSlots">
-            <option value=""></option>
-            <option *ngFor="let t of timeSlots" value="{{ t.id }}">{{ t.startTime | date:'shortTime' }}-{{ t.endTime | date:'shortTime' }}</option>
-        </select>
-    </div>
-    <!-- Contact from -->
-    <div class="form-group">
-        <label for="contactName">Name *</label>
-        <input id="contactName" type="text" class="form-control" [(ngModel)]="booking.contact.name" name="contactName" required #contactName="ngModel">
-        <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">Please specify the name.</div>
-    </div>
-    <div class="form-group">
-        <label for="contactEmail">Email</label>
-        <input id="contactEmail" type="text" class="form-control" [(ngModel)]="booking.contact.email" name="contactEmail">
-    </div>
-    <div class="form-group">
-        <label for="contactPhone">Phone</label>
-        <input id="contactPhone" type="text" class="form-control" [(ngModel)]="booking.contact.phone" name="contactPhone">
-    </div>
-    <!-- Purpose form -->
-    <div class="form-group">
-        <label for="purpose">Purpose</label>
-        <input id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose">
-    </div>
-    <button class="btn btn-primary" >Book</button> <!-- [disabled]="!f.valid" -->
+  </div>
 </form>

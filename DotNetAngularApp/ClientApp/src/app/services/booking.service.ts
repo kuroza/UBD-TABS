@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { SaveBooking } from '../models/booking';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,16 @@ export class BookingService {
 
   create(booking) {
     return this.http.post('/api/bookings', booking)
+      .pipe(map(response => response));
+  }
+
+  update(booking: SaveBooking) {
+    return this.http.put('/api/bookings/' + booking.id, booking)
+      .pipe(map(response => response));
+  }
+
+  delete(id) {
+    return this.http.delete('/api/bookings/' + id)
       .pipe(map(response => response));
   }
 }

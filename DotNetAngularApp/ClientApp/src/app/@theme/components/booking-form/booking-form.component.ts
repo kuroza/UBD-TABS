@@ -70,7 +70,17 @@ export class BookingFormComponent implements OnInit {
     this.booking.roomId = b.room.id;
     this.booking.bookDate = b.bookDate;
     this.booking.contact = b.contact;
+    this.booking.purpose = b.purpose;
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
+  }
+
+  onTimeSlotToggle(timeSlotId, $event) {
+    if ($event.target.checked) // if this check box is checked, push this Id into TimeSlots array
+      this.booking.timeSlots.push(timeSlotId);
+    else {
+      var index = this.booking.timeSlots.indexOf(timeSlotId);
+      this.booking.timeSlots.splice(index, 1);
+    }
   }
 
   onBuildingChange() { // when the option is selected
@@ -85,7 +95,30 @@ export class BookingFormComponent implements OnInit {
   }
 
   submit() {
-    this.bookingService.create(this.booking) // this booking is not sent to the server unless we subscribe to the observable
+    if (this.booking.id) {
+      this.bookingService.update(this.booking)
+        .subscribe(x => {
+          this.toastyService.success({
+            title: 'Success',
+            msg: 'The booking was successfully updated.',
+            theme: 'bootstrap',
+            showClose: true,
+            timeout: 5000
+          });
+        });
+    }
+    else {
+      this.bookingService.create(this.booking) // this booking is not sent to the server unless we subscribe to the observable
       .subscribe(x => console.log(x));
+    }
+  }
+
+  delete() {
+    if (confirm("Are you sure you want to delete this booking?")) {
+      this.bookingService.delete(this.booking.id)
+        .subscribe(x => { // navigate the user back to the list of bookings
+          this.router.navigate(['/']);
+        });
+    }
   }
 }
