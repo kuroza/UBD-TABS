@@ -4,10 +4,12 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { NgCalendarComponent } from './ng-calendar.component';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarHeaderModule } from '../calendar-header/calendar-header.module';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
       CommonModule,
+      NgbModalModule,
       CalendarModule.forRoot({
         provide: DateAdapter,
         useFactory: adapterFactory,
