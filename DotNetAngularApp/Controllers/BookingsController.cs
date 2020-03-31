@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using DotNetAngularApp.Controllers.Resources;
@@ -23,6 +24,8 @@ namespace DotNetAngularApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBooking([FromBody] SaveBookingResource bookingResource)
         {
+            throw new Exception();
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 

@@ -22,6 +22,7 @@ const routes: Routes = [{
     },
     { path: 'bookings', component: ViewBookingsComponent }, //view all bookings / table
     { path: 'bookings/new', component: NewBookingComponent },
+    { path: 'bookings/:id', component: NewBookingComponent },
     { path: 'rooms', component: ViewRoomsComponent },
   ],
 }];

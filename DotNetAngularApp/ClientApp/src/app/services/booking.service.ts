@@ -9,6 +9,11 @@ export class BookingService {
 
   constructor(private http: HttpClient) { }
 
+  getBooking(id) {
+    return this.http.get('/api/bookings/' + id)
+      .pipe(map(response => response));
+  }
+
   getBuildings() { //gets buildings from server and return the data in json format to client
     return this.http.get('/api/buildings')
       .pipe(map(response => response));

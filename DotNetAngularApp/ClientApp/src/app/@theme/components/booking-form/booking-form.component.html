@@ -2,7 +2,7 @@
 <p>
     {{ booking | json }}
 </p>
-<form #f="ngForm" (ngSubmit)="submit()">
+<form #f="ngForm" (ngSubmit)="submit()" novalidate>
     <!-- Building drop down list -->
     <div class="form-group">
         <label for="building">Building *</label> <!-- 'for' when a user clicks the lable, the input field will get focused -->
@@ -55,5 +55,5 @@
         <label for="purpose">Purpose</label>
         <input id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose">
     </div>
-    <button class="btn btn-primary" [disabled]="!f.valid">Book</button>
+    <button class="btn btn-primary" >Book</button> <!-- [disabled]="!f.valid" -->
 </form>
