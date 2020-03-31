@@ -19,7 +19,6 @@ namespace DotNetAngularApp.Controllers
             this.context = context;
         }
 
-
         [HttpGet("/api/buildings")]
         public async Task<IEnumerable<BuildingResource>> GetBuildings() //returns an IEnumerable of BuildingResource
         {

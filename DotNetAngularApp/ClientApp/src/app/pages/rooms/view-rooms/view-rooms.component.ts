@@ -7,12 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./view-rooms.component.scss']
 })
 export class ViewRoomsComponent implements OnInit {
-  buildings: any;
+  rooms: any;
 
   constructor(private bookingService: BookingService) { }
 
   ngOnInit() {
-    this.bookingService.getBuildings()
-      .subscribe(buildings => this.buildings = buildings);
+    this.bookingService.getRooms()
+      .subscribe(rooms => this.rooms = rooms);
   }
 }

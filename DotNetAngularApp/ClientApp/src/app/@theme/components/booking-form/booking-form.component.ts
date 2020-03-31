@@ -33,7 +33,10 @@ export class BookingFormComponent implements OnInit {
   }
 
   submit() {
-    this.bookingService.create(this.booking)
-      .subscribe(x => console.log(x));// this booking is not sent to the server unless we subscribe to the observable
+    this.bookingService.create(this.booking) // this booking is not sent to the server unless we subscribe to the observable
+      .subscribe(
+        x => console.log(x),
+                
+        );
   }
 }

@@ -2,21 +2,34 @@
   <div class="col-md-8">
     <nb-card>
       <nb-card-body>
-        Here show all the rooms in a table.
         <table class="table">
-          <thead>
+          <thead class="thead-dark">
             <tr>
-              <th scope="col">Building Id</th>
-              <th scope="col">Building Name</th>
+              <th scope="col">Rooms</th>
+              <th scope="col">Capacity</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let b of buildings">
-              <th scope="row">{{ b.id }}</th>
-              <td>{{ b.name }}</td>
+            <tr *ngFor="let r of rooms">
+              <td>{{ r.name }}</td>
+              <td>{{ r.capacity }}</td>
             </tr>
           </tbody>
         </table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-4">
+    <nb-card>
+      <nb-card-body>
+        <nb-tabset>
+          <nb-tab tabTitle="Details">
+            <button class="btn btn-info">Edit</button>
+            <button class="btn btn-danger">Delete</button>
+          </nb-tab>
+          <nb-tab tabTitle="Edit">
+          </nb-tab>
+         </nb-tabset>
       </nb-card-body>
     </nb-card>
   </div>

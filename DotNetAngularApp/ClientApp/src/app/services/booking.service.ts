@@ -13,6 +13,11 @@ export class BookingService {
     return this.http.get('/api/buildings')
       .pipe(map(response => response));
   }
+  
+  getRooms() {
+    return this.http.get('/api/rooms')
+      .pipe(map(response => response));
+  }
 
   getTimeSlots() {
     return this.http.get('/api/timeslots')
