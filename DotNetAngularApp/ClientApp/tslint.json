@@ -2,8 +2,5 @@
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],
-  "rules": { "no-var-keyword": false },
-  "jsRules": {
-    "no-empty": true
-  }
+  "rules": { "no-var-keyword": false }
 }
