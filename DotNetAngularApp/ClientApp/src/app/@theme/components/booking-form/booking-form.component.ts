@@ -1,10 +1,11 @@
-
+import * as _ from 'underscore';
 import { BookingService } from '../../../services/booking.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastyService } from 'ng2-toasty';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/Observable/forkJoin';
+import { SaveBooking, Booking } from '../../../models/booking';
 
 @Component({
   selector: 'ngx-booking-form',
@@ -14,10 +15,18 @@ export class BookingFormComponent implements OnInit {
   buildings: any;
   rooms: any;
   timeSlots: any;
-  booking: any = { // booking object
+  booking: SaveBooking = { // booking object
+    id: 0, // set to default value
+    roomId: 0,
+    buildingId: 0,
     bookDate: '',
-    timeSlots: [], // change to empty array []
-    contact: {},
+    contact: {
+      name: '',
+      email: '',
+      phone: '',
+    },
+    purpose: '',
+    timeSlots: [],
   };
 
   constructor(
@@ -40,23 +49,39 @@ export class BookingFormComponent implements OnInit {
     if (this.booking.id) // if not 0, push a new observable into sources array
       sources.push(this.bookingService.getBooking(this.booking.id));// get the booking with the given id)
 
-    // for getting Bookings
+    // for getting Bookings, this is from server, a complete representation of Bookings
     Observable.forkJoin(sources).subscribe(data => { // an array which includes all results from observable
       this.buildings = data[0];
       this.timeSlots = data[1];
 
-      if (this.booking.id)
-        this.booking = data[2];
+      if (this.booking.id) {
+        this.setBooking(data[2]);
+        this.populateRooms(); // room is populated on the building of this booking
+      }
     }, err => { // i think this error is already implemented
       if (err.status == 404)
         this.router.navigate(['/']);
     });
   }
 
+  private setBooking(b) { // b: Booking, no need?
+    this.booking.id = b.id;
+    this.booking.buildingId = b.building.id;
+    this.booking.roomId = b.room.id;
+    this.booking.bookDate = b.bookDate;
+    this.booking.contact = b.contact;
+    this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
+  }
+
   onBuildingChange() { // when the option is selected
+    this.populateRooms();
+
+    delete this.booking.roomId;
+  }
+
+  private populateRooms() { // private because it is an implementation detail, don't want to expose it out
     var selectedBuilding = this.buildings.find(b => b.id == this.booking.buildingId); // get the selected building from db
     this.rooms = selectedBuilding ? selectedBuilding.rooms : []; // get the rooms as well?
-    delete this.booking.roomId;
   }
 
   submit() {
