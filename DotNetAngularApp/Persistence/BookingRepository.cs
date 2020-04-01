@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
@@ -27,14 +28,22 @@ namespace DotNetAngularApp.Persistence
                 .SingleOrDefaultAsync(b => b.Id == id);
         }
 
-        public async Task<IEnumerable<Booking>> GetBookings()
+        public async Task<IEnumerable<Booking>> GetBookings(Filter filter)
         {
-            return await context.Bookings
-                .Include(bookings => bookings.Room)
-                    .ThenInclude(room => room.Building)
-                .Include(bookings => bookings.TimeSlots)
+            var query = context.Bookings
+                .Include(b => b.Room)
+                    .ThenInclude(r => r.Building)
+                .Include(b => b.TimeSlots)
                     .ThenInclude(bt => bt.TimeSlot)
-                .ToListAsync();
+                .AsQueryable();
+
+            if (filter.BuildingId.HasValue)
+                query = query.Where(b => b.Room.BuildingId == filter.BuildingId.Value);
+            
+            if (filter.RoomId.HasValue)
+                query = query.Where(b => b.RoomId == filter.RoomId.Value);
+
+            return await query.ToListAsync();
         }
 
         // //if you want to only load a Booking and its Room

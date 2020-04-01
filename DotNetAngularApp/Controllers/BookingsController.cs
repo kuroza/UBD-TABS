@@ -93,9 +93,10 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<BookingResource>> GetBookings()
+        public async Task<IEnumerable<BookingResource>> GetBookings(FilterResource filterResource)
         {
-            var bookings = await repository.GetBookings();
+            var filter = mapper.Map<FilterResource, Filter>(filterResource);
+            var bookings = await repository.GetBookings(filter);
 
             return mapper.Map<IEnumerable<Booking>, IEnumerable<BookingResource>>(bookings);
         }

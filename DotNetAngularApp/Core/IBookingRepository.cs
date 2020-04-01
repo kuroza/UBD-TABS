@@ -8,7 +8,7 @@ namespace DotNetAngularApp.Core
     {
         void Add(Booking booking);
         Task<Booking> GetBooking(int id, bool includeRelated = true);
-        Task<IEnumerable<Booking>> GetBookings();
+        Task<IEnumerable<Booking>> GetBookings(Filter filter);
         void Remove(Booking booking);
     }
 }

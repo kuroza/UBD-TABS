@@ -23,6 +23,7 @@ namespace DotNetAngularApp.Mapping
                 .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => new TimeSlotResource { Id = bt.TimeSlot.Id, StartTime = bt.TimeSlot.StartTime, EndTime = bt.TimeSlot.EndTime }))); //load the association class
 
             //API Resource to Domain
+            CreateMap<FilterResource, Filter>();
             CreateMap<SaveBookingResource, Booking>()
                 .ForMember(b => b.Id, opt => opt.Ignore()) //to ignore mapping this Id property
                 .ForMember(b => b.ContactName, opt => opt.MapFrom(br => br.Contact.Name))

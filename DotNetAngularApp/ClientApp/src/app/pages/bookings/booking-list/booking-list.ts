@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BookingListComponent implements OnInit {
   bookings: any; // Booking[]
-  allBookings: any;
   buildings: any; // KeyValuePair[]
   filter: any = {};
   
@@ -17,20 +16,16 @@ export class BookingListComponent implements OnInit {
     this.bookingService.getBuildings()
       .subscribe(buildings => this.buildings = buildings);
 
-    this.bookingService.getBookings()
-      .subscribe(bookings => this.bookings = this.allBookings = bookings);
+    this.populateBookings();
+  }
+
+  private populateBookings() {
+    this.bookingService.getBookings(this.filter)
+      .subscribe(bookings => this.bookings = bookings);
   }
 
   onFilterChange() {
-    var bookings = this.allBookings;
-
-    if (this.filter.buildingId)
-      bookings = bookings.filter(b => b.building.id == this.filter.buildingId);
-
-    if (this.filter.roomId)
-      bookings = bookings.filter(b => b.room.id == this.filter.roomId);
-
-    this.bookings = bookings;
+    this.populateBookings();
   }
 
   resetFilter() {

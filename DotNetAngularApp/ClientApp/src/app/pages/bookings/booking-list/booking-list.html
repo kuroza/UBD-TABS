@@ -25,6 +25,9 @@
           <th>#</th>
           <th>Building</th>
           <th>Room</th>
+          <th>Date</th>
+          <!-- <th>Start time</th>
+          <th>End time</th> -->
           <th>Contact Name</th>
           <th></th>
         </tr>
@@ -34,6 +37,9 @@
           <td>{{ b.id }}</td>
           <td>{{ b.building.name }}</td>
           <td>{{ b.room.name }}</td>
+          <td>{{ b.bookDate }}</td>
+          <!-- <td>{{ b.timeSlots.startTime }}</td>
+          <td>{{ b.timeSlots.endTime }}</td> -->
           <td>{{ b.contact.name }}</td>
           <td>
             <a [routerLink]="['/pages/bookings/', b.id]">Edit</a>

@@ -17,9 +17,20 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
-  getBookings() { // for Booking list
-    return this.http.get(this.bookingsEndpoint)
+  getBookings(filter) { // for Booking list
+    return this.http.get(this.bookingsEndpoint + '?' +this.toQueryString(filter))
       .pipe(map(response => response));
+  }
+
+  toQueryString(obj) {
+    var parts = [];
+    for (var property in obj) {
+      var value = obj[property];
+      if (value != null && value != undefined)
+        parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(value));
+    }
+
+    return parts.join('&');
   }
 
   create(booking) {
