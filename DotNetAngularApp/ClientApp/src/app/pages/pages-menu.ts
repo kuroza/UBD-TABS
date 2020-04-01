@@ -34,6 +34,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
+    title: 'Settings',
+    icon: 'settings-outline',
+  },
+  {
+    title: 'Admin',
+    group: true,
+  },
+  {
     title: 'Calendar',
     icon: 'calendar-outline',
     children: [
@@ -88,25 +96,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Manage',
-    icon: 'edit-outline',
+    title: 'Time Slot',
+    icon: 'clock-outline',
     children: [
       {
-        title: 'Course',
-        link: '/',
-      },
-      {
-        title: 'Faculty',
-        link: '/',
-      },
-      {
-        title: 'Time slot',
+        title: 'Edit time slot',
         link: '/',
       },
     ],
-  },
-  {
-    title: 'Settings',
-    icon: 'settings-outline',
   },
 ];

@@ -1,0 +1,32 @@
+<nb-card>
+  <nb-card-body>
+    <h3>Booking List</h3>
+  </nb-card-body>
+</nb-card>
+<nb-card>
+  <nb-card-body>
+    <p>
+      <button [routerLink]="['/pages/bookings/new']" class="btn btn-primary">New Booking</button>
+    </p>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>Building</th>
+          <th>Room</th>
+          <th>Contact Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let b of bookings">
+          <td>{{ b.building.name }}</td>
+          <td>{{ b.room.name }}</td>
+          <td>{{ b.contact.name }}</td>
+          <td>
+            <a [routerLink]="['/pages/bookings/', b.id]">Edit</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </nb-card-body>
+</nb-card>

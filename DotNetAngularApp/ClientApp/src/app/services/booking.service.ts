@@ -8,10 +8,32 @@ import { SaveBooking } from '../models/booking';
 })
 export class BookingService {
 
+  private readonly bookingsEndpoint = '/api/bookings';
+
   constructor(private http: HttpClient) { }
 
   getBooking(id) {
-    return this.http.get('/api/bookings/' + id)
+    return this.http.get(this.bookingsEndpoint + '/' + id)
+      .pipe(map(response => response));
+  }
+
+  getBookings() { // for Booking list
+    return this.http.get(this.bookingsEndpoint)
+      .pipe(map(response => response));
+  }
+
+  create(booking) {
+    return this.http.post(this.bookingsEndpoint, booking)
+      .pipe(map(response => response));
+  }
+
+  update(booking: SaveBooking) {
+    return this.http.put(this.bookingsEndpoint + '/' + booking.id, booking)
+      .pipe(map(response => response));
+  }
+
+  delete(id) {
+    return this.http.delete(this.bookingsEndpoint + '/' + id)
       .pipe(map(response => response));
   }
 
@@ -27,21 +49,6 @@ export class BookingService {
 
   getTimeSlots() {
     return this.http.get('/api/timeslots')
-      .pipe(map(response => response));
-  }
-
-  create(booking) {
-    return this.http.post('/api/bookings', booking)
-      .pipe(map(response => response));
-  }
-
-  update(booking: SaveBooking) {
-    return this.http.put('/api/bookings/' + booking.id, booking)
-      .pipe(map(response => response));
-  }
-
-  delete(id) {
-    return this.http.delete('/api/bookings/' + id)
       .pipe(map(response => response));
   }
 }

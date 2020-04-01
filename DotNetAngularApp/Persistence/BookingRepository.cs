@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
@@ -24,6 +25,16 @@ namespace DotNetAngularApp.Persistence
                 .Include(b => b.Room) //eager load room also
                     .ThenInclude(r => r.Building) //when eager loading the room, we should also include the building
                 .SingleOrDefaultAsync(b => b.Id == id);
+        }
+
+        public async Task<IEnumerable<Booking>> GetBookings()
+        {
+            return await context.Bookings
+                .Include(bookings => bookings.Room)
+                    .ThenInclude(room => room.Building)
+                .Include(bookings => bookings.TimeSlots)
+                    .ThenInclude(bt => bt.TimeSlot)
+                .ToListAsync();
         }
 
         // //if you want to only load a Booking and its Room

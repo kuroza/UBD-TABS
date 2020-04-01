@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { BookingFormModule } from './../../@theme/components/booking-form/booking-form.modules';
 import { NewBookingComponent } from './new-booking/new-booking.component';
 import { NgbdTablePaginationModule } from '../../@theme/components/table-pagination/table-pagination.module';
@@ -5,7 +6,7 @@ import { NbCardModule, NbTabsetModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
-import { ViewBookingsComponent } from './view-bookings/view-bookings.component';
+import { BookingListComponent } from './booking-list/booking-list';
 import { BookingTableModule } from '../../@theme/components/booking-table/booking-table.module';
 
 @NgModule({
@@ -16,10 +17,11 @@ import { BookingTableModule } from '../../@theme/components/booking-table/bookin
       NbTabsetModule,
       NgbdTablePaginationModule,
       BookingTableModule,
-      BookingFormModule
+      BookingFormModule,
+      RouterModule
     ],
     declarations: [
-      ViewBookingsComponent,
+      BookingListComponent,
       NewBookingComponent
     ],
   })

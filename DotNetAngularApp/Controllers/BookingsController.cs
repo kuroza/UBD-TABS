@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using DotNetAngularApp.Controllers.Resources;
@@ -24,8 +25,6 @@ namespace DotNetAngularApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBooking([FromBody] SaveBookingResource bookingResource)
         {
-            throw new Exception();
-
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
@@ -91,6 +90,14 @@ namespace DotNetAngularApp.Controllers
             var bookingResource = mapper.Map<Booking, BookingResource>(booking); //if have booking object, map it to resource and return it
 
             return Ok(bookingResource);
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<BookingResource>> GetBookings()
+        {
+            var bookings = await repository.GetBookings();
+
+            return mapper.Map<IEnumerable<Booking>, IEnumerable<BookingResource>>(bookings);
         }
     }
 }
