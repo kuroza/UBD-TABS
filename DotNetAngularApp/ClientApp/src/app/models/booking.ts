@@ -1,5 +1,10 @@
 import { Time } from '@angular/common';
 
+export interface KeyValuePair {
+    id: string;
+    name: string;
+}
+
 export interface Contact {
     name: string;
     phone: string;

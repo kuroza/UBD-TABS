@@ -96,7 +96,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Time Slot',
+    title: 'Time slot',
     icon: 'clock-outline',
     children: [
       {

@@ -1,7 +1,7 @@
 <nb-card>
   <nb-card-body>
-    <h3>Booking</h3>
-    <p>{{ booking | json }}</p>
+    <h3 *ngIf="booking.id">Edit booking</h3>
+    <h3 *ngIf="!booking.id">Add new booking</h3>
   </nb-card-body>
 </nb-card>
 <form #f="ngForm" (ngSubmit)="submit()" novalidate>
@@ -9,12 +9,14 @@
     <div class="col-md-8">
       <nb-card>
         <nb-card-body>
+          <p>{{ booking | json }}</p>
+          <label>Time slot *</label>
           <table class="table table-hover">
             <thead class="thead-dark">
               <tr>
                 <th scope="col"></th>
-                <th scope="col">Start Time</th>
-                <th scope="col">End Time</th>
+                <th scope="col">Start time</th>
+                <th scope="col">End time</th>
               </tr>
             </thead>
             <tbody>
@@ -100,9 +102,16 @@
             <label for="purpose">Purpose</label>
             <input id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose">
           </div>
-          <button class="btn btn-primary">Save</button> <!-- [disabled]="!f.valid" -->
-          <button *ngIf="booking.id" class="btn btn-danger" type="button" (click)="delete()">Delete</button> <!-- display this delete button only for an existing booking, not when creating a new booking -->
-
+          <div *ngIf="!booking.id">
+            <button class="btn btn-primary" [disabled]="!f.valid">Book</button>
+          </div>
+          <div *ngIf="booking.id">
+            <button class="btn btn-primary" [disabled]="!f.valid">Save</button>
+            <button  class="btn btn-danger" type="button" (click)="delete()">Delete</button>
+          </div>
+          <!-- <button class="btn btn-primary" [disabled]="!f.valid">Save</button>
+          <button *ngIf="booking.id" class="btn btn-danger" type="button" (click)="delete()">Delete</button> -->
+          <!-- display this delete button only for an existing booking, not when creating a new booking -->
         </nb-card-body>
       </nb-card>
     </div>
