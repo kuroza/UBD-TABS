@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using DotNetAngularApp.Extensions;
 
 namespace DotNetAngularApp.Persistence
 {
@@ -28,7 +31,7 @@ namespace DotNetAngularApp.Persistence
                 .SingleOrDefaultAsync(b => b.Id == id);
         }
 
-        public async Task<IEnumerable<Booking>> GetBookings(Filter filter)
+        public async Task<IEnumerable<Booking>> GetBookings(BookingQuery queryObj)
         {
             var query = context.Bookings
                 .Include(b => b.Room)
@@ -37,11 +40,20 @@ namespace DotNetAngularApp.Persistence
                     .ThenInclude(bt => bt.TimeSlot)
                 .AsQueryable();
 
-            if (filter.BuildingId.HasValue)
-                query = query.Where(b => b.Room.BuildingId == filter.BuildingId.Value);
+            if (queryObj.BuildingId.HasValue)
+                query = query.Where(b => b.Room.BuildingId == queryObj.BuildingId.Value);
             
-            if (filter.RoomId.HasValue)
-                query = query.Where(b => b.RoomId == filter.RoomId.Value);
+            if (queryObj.RoomId.HasValue)
+                query = query.Where(b => b.RoomId == queryObj.RoomId.Value);
+
+            var columnsMap = new Dictionary<string, Expression<Func<Booking, object>>>()
+            {
+                ["building"] = b => b.Room.Building.Name,
+                ["room"] = b => b.Room.Name,
+                ["contactName"] = b => b.ContactName
+            };
+
+            query = query.ApplyOrdering(queryObj, columnsMap);
 
             return await query.ToListAsync();
         }

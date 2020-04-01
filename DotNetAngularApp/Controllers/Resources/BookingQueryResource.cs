@@ -1,8 +1,11 @@
 namespace DotNetAngularApp.Controllers.Resources
 {
-    public class FilterResource
+    public class BookingQueryResource
     {
         public int? BuildingId { get; set; }
         public int? RoomId { get; set; }
+        public string SortBy { get; set; }
+        public bool IsSortAscending { get; set; }
+
     }
 }
