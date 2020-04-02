@@ -11,7 +11,7 @@
           <button [routerLink]="['/pages/bookings/new']" class="btn btn-primary">New booking</button>
         </p>
         <label for="building">Filter by building:</label>
-        <select name="building" id="" class="form-control" [(ngModel)]="filter.buildingId" (change)="onFilterChange()">
+        <select name="building" id="" class="form-control" [(ngModel)]="query.buildingId" (change)="onFilterChange()">
           <option value="">Select a building</option>
           <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
         </select>
@@ -22,14 +22,19 @@
     <table class="table">
       <thead class="thead-dark">
         <tr>
-          <th>#</th>
-          <th>Building</th>
-          <th>Room</th>
-          <th>Date</th>
-          <!-- <th>Start time</th>
-          <th>End time</th> -->
-          <th>Contact Name</th>
-          <th></th>
+          <th *ngFor="let c of columns">
+            <div *ngIf="c.isSortable" (click)="sortBy(c.key)">
+              {{ c.title }}
+              <i *ngIf="query.sortBy === c.key" 
+                class="fa"
+                [class.fa-sort-asc]="query.isSortAscending"
+                [class.fa-sort-desc]="!query.isSortAscending"
+              ></i>
+            </div>
+            <div *ngIf="!c.isSortable">
+              {{ c.title }}
+            </div>
+          </th>
         </tr>
       </thead>
       <tbody>

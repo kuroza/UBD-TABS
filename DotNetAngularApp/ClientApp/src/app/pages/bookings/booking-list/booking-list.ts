@@ -8,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
 export class BookingListComponent implements OnInit {
   bookings: any; // Booking[]
   buildings: any; // KeyValuePair[]
-  filter: any = {};
+  query: any = {};
+  columns = [
+    { title: 'Id' },
+    { title: 'Building', key: 'building', isSortable: true },
+    { title: 'Room', key: 'room', isSortable: true },
+    { title: 'Date', key: 'bookDate', isSortable: true },
+    { title: 'Name', key: 'contactName', isSortable: true },
+    { }
+  ];
   
   constructor(private bookingService: BookingService) { }
 
@@ -20,7 +28,7 @@ export class BookingListComponent implements OnInit {
   }
 
   private populateBookings() {
-    this.bookingService.getBookings(this.filter)
+    this.bookingService.getBookings(this.query)
       .subscribe(bookings => this.bookings = bookings);
   }
 
@@ -29,7 +37,17 @@ export class BookingListComponent implements OnInit {
   }
 
   resetFilter() {
-    this.filter = {};
+    this.query = {};
     this.onFilterChange();
+  }
+
+  sortBy(columnName) {
+    if (this.query.sortBy === columnName) {
+      this.query.isSortAscending = !this.query.isSortAscending;
+    } else {
+      this.query.sortBy = columnName;
+      this.query.isSortAscending = true;
+    }
+    this.populateBookings();
   }
 }
