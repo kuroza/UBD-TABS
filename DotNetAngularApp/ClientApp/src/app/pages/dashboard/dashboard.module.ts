@@ -1,4 +1,5 @@
-import { BookingFormModule } from './../../@theme/components/booking-form/booking-form.modules';
+import { BookingDetailsModule } from './../../@theme/components/booking-details/booking-details.module';
+import { BookingFormModule } from '../../@theme/components/booking-form/booking-form.module';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NbCardModule, NbTabsetModule } from '@nebular/theme';
@@ -14,7 +15,8 @@ import { NgCalendarModule } from '../../@theme/components/ng-calendar/ng-calenda
     FormsModule,
     NbTabsetModule,
     NgCalendarModule,
-    BookingFormModule
+    BookingFormModule,
+    BookingDetailsModule
   ],
   declarations: [
     DashboardComponent,

@@ -1,0 +1,25 @@
+<div *ngIf="booking">
+    <h6>Contact details:</h6>
+    <ul>
+      <li>Name: {{ booking.contact.name }}</li>
+      <li>Phone: {{ booking.contact.phone }}</li>
+      <li>Email: {{ booking.contact.email }}</li>
+    </ul>
+    <h6>Venue:</h6>
+    <ul>
+      <li>Building: {{ booking.building.name }}</li>
+      <li>Room: {{ booking.room.name }}</li>
+      <li>Date: {{ booking.bookDate | date }}</li>
+      <li>Purpose: {{ booking.purpose }}</li>
+    </ul>
+    <h6>Booked time slots:</h6>
+    <ul>
+      <li *ngFor="let t of booking.timeSlots">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>
+    </ul>
+    <br />
+    <p>
+      <button class="btn btn-primary mx-2" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+      <button class="btn btn-danger mr-2" (click)="delete()">Delete</button>
+      <button class="btn btn-warning" [routerLink]="['/pages/bookings']">View All Bookings</button>
+    </p>
+  </div>

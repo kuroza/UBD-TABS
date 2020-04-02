@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BookingService } from '../../../services/booking.service';
 
 @Component({
   selector: 'ngx-new-booking',

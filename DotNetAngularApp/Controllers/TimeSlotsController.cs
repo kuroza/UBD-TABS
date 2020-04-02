@@ -20,6 +20,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpGet("/api/timeslots")]
+        [Authorize]
         public async Task<IEnumerable<TimeSlotResource>> GetTimeSlots()
         {
             var timeSlots = await context.TimeSlots.ToListAsync();

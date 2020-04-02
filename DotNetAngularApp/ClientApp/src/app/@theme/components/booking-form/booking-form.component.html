@@ -66,9 +66,17 @@
           <!-- Add datepicker here? Or the selected date from the calendar -->
           <div class="form-group">
             <label for="bookDate">Date *</label>
-            <input id="bookDate" nbInput placeholder="Pick Date" [nbDatepicker]="formpicker"
+            <!-- <input id="bookDate" nbInput placeholder="Pick Date" [nbDatepicker]="formpicker"
               [(ngModel)]="booking.bookDate" name="bookDate" required #bookDate="ngModel">
-            <nb-datepicker #formpicker></nb-datepicker>
+            <nb-datepicker #formpicker></nb-datepicker> -->
+
+            <div class="input-group">
+              <input id="bookDate" class="form-control" placeholder="mm-dd-yyyy"
+                [(ngModel)]="booking.bookDate" ngbDatepicker name="bookDate" required #bookDate="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="bookDate.toggle()" type="button"></button>
+              </div>
+            </div>
             <div class="alert alert-danger" *ngIf="bookDate.touched && !bookDate.valid">Please specify the date.</div>
           </div>
           <!-- TimeSlot drop down list -->

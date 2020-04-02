@@ -1,3 +1,4 @@
+import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ToastyModule } from 'ng2-toasty';
 import { BookingService } from './services/booking.service';
 import { CommonModule } from '@angular/common';
@@ -52,6 +53,7 @@ Sentry.init({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
+    NbEvaIconsModule
   ],
   bootstrap: [AppComponent],
   providers: [

@@ -41,6 +41,16 @@ namespace DotNetAngularApp
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://ubd-tabs.auth0.com/";
+                options.Audience = "https://api.ubd-tabs.com";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +73,8 @@ namespace DotNetAngularApp
             {
                 app.UseSpaStaticFiles();
             }
+
+            app.UseAuthentication();
 
             app.UseRouting();
 
