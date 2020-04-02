@@ -9,14 +9,18 @@
       <button [routerLink]="['/pages/bookings/new']" class="btn btn-primary">New booking</button>
     </p>
     <div class="card card-body bg-light">
-      <div class="form-group">
-        <label for="building">Filter by building:</label>
-        <select name="building" id="" class="form-control" [(ngModel)]="query.buildingId" (change)="onFilterChange()">
-          <option value="">Select a building</option>
-          <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
-        </select>
+      <div class="form-inline">
+        <div class="form-group mb-2">
+          <label for="building">Filter building:</label>
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+          <select name="building" id="" class="form-control" [(ngModel)]="query.buildingId" (change)="onFilterChange()">
+            <option value=""></option>
+            <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
+          </select>
+        </div>
+        <button class="btn btn-secondary mb-2" (click)="resetFilter()">Reset</button>
       </div>
-      <button class="btn btn-secondary" (click)="resetFilter()" style="max-width: 5rem;">Reset</button>
     </div>
     <br>
     <table class="table">
@@ -45,7 +49,7 @@
           <td>{{ b.bookDate | date:'longDate' }}</td>
           <td>{{ b.contact.name }}</td>
           <td>
-            <a [routerLink]="['/pages/bookings/', b.id]">Edit</a>
+            <a [routerLink]="['/pages/bookings/', b.id]">View</a>
           </td>
         </tr>
       </tbody>

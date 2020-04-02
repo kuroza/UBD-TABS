@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BookingListComponent } from './bookings/booking-list/booking-list';
 import { NewBookingComponent } from './bookings/new-booking/new-booking.component';
 import { ViewRoomsComponent } from './rooms/view-rooms/view-rooms.component';
+import { ViewBookingComponent } from './bookings/view-booking/view-booking';
 
 const routes: Routes = [{
   path: '',
@@ -22,7 +23,8 @@ const routes: Routes = [{
     },
     { path: 'bookings', component: BookingListComponent }, //view all bookings / table
     { path: 'bookings/new', component: NewBookingComponent },
-    { path: 'bookings/:id', component: NewBookingComponent },
+    { path: 'bookings/:id', component: ViewBookingComponent },
+    { path: 'bookings/edit/:id', component: NewBookingComponent },
     { path: 'rooms', component: ViewRoomsComponent },
   ],
 }];

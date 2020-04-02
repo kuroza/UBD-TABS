@@ -1,0 +1,53 @@
+<nb-card>
+  <nb-card-body>
+    <h3>Booking details</h3>
+  </nb-card-body>
+</nb-card>
+<nb-card>
+  <nb-card-body>
+    <div>
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="nav-item">
+          <a class="nav-link active" href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Booking</a>
+        </li>
+        <li role="presentation" class="nav-item">
+          <a class="nav-link" href="#photos" aria-controls="photos" role="tab" data-toggle="tab">Photos</a>
+        </li>
+      </ul>
+      <br>
+      <!-- Tab panes -->
+      <div class="tab-content" *ngIf="booking">
+        <!-- Booking tab -->
+        <div role="tabpanel" class="tab-pane active" id="basic">
+          <!-- better display on a table -->
+          <h6>Contact details:</h6>
+          <ul>
+            <li>Name: {{ booking.contact.name }}</li>
+            <li>Phone: {{ booking.contact.phone }}</li>
+            <li>Email: {{ booking.contact.email }}</li>
+          </ul>
+          <h6>Venue:</h6>
+          <ul>
+            <li>Building: {{ booking.building.name }}</li>
+            <li>Room: {{ booking.room.name }}</li>
+          </ul>
+          <h6>Booked time slots:</h6>
+          <ul>
+            <li *ngFor="let t of booking.timeSlots">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>
+          </ul>
+          <br />
+          <p>
+            <button class="btn btn-primary mx-2" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+            <button class="btn btn-danger mr-2" (click)="delete()">Delete</button>
+            <button class="btn btn-warning" [routerLink]="['/pages/bookings']">View All Bookings</button>
+          </p>
+        </div>
+        <!-- Photos tab -->
+        <div role="tabpanel" class="tab-pane" id="photos">
+          <h2>Photos</h2>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

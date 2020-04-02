@@ -36,7 +36,7 @@ export class BookingFormComponent implements OnInit {
     private toastyService: ToastyService) {
 
       route.params.subscribe(p => {
-        this.booking.id = +p['id']; // put a + to convert into a number
+        this.booking.id = +p['id'] || 0; // put a + to convert into a number
       });
     }
 
@@ -95,30 +95,16 @@ export class BookingFormComponent implements OnInit {
   }
 
   submit() {
-    if (this.booking.id) {
-      this.bookingService.update(this.booking)
-        .subscribe(x => {
-          this.toastyService.success({
-            title: 'Success',
-            msg: 'The booking was successfully updated.',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 5000
-          });
-        });
-    }
-    else {
-      this.bookingService.create(this.booking) // this booking is not sent to the server unless we subscribe to the observable
-      .subscribe(x => console.log(x));
-    }
-  }
-
-  delete() {
-    if (confirm("Are you sure you want to delete this booking?")) {
-      this.bookingService.delete(this.booking.id)
-        .subscribe(x => { // navigate the user back to the list of bookings
-          this.router.navigate(['/']);
-        });
-    }
+    var result$ = (this.booking.id) ? this.bookingService.update(this.booking) : this.bookingService.create(this.booking); 
+    result$.subscribe(booking => {
+      this.toastyService.success({
+        title: 'Success', 
+        msg: 'Booking was sucessfully saved.',
+        theme: 'bootstrap',
+        showClose: true,
+        timeout: 5000
+      });
+      this.router.navigate(['/pages/bookings/', booking.id])
+    });
   }
 }
