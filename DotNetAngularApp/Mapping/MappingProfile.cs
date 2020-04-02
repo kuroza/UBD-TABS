@@ -10,6 +10,7 @@ namespace DotNetAngularApp.Mapping
         public MappingProfile()
         {
             //Domain to API Resource
+            CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
             CreateMap<Building, BuildingResource>(); //AutoMapper scans the properties of the 2 types. if the prop names match, it'll be auto map. if not, need to supply additional config
             CreateMap<Building, KeyValuePairResource>();
             CreateMap<Room, RoomResource>(); //also create a map between room and room resource

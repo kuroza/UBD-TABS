@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './booking-list.html'
 })
 export class BookingListComponent implements OnInit {
-  bookings: any; // Booking[]
-  buildings: any; // KeyValuePair[]
+  private readonly PAGE_SIZE = 3;
+
+  queryResult: any = {}; // bookings: Booking[];
+  buildings: any; // buildings: KeyValuePair[];
   query: any = {
-    pageSize: 3
+    pageSize: this.PAGE_SIZE
   };
   columns = [
     { title: 'Id' },
@@ -31,16 +33,20 @@ export class BookingListComponent implements OnInit {
 
   private populateBookings() {
     this.bookingService.getBookings(this.query)
-      .subscribe(bookings => this.bookings = bookings);
+      .subscribe(result => this.queryResult = result);
   }
 
   onFilterChange() {
+    this.query.page = 1;
     this.populateBookings();
   }
 
   resetFilter() {
-    this.query = {};
-    this.onFilterChange();
+    this.query = {
+      page: 1,
+      pageSize: this.PAGE_SIZE
+    };
+    this.populateBookings();
   }
 
   sortBy(columnName) {

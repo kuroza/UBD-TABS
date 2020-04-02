@@ -31,8 +31,10 @@ namespace DotNetAngularApp.Persistence
                 .SingleOrDefaultAsync(b => b.Id == id);
         }
 
-        public async Task<IEnumerable<Booking>> GetBookings(BookingQuery queryObj)
+        public async Task<QueryResult<Booking>> GetBookings(BookingQuery queryObj)
         {
+            var result = new QueryResult<Booking>();
+
             var query = context.Bookings
                 .Include(b => b.Room)
                     .ThenInclude(r => r.Building)
@@ -55,9 +57,13 @@ namespace DotNetAngularApp.Persistence
 
             query = query.ApplyOrdering(queryObj, columnsMap);
 
+            result.TotalItems = await query.CountAsync();
+
             query = query.ApplyPaging(queryObj);
 
-            return await query.ToListAsync();
+            result.Items = await query.ToListAsync();
+
+            return result;
         }
 
         // //if you want to only load a Booking and its Room

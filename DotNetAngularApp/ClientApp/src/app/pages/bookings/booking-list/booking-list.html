@@ -5,18 +5,18 @@
 </nb-card>
 <nb-card>
   <nb-card-body>
+    <p>
+      <button [routerLink]="['/pages/bookings/new']" class="btn btn-primary">New booking</button>
+    </p>
     <div class="card card-body bg-light">
       <div class="form-group">
-        <p>
-          <button [routerLink]="['/pages/bookings/new']" class="btn btn-primary">New booking</button>
-        </p>
         <label for="building">Filter by building:</label>
         <select name="building" id="" class="form-control" [(ngModel)]="query.buildingId" (change)="onFilterChange()">
           <option value="">Select a building</option>
           <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
         </select>
       </div>
-      <button class="btn btn-secondary" (click)="resetFilter()" style="max-width: 8rem;">Reset</button>
+      <button class="btn btn-secondary" (click)="resetFilter()" style="max-width: 5rem;">Reset</button>
     </div>
     <br>
     <table class="table">
@@ -38,11 +38,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let b of bookings">
+        <tr *ngFor="let b of queryResult.items"> <!-- let b of bookings -->
           <td>{{ b.id }}</td>
           <td>{{ b.building.name }}</td>
           <td>{{ b.room.name }}</td>
-          <td>{{ b.bookDate }}</td>
+          <td>{{ b.bookDate | date:'longDate' }}</td>
           <td>{{ b.contact.name }}</td>
           <td>
             <a [routerLink]="['/pages/bookings/', b.id]">Edit</a>
@@ -50,6 +50,6 @@
         </tr>
       </tbody>
     </table>
-    <pagination [total-items]="5" [page-size]="query.pageSize" (page-changed)="onPageChange($event)"></pagination>
+    <pagination [total-items]="queryResult.totalItems" [page-size]="query.pageSize" (page-changed)="onPageChange($event)"></pagination>
   </nb-card-body>
 </nb-card>
