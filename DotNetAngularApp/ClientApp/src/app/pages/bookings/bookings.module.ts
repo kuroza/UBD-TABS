@@ -1,3 +1,4 @@
+import { PaginationComponent } from './../../@theme/components/shared/pagination.component';
 import { RouterModule } from '@angular/router';
 import { BookingFormModule } from './../../@theme/components/booking-form/booking-form.modules';
 import { NewBookingComponent } from './new-booking/new-booking.component';
@@ -22,7 +23,8 @@ import { BookingTableModule } from '../../@theme/components/booking-table/bookin
     ],
     declarations: [
       BookingListComponent,
-      NewBookingComponent
+      NewBookingComponent,
+      PaginationComponent
     ],
   })
   export class BookingsModule { }

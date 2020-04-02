@@ -8,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class BookingListComponent implements OnInit {
   bookings: any; // Booking[]
   buildings: any; // KeyValuePair[]
-  query: any = {};
+  query: any = {
+    pageSize: 3
+  };
   columns = [
     { title: 'Id' },
     { title: 'Building', key: 'building', isSortable: true },
@@ -48,6 +50,11 @@ export class BookingListComponent implements OnInit {
       this.query.sortBy = columnName;
       this.query.isSortAscending = true;
     }
+    this.populateBookings();
+  }
+
+  onPageChange(page) {
+    this.query.page = page;
     this.populateBookings();
   }
 }

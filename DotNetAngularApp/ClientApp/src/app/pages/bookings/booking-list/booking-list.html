@@ -43,8 +43,6 @@
           <td>{{ b.building.name }}</td>
           <td>{{ b.room.name }}</td>
           <td>{{ b.bookDate }}</td>
-          <!-- <td>{{ b.timeSlots.startTime }}</td>
-          <td>{{ b.timeSlots.endTime }}</td> -->
           <td>{{ b.contact.name }}</td>
           <td>
             <a [routerLink]="['/pages/bookings/', b.id]">Edit</a>
@@ -52,5 +50,6 @@
         </tr>
       </tbody>
     </table>
+    <pagination [total-items]="5" [page-size]="query.pageSize" (page-changed)="onPageChange($event)"></pagination>
   </nb-card-body>
 </nb-card>
