@@ -14,12 +14,12 @@
 
 <div class="header-container">
   <nb-actions size="small">
-
     <!-- <nb-action class="control-item">
       <nb-search type="rotate-layout"></nb-search>
     </nb-action>
     <nb-action class="control-item" icon="email-outline"></nb-action>
     <nb-action class="control-item" icon="bell-outline"></nb-action> -->
+
     <nb-action class="user-action" *nbIsGranted="['view', 'user']" >
       <nb-user [nbContextMenu]="userMenu"
                [onlyPicture]="userPictureOnly"
@@ -28,6 +28,8 @@
       </nb-user>
     </nb-action>
   </nb-actions>
-  <button (click)="auth.login()" *ngIf="!auth.loggedIn">Log In</button>
-  <button (click)="auth.logout()" *ngIf="auth.loggedIn">Log Out</button>
+  <button class="btn btn-info" (click)="auth.login()" *ngIf="!auth.loggedIn">Log In</button>
+  <button class="btn btn-secondary" (click)="auth.logout()" *ngIf="auth.loggedIn">Log Out</button>
+  <a routerLink="/">Home</a>&nbsp;
+  <a routerLink="/auth/profile" *ngIf="auth.loggedIn">Profile</a>
 </div>

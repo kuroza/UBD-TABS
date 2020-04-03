@@ -150,7 +150,8 @@ export class BookingFormComponent implements OnInit {
         showClose: true,
         timeout: 5000
       });
-      this.router.navigate(['/pages/bookings/', booking.id]); // this.booking.id?
+      // fix after success adding authentication
+      // this.router.navigate(['/pages/bookings/', booking.id]); // this.booking.id?
     });
   }
 }

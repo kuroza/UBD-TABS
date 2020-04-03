@@ -8,6 +8,7 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from '@nebular/auth';
+import { ProfileComponent } from './@theme/components/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,7 @@ const routes: Routes = [
         path: 'reset-password',
         component: NbResetPasswordComponent,
       },
+      { path: 'profile', component: ProfileComponent },
     ],
   },
   { path: '', redirectTo: 'pages', pathMatch: 'full' },

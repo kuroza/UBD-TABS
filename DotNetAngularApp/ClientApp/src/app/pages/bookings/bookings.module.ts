@@ -13,23 +13,23 @@ import { BookingTableModule } from '../../@theme/components/booking-table/bookin
 import { BookingDetailsModule } from '../../@theme/components/booking-details/booking-details.module';
 
 @NgModule({
-    imports: [
-      NbCardModule,
-      ThemeModule,
-      FormsModule,
-      NbTabsetModule,
-      NgbdTablePaginationModule,
-      BookingTableModule,
-      BookingFormModule,
-      RouterModule,
-      NbIconModule,
-      BookingDetailsModule
-    ],
-    declarations: [
-      BookingListComponent,
-      NewBookingComponent,
-      PaginationComponent,
-      ViewBookingComponent
-    ],
-  })
-  export class BookingsModule { }
+  imports: [
+    NbCardModule,
+    ThemeModule,
+    FormsModule,
+    NbTabsetModule,
+    NgbdTablePaginationModule,
+    BookingTableModule,
+    BookingFormModule,
+    RouterModule,
+    NbIconModule,
+    BookingDetailsModule
+  ],
+  declarations: [
+    BookingListComponent,
+    NewBookingComponent,
+    PaginationComponent,
+    ViewBookingComponent
+  ],
+})
+export class BookingsModule { }

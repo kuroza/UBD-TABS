@@ -1,3 +1,4 @@
+import { ProfileModule } from './@theme/components/profile/profile.module';
 import { AuthService } from './services/auth.service';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ToastyModule } from 'ng2-toasty';
@@ -54,7 +55,8 @@ Sentry.init({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
-    NbEvaIconsModule
+    NbEvaIconsModule,
+    ProfileModule
   ],
   bootstrap: [AppComponent],
   providers: [
