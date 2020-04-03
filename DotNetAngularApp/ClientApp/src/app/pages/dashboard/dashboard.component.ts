@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -5,4 +6,5 @@ import { Component } from '@angular/core';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent {
+  constructor(private auth: AuthService) {}
 }

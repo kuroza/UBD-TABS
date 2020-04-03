@@ -1,3 +1,4 @@
+import { AuthService } from './../../../services/auth.service';
 import { BookingService } from './../../../services/booking.service';
 import { ToastyService } from 'ng2-toasty';
 import { Component, OnInit } from '@angular/core';
@@ -15,7 +16,8 @@ export class BookingDetailsComponent implements OnInit {
     private route: ActivatedRoute, 
     private router: Router,
     private toasty: ToastyService,
-    private bookingService: BookingService) { 
+    private bookingService: BookingService,
+    private auth: AuthService) { 
 
     route.params.subscribe(p => {
       this.bookingId = +p['id'];

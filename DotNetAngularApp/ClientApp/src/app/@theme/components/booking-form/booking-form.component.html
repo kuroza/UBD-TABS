@@ -9,9 +9,8 @@
     <div class="col-md-8">
       <nb-card>
         <nb-card-body>
-          <p>{{ booking | json }}</p>
           <label>Time slot *</label>
-          <table class="table table-hover">
+          <table class="table table-hover text-center">
             <thead class="thead-dark">
               <tr>
                 <th scope="col"></th>
@@ -35,6 +34,7 @@
               </tr>
             </tbody>
           </table>
+          <p>{{ booking | json }}</p>
         </nb-card-body>
       </nb-card>
     </div>
@@ -63,13 +63,9 @@
             </select>
             <div class="alert alert-danger" *ngIf="room.touched && !room.valid">Please specify the room.</div>
           </div>
-          <!-- Add datepicker here? Or the selected date from the calendar -->
+          <!-- Date picker -->
           <div class="form-group">
             <label for="bookDate">Date *</label>
-            <!-- <input id="bookDate" nbInput placeholder="Pick Date" [nbDatepicker]="formpicker"
-              [(ngModel)]="booking.bookDate" name="bookDate" required #bookDate="ngModel">
-            <nb-datepicker #formpicker></nb-datepicker> -->
-
             <div class="input-group">
               <input id="bookDate" class="form-control" placeholder="mm-dd-yyyy"
                 [(ngModel)]="booking.bookDate" ngbDatepicker name="bookDate" required #bookDate="ngbDatepicker">
@@ -79,36 +75,29 @@
             </div>
             <div class="alert alert-danger" *ngIf="bookDate.touched && !bookDate.valid">Please specify the date.</div>
           </div>
-          <!-- TimeSlot drop down list -->
-          <!-- <div class="form-group">
-                        <label for="timeSlot">Time Slot *</label>
-                        <select id="timeSlot" class="form-control" [(ngModel)]="booking.timeSlots" name="timeSlots">
-                            <option value=""></option>
-                            <option *ngFor="let t of timeSlots" value="{{ t.id }}">{{ t.startTime | date:'shortTime' }}-{{ t.endTime | date:'shortTime' }}</option>
-                        </select>
-                    </div> -->
           <!-- Contact from -->
           <div class="form-group">
             <label for="contactName">Name *</label>
             <input id="contactName" type="text" class="form-control" [(ngModel)]="booking.contact.name"
-              name="contactName" required #contactName="ngModel">
+              name="contactName" placeholder="Name" placeholder="e.g. Nora Danish" required #contactName="ngModel">
             <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">Please specify the name.
             </div>
           </div>
           <div class="form-group">
             <label for="contactEmail">Email</label>
             <input id="contactEmail" type="text" class="form-control" [(ngModel)]="booking.contact.email"
-              name="contactEmail">
+              name="contactEmail" placeholder="e.g. nora@ubd.com.com">
           </div>
           <div class="form-group">
             <label for="contactPhone">Phone</label>
             <input id="contactPhone" type="text" class="form-control" [(ngModel)]="booking.contact.phone"
-              name="contactPhone">
+              name="contactPhone" placeholder="e.g. +673-2226111">
           </div>
           <!-- Purpose form -->
           <div class="form-group">
             <label for="purpose">Purpose</label>
-            <input id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose">
+            <input id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose" 
+            placeholder="e.g. LE-1503">
           </div>
           <div *ngIf="!booking.id">
             <button class="btn btn-primary" [disabled]="!f.valid">Book</button>
@@ -117,9 +106,6 @@
             <button class="btn btn-primary" [disabled]="!f.valid">Save</button>
             <!-- <button  class="btn btn-danger" type="button" (click)="delete()">Delete</button> -->
           </div>
-          <!-- <button class="btn btn-primary" [disabled]="!f.valid">Save</button>
-          <button *ngIf="booking.id" class="btn btn-danger" type="button" (click)="delete()">Delete</button> -->
-          <!-- display this delete button only for an existing booking, not when creating a new booking -->
         </nb-card-body>
       </nb-card>
     </div>

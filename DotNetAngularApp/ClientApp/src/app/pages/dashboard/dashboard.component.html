@@ -13,7 +13,7 @@
           <nb-tab tabTitle="Details">
             <!-- <ngx-booking-details></ngx-booking-details> -->
           </nb-tab>
-          <nb-tab tabTitle="Edit">
+          <nb-tab tabTitle="Edit" *ngIf="auth.loggedIn">
             <button class="btn btn-info">Edit</button>
             <button class="btn btn-danger">Delete</button>
           </nb-tab>

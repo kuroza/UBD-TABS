@@ -1,3 +1,4 @@
+import { AuthService } from './../../../services/auth.service';
 import { BookingService } from './../../../services/booking.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './booking-list.html'
 })
 export class BookingListComponent implements OnInit {
-  private readonly PAGE_SIZE = 3;
+  private readonly PAGE_SIZE = 8;
 
   queryResult: any = {}; // bookings: Booking[];
   buildings: any; // buildings: KeyValuePair[];
@@ -22,7 +23,7 @@ export class BookingListComponent implements OnInit {
     { }
   ];
   
-  constructor(private bookingService: BookingService) { }
+  constructor(private bookingService: BookingService, public auth: AuthService) { }
 
   ngOnInit() {
     this.bookingService.getBuildings()
