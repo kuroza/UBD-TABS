@@ -55,10 +55,6 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 @Component({
   selector: 'ngx-booking-form',
   templateUrl: './booking-form.component.html',
-  // providers: [
-  //   {provide: NgbDateAdapter, useClass: CustomAdapter},
-  //   {provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter}
-  // ]
 })
 export class BookingFormComponent implements OnInit {
   datePicker: string;
@@ -154,7 +150,7 @@ export class BookingFormComponent implements OnInit {
         showClose: true,
         timeout: 5000
       });
-      this.router.navigate(['/pages/bookings/', booking.id]);
+      this.router.navigate(['/pages/bookings/', booking.id]); // this.booking.id?
     });
   }
 }

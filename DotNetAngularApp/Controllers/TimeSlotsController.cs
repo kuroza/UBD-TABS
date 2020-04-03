@@ -4,6 +4,7 @@ using AutoMapper;
 using DotNetAngularApp.Controllers.Resources;
 using DotNetAngularApp.Core.Models;
 using DotNetAngularApp.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,6 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpGet("/api/timeslots")]
-        [Authorize]
         public async Task<IEnumerable<TimeSlotResource>> GetTimeSlots()
         {
             var timeSlots = await context.TimeSlots.ToListAsync();

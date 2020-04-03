@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { Component } from '@angular/core';
 
 import { MENU_ITEMS } from './pages-menu';
@@ -13,6 +14,8 @@ import { MENU_ITEMS } from './pages-menu';
   `,
 })
 export class PagesComponent {
+  
+  constructor(private auth: AuthService) {}
 
   menu = MENU_ITEMS;
 }

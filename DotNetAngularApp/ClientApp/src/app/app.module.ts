@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ToastyModule } from 'ng2-toasty';
 import { BookingService } from './services/booking.service';
@@ -57,6 +58,7 @@ Sentry.init({
   ],
   bootstrap: [AppComponent],
   providers: [
+    AuthService,
     BookingService, //for dependency injection in BookingService.ts
     { provide: ErrorHandler, useClass: AppErrorHandler },
   ]

@@ -1,6 +1,7 @@
 using AutoMapper;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -74,10 +75,12 @@ namespace DotNetAngularApp
                 app.UseSpaStaticFiles();
             }
 
-            app.UseAuthentication();
-
             app.UseRouting();
 
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

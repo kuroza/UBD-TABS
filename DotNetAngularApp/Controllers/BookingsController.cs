@@ -5,6 +5,7 @@ using AutoMapper;
 using DotNetAngularApp.Controllers.Resources;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetAngularApp.Controllers
@@ -23,6 +24,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateBooking([FromBody] SaveBookingResource bookingResource)
         {
             if (!ModelState.IsValid)
@@ -44,6 +46,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPut("{id}")] // /api/bookings/{id}
+        [Authorize]
         public async Task<IActionResult> UpdateBooking(int id, [FromBody] SaveBookingResource bookingResource) //id from route, and bookingResource from body
         {
             if (!ModelState.IsValid)
@@ -66,6 +69,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteBooking(int id)
         {
             var booking = await repository.GetBooking(id, includeRelated: false); //get a booking with this id
