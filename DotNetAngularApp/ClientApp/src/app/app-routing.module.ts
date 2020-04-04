@@ -1,3 +1,4 @@
+import { AuthGuard } from './services/auth.guard';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import {
@@ -44,7 +45,7 @@ const routes: Routes = [
         path: 'reset-password',
         component: NbResetPasswordComponent,
       },
-      { path: 'profile', component: ProfileComponent },
+      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
     ],
   },
   { path: '', redirectTo: 'pages', pathMatch: 'full' },

@@ -9,7 +9,6 @@ import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
 import { BookingListComponent } from './booking-list/booking-list';
-import { BookingTableModule } from '../../@theme/components/booking-table/booking-table.module';
 import { BookingDetailsModule } from '../../@theme/components/booking-details/booking-details.module';
 
 @NgModule({
@@ -19,7 +18,6 @@ import { BookingDetailsModule } from '../../@theme/components/booking-details/bo
     FormsModule,
     NbTabsetModule,
     NgbdTablePaginationModule,
-    BookingTableModule,
     BookingFormModule,
     RouterModule,
     NbIconModule,

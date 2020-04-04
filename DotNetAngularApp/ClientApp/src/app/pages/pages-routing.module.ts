@@ -7,6 +7,7 @@ import { BookingListComponent } from './bookings/booking-list/booking-list';
 import { NewBookingComponent } from './bookings/new-booking/new-booking.component';
 import { ViewRoomsComponent } from './rooms/view-rooms/view-rooms.component';
 import { ViewBookingComponent } from './bookings/view-booking/view-booking';
+import { AuthGuard } from '../services/auth.guard';
 
 const routes: Routes = [{
   path: '',
@@ -22,9 +23,9 @@ const routes: Routes = [{
       pathMatch: 'full',
     },
     { path: 'bookings', component: BookingListComponent }, //view all bookings / table
-    { path: 'bookings/new', component: NewBookingComponent },
+    { path: 'bookings/new', component: NewBookingComponent, canActivate: [AuthGuard] },
     { path: 'bookings/:id', component: ViewBookingComponent },
-    { path: 'bookings/edit/:id', component: NewBookingComponent },
+    { path: 'bookings/edit/:id', component: NewBookingComponent, canActivate: [AuthGuard] },
     { path: 'rooms', component: ViewRoomsComponent },
   ],
 }];

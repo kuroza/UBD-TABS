@@ -9,8 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
     templateUrl: 'booking-details.component.html'
 })
 export class BookingDetailsComponent implements OnInit {
-  booking: any;
-  bookingId: number; 
+  booking: any; // store all the booking details here
+  bookingId: number; // store bookingId from route
 
   constructor(
     private route: ActivatedRoute, 
@@ -20,9 +20,9 @@ export class BookingDetailsComponent implements OnInit {
     private auth: AuthService) { 
 
     route.params.subscribe(p => {
-      this.bookingId = +p['id'];
-      if (isNaN(this.bookingId) || this.bookingId <= 0) {
-        router.navigate(['/pages//bookings']);
+      this.bookingId = +p['id']; // get the Id from the route 
+      if (isNaN(this.bookingId) || this.bookingId <= 0) { // if bookingId is not a number or less than 1, navigate back
+        router.navigate(['/pages/bookings']); // '/pages//bookings' why were there 2 slashes?
         return; 
       }
     });
@@ -31,9 +31,9 @@ export class BookingDetailsComponent implements OnInit {
   ngOnInit() { 
     this.bookingService.getBooking(this.bookingId)
       .subscribe(
-        b => this.booking = b,
+        b => this.booking = b, // store the booking details from db to this.booking
         err => {
-          if (err.status == 404) {
+          if (err.status == 404) { // else data not found? then navigate back
             this.router.navigate(['/pages/bookings']);
             return; 
           }
@@ -41,8 +41,8 @@ export class BookingDetailsComponent implements OnInit {
   }
 
   delete() {
-    if (confirm("Are you sure?")) {
-      this.bookingService.delete(this.booking.id)
+    if (confirm("Are you sure?")) { // if confirm() == true
+      this.bookingService.delete(this.booking.id) // delete in db
         .subscribe(x => {
           this.router.navigate(['/pages/bookings']);
         });

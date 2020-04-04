@@ -17,12 +17,12 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
-  getBookings(filter) { // for Booking list
-    return this.http.get(this.bookingsEndpoint + '?' +this.toQueryString(filter))
+  getBookings(filter) {
+    return this.http.get(this.bookingsEndpoint + '?' + this.toQueryString(filter))
       .pipe(map(response => response));
   }
 
-  toQueryString(obj) {
+  toQueryString(obj) { // what is this query used for?
     var parts = [];
     for (var property in obj) {
       var value = obj[property];

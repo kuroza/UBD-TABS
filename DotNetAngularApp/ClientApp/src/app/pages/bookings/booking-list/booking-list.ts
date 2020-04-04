@@ -9,12 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class BookingListComponent implements OnInit {
   private readonly PAGE_SIZE = 8;
 
-  queryResult: any = {}; // bookings: Booking[];
-  buildings: any; // buildings: KeyValuePair[];
+  queryResult: any = {}; // or 'bookings: Booking[];'
+  buildings: any; // or 'buildings: KeyValuePair[];'
   query: any = {
     pageSize: this.PAGE_SIZE
   };
-  columns = [
+  columns = [ // display on table head on each column
     { title: 'Id' },
     { title: 'Building', key: 'building', isSortable: true },
     { title: 'Room', key: 'room', isSortable: true },
@@ -23,11 +23,14 @@ export class BookingListComponent implements OnInit {
     { }
   ];
   
-  constructor(private bookingService: BookingService, public auth: AuthService) { }
+  constructor( // injecting service
+    private bookingService: BookingService, 
+    public auth: AuthService
+  ) { }
 
-  ngOnInit() {
-    this.bookingService.getBuildings()
-      .subscribe(buildings => this.buildings = buildings);
+  ngOnInit() { // when the page starts
+    this.bookingService.getBuildings() // get the buildings from service
+      .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
 
     this.populateBookings();
   }

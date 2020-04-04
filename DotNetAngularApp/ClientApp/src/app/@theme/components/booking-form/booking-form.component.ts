@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/Observable/forkJoin';
 import { SaveBooking, Booking } from '../../../models/booking';
 import { NgbDateStruct, NgbCalendar, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { formatDate } from '@angular/common';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -119,6 +120,8 @@ export class BookingFormComponent implements OnInit {
     this.booking.purpose = b.purpose;
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
   }
+
+  // this.bookDate = formatDate(bookDate, 'shortDate');
 
   onTimeSlotToggle(timeSlotId, $event) {
     if ($event.target.checked) // if this check box is checked, push this Id into TimeSlots array
