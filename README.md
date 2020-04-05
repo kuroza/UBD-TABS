@@ -19,6 +19,21 @@ dotnet run
 5. It will take some time to download node_modules.
 6. Open http://localhost:5000 or https://localhost:5001 in your browser.
 
+## To create the database:
+
+1. Stop the running application in the terminal by pressing Ctrl+c.
+2. Install Entity Framework
+
+```sh
+dotnet tool install --global dotnet-ef
+```
+
+3. Update database
+
+```sh
+dotnet ef database update
+```
+
 ## If you'd like to run the ASP.NET MVC 5 version of UBD-TABS:
 
 1. Go to WebApplication1 folder.
