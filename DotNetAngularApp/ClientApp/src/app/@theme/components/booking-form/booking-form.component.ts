@@ -9,7 +9,7 @@ import { SaveBooking, Booking } from '../../../models/booking';
 import { NgbDateStruct, NgbCalendar, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { formatDate } from '@angular/common';
 
-@Injectable()
+@Injectable() // ng material datepicker
 export class CustomAdapter extends NgbDateAdapter<string> {
 
   readonly DELIMITER = '-';
@@ -31,7 +31,7 @@ export class CustomAdapter extends NgbDateAdapter<string> {
   }
 }
 
-@Injectable()
+@Injectable() // ng material datepicker
 export class CustomDateParserFormatter extends NgbDateParserFormatter {
 
   readonly DELIMITER = '/';
@@ -83,18 +83,19 @@ export class BookingFormComponent implements OnInit {
     private toastyService: ToastyService) {
 
       route.params.subscribe(p => {
-        this.booking.id = +p['id'] || 0; // put a + to convert into a number
+        this.booking.id = +p['id'] || 0; // '+' to convert into a number
       });
     }
 
   ngOnInit() {
     var sources = [ // data sources
-      this.bookingService.getBuildings(), // get the buildings from server
-      this.bookingService.getTimeSlots(),
+      this.bookingService.getBuildings(), // get the buildings from server for drop down
+      this.bookingService.getTimeSlots(), // get timeSlots for table
     ];
 
+    // for editing
     if (this.booking.id) // if not 0, push a new observable into sources array
-      sources.push(this.bookingService.getBooking(this.booking.id));// get the booking with the given id)
+      sources.push(this.bookingService.getBooking(this.booking.id)); // get the booking with the given id
 
     // for getting Bookings, this is from server, a complete representation of Bookings
     Observable.forkJoin(sources).subscribe(data => { // an array which includes all results from observable
@@ -111,7 +112,7 @@ export class BookingFormComponent implements OnInit {
     });
   }
 
-  private setBooking(b) { // b: Booking, no need?
+  private setBooking(b) { // 'b: Booking', no need?
     this.booking.id = b.id;
     this.booking.buildingId = b.building.id;
     this.booking.roomId = b.room.id;
@@ -121,7 +122,7 @@ export class BookingFormComponent implements OnInit {
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
   }
 
-  // this.bookDate = formatDate(bookDate, 'shortDate');
+  // this.bookDate = formatDate(bookDate, 'shortDate'); // if this can be used to display on calendar
 
   onTimeSlotToggle(timeSlotId, $event) {
     if ($event.target.checked) // if this check box is checked, push this Id into TimeSlots array

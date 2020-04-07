@@ -14,7 +14,7 @@ namespace DotNetAngularApp.Controllers
     public class BookingsController : Controller
     {
         private readonly IMapper mapper;
-        private readonly IBookingRepository repository;
+        private readonly IBookingRepository repository; // interface for 
         private readonly IUnitOfWork unitOfWork;
         public BookingsController(IMapper mapper, IBookingRepository repository, IUnitOfWork unitOfWork)
         {
@@ -97,12 +97,12 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpGet]
-        public async Task<QueryResultResource<BookingResource>> GetBookings(BookingQueryResource filterResource)
+        public async Task<QueryResultResource<BookingResource>> GetBookings(BookingQueryResource filterResource) // accepts the filtering and sorting queries
         {
             var filter = mapper.Map<BookingQueryResource, BookingQuery>(filterResource);
-            var queryResult = await repository.GetBookings(filter);
+            var queryResult = await repository.GetBookings(filter); // GetBookings() is called from the interface
 
-            return mapper.Map<QueryResult<Booking>, QueryResultResource<BookingResource>>(queryResult);
+            return mapper.Map<QueryResult<Booking>, QueryResultResource<BookingResource>>(queryResult); // returns a list of bookings
         }
     }
 }

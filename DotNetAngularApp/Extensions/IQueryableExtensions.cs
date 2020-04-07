@@ -13,20 +13,20 @@ namespace DotNetAngularApp.Extensions
             if (String.IsNullOrWhiteSpace(queryObj.SortBy) || !columnsMap.ContainsKey(queryObj.SortBy))
                 return query;
 
-            if (queryObj.IsSortAscending)
-                return query.OrderBy(columnsMap[queryObj.SortBy]);
+            if (queryObj.IsSortAscending) // if IsSortAscending == ture
+                return query.OrderBy(columnsMap[queryObj.SortBy]); // string SortBy? // order by ascending
             else
-                return query.OrderByDescending(columnsMap[queryObj.SortBy]);
+                return query.OrderByDescending(columnsMap[queryObj.SortBy]); // order columnsMap by descending
         }
 
         public static IQueryable<T> ApplyPaging<T>(this IQueryable<T> query, IQueryObject queryObj)
         {
-            if (queryObj.Page <= 0)
+            if (queryObj.Page <= 0) // edge case: if query page is 0, set page == first page
                 queryObj.Page = 1;
-            if (queryObj.PageSize <= 0)
+            if (queryObj.PageSize <= 0) // edge case: if query page size is 0, set the page size (number of rows in a page)
                 queryObj.PageSize = 10;
 
-            return query = query.Skip((queryObj.Page - 1) * queryObj.PageSize).Take(queryObj.PageSize);
+            return query = query.Skip((queryObj.Page - 1) * queryObj.PageSize).Take(queryObj.PageSize); // Skip? Take?
         }
     }
 }

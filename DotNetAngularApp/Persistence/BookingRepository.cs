@@ -36,18 +36,21 @@ namespace DotNetAngularApp.Persistence
             var result = new QueryResult<Booking>();
 
             var query = context.Bookings
-                .Include(b => b.Room)
-                    .ThenInclude(r => r.Building)
-                .Include(b => b.TimeSlots)
-                    .ThenInclude(bt => bt.TimeSlot)
-                .AsQueryable();
+                .Include(b => b.Room) // from bookings, get the room
+                    .ThenInclude(r => r.Building) // from room, get the building
+                .Include(b => b.TimeSlots) // get the collection of BookingTimeSlot
+                    .ThenInclude(bt => bt.TimeSlot) // also its start and end time
+                .AsQueryable(); // convert from IEnumerable to IQueryable, so that we can use LINQ below
 
-            if (queryObj.BuildingId.HasValue)
+            if (queryObj.BuildingId.HasValue) // if the queryObj includes BuildingId value, then filter context by BuildingId
                 query = query.Where(b => b.Room.BuildingId == queryObj.BuildingId.Value);
             
-            if (queryObj.RoomId.HasValue)
+            if (queryObj.RoomId.HasValue) // if the queryObj includes RoomId value, then filter context by RoomId
                 query = query.Where(b => b.RoomId == queryObj.RoomId.Value);
 
+            // Dictionary for storing keys (strings) and values (from context)
+            // Expression<> is a type of lambda expression
+            // Func, the input for lambda expression here is Booking  // i.e. booking.Room.Name
             var columnsMap = new Dictionary<string, Expression<Func<Booking, object>>>()
             {
                 ["building"] = b => b.Room.Building.Name,
@@ -55,13 +58,13 @@ namespace DotNetAngularApp.Persistence
                 ["contactName"] = b => b.ContactName
             };
 
-            query = query.ApplyOrdering(queryObj, columnsMap);
+            query = query.ApplyOrdering(queryObj, columnsMap); // sorting
 
-            result.TotalItems = await query.CountAsync();
+            result.TotalItems = await query.CountAsync(); // show total
 
             query = query.ApplyPaging(queryObj);
 
-            result.Items = await query.ToListAsync();
+            result.Items = await query.ToListAsync(); // return booking list, after all filtering
 
             return result;
         }

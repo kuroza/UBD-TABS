@@ -24,6 +24,7 @@ import { Subject } from 'rxjs';
 import { CustomEventTitleFormatter } from './custom-event-title-formatter.provider';
 import { colors } from '../calendar-header/colors';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'ngx-calendar',
@@ -76,6 +77,12 @@ export class NgCalendarComponent {
   refresh: Subject<any> = new Subject();
 
   events: CalendarEvent[] = [
+    {
+      start: new Date(), // formatDate('04-27-2020', 'MM-dd-yyyy', 'en-US'),
+      title: 'SS-2201 Algorithms and Data Structures',
+      color: colors.red,
+      actions: this.actions,
+    },
     {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
