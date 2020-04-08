@@ -104,5 +104,13 @@ namespace DotNetAngularApp.Controllers
 
             return mapper.Map<QueryResult<Booking>, QueryResultResource<BookingResource>>(queryResult); // returns a list of bookings
         }
+
+        [HttpGet("/api/allbookings")]
+        public async Task<IEnumerable<BookingResource>> GetAllBookings()
+        {
+            var bookings = await repository.GetAllBookings();
+
+            return mapper.Map<IEnumerable<Booking>, IEnumerable<BookingResource>>(bookings);
+        }
     }
 }

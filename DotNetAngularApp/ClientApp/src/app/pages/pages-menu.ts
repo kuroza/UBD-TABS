@@ -7,13 +7,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Dashboard',
-    icon: 'home',
+    icon: 'home-outline',
     link: '/pages/dashboard',
     home: true,
   },
   {
     title: 'User',
-    icon: 'lock',
+    icon: 'lock-outline',
     children: [
       {
         title: 'Profile',
@@ -39,15 +39,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Settings',
-    icon: 'settings',
+    icon: 'settings-outline',
   },
   {
     title: 'Admin',
     group: true,
   },
   {
-    title: 'Calendar',
-    icon: 'calendar',
+    title: 'Bookings',
+    icon: 'calendar-outline',
     children: [
       {
         title: 'View calendar',
@@ -65,7 +65,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Rooms',
-    icon: 'grid',
+    icon: 'grid-outline',
     children: [
       {
         title: 'Add room',
@@ -75,15 +75,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'View all rooms',
         link: '/pages/rooms',
       },
-      {
-        title: 'Edit room details',
-        link: '/pages/rooms',
-      },
     ],
   },
   {
     title: 'Staff',
-    icon: 'people',
+    icon: 'people-outline',
     children: [
       {
         title: 'Add staff',
@@ -93,15 +89,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'View all staffs',
         link: '/',
       },
-      {
-        title: 'Edit staff details',
-        link: '/',
-      },
     ],
   },
   {
     title: 'Time slot',
-    icon: 'clock',
+    icon: 'clock-outline',
     children: [
       {
         title: 'Edit time slot',

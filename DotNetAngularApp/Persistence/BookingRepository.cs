@@ -7,6 +7,7 @@ using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using DotNetAngularApp.Extensions;
+using System.Collections;
 
 namespace DotNetAngularApp.Persistence
 {
@@ -29,6 +30,16 @@ namespace DotNetAngularApp.Persistence
                 .Include(b => b.Room) //eager load room also
                     .ThenInclude(r => r.Building) //when eager loading the room, we should also include the building
                 .SingleOrDefaultAsync(b => b.Id == id);
+        }
+
+        public async Task<IEnumerable<Booking>> GetAllBookings()
+        {
+            return await context.Bookings
+                .Include(b => b.Room)
+                    .ThenInclude(r => r.Building)
+                .Include(b => b.TimeSlots)
+                    .ThenInclude(bt => bt.TimeSlot)
+                .ToListAsync();
         }
 
         public async Task<QueryResult<Booking>> GetBookings(BookingQuery queryObj)

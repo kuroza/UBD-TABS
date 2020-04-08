@@ -9,7 +9,7 @@
   <ul>
     <li>Building: {{ booking.building.name }}</li>
     <li>Room: {{ booking.room.name }}</li>
-    <li>Date: {{ booking.bookDate | date }}</li>
+    <li>Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}</li>
     <li>Purpose: {{ booking.purpose }}</li>
   </ul>
   <div class="card" style="width: 18rem;">

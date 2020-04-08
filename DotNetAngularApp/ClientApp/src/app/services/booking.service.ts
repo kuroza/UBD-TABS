@@ -17,6 +17,15 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
+  // async getAllBookings() {
+  //   return await this.http.get(this.bookingsEndpoint).toPromise();
+  // }
+
+  async getAllBookings() {
+    return this.http.get('/api/allbookings').toPromise();
+      // .pipe(map(response => response));
+  }
+
   getBookings(filter) {
     return this.http.get(this.bookingsEndpoint + '?' + this.toQueryString(filter))
       .pipe(map(response => response));
@@ -55,6 +64,11 @@ export class BookingService {
   
   getRooms() {
     return this.http.get('/api/rooms')
+      .pipe(map(response => response));
+  }
+
+  getRoom(id) {
+    return this.http.get('/api/rooms/' + id)
       .pipe(map(response => response));
   }
 

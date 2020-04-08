@@ -95,14 +95,14 @@ export class BookingFormComponent implements OnInit {
 
     // for editing
     if (this.booking.id) // if not 0, push a new observable into sources array
-      sources.push(this.bookingService.getBooking(this.booking.id)); // get the booking with the given id
+      sources.push(this.bookingService.getBooking(this.booking.id)); // get the booking with the given id // data[2]
 
     // for getting Bookings, this is from server, a complete representation of Bookings
     Observable.forkJoin(sources).subscribe(data => { // an array which includes all results from observable
       this.buildings = data[0];
       this.timeSlots = data[1];
 
-      if (this.booking.id) {
+      if (this.booking.id) { // if 'edit', populate forms
         this.setBooking(data[2]);
         this.populateRooms(); // room is populated on the building of this booking
       }
@@ -122,8 +122,6 @@ export class BookingFormComponent implements OnInit {
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
   }
 
-  // this.bookDate = formatDate(bookDate, 'shortDate'); // if this can be used to display on calendar
-
   onTimeSlotToggle(timeSlotId, $event) {
     if ($event.target.checked) // if this check box is checked, push this Id into TimeSlots array
       this.booking.timeSlots.push(timeSlotId);
@@ -139,7 +137,7 @@ export class BookingFormComponent implements OnInit {
     delete this.booking.roomId;
   }
 
-  private populateRooms() { // private because it is an implementation detail, don't want to expose it out
+  private populateRooms() { // private because it is an implementation detail, don't want to expose it outside
     var selectedBuilding = this.buildings.find(b => b.id == this.booking.buildingId); // get the selected building from db
     this.rooms = selectedBuilding ? selectedBuilding.rooms : []; // get the rooms as well?
   }

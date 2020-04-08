@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./view-rooms.component.scss']
 })
 export class ViewRoomsComponent implements OnInit {
+  room: any;
   rooms: any;
 
   constructor(private bookingService: BookingService) { }
@@ -14,5 +15,10 @@ export class ViewRoomsComponent implements OnInit {
   ngOnInit() {
     this.bookingService.getRooms()
       .subscribe(rooms => this.rooms = rooms);
+  }
+
+  viewOnClick(id) {
+    this.bookingService.getRoom(id)
+      .subscribe(room => this.room = room);
   }
 }

@@ -36,16 +36,16 @@ export class BookingListComponent implements OnInit {
   }
 
   private populateBookings() {
-    this.bookingService.getBookings(this.query) // get bookings using queries to filter
-      .subscribe(result => this.queryResult = result); // outputs the filtered booking list
+    this.bookingService.getBookings(this.query) // get filtered bookings using queries
+      .subscribe(result => this.queryResult = result); // saves filtered booking list to queryResult
   }
 
-  onFilterChange() { // if select drop down
-    this.query.page = 1; // go back to page 1?
+  onFilterChange() { // filtering
+    this.query.page = 1; // reset, go back to page 1?
     this.populateBookings(); // no need to input parameter, just use 'this'
   }
 
-  resetFilter() {
+  resetFilter() { // filtering
     this.query = {
       page: 1,
       pageSize: this.PAGE_SIZE
@@ -53,8 +53,8 @@ export class BookingListComponent implements OnInit {
     this.populateBookings();
   }
 
-  sortBy(columnName) { // initially table is sort by Id
-    if (this.query.sortBy === columnName) {
+  sortBy(columnName) { // sorting
+    if (this.query.sortBy === columnName) { // initially table is sort by Id
       this.query.isSortAscending = !this.query.isSortAscending; // toggle sort ascending and descending
     } else {
       this.query.sortBy = columnName;
@@ -63,7 +63,7 @@ export class BookingListComponent implements OnInit {
     this.populateBookings();
   }
 
-  onPageChange(page) {
+  onPageChange(page) { // pagination
     this.query.page = page;
     this.populateBookings();
   }

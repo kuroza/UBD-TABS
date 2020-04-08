@@ -8,8 +8,7 @@
     [refresh]="refresh"
     [activeDayIsOpen]="activeDayIsOpen"
     (dayClicked)="dayClicked($event.day)"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
+    (eventClicked)="eventClicked($event)"
     [excludeDays]="excludeDays"
     [weekStartsOn]="weekStartsOn"
   >
@@ -20,7 +19,6 @@
     [events]="events"
     [refresh]="refresh"
     (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
     [excludeDays]="excludeDays"
     [weekStartsOn]="weekStartsOn"
   >
@@ -29,9 +27,10 @@
     *ngSwitchCase="CalendarView.Day"
     [viewDate]="viewDate"
     [events]="events"
+    [dayStartHour]="7"
+    [dayEndHour]="20"
     [refresh]="refresh"
     (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
   >
   </mwl-calendar-day-view>
 </div>
