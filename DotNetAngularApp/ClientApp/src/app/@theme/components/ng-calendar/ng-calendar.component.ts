@@ -92,7 +92,7 @@ export class NgCalendarComponent {
     this.view = view;
   }
 
-  closeOpenMonthViewDay() {
+  closeOpenMonthViewDay() { // for calendar-header.. click next, close slide animation
     this.activeDayIsOpen = false;
   }
 }
