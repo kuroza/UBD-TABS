@@ -1,8 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "noUnusedLocals": true,                /* Report errors on unused locals. */
-    "noUnusedParameters": true,             /* Report errors on unused parameters. */
     "importHelpers": true,
     "module": "esnext",
     "outDir": "./dist/out-tsc",
