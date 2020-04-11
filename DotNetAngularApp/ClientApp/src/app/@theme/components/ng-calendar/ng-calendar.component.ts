@@ -2,25 +2,15 @@ import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef } from '@ang
 import {
   CalendarEvent,
   CalendarEventTitleFormatter,
-  CalendarEventTimesChangedEvent,
   CalendarView,
-  CalendarEventAction,
   DAYS_OF_WEEK
 } from 'angular-calendar';
 import { 
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
   isSameDay,
   isSameMonth,
-  addHours,
 } from 'date-fns';
 import { Subject } from 'rxjs';
 import { CustomEventTitleFormatter } from './custom-event-title-formatter.provider';
-import { colors } from '../calendar-header/colors';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BookingService } from '../../../services/booking.service';
 
 @Component({
@@ -36,35 +26,53 @@ import { BookingService } from '../../../services/booking.service';
   ],
 })
 export class NgCalendarComponent {
-  //excludeDays: number[] = [0, 5];
+
+  // excludeDays: number[] = [0, 5];
   weekStartsOn = DAYS_OF_WEEK.MONDAY;
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
   activeDayIsOpen: boolean = false;
+  date: string;
   refresh: Subject<any> = new Subject();
   events: CalendarEvent[] = [];
-  bookings: any; // bookings: Bookings[];
-  date: string;
+  bookings: any; // ? bookings: Bookings[];
+  startDateTime: any;
+  endDateTime: any;
+  bookDate: any;
+  startTime: any;
+  endTime: any;
 
   constructor(private bookingService: BookingService) {}
 
   async ngOnInit() {
     this.bookings = await this.bookingService.getAllBookings()
-      // .subscribe(result => this.bookings = result); // using Promise instead
+      // .subscribe(result => this.bookings = result); // ! using Promise instead
 
-    for (let booking of this.bookings) {
-      // this.date = formatDate(booking.bookDate, 'medium', 'en-us', 'GMT+8');        
-      this.events = [ // push object into events[]
-        ...this.events,
-        {
-          start: new Date(booking.bookDate),
-          title: booking.purpose,
-          meta: {
-            id: booking.id,
+    for (let b of this.bookings) {
+      var dateFormat = require('dateformat');
+      this.bookDate = dateFormat(b.bookDate, 'yyyy-mm-dd'); // * format date
+
+      for (let timeSlot of b.timeSlots) { // * nested loop for each time slots under each booking
+        var timeFormat = require('dateformat');
+        this.startTime = timeFormat(timeSlot.startTime, 'hh:MM:ss');
+        this.startDateTime = this.bookDate + "T" + this.startTime; // * concat date and time into string
+        this.endTime = timeFormat(timeSlot.endTime, 'hh:MM:ss');
+        this.endDateTime = this.bookDate + "T" + this.endTime;
+
+        this.events = [ // push object into events[]
+          ...this.events,
+          {
+            start: new Date(this.startDateTime),
+            end: new Date(this.endDateTime),
+            title: "Purpose: " + b.purpose + " | Name: " + b.contact.name,
+            meta: {
+              // id: b.id, // * just the id
+              b, // * booking object
+            },
           },
-        },
-      ];
+        ];
+      }
     }
     this.refresh.next(); // refresh calendar after loading
   }
@@ -84,7 +92,7 @@ export class NgCalendarComponent {
   }
 
   eventClicked({ event }: { event: CalendarEvent }): void {
-    // here write code to show clicked event's details on right card
+    // todo: here write code to show clicked event's details on right card
     console.log('Event clicked', event);
   }
 

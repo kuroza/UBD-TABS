@@ -26,5 +26,7 @@ namespace DotNetAngularApp.Controllers
 
             return mapper.Map<List<Room>, List<RoomResource>>(rooms);
         }
+
+        // todo: create a GetRoom(id) method
     }
 }

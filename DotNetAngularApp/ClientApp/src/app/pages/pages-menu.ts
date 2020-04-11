@@ -20,14 +20,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/auth/profile',
       },
       {
-        title: 'Login',
-        link: '/auth/login',
-      },
-      {
-        title: 'Register',
-        link: '/auth/register',
-      },
-      {
         title: 'Request Password',
         link: '/auth/request-password',
       },
@@ -50,16 +42,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'calendar-outline',
     children: [
       {
-        title: 'View calendar',
-        link: '/pages/dashboard',
-      },
-      {
         title: 'Add new booking',
         link: '/pages/bookings/new',
       },
       {
         title: 'View all bookings',
         link: '/pages/bookings',
+      },
+      {
+        title: 'View calendar',
+        link: '/pages/dashboard',
       },
     ],
   },

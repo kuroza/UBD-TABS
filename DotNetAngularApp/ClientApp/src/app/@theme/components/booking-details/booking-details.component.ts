@@ -22,7 +22,7 @@ export class BookingDetailsComponent implements OnInit {
     route.params.subscribe(p => {
       this.bookingId = +p['id']; // get the Id from the route 
       if (isNaN(this.bookingId) || this.bookingId <= 0) { // if bookingId is not a number or less than 1, navigate back
-        router.navigate(['/pages/bookings']); // '/pages//bookings' why were there 2 slashes?
+        router.navigate(['/pages/bookings']); // ? '/pages//bookings' why were there 2 slashes?
         return; 
       }
     });

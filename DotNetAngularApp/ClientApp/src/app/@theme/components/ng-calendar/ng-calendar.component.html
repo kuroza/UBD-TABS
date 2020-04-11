@@ -3,6 +3,7 @@
 >
 </ngx-calendar-header>
 
+
 <div [ngSwitch]="view">
   <mwl-calendar-month-view
     *ngSwitchCase="CalendarView.Month"
@@ -21,6 +22,9 @@
     [events]="events"
     [refresh]="refresh"
     [weekStartsOn]="weekStartsOn"
+    [dayStartHour]="7"
+    [dayEndHour]="20"
+    (eventClicked)="eventClicked($event)"
   >
   </mwl-calendar-week-view>
   <mwl-calendar-day-view
@@ -30,6 +34,7 @@
     [dayStartHour]="7"
     [dayEndHour]="20"
     [refresh]="refresh"
+    (eventClicked)="eventClicked($event)"
   >
   </mwl-calendar-day-view>
 </div>

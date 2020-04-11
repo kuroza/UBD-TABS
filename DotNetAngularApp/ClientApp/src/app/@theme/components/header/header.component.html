@@ -6,6 +6,7 @@
     <img src="assets/images/ubd-logo.png" width="38">
     <a class="logo" href="#" (click)="navigateHome()"><b>Timetable and Booking System</b></a>
   </div>
+  <!-- * Select themes -->
   <!-- <nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
     <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
   </nb-select>
@@ -14,12 +15,14 @@
 
 <div class="header-container">
   <nb-actions size="small">
+    <!-- * Links with icons -->
     <!-- <nb-action class="control-item">
       <nb-search type="rotate-layout"></nb-search>
     </nb-action>
     <nb-action class="control-item" icon="email-outline"></nb-action>
     <nb-action class="control-item" icon="bell-outline"></nb-action> -->
 
+    <!-- todo: Add user name/email to menu -->
     <!-- <nb-action class="user-action" *nbIsGranted="['view', 'user']" >
       <nb-user [nbContextMenu]="userMenu"
                [onlyPicture]="userPictureOnly"
@@ -27,7 +30,13 @@
                [picture]="user?.picture">
       </nb-user>
     </nb-action> -->
+    
   </nb-actions>
-  <button class="btn btn-primary" (click)="auth.login()" *ngIf="!auth.loggedIn">Log In</button>
-  <button class="btn btn-outline-secondary" (click)="auth.logout()" *ngIf="auth.loggedIn">Log Out</button>
+  <button class="mr-4" nbButton status="primary" (click)="auth.login()" *ngIf="!auth.loggedIn">Log In</button>
+  <button class="mr-4" nbButton outline status="primary" 
+    nbContextMenuTrigger="hover" [nbContextMenu]="userMenu"
+    (click)="auth.logout()" *ngIf="auth.loggedIn"
+    >
+    Zakwan
+  </button>
 </div>

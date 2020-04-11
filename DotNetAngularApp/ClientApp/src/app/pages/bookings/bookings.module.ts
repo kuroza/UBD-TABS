@@ -3,8 +3,7 @@ import { PaginationComponent } from './../../@theme/components/shared/pagination
 import { RouterModule } from '@angular/router';
 import { BookingFormModule } from '../../@theme/components/booking-form/booking-form.module';
 import { NewBookingComponent } from './new-booking/new-booking.component';
-import { NgbdTablePaginationModule } from '../../@theme/components/table-pagination/table-pagination.module';
-import { NbCardModule, NbTabsetModule, NbIconModule } from '@nebular/theme';
+import { NbCardModule, NbTabsetModule, NbIconModule, NbButtonModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
@@ -14,20 +13,20 @@ import { BookingDetailsModule } from '../../@theme/components/booking-details/bo
 @NgModule({
   imports: [
     NbCardModule,
+    NbButtonModule,
+    NbTabsetModule,
+    NbIconModule,
     ThemeModule,
     FormsModule,
-    NbTabsetModule,
-    NgbdTablePaginationModule,
-    BookingFormModule,
     RouterModule,
-    NbIconModule,
+    BookingFormModule,
     BookingDetailsModule
   ],
   declarations: [
     BookingListComponent,
     NewBookingComponent,
+    ViewBookingComponent,
     PaginationComponent,
-    ViewBookingComponent
   ],
 })
 export class BookingsModule { }

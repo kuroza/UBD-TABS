@@ -100,11 +100,11 @@
             placeholder="e.g. LE-1503">
           </div>
           <div *ngIf="!booking.id">
-            <button class="btn btn-primary" [disabled]="!f.valid">Book</button>
+            <button nbButton fullWidth status="success" [disabled]="!f.valid">Book</button>
           </div>
           <div *ngIf="booking.id">
-            <button class="btn btn-primary" [disabled]="!f.valid">Save</button>
-            <!-- <button  class="btn btn-danger" type="button" (click)="delete()">Delete</button> -->
+            <button nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>
+            <!-- ? <button  class="btn btn-danger" type="button" (click)="delete()">Delete</button> -->
           </div>
         </nb-card-body>
       </nb-card>

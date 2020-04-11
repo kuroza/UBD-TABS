@@ -5,8 +5,8 @@ import { ToastyService } from 'ng2-toasty';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/Observable/forkJoin';
-import { SaveBooking, Booking } from '../../../models/booking';
-import { NgbDateStruct, NgbCalendar, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { SaveBooking } from '../../../models/booking';
+import { NgbDateStruct, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { formatDate } from '@angular/common';
 
 @Injectable() // ng material datepicker
@@ -106,13 +106,13 @@ export class BookingFormComponent implements OnInit {
         this.setBooking(data[2]);
         this.populateRooms(); // room is populated on the building of this booking
       }
-    }, err => { // i think this error is already implemented
+    }, err => { // ? i think this error is already implemented
       if (err.status == 404)
         this.router.navigate(['/']);
     });
   }
 
-  private setBooking(b) { // 'b: Booking', no need?
+  private setBooking(b) { // ? 'b: Booking', no need?
     this.booking.id = b.id;
     this.booking.buildingId = b.building.id;
     this.booking.roomId = b.room.id;
@@ -139,7 +139,7 @@ export class BookingFormComponent implements OnInit {
 
   private populateRooms() { // private because it is an implementation detail, don't want to expose it outside
     var selectedBuilding = this.buildings.find(b => b.id == this.booking.buildingId); // get the selected building from db
-    this.rooms = selectedBuilding ? selectedBuilding.rooms : []; // get the rooms as well?
+    this.rooms = selectedBuilding ? selectedBuilding.rooms : []; // ? get the rooms as well?
   }
 
   submit() {
@@ -152,8 +152,8 @@ export class BookingFormComponent implements OnInit {
         showClose: true,
         timeout: 5000
       });
-      // fix after success adding authentication
-      // this.router.navigate(['/pages/bookings/', booking.id]); // this.booking.id?
+      // todo: fix after success adding authentication
+      // * this.router.navigate(['/pages/bookings/', booking.id]); // this.booking.id?
     });
   }
 }

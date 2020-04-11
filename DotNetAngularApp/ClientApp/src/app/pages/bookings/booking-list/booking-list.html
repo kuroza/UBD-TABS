@@ -6,7 +6,7 @@
 <nb-card>
   <nb-card-body>
     <p *ngIf="auth.loggedIn"> <!-- change to auth.authenticated() -->
-      <button [routerLink]="['/pages/bookings/new']" class="btn btn-primary">New booking</button>
+      <button [routerLink]="['/pages/bookings/new']" nbButton status="primary">New booking</button>
     </p>
     <div class="card card-body bg-light">
       <div class="form-inline">
@@ -19,7 +19,7 @@
             <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
           </select>
         </div>
-        <button class="btn btn-secondary mb-2" (click)="resetFilter()">Reset</button>
+        <button class="mb-2" nbButton status="basic" (click)="resetFilter()">Reset</button>
       </div>
     </div>
     <br>
@@ -46,7 +46,11 @@
           <td>{{ b.id }}</td>
           <td>{{ b.building.name }}</td>
           <td>{{ b.room.name }}</td>
-          <td>{{ b.bookDate | date:'longDate' }}</td>
+          <td>{{ b.bookDate | date:'dd MMMM yyyy' }}</td>
+          <!-- todo: Figure out how to display times in table -->
+          <!-- <ul>
+            <li *ngFor="let timeSlot of b.timeSlots">{{ timeSlot.startTime | date:'shortTime' }}-{{ timeSlot.endTime | date:'shortTime' }}</li>
+          </ul> -->
           <td>{{ b.contact.name }}</td>
           <td>
             <a [routerLink]="['/pages/bookings/', b.id]">View</a>

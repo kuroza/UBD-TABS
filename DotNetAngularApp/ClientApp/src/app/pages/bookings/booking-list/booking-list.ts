@@ -25,8 +25,7 @@ export class BookingListComponent implements OnInit {
   
   constructor( // injecting service
     private bookingService: BookingService, 
-    public auth: AuthService
-  ) { }
+    public auth: AuthService) { }
 
   ngOnInit() { // when the page starts
     this.bookingService.getBuildings() // get the buildings from service for filter drop down
