@@ -8,6 +8,7 @@ import 'rxjs/add/Observable/forkJoin';
 import { SaveBooking } from '../../../models/booking';
 import { NgbDateStruct, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { formatDate } from '@angular/common';
+import { FormControl } from '@angular/forms';
 
 @Injectable() // ng material datepicker
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -18,8 +19,8 @@ export class CustomAdapter extends NgbDateAdapter<string> {
     if (value) {
       let date = value.split(this.DELIMITER);
       return {
-        month : parseInt(date[0], 10),
-        day : parseInt(date[1], 10),
+        day : parseInt(date[0], 10),
+        month : parseInt(date[1], 10),
         year : parseInt(date[2], 10)
       };
     }
@@ -27,7 +28,7 @@ export class CustomAdapter extends NgbDateAdapter<string> {
   }
 
   toModel(date: NgbDateStruct | null): string | null {
-    return date ? date.month + this.DELIMITER + date.day + this.DELIMITER + date.year : null;
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
   }
 }
 
@@ -40,8 +41,8 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
     if (value) {
       let date = value.split(this.DELIMITER);
       return {
-        month : parseInt(date[0], 10),
-        day : parseInt(date[1], 10),
+        day : parseInt(date[0], 10),
+        month : parseInt(date[1], 10),
         year : parseInt(date[2], 10)
       };
     }
@@ -49,7 +50,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   }
 
   format(date: NgbDateStruct | null): string {
-    return date ? date.month + this.DELIMITER + date.day + this.DELIMITER + date.year : '';
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
   }
 }
 
@@ -122,7 +123,7 @@ export class BookingFormComponent implements OnInit {
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
   }
 
-  onTimeSlotToggle(timeSlotId, $event) {
+  onTimeSlotToggle(timeSlotId, $event) { // ! UNDERSTAND THIS CODE
     if ($event.target.checked) // if this check box is checked, push this Id into TimeSlots array
       this.booking.timeSlots.push(timeSlotId);
     else {

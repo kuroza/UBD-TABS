@@ -41,7 +41,7 @@ export class BookingListComponent implements OnInit {
 
   onFilterChange() { // filtering
     this.query.page = 1; // reset, go back to page 1?
-    this.populateBookings(); // no need to input parameter, just use 'this'
+    this.populateBookings(); // query.buildingId selected from view sent to this.query
   }
 
   resetFilter() { // filtering

@@ -3,7 +3,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // for binding forms
 import { BookingFormComponent, CustomAdapter, CustomDateParserFormatter } from './booking-form.component';
-import { NbDatepickerModule, NbCardModule, NbButtonModule } from '@nebular/theme';
+import { NbDatepickerModule, NbCardModule, NbButtonModule, NbCheckboxModule, NbInputModule, NbSelectModule } from '@nebular/theme';
 
 @NgModule({
   imports: [
@@ -12,7 +12,10 @@ import { NbDatepickerModule, NbCardModule, NbButtonModule } from '@nebular/theme
     NbDatepickerModule, 
     NbCardModule, 
     NgbModule,
-    NbButtonModule
+    NbButtonModule,
+    NbCheckboxModule,
+    NbInputModule,
+    NbSelectModule,
   ],
   declarations: [BookingFormComponent],
   exports: [BookingFormComponent],

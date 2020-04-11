@@ -11,11 +11,12 @@
       <nb-card-body>
         <nb-tabset>
           <nb-tab tabTitle="Details">
+            <!-- todo: Put booking details here -->
             <!-- <ngx-booking-details></ngx-booking-details> -->
           </nb-tab>
           <nb-tab tabTitle="Edit" *ngIf="auth.loggedIn">
-            <button class="btn btn-info">Edit</button>
-            <button class="btn btn-danger">Delete</button>
+            <button nbButton status="primary">Edit</button>
+            <button nbButton status="danger">Delete</button>
           </nb-tab>
          </nb-tabset>
       </nb-card-body>

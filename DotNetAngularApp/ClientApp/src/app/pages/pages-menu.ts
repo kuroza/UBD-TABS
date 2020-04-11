@@ -11,28 +11,29 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/dashboard',
     home: true,
   },
-  {
-    title: 'User',
-    icon: 'lock-outline',
-    children: [
-      {
-        title: 'Profile',
-        link: '/auth/profile',
-      },
-      {
-        title: 'Request Password',
-        link: '/auth/request-password',
-      },
-      {
-        title: 'Reset Password',
-        link: '/auth/reset-password',
-      },
-    ],
-  },
-  {
-    title: 'Settings',
-    icon: 'settings-outline',
-  },
+  // * Account settings on sidebar
+  // {
+  //   title: 'User',
+  //   icon: 'lock-outline',
+  //   children: [
+  //     {
+  //       title: 'Profile',
+  //       link: '/auth/profile',
+  //     },
+  //     {
+  //       title: 'Request Password',
+  //       link: '/auth/request-password',
+  //     },
+  //     {
+  //       title: 'Reset Password',
+  //       link: '/auth/reset-password',
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: 'Settings',
+  //   icon: 'settings-outline',
+  // },
   {
     title: 'Admin',
     group: true,

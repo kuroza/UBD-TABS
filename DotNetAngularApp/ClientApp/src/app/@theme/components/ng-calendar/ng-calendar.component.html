@@ -3,6 +3,19 @@
 >
 </ngx-calendar-header>
 
+<!-- todo: Filter by building and room -->
+<!-- <div class="form-inline">
+  <div class="form-group mb-2">
+    <label for="building">Filter building:</label>
+  </div>
+  <div class="form-group mx-sm-3 mb-2">
+    <select name="building" id="" class="form-control" [(ngModel)]="query.buildingId" (change)="onFilterChange()">
+      <option value=""></option>
+      <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
+    </select>
+  </div>
+  <button class="mb-2" nbButton status="basic" (click)="resetFilter()">Reset</button>
+</div> -->
 
 <div [ngSwitch]="view">
   <mwl-calendar-month-view
