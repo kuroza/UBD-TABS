@@ -17,10 +17,6 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
-  // async getAllBookings() {
-  //   return await this.http.get(this.bookingsEndpoint).toPromise();
-  // }
-
   async getAllBookings() {
     return this.http.get('/api/allbookings').toPromise();
       // .pipe(map(response => response));
@@ -31,7 +27,7 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
-  toQueryString(obj) { // what is this query used for?
+  toQueryString(obj) { // * for multiple query strings eg. 'buildingId=1&roomId=2'
     var parts = [];
     for (var property in obj) {
       var value = obj[property];

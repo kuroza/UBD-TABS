@@ -34,7 +34,7 @@ export class NgCalendarComponent {
   viewDate: Date = new Date();
   activeDayIsOpen: boolean = false;
   date: string;
-  refresh: Subject<any> = new Subject();
+  refresh: Subject<any> = new Subject(); // ? Subject()
   events: CalendarEvent[] = [];
   bookings: any; // ? bookings: Bookings[];
   startDateTime: any;
@@ -42,13 +42,49 @@ export class NgCalendarComponent {
   bookDate: any;
   startTime: any;
   endTime: any;
+  buildings: any;
+  rooms: any;
+  filter: any = {};
+  allBookings: any;
 
   constructor(private bookingService: BookingService) {}
 
   async ngOnInit() {
-    this.bookings = await this.bookingService.getAllBookings()
-      // .subscribe(result => this.bookings = result); // ! using Promise instead
+    this.bookingService.getBuildings() // get the buildings from service for filter drop down
+      .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
+    
+    // todo: Filter by room
 
+    this.bookings = this.allBookings = await this.bookingService.getAllBookings()
+    // .subscribe(result => this.bookings = result); // ! using Promise instead
+    
+    this.refresh.next(); // refresh calendar after loading
+  }
+
+  onFilterChange() {
+    this.events = []; // reset events after every filter change
+    var bookings = this.allBookings;
+
+    if (this.filter.buildingId == 0) // if none is selected, empty events
+      this.events = [];
+
+    if (this.filter.buildingId)
+      bookings = bookings.filter(b => b.building.id == this.filter.buildingId);
+
+    if (this.filter.roomId)
+      bookings = bookings.filter(b => b.room.id == this.filter.roomId);
+
+    this.bookings = bookings;
+
+    this.populateCalendar();
+  }
+
+  resetFilter() {
+    this.filter = {}; // empty drop down filter
+    this.events = []; // and empty events
+  }
+
+  private populateCalendar() {
     for (let b of this.bookings) {
       var dateFormat = require('dateformat');
       this.bookDate = dateFormat(b.bookDate, 'yyyy-mm-dd'); // * format date
@@ -74,7 +110,14 @@ export class NgCalendarComponent {
         ];
       }
     }
-    this.refresh.next(); // refresh calendar after loading
+    this.refresh.next();
+  }
+
+  onBuildingChange() {
+    var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
+    this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
+    
+    this.refresh.next();
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
