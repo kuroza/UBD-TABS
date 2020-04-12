@@ -14,7 +14,7 @@ namespace DotNetAngularApp.Controllers
     public class BookingsController : Controller
     {
         private readonly IMapper mapper;
-        private readonly IBookingRepository repository; // interface for 
+        private readonly IBookingRepository repository;
         private readonly IUnitOfWork unitOfWork;
         public BookingsController(IMapper mapper, IBookingRepository repository, IUnitOfWork unitOfWork)
         {

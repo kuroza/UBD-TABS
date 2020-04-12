@@ -79,17 +79,20 @@ export class NgCalendarComponent {
 
   resetFilter() {
     this.filter = {}; // empty filter drop down
-    this.events = []; // and empty events
+    this.rooms = []; // clear room drop down filter
+    this.emptyRoomFilter();
   }
 
   onBuildingChange() { // for cascading
     var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
     this.rooms = selectedBuilding ? selectedBuilding.rooms : []; // cascade rooms drop down
+    this.emptyRoomFilter();
+  }
 
+  emptyRoomFilter() {
     this.events = []; // clear events
-    this.filter.rooms = {}; // clear room drop down filter
     delete this.filter.roomId; // clear selected roomId
-    this.refresh.next();
+    this.refresh.next();// refresh calendar after loading
   }
 
   private populateCalendar() {

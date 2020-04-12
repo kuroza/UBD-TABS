@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent {
-  constructor(private auth: AuthService) {}
+  constructor(public auth: AuthService) {} // ? private?
 }

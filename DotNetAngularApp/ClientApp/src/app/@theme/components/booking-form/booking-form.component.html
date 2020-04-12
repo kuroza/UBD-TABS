@@ -71,7 +71,7 @@
               <input id="bookDate" class="form-control" placeholder="dd/mm/yyyy"
                 [(ngModel)]="booking.bookDate" ngbDatepicker name="bookDate" required #bookDate="ngbDatepicker">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary calendar" (click)="bookDate.toggle()" type="button"></button>
+                <button class="fa fa-calendar" (click)="bookDate.toggle()" type="button"></button>
               </div>
             </div>
             <div class="alert alert-danger" *ngIf="bookDate.touched && !bookDate.valid">Please specify the date.</div>

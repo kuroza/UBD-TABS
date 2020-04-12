@@ -17,7 +17,7 @@ export class BookingDetailsComponent implements OnInit {
     private router: Router,
     private toasty: ToastyService,
     private bookingService: BookingService,
-    private auth: AuthService) { 
+    public auth: AuthService) { // ? public?
 
     route.params.subscribe(p => {
       this.bookingId = +p['id']; // get the Id from the route 
