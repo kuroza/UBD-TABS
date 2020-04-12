@@ -52,8 +52,6 @@ export class NgCalendarComponent {
   async ngOnInit() {
     this.bookingService.getBuildings() // get the buildings from service for filter drop down
       .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
-    
-    // todo: Filter by room
 
     this.bookings = this.allBookings = await this.bookingService.getAllBookings()
     // .subscribe(result => this.bookings = result); // ! using Promise instead
@@ -65,7 +63,7 @@ export class NgCalendarComponent {
     this.events = []; // reset events after every filter change
     var bookings = this.allBookings;
 
-    if (this.filter.buildingId == 0) // if none is selected, empty events
+    if (this.filter.buildingId == 0 || this.filter.roomId == 0) // if none is selected, empty events
       this.events = [];
 
     if (this.filter.buildingId)
@@ -80,8 +78,18 @@ export class NgCalendarComponent {
   }
 
   resetFilter() {
-    this.filter = {}; // empty drop down filter
+    this.filter = {}; // empty filter drop down
     this.events = []; // and empty events
+  }
+
+  onBuildingChange() { // for cascading
+    var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
+    this.rooms = selectedBuilding ? selectedBuilding.rooms : []; // cascade rooms drop down
+
+    this.events = []; // clear events
+    this.filter.rooms = {}; // clear room drop down filter
+    delete this.filter.roomId; // clear selected roomId
+    this.refresh.next();
   }
 
   private populateCalendar() {
@@ -110,13 +118,6 @@ export class NgCalendarComponent {
         ];
       }
     }
-    this.refresh.next();
-  }
-
-  onBuildingChange() {
-    var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
-    this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
-    
     this.refresh.next();
   }
 

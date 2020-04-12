@@ -10,23 +10,23 @@
       <label for="building">Filter building</label>
     </div>
     <div class="form-group mx-sm-3 mb-2">
-      <select name="buildingId" id="building" class="form-control" [(ngModel)]="filter.buildingId" (change)="onFilterChange()" (change)="onBuildingChange()"> <!-- [(ngModel)]="query.buildingId" (change)="onFilterChange()" -->
+      <select name="buildingId" id="building" class="form-control" [(ngModel)]="filter.buildingId" (change)="onBuildingChange()"> <!-- [(ngModel)]="query.buildingId" (change)="onFilterChange()" -->
         <option value="0"></option>
         <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
       </select>
     </div>
   </div>
-  <!-- <div class="form-inline">
+  <div class="form-inline">
     <div class="form-group mb-2">
       <label for="room">Filter room</label>
     </div>
     <div class="form-group mx-sm-3 mb-2">
-      <select name="roomId" id="room" class="form-control" [(ngModel)]="filter.roomId">
+      <select name="roomId" id="room" class="form-control" [(ngModel)]="filter.roomId" (change)="onFilterChange()">
         <option value="0"></option>
         <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
       </select>
     </div>
-  </div> -->
+  </div>
   <button class="mb-2" nbButton status="basic" (click)="resetFilter()">Reset</button>
 </div>
 <br>
