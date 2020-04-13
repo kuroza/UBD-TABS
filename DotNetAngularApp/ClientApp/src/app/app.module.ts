@@ -27,11 +27,11 @@ import {
 } from '@nebular/theme';
 import { AppErrorHandler } from './app.error-handler';
 
-import * as Sentry from "@sentry/browser";
+// import * as Sentry from "@sentry/browser";
 
-Sentry.init({
-  dsn: "https://c911f2c6b01742fd83e853133d6a4b06@sentry.io/5182636"
-});
+// Sentry.init({
+//   dsn: "https://c911f2c6b01742fd83e853133d6a4b06@sentry.io/5182636"
+// });
 
 @NgModule({
   declarations: [AppComponent],
