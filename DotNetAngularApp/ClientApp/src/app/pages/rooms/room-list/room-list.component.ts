@@ -1,12 +1,12 @@
-import { BookingService } from './../../../services/booking.service';
+import { BookingService } from '../../../services/booking.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ngx-view-rooms',
-  templateUrl: './view-rooms.component.html',
-  styleUrls: ['./view-rooms.component.scss']
+  templateUrl: './room-list.component.html',
+  styleUrls: ['./room-list.component.scss']
 })
-export class ViewRoomsComponent implements OnInit {
+export class RoomListComponent implements OnInit {
   building: any;
   buildings: any;
 
@@ -18,7 +18,6 @@ export class ViewRoomsComponent implements OnInit {
   }
 
   // viewOnClick(id) {
-  //   this.bookingService.getBuilding(id)
-  //     .subscribe(building => this.building = building);
+  //   get roomId from template
   // }
 }

@@ -1,14 +1,14 @@
-import { AuthService } from './../../../services/auth.service';
-import { BookingService } from './../../../services/booking.service';
+import { AuthService } from '../../../services/auth.service';
+import { BookingService } from '../../../services/booking.service';
 import { ToastyService } from 'ng2-toasty';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-    selector: 'ngx-booking-details',
-    templateUrl: 'booking-details.component.html'
+    selector: 'ngx-room-details',
+    templateUrl: 'room-details.component.html'
 })
-export class BookingDetailsComponent implements OnInit {
+export class RoomDetailsComponent implements OnInit {
   booking: any; // store all the booking details here
   bookingId: number; // store bookingId from route
 
@@ -19,6 +19,7 @@ export class BookingDetailsComponent implements OnInit {
     private bookingService: BookingService,
     public auth: AuthService) { // ? public?
 
+    // * retrieve the id from route
     route.params.subscribe(p => {
       this.bookingId = +p['id']; // get the Id from the route 
       if (isNaN(this.bookingId) || this.bookingId <= 0) { // if bookingId is not a number or less than 1, navigate back
@@ -29,6 +30,8 @@ export class BookingDetailsComponent implements OnInit {
   }
 
   ngOnInit() { 
+    // todo: Add getBuilding(id) in service
+    // * get the building of id==id from server
     this.bookingService.getBooking(this.bookingId)
       .subscribe(
         b => this.booking = b, // store the booking details from db to this.booking

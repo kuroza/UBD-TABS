@@ -57,6 +57,8 @@ export class BookingService {
     return this.http.get('/api/buildings')
       .pipe(map(response => response));
   }
+
+  // todo: getBuilding(id) {}
   
   getRooms() {
     return this.http.get('/api/rooms')

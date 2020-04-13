@@ -1,9 +1,14 @@
+import { RoomFormModule } from './../../@theme/components/room-form/room-form.module';
+import { NewRoomComponent } from './new-room/new-room.component';
 import { NbCardModule, NbTabsetModule, NbAccordionModule, NbButtonModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
-import { ViewRoomsComponent } from './view-rooms/view-rooms.component';
+import { RoomListComponent } from './room-list/room-list.component';
 import { RouterModule } from '@angular/router';
+import { ViewRoomComponent } from './view-room/view-room';
+import { RoomDetailsModule } from '../../@theme/components/room-details/room-details.module';
+import { RoomDetailsComponent } from '../../@theme/components/room-details/room-details.component';
 
 @NgModule({
     imports: [
@@ -13,10 +18,14 @@ import { RouterModule } from '@angular/router';
       NbButtonModule,
       ThemeModule,
       FormsModule,
-      RouterModule
+      RouterModule,
+      RoomFormModule,
+      RoomDetailsModule
     ],
     declarations: [
-      ViewRoomsComponent,
+      RoomListComponent,
+      NewRoomComponent,
+      ViewRoomComponent,
     ],
   })
   export class RoomsModule { }

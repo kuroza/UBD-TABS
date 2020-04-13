@@ -30,7 +30,7 @@
               <tr *ngFor="let room of b.rooms">
                 <th scope="row">{{ room.name }}</th>
                 <td>{{ room.capacity }}</td>
-                <td>View</td>
+                <td><a [routerLink]="['/pages/rooms/edit/', room.id]">View</a></td> <!-- todo: bind view to right panel or page -->
               </tr>
             </tbody>
           </table>

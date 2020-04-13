@@ -1,13 +1,13 @@
-<nb-card>
+<!-- <nb-card>
   <nb-card-body>
     <h3>Dashboard</h3>
   </nb-card-body>
-</nb-card>
+</nb-card> -->
 <div class="row">
   <div class="col-md-8">
     <nb-card>
       <nb-card-body>
-        <ngx-calendar></ngx-calendar>
+        <ngx-calendar (selectedBookingId)="onEventClicked($event)"></ngx-calendar>
       </nb-card-body>
     </nb-card>
   </div>
@@ -15,15 +15,44 @@
     <nb-card>
       <nb-card-body>
         <nb-tabset>
-          <nb-tab *ngIf="auth.loggedIn" tabTitle="Add new booking">
-            <!-- todo: Put add booking here -->
-            <!-- <ngx-booking-form></ngx-booking-form> -->
-          </nb-tab>
           <nb-tab tabTitle="Details">
-            <!-- todo: Put booking details here-->
-            <!-- <ngx-booking-details></ngx-booking-details> -->
-              <button class="mr-2" nbButton status="primary">Edit</button>
-              <button nbButton status="danger">Delete</button>
+            <!-- todo: onEventClicked, open this tab -->
+            <div *ngIf="!booking">
+              <p>Select a booking event from the calendar to show details.</p>
+            </div>
+            <div *ngIf="booking">
+              <h6>Contact details</h6>
+              <ul>
+                <li>Name: {{ booking.contact.name }}</li>
+                <li>Phone: {{ booking.contact.phone }}</li>
+                <li>Email: {{ booking.contact.email }}</li>
+              </ul>
+              <h6>Venue</h6>
+              <ul>
+                <li>Building: {{ booking.building.name }}</li>
+                <li>Room: {{ booking.room.name }}</li>
+                <li>Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}</li>
+                <li>Purpose: {{ booking.purpose }}</li>
+              </ul>
+              <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                  <b>Booked time slots</b>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>
+                </ul>
+              </div>
+              <br />
+              <p>
+                <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+                <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="danger" (click)="delete()">Delete</button>
+                <button nbButton status="warning" [routerLink]="['/pages/bookings']">View all</button>
+              </p>
+            </div>
+          </nb-tab>
+          <nb-tab *ngIf="auth.loggedIn" tabTitle="Add booking">
+            <!-- todo: Put booking-form here -->
+            <!-- <ngx-booking-form></ngx-booking-form> -->
           </nb-tab>
          </nb-tabset>
       </nb-card-body>

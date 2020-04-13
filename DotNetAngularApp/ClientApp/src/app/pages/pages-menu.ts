@@ -62,7 +62,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Add room',
-        link: '/pages/rooms',
+        link: '/pages/rooms/new',
       },
       {
         title: 'View all rooms',

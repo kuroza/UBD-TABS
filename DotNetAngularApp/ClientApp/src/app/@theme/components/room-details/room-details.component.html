@@ -1,4 +1,5 @@
 <div *ngIf="booking">
+  <!-- todo: Here display all room details -->
   <h6>Contact details:</h6>
   <ul>
     <li>Name: {{ booking.contact.name }}</li>
@@ -23,8 +24,8 @@
 
   <br />
   <p>
-    <button *ngIf="auth.loggedIn" class="mx-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+    <button *ngIf="auth.loggedIn" class="mx-2" nbButton status="primary" [routerLink]="['/pages/rooms/edit/', booking.id]">Edit</button>
     <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="danger" (click)="delete()">Delete</button>
-    <button nbButton status="warning" [routerLink]="['/pages/bookings']">View All Bookings</button>
+    <button nbButton status="warning" [routerLink]="['/pages/rooms']">View all rooms</button>
   </p>
 </div>

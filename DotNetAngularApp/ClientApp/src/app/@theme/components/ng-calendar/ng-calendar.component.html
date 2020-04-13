@@ -1,35 +1,33 @@
+<br>
 <ngx-calendar-header 
   [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()"
 >
 </ngx-calendar-header>
 
-<!-- todo: Filter by building and room -->
-<div class="card card-body bg-light">
-  <div class="form-inline">
-    <div class="form-group mb-2">
-      <label for="building">Filter building</label>
-    </div>
-    <div class="form-group mx-sm-3 mb-2">
-      <select name="buildingId" id="building" class="form-control" [(ngModel)]="filter.buildingId" (change)="onBuildingChange()"> <!-- [(ngModel)]="query.buildingId" (change)="onFilterChange()" -->
-        <option value="0"></option>
-        <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
-      </select>
-    </div>
-  </div>
-  <div class="form-inline">
-    <div class="form-group mb-2">
-      <label for="room">Filter room</label>
-    </div>
-    <div class="form-group mx-sm-3 mb-2">
-      <select name="roomId" id="room" class="form-control" [(ngModel)]="filter.roomId" (change)="onFilterChange()">
-        <option value="0"></option>
-        <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
-      </select>
-    </div>
-  </div>
-  <button class="mb-2" nbButton status="basic" (click)="resetFilter()">Reset</button>
-</div>
-<br>
+<!-- <div class="card card-body bg-light"> -->
+  <nb-card status="primary">
+    <nb-card-header>Filter by building and room</nb-card-header>
+    <nb-card-body>
+      <div class="form-inline">
+        <div class="form-group">
+          <div class="mr-2">
+            <select style="width: 28rem;" name="buildingId" id="building" class="form-control" [(ngModel)]="filter.buildingId" (change)="onBuildingChange()"> <!-- [(ngModel)]="query.buildingId" (change)="onFilterChange()" -->
+              <option value="0"></option>
+              <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
+            </select>
+          </div>
+          <div class="mr-2">
+            <select style="width: 11rem;" name="roomId" id="room" class="form-control" [(ngModel)]="filter.roomId" (change)="onFilterChange()">
+              <option value="0"></option>
+              <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
+            </select>
+          </div>
+          <button nbButton status="basic" (click)="resetFilter()">Reset</button>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+  <!-- </div> -->
 
 <div [ngSwitch]="view">
   <mwl-calendar-month-view

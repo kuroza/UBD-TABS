@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, Output, EventEmitter } from '@angular/core';
 import {
   CalendarEvent,
   CalendarEventTitleFormatter,
@@ -12,6 +12,7 @@ import {
 import { Subject } from 'rxjs';
 import { CustomEventTitleFormatter } from './custom-event-title-formatter.provider';
 import { BookingService } from '../../../services/booking.service';
+import { colors } from '../calendar-header/colors';
 
 @Component({
   selector: 'ngx-calendar',
@@ -60,6 +61,7 @@ export class NgCalendarComponent {
   }
 
   onFilterChange() {
+    this.activeDayIsOpen = false;
     this.events = []; // reset events after every filter change
     var bookings = this.allBookings;
 
@@ -90,6 +92,7 @@ export class NgCalendarComponent {
   }
 
   emptyRoomFilter() {
+    this.activeDayIsOpen = false;
     this.events = []; // clear events
     delete this.filter.roomId; // clear selected roomId
     this.refresh.next();// refresh calendar after loading
@@ -113,9 +116,10 @@ export class NgCalendarComponent {
             start: new Date(this.startDateTime),
             end: new Date(this.endDateTime),
             title: "Purpose: " + b.purpose + " | Name: " + b.contact.name,
+            color: colors.yellow,
             meta: {
-              // id: b.id, // * just the id
-              b, // * booking object
+              id: b.id, // * just the id
+              // b, // * booking object
             },
           },
         ];
@@ -138,10 +142,16 @@ export class NgCalendarComponent {
     }
   }
 
+  @Output() selectedBookingId = new EventEmitter<number>();
+  
   eventClicked({ event }: { event: CalendarEvent }): void {
-    // todo: here write code to show clicked event's details on right card
-    console.log('Event clicked', event);
+    this.selectedBookingId.emit(event.meta.id);
   }
+
+  // eventClicked({ event }: { event: CalendarEvent }): void {
+  //   this.selectedBookingId = event.meta.id; // * gets the bookingId when event is clicked
+  //   console.log('Event clicked', this.selectedBookingId);
+  // }
 
   setView(view: CalendarView) {
     this.view = view;
