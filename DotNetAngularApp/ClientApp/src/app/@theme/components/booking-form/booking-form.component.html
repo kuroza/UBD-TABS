@@ -89,25 +89,25 @@
           <!-- Contact from -->
           <div class="form-group">
             <label for="contactName">Name *</label>
-            <input id="contactName" type="text" nbInput fullWidth [(ngModel)]="booking.contact.name"
+            <input id="contactName" type="text" class="form-control" [(ngModel)]="booking.contact.name"
               name="contactName" placeholder="Name" placeholder="e.g. Nora Danish" required #contactName="ngModel"> <!-- * class="form-control" -->
             <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">Please specify the name.
             </div>
           </div>
           <div class="form-group">
             <label for="contactEmail">Email</label>
-            <input id="contactEmail" type="text" nbInput fullWidth [(ngModel)]="booking.contact.email"
+            <input id="contactEmail" type="text" class="form-control" [(ngModel)]="booking.contact.email"
               name="contactEmail" placeholder="e.g. nora@ubd.com.com">
           </div>
           <div class="form-group">
             <label for="contactPhone">Phone</label>
-            <input id="contactPhone" type="text" nbInput fullWidth [(ngModel)]="booking.contact.phone"
+            <input id="contactPhone" type="text" class="form-control" [(ngModel)]="booking.contact.phone"
               name="contactPhone" placeholder="e.g. +673-2226111">
           </div>
           <!-- Purpose form -->
           <div class="form-group">
             <label for="purpose">Purpose</label>
-            <input id="purpose" type="text" nbInput fullWidth [(ngModel)]="booking.purpose" name="purpose" 
+            <input id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose" 
             placeholder="e.g. LE-1503">
           </div>
           <div *ngIf="!booking.id">

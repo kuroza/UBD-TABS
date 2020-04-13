@@ -1,4 +1,4 @@
-import { NbButtonModule, NbCardModule } from '@nebular/theme';
+import { NbButtonModule, NbCardModule, NbSelectModule } from '@nebular/theme';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
       NgbModalModule,
       NbButtonModule,
       NbCardModule,
+      NbSelectModule,
       CalendarModule.forRoot({
         provide: DateAdapter,
         useFactory: adapterFactory,

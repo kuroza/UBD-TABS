@@ -4,20 +4,21 @@
 >
 </ngx-calendar-header>
 
-<!-- <div class="card card-body bg-light"> -->
-  <nb-card status="primary">
-    <nb-card-header>Filter by building and room</nb-card-header>
+<!-- <div class="card card-body text-white bg-success">
+  <label><b>Filter calendar by building and room</b></label> -->
+  <nb-card status="info">
+    <nb-card-header>Filter calendar by building and room</nb-card-header>
     <nb-card-body>
       <div class="form-inline">
         <div class="form-group">
           <div class="mr-2">
-            <select style="width: 28rem;" name="buildingId" id="building" class="form-control" [(ngModel)]="filter.buildingId" (change)="onBuildingChange()"> <!-- [(ngModel)]="query.buildingId" (change)="onFilterChange()" -->
+            <select style="width: 28rem;" name="buildingId" id="building" class="form-control" [(ngModel)]="filter.buildingId" (change)="onBuildingChange()">
               <option value="0"></option>
               <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
             </select>
           </div>
           <div class="mr-2">
-            <select style="width: 11rem;" name="roomId" id="room" class="form-control" [(ngModel)]="filter.roomId" (change)="onFilterChange()">
+            <select style="width: 12rem;" name="roomId" id="room" class="form-control" [(ngModel)]="filter.roomId" (change)="onFilterChange()">
               <option value="0"></option>
               <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
             </select>
@@ -27,7 +28,8 @@
       </div>
     </nb-card-body>
   </nb-card>
-  <!-- </div> -->
+<!-- </div> -->
+<!-- <br> -->
 
 <div [ngSwitch]="view">
   <mwl-calendar-month-view
