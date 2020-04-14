@@ -1,5 +1,6 @@
 import { BookingService } from '../../../services/booking.service';
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'ngx-view-rooms',
@@ -10,7 +11,9 @@ export class RoomListComponent implements OnInit {
   building: any;
   buildings: any;
 
-  constructor(private bookingService: BookingService) { }
+  constructor(
+    private bookingService: BookingService,
+    public auth: AuthService) { }
 
   ngOnInit() {
     this.bookingService.getBuildings()

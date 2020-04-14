@@ -32,12 +32,9 @@
     </nb-action> -->
     
   </nb-actions>
-  <button class="mr-4" nbButton status="primary" (click)="auth.login()" *ngIf="!auth.loggedIn">Log In</button>
-  <button class="mr-4" nbButton outline status="primary" 
-    nbContextMenuTrigger="hover" [nbContextMenu]="userMenu"
-    *ngIf="auth.loggedIn"
-    >
+  <button *ngIf="!auth.loggedIn" class="mr-4" nbButton status="primary" (click)="auth.login()" shape="round">Login</button>
+  <button *ngIf="auth.loggedIn" class="mr-4" nbButton outline status="primary" 
+    nbContextMenuTrigger="hover" [nbContextMenu]="userMenu" shape="round">
     Zakwan
   </button> <!-- todo: Insert username instead -->
-  <!-- (click)="auth.logout()" -->
 </div>

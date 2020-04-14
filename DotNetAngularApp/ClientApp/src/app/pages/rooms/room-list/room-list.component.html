@@ -57,9 +57,13 @@
               </p>
             </div>
           </nb-tab>
-          <nb-tab tabTitle="Edit">
+          <nb-tab *ngIf="!auth.loggedIn" disabled tabTitle="Edit">
           </nb-tab>
-          <nb-tab tabTitle="Add">
+          <nb-tab *ngIf="auth.loggedIn" tabTitle="Edit">
+          </nb-tab>
+          <nb-tab *ngIf="!auth.loggedIn" disabled tabTitle="Add">
+          </nb-tab>
+          <nb-tab *ngIf="auth.loggedIn" tabTitle="Add">
           </nb-tab>
          </nb-tabset>
       </nb-card-body>

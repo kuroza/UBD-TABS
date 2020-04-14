@@ -51,6 +51,8 @@
               </p>
             </div>
           </nb-tab>
+          <nb-tab *ngIf="!auth.loggedIn" tabTitle="Add booking" disabled>
+          </nb-tab>
           <nb-tab *ngIf="auth.loggedIn" tabTitle="Add booking">
             <!-- todo: Put booking-form here -->
             <!-- <ngx-booking-form></ngx-booking-form> -->
