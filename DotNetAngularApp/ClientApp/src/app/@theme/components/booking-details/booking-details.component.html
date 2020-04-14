@@ -1,17 +1,17 @@
 <div *ngIf="booking">
-  <h6>Contact details:</h6>
-  <ul>
-    <li>Name: {{ booking.contact.name }}</li>
-    <li>Phone: {{ booking.contact.phone }}</li>
-    <li>Email: {{ booking.contact.email }}</li>
-  </ul>
-  <h6>Venue:</h6>
-  <ul>
-    <li>Building: {{ booking.building.name }}</li>
-    <li>Room: {{ booking.room.name }}</li>
-    <li>Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}</li>
-    <li>Purpose: {{ booking.purpose }}</li>
-  </ul>
+  <h6>Contact details</h6>
+  <p>
+    Name: {{ booking.contact.name }}<br>
+    Phone: {{ booking.contact.phone }}<br>
+    Email: {{ booking.contact.email }}<br>
+  </p>
+  <h6>Venue</h6>
+  <p>
+    Building: {{ booking.building.name }}<br>
+    Room: {{ booking.room.name }}<br>
+    Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
+    Purpose: {{ booking.purpose }}<br>
+  </p>
   <div class="card" style="width: 18rem;">
     <div class="card-header">
       Booked time slots

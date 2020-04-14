@@ -42,16 +42,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
     { title: 'Account', link: '/pages/user/account' }, 
     { title: 'Reset password', link: '/pages/user/reset' }, 
     { title: 'Settings', link: '/pages/user/settings' }, 
-    { title: 'Log out', itemClick: 'auth.logout()' } // todo fix: click logout()
+    { title: 'Log out', itemClick: 'onItemClick()' }
   ];
+  // , itemClick: 'onItemClick()'
 
-  constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private themeService: NbThemeService,
-              private userService: UserData,
-              private breakpointService: NbMediaBreakpointsService,
-              public auth: AuthService) {
-  }
+  constructor(
+    private sidebarService: NbSidebarService,
+    private menuService: NbMenuService,
+    private themeService: NbThemeService,
+    private userService: UserData,
+    private breakpointService: NbMediaBreakpointsService,
+    public auth: AuthService) {}
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
@@ -74,6 +75,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+
+      this.menuService.onItemClick().subscribe((event) => {
+        if (event.item.title === 'Log out') {
+          this.auth.logout();
+        }
+      });
   }
 
   ngOnDestroy() {

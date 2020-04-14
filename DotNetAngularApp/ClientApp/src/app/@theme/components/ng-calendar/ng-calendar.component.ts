@@ -145,13 +145,8 @@ export class NgCalendarComponent {
   @Output() selectedBookingId = new EventEmitter<number>();
   
   eventClicked({ event }: { event: CalendarEvent }): void {
-    this.selectedBookingId.emit(event.meta.id);
+    this.selectedBookingId.emit(event.meta.id); // * gets the bookingId when event is clicked
   }
-
-  // eventClicked({ event }: { event: CalendarEvent }): void {
-  //   this.selectedBookingId = event.meta.id; // * gets the bookingId when event is clicked
-  //   console.log('Event clicked', this.selectedBookingId);
-  // }
 
   setView(view: CalendarView) {
     this.view = view;
@@ -159,5 +154,10 @@ export class NgCalendarComponent {
 
   closeOpenMonthViewDay() { // for calendar-header.. click next, close slide animation
     this.activeDayIsOpen = false;
+  }
+
+  changeDay(date: Date) {
+    this.viewDate = date;
+    this.view = CalendarView.Day;
   }
 }

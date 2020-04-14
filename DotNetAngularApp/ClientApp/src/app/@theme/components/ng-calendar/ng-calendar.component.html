@@ -52,6 +52,7 @@
     [dayStartHour]="7"
     [dayEndHour]="20"
     (eventClicked)="eventClicked($event)"
+    (dayHeaderClicked)="changeDay($event.day.date)"
   >
   </mwl-calendar-week-view>
   <mwl-calendar-day-view
