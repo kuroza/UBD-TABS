@@ -9,7 +9,6 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
 import { BookingListComponent } from './booking-list/booking-list';
 import { BookingDetailsModule } from '../../@theme/components/booking-details/booking-details.module';
-import { BookingListTreeComponent } from './booking-list-tree/booking-list-tree';
 
 @NgModule({
   imports: [
@@ -26,7 +25,6 @@ import { BookingListTreeComponent } from './booking-list-tree/booking-list-tree'
   ],
   declarations: [
     BookingListComponent,
-    BookingListTreeComponent,
     NewBookingComponent,
     ViewBookingComponent,
     PaginationComponent,

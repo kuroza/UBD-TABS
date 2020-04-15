@@ -1,4 +1,3 @@
-import { ProfileModule } from './@theme/components/profile/profile.module';
 import { AuthService } from './services/auth.service';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ToastyModule } from 'ng2-toasty';
@@ -27,7 +26,7 @@ import {
 } from '@nebular/theme';
 import { AppErrorHandler } from './app.error-handler';
 
-// import * as Sentry from "@sentry/browser";
+// import * as Sentry from "@sentry/browser"; // ? should I try sentry again?
 
 // Sentry.init({
 //   dsn: "https://c911f2c6b01742fd83e853133d6a4b06@sentry.io/5182636"
@@ -56,7 +55,6 @@ import { AppErrorHandler } from './app.error-handler';
     }),
     CoreModule.forRoot(),
     NbEvaIconsModule,
-    ProfileModule
   ],
   bootstrap: [AppComponent],
   providers: [

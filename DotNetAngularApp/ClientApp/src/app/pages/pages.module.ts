@@ -1,3 +1,4 @@
+import { UsersModule } from './users/users.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { NgModule } from '@angular/core';
 import { NbMenuModule } from '@nebular/theme';
@@ -16,6 +17,7 @@ import { BookingsModule } from './bookings/bookings.module';
     DashboardModule,
     BookingsModule,
     RoomsModule,
+    UsersModule
   ],
   declarations: [
     PagesComponent,

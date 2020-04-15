@@ -1,0 +1,11 @@
+<nb-card>
+    <nb-card-body>
+        <pre *ngIf="auth.userProfile$ | async as profile">
+            <!-- <code>{{ profile | json }}</code> -->
+            <p>
+                Name: {{ profile.name }}<br>
+                Email: {{ profile.email }}<br>
+            </p>
+        </pre>
+    </nb-card-body>
+</nb-card>

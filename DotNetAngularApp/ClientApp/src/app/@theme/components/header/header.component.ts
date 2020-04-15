@@ -39,9 +39,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentTheme = 'default';
 
   userMenu = [ 
-    { title: 'Account', link: '/pages/user/account' }, 
-    { title: 'Reset password', link: '/pages/user/reset' }, 
-    { title: 'Settings', link: '/pages/user/settings' }, 
+    { title: 'Profile', link: '/pages/account/profile' }, 
+    { title: 'Reset password', link: '/pages/account/reset-password' }, 
+    { title: 'Settings', link: '/pages/account/settings' }, 
     { title: 'Log out', itemClick: 'onItemClick()' }
   ];
   // , itemClick: 'onItemClick()'

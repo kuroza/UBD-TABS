@@ -9,8 +9,8 @@ import { NewBookingComponent } from './bookings/new-booking/new-booking.componen
 import { RoomListComponent } from './rooms/room-list/room-list.component';
 import { NewRoomComponent } from './rooms/new-room/new-room.component';
 import { AuthGuard } from '../services/auth.guard';
-import { BookingListTreeComponent } from './bookings/booking-list-tree/booking-list-tree';
 import { ViewRoomComponent } from './rooms/view-room/view-room';
+import { UserProfileComponent } from './users/user-profile/user-profile';
 
 const routes: Routes = [{
   path: '',
@@ -25,7 +25,6 @@ const routes: Routes = [{
       redirectTo: 'dashboard',
       pathMatch: 'full',
     },
-    { path: 'bookings/tree', component: BookingListTreeComponent }, // * Booking list tree
     { path: 'bookings/new', component: NewBookingComponent, canActivate: [AuthGuard] },
     { path: 'bookings', component: BookingListComponent }, // view all bookings / table
     { path: 'bookings/:id', component: ViewBookingComponent },
@@ -34,6 +33,7 @@ const routes: Routes = [{
     { path: 'rooms', component: RoomListComponent },
     { path: 'rooms/:id', component: ViewRoomComponent },
     { path: 'rooms/edit/:id', component: NewRoomComponent },
+    { path: 'account/profile', component: UserProfileComponent, canActivate: [AuthGuard]},  // * temporary 
   ],
 }];
 

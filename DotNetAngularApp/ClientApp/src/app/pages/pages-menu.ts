@@ -12,28 +12,28 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   // * Account settings on sidebar
-  // {
-  //   title: 'User',
-  //   icon: 'lock-outline',
-  //   children: [
-  //     {
-  //       title: 'Profile',
-  //       link: '/auth/profile',
-  //     },
+  {
+    title: 'Account',
+    icon: 'lock-outline',
+    children: [
+      {
+        title: 'Profile',
+        link: '/pages/account/profile',
+      },
   //     {
   //       title: 'Request Password',
-  //       link: '/auth/request-password',
+  //       link: '/pages/account/request-password',
   //     },
   //     {
   //       title: 'Reset Password',
-  //       link: '/auth/reset-password',
+  //       link: '/pages/account/reset-password',
   //     },
-  //   ],
+    ],
   // },
   // {
   //   title: 'Settings',
   //   icon: 'settings-outline',
-  // },
+  },
   {
     title: 'Admin',
     group: true,
