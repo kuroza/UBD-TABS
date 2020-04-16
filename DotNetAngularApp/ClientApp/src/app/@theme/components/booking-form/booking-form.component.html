@@ -68,7 +68,7 @@
           <div class="form-group">
             <label for="bookDate">Date *</label>
             <div class="input-group">
-              <input id="bookDate" class="form-control" placeholder="dd/mm/yyyy"
+              <input id="bookDate" class="form-control" placeholder="mm-dd-yyyy"
                 [(ngModel)]="booking.bookDate" ngbDatepicker name="bookDate" required #bookDate="ngbDatepicker">
               <div class="input-group-append">
                 <button class="fa fa-calendar" (click)="bookDate.toggle()" type="button"></button>

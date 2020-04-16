@@ -19,8 +19,8 @@ export class CustomAdapter extends NgbDateAdapter<string> {
     if (value) {
       let date = value.split(this.DELIMITER);
       return {
-        day : parseInt(date[0], 10),
-        month : parseInt(date[1], 10),
+        month : parseInt(date[0], 10),
+        day : parseInt(date[1], 10),
         year : parseInt(date[2], 10)
       };
     }
@@ -28,7 +28,7 @@ export class CustomAdapter extends NgbDateAdapter<string> {
   }
 
   toModel(date: NgbDateStruct | null): string | null {
-    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
+    return date ? date.month + this.DELIMITER + date.day + this.DELIMITER + date.year : null;
   }
 }
 
@@ -41,8 +41,8 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
     if (value) {
       let date = value.split(this.DELIMITER);
       return {
-        day : parseInt(date[0], 10),
-        month : parseInt(date[1], 10),
+        month : parseInt(date[0], 10),
+        day : parseInt(date[1], 10),
         year : parseInt(date[2], 10)
       };
     }
@@ -50,7 +50,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   }
 
   format(date: NgbDateStruct | null): string {
-    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
+    return date ? date.month + this.DELIMITER + date.day + this.DELIMITER + date.year : '';
   }
 }
 
@@ -154,7 +154,7 @@ export class BookingFormComponent implements OnInit {
         timeout: 5000
       });
       // todo: fix after success adding authentication
-      // * this.router.navigate(['/pages/bookings/', booking.id]); // this.booking.id?
+      this.router.navigate(['/pages/bookings/', this.booking.id]); // this.booking.id?
     });
   }
 }
