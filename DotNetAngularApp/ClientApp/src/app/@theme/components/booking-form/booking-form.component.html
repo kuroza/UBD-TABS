@@ -60,14 +60,14 @@
   <div class="form-group">
     <label for="contactName">Name *</label>
     <input id="contactName" type="text" class="form-control" [(ngModel)]="booking.contact.name"
-      name="contactName" placeholder="Name" placeholder="e.g. Nora Danish" required #contactName="ngModel"> <!-- * class="form-control" -->
+      name="contactName" placeholder="e.g. Ghassani" required #contactName="ngModel"> <!-- * class="form-control" -->
     <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">Please specify the name.
     </div>
   </div>
   <div class="form-group">
     <label for="contactEmail">Email</label>
     <input id="contactEmail" type="text" class="form-control" [(ngModel)]="booking.contact.email"
-      name="contactEmail" placeholder="e.g. nora@ubd.com.com">
+      name="contactEmail" placeholder="e.g. ghas@ubd.com.com">
   </div>
   <div class="form-group">
     <label for="contactPhone">Phone</label>
@@ -82,6 +82,7 @@
     placeholder="e.g. LE-1503">
   </div>
   <div *ngIf="!booking.id">
+    <!-- <button nbButton fullWidth status="default" (click)="onClickReset()">Reset</button> --> <!-- ? why it outputs a 401 error? -->
     <button nbButton fullWidth status="success" [disabled]="!f.valid">Book</button>
   </div>
   <div *ngIf="booking.id">

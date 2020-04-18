@@ -45,25 +45,19 @@
         <nb-tabset>
           <!-- todo: show details if click 'view' -->
           <nb-tab tabTitle="Details">
-            <div *ngIf="building">
-              <ul>
-                <li>Room: {{ building.name }}</li>
-                <li>Capacity: {{ building.room.capacity }}</li>
-              </ul>
-              <br />
-              <p>
-                <button *ngIf="auth.loggedIn" class="btn btn-primary mx-2" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
-                <button *ngIf="auth.loggedIn" class="btn btn-danger mr-2" (click)="delete()">Delete</button>
-              </p>
-            </div>
+            <!-- <ngx-room-details></ngx-room-details> -->
           </nb-tab>
           <nb-tab *ngIf="!auth.loggedIn" disabled tabTitle="Edit">
+            <ngx-room-form></ngx-room-form>
           </nb-tab>
           <nb-tab *ngIf="auth.loggedIn" tabTitle="Edit">
+            <ngx-room-form></ngx-room-form>
           </nb-tab>
           <nb-tab *ngIf="!auth.loggedIn" disabled tabTitle="Add">
+            <ngx-room-form></ngx-room-form>
           </nb-tab>
           <nb-tab *ngIf="auth.loggedIn" tabTitle="Add">
+            <ngx-room-form></ngx-room-form>
           </nb-tab>
          </nb-tabset>
       </nb-card-body>

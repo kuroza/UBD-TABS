@@ -114,7 +114,15 @@ export class BookingFormComponent implements OnInit {
     });
   }
 
-  clearTimeSlot() {
+  onClickReset() { // clear form
+    this.booking.id = 0;
+    this.booking.roomId = 0;
+    this.booking.buildingId = 0;
+    this.booking.bookDate = '';
+    this.booking.contact.name = '';
+    this.booking.contact.email = '';
+    this.booking.contact.phone = '';
+    this.booking.purpose = '';
     this.booking.timeSlots = [];
   }
 

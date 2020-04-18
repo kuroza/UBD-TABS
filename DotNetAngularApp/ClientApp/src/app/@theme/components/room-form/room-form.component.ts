@@ -6,9 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/Observable/forkJoin';
 import { SaveBooking } from '../../../models/booking';
-import { NgbDateStruct, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { formatDate } from '@angular/common';
 import { FormControl } from '@angular/forms';
+import { NgbDateAdapter, NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable() // ng material datepicker
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -59,7 +58,6 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   templateUrl: './room-form.component.html',
 })
 export class RoomFormComponent implements OnInit {
-  datePicker: string;
   buildings: any;
   rooms: any;
   timeSlots: any;
@@ -113,7 +111,7 @@ export class RoomFormComponent implements OnInit {
     });
   }
 
-  private setBooking(b) { // ? 'b: Booking', no need?
+  private setBooking(b) {
     this.booking.id = b.id;
     this.booking.buildingId = b.building.id;
     this.booking.roomId = b.room.id;
@@ -121,15 +119,6 @@ export class RoomFormComponent implements OnInit {
     this.booking.contact = b.contact;
     this.booking.purpose = b.purpose;
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
-  }
-
-  onTimeSlotToggle(timeSlotId, $event) { // ! UNDERSTAND THIS CODE
-    if ($event.target.checked) // if this check box is checked, push this Id into TimeSlots array
-      this.booking.timeSlots.push(timeSlotId);
-    else {
-      var index = this.booking.timeSlots.indexOf(timeSlotId);
-      this.booking.timeSlots.splice(index, 1);
-    }
   }
 
   onBuildingChange() { // when the option is selected
@@ -153,8 +142,7 @@ export class RoomFormComponent implements OnInit {
         showClose: true,
         timeout: 5000
       });
-      // todo: fix after success adding authentication
-      // * this.router.navigate(['/pages/bookings/', booking.id]); // this.booking.id?
+      // * this.router.navigate(['/pages/bookings/', this.booking.id]); // this.booking.id?
     });
   }
 }
