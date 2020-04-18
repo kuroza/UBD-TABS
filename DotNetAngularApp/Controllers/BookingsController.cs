@@ -24,13 +24,15 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize] // [Authorize("write:bookings")]
         public async Task<IActionResult> CreateBooking([FromBody] SaveBookingResource bookingResource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var booking = mapper.Map<SaveBookingResource, Booking>(bookingResource);
+
+            // todo check for clashes: query from repository
 
             repository.Add(booking);
             await unitOfWork.CompleteAsync();

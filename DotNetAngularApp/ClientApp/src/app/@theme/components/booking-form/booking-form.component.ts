@@ -56,6 +56,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 
 @Component({
   selector: 'ngx-booking-form',
+  styleUrls: ['./booking-form.component.scss'],
   templateUrl: './booking-form.component.html',
 })
 export class BookingFormComponent implements OnInit {
@@ -94,17 +95,17 @@ export class BookingFormComponent implements OnInit {
       this.bookingService.getTimeSlots(), // get timeSlots for table
     ];
 
-    // for editing
+    // * for editing
     if (this.booking.id) // if not 0, push a new observable into sources array
       sources.push(this.bookingService.getBooking(this.booking.id)); // get the booking with the given id // data[2]
 
-    // for getting Bookings, this is from server, a complete representation of Bookings
+    // * for getting Bookings, this is from server, a complete representation of Bookings
     Observable.forkJoin(sources).subscribe(data => { // an array which includes all results from observable
       this.buildings = data[0];
       this.timeSlots = data[1];
 
-      if (this.booking.id) { // if 'edit', populate forms
-        this.setBooking(data[2]);
+      if (this.booking.id) { // if 'edit' or id is supplied
+        this.setBooking(data[2]); // populate forms with bookingId's data
         this.populateRooms(); // room is populated on the building of this booking
       }
     }, err => { // ? i think this error is already implemented
@@ -113,7 +114,13 @@ export class BookingFormComponent implements OnInit {
     });
   }
 
-  private setBooking(b) { // ? 'b: Booking', no need?
+  clearTimeSlot() {
+    this.booking.timeSlots = [];
+  }
+
+  private setBooking(b) { // * for editing
+    // todo: parse parameter 'b' to date format, then assign
+
     this.booking.id = b.id;
     this.booking.buildingId = b.building.id;
     this.booking.roomId = b.room.id;
@@ -123,12 +130,12 @@ export class BookingFormComponent implements OnInit {
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
   }
 
-  onTimeSlotToggle(timeSlotId, $event) { // ! UNDERSTAND THIS CODE
-    if ($event.target.checked) // if this check box is checked, push this Id into TimeSlots array
+  onTimeSlotToggle(timeSlotId, $event) {
+    if ($event.target.selected) // if this check box is checked, push this Id into TimeSlots array
       this.booking.timeSlots.push(timeSlotId);
     else {
       var index = this.booking.timeSlots.indexOf(timeSlotId);
-      this.booking.timeSlots.splice(index, 1);
+      this.booking.timeSlots.splice(index, 1); // else, remove
     }
   }
 

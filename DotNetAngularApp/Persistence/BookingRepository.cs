@@ -80,9 +80,10 @@ namespace DotNetAngularApp.Persistence
             return result;
         }
 
-        // //if you want to only load a Booking and its Room
-        // public async Task<Booking> GetBookingWithRoom(int id)
+        // public bool Check(Booking booking)
         // {
+        //     // do checking here
+        //     return true;
         // }
 
         public void Add(Booking booking)

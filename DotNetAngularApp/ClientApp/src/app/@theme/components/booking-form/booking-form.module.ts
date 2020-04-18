@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // for binding forms
 import { BookingFormComponent, CustomAdapter, CustomDateParserFormatter } from './booking-form.component';
 import { NbDatepickerModule, NbCardModule, NbButtonModule, NbCheckboxModule, NbInputModule, NbSelectModule } from '@nebular/theme';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { NbDatepickerModule, NbCardModule, NbButtonModule, NbCheckboxModule, NbI
     NbCheckboxModule,
     NbInputModule,
     NbSelectModule,
+    NgSelectModule
   ],
   declarations: [BookingFormComponent],
   exports: [BookingFormComponent],

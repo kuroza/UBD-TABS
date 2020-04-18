@@ -116,7 +116,7 @@ export class NgCalendarComponent {
             start: new Date(this.startDateTime),
             end: new Date(this.endDateTime),
             title: "Purpose: " + b.purpose + " | Name: " + b.contact.name,
-            color: colors.yellow,
+            color: colors.blue,
             meta: {
               id: b.id, // * just the id
               // b, // * booking object

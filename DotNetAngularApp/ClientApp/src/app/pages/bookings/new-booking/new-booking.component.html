@@ -1,1 +1,46 @@
-<ngx-booking-form></ngx-booking-form>
+<div class="row">
+  <div class="col-md-4">
+    <nb-card>
+      <nb-card-body>
+        <h3>Edit booking</h3>
+        <!-- <h3 *ngIf="booking.id">Edit booking</h3>
+        <h3 *ngIf="!booking.id">Add new booking</h3> -->
+      </nb-card-body>
+    </nb-card>
+  
+    <!-- <table class="table table-hover text-center">
+        <thead class="thead-dark">
+          <tr>
+            <th style="width: 10%" scope="col"></th>
+            <th style="width: 45%" scope="col">Start time</th>
+            <th style="width: 45%" scope="col">End time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of timeSlots" class="checkbox">
+            <td>
+              <nb-checkbox status="primary" 
+              id="timeSlot{{ t.id }}" 
+              (change)="onTimeSlotToggle(t.id, $event)"
+              [checked]="booking.timeSlots.includes(t.id)"
+              >
+            </nb-checkbox>
+            </td>
+            <td>
+              {{ t.startTime | date:'shortTime' }}
+            </td>
+            <td>
+              {{ t.endTime | date:'shortTime' }}
+            </td>
+          </tr>
+        </tbody>
+      </table> -->
+  
+    <nb-card>
+        <nb-card-body>
+            <ngx-booking-form></ngx-booking-form>
+        </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-8"></div>
+</div>
