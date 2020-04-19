@@ -77,6 +77,7 @@ export class AuthService {
     // Ensure Auth0 client instance exists
     this.auth0Client$.subscribe((client: Auth0Client) => {
       // Call method to log in
+      // client.loginWithPopup();
       client.loginWithRedirect({
         redirect_uri: `${window.location.origin}`,
         appState: { target: redirectPath }

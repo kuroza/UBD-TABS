@@ -6,11 +6,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/Observable/forkJoin';
 import { SaveBooking } from '../../../models/booking';
-import { NgbDateStruct, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDateStruct, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { formatDate } from '@angular/common';
 import { FormControl } from '@angular/forms';
 
-@Injectable() // ng material datepicker
+@Injectable() // ng-bootstrap datepicker
 export class CustomAdapter extends NgbDateAdapter<string> {
 
   readonly DELIMITER = '-';
@@ -32,7 +32,7 @@ export class CustomAdapter extends NgbDateAdapter<string> {
   }
 }
 
-@Injectable() // ng material datepicker
+@Injectable() // ng-bootstrap datepicker
 export class CustomDateParserFormatter extends NgbDateParserFormatter {
 
   readonly DELIMITER = '/';
