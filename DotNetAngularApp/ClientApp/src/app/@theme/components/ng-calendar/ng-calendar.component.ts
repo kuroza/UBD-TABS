@@ -105,9 +105,9 @@ export class NgCalendarComponent {
 
       for (let timeSlot of b.timeSlots) { // * nested loop for each time slots under each booking
         var timeFormat = require('dateformat');
-        this.startTime = timeFormat(timeSlot.startTime, 'hh:MM:ss');
+        this.startTime = timeFormat(timeSlot.startTime, 'HH:MM:ss');
         this.startDateTime = this.bookDate + "T" + this.startTime; // * concat date and time into string
-        this.endTime = timeFormat(timeSlot.endTime, 'hh:MM:ss');
+        this.endTime = timeFormat(timeSlot.endTime, 'HH:MM:ss');
         this.endDateTime = this.bookDate + "T" + this.endTime;
 
         this.events = [ // push object into events[]

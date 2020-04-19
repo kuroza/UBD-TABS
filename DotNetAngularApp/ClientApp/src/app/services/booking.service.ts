@@ -10,7 +10,8 @@ export class BookingService {
 
   private readonly bookingsEndpoint = '/api/bookings';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient) { }
 
   getBooking(id) {
     return this.http.get(this.bookingsEndpoint + '/' + id)

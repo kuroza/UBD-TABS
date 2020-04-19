@@ -37,7 +37,7 @@
 
   <!-- * Time slot multiple select -->
   <!-- todo: Bind selected values -->
-  <!-- <div class="form-group">
+  <div class="form-group">
     <label>Time slots *</label>
     <ng-select
     placeholder="Select time slots"
@@ -45,16 +45,17 @@
     [clearable]="true"
     [closeOnSelect]="false"
     [hideSelected]="true"
-    (change)="onTimeSlotToggle(t.id, $event)"
-    [(selected)]="booking.timeSlots"
-    bindLabel="name"
-    bindValue="t.id"
     >
       <ng-option *ngFor="let t of timeSlots">
         {{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}
       </ng-option>
     </ng-select>
-  </div> -->
+  </div>
+  
+  <!-- (change)="onTimeSlotToggle(t.id, $event)"
+  [(selected)]="booking.timeSlots"
+  bindLabel="name"
+  bindValue="t.id" -->
 
   <!-- Contact from -->
   <div class="form-group">

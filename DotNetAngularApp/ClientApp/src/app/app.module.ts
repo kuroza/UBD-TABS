@@ -25,6 +25,7 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import { AppErrorHandler } from './app.error-handler';
+import { JwtModule } from "@auth0/angular-jwt";
 
 // import * as Sentry from "@sentry/browser"; // ? should I try sentry again?
 
@@ -53,8 +54,18 @@ import { AppErrorHandler } from './app.error-handler';
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
+
     CoreModule.forRoot(),
     NbEvaIconsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: function tokenGetter() {
+          return localStorage.getItem('access_token');
+        },
+        whitelistedDomains: ['https://localhost:5001'],
+        blacklistedRoutes: ['https://localhost:5001/auth/login']
+      }
+    })
   ],
   bootstrap: [AppComponent],
   providers: [
