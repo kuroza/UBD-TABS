@@ -40,6 +40,8 @@
   <div class="form-group">
     <label>Time slots *</label>
     <ng-select
+    required
+    id="timeSlots"
     placeholder="Select time slots"
     [multiple]="true"
     [clearable]="true"
@@ -51,19 +53,18 @@
       </ng-option>
     </ng-select>
   </div>
-  
   <!-- (change)="onTimeSlotToggle(t.id, $event)"
   [(selected)]="booking.timeSlots"
   bindLabel="name"
   bindValue="t.id" -->
+  <!-- todo: Implement validation -->
 
   <!-- Contact from -->
   <div class="form-group">
     <label for="contactName">Name *</label>
     <input id="contactName" type="text" class="form-control" [(ngModel)]="booking.contact.name"
       name="contactName" placeholder="e.g. Ghassani" required #contactName="ngModel"> <!-- * class="form-control" -->
-    <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">Please specify the name.
-    </div>
+    <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">Please specify the name.</div>
   </div>
   <div class="form-group">
     <label for="contactEmail">Email</label>

@@ -44,7 +44,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     { title: 'Settings', link: '/pages/account/settings' }, 
     { title: 'Log out', itemClick: 'onItemClick()' }
   ];
-  // , itemClick: 'onItemClick()'
 
   constructor(
     private sidebarService: NbSidebarService,
