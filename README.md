@@ -1,4 +1,4 @@
-# UBD Timetabling and Room Booking System (UBD-TABS)
+# ⚡ Timetabling and Room Booking System ⚡
 
 ## To run Angular + ASP.NET Core version of UBD-TABS:
 
