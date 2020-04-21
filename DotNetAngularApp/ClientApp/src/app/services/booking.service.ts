@@ -20,7 +20,6 @@ export class BookingService {
 
   async getAllBookings() {
     return this.http.get('/api/allbookings').toPromise();
-      // .pipe(map(response => response));
   }
 
   getBookings(filter) {
@@ -59,7 +58,7 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
-  // todo: getBuilding(id) {}
+  // ? todo: getBuilding(id) {}
   
   getRooms() {
     return this.http.get('/api/rooms')

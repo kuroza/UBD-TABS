@@ -24,7 +24,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPost]
-        [Authorize] // [Authorize("write:bookings")]
+        [Authorize] // [Authorize("create:bookings")]
         public async Task<IActionResult> CreateBooking([FromBody] SaveBookingResource bookingResource)
         {
             if (!ModelState.IsValid)
@@ -48,7 +48,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPut("{id}")] // /api/bookings/{id}
-        [Authorize]
+        [Authorize] // [Authorize("update:bookings")]
         public async Task<IActionResult> UpdateBooking(int id, [FromBody] SaveBookingResource bookingResource) //id from route, and bookingResource from body
         {
             if (!ModelState.IsValid)
@@ -71,7 +71,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize] // [Authorize("delete:bookings")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
             var booking = await repository.GetBooking(id, includeRelated: false); //get a booking with this id
@@ -86,6 +86,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize] // [Authorize("read:bookings")]
         public async Task<IActionResult> GetBooking(int id)
         {
             var booking = await repository.GetBooking(id);
@@ -99,6 +100,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpGet]
+        [Authorize] // [Authorize("read:bookings")]
         public async Task<QueryResultResource<BookingResource>> GetBookings(BookingQueryResource filterResource) // accepts the filtering and sorting queries
         {
             var filter = mapper.Map<BookingQueryResource, BookingQuery>(filterResource);
@@ -108,6 +110,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpGet("/api/allbookings")]
+        [Authorize] // [Authorize("read:bookings")]
         public async Task<IEnumerable<BookingResource>> GetAllBookings()
         {
             var bookings = await repository.GetAllBookings();

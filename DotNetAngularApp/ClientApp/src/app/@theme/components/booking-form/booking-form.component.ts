@@ -108,7 +108,7 @@ export class BookingFormComponent implements OnInit {
         this.setBooking(data[2]); // populate forms with bookingId's data
         this.populateRooms(); // room is populated on the building of this booking
       }
-    }, err => { // ? i think this error is already implemented
+    }, err => { // if error occurs, navigate back to home
       if (err.status == 404)
         this.router.navigate(['/']);
     });
@@ -128,7 +128,7 @@ export class BookingFormComponent implements OnInit {
 
   private setBooking(b) { // * for editing
     // todo: parse parameter 'b' to date format, then assign
-
+    // ? will this fix datePicker?
     this.booking.id = b.id;
     this.booking.buildingId = b.building.id;
     this.booking.roomId = b.room.id;
@@ -168,8 +168,7 @@ export class BookingFormComponent implements OnInit {
         showClose: true,
         timeout: 5000
       });
-      // todo: fix after success adding authentication
-      this.router.navigate(['/pages/bookings/', this.booking.id]); // this.booking.id?
+      this.router.navigate(['/pages/bookings/', this.booking.id]); // navigates to the newly created booking page
     });
   }
 }

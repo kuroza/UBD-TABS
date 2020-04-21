@@ -37,7 +37,7 @@ export class NgCalendarComponent {
   date: string;
   refresh: Subject<any> = new Subject(); // ? Subject()
   events: CalendarEvent[] = [];
-  bookings: any; // ? bookings: Bookings[];
+  bookings: any; // Bookings[]
   startDateTime: any;
   endDateTime: any;
   bookDate: any;
@@ -54,8 +54,7 @@ export class NgCalendarComponent {
     this.bookingService.getBuildings() // get the buildings from service for filter drop down
       .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
 
-    this.bookings = this.allBookings = await this.bookingService.getAllBookings()
-    // .subscribe(result => this.bookings = result); // ! using Promise instead
+    this.bookings = this.allBookings = await this.bookingService.getAllBookings() // ! using Promise instead
     
     this.refresh.next(); // refresh calendar after loading
   }
@@ -119,7 +118,7 @@ export class NgCalendarComponent {
             color: colors.blue,
             meta: {
               id: b.id, // * just the id
-              // b, // * booking object
+              // b, // * the whole booking object
             },
           },
         ];
@@ -152,7 +151,7 @@ export class NgCalendarComponent {
     this.view = view;
   }
 
-  closeOpenMonthViewDay() { // for calendar-header.. click next, close slide animation
+  closeOpenMonthViewDay() { // for calendar-header.. click next to close slide animation
     this.activeDayIsOpen = false;
   }
 

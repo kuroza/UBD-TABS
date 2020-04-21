@@ -15,14 +15,14 @@ export class BookingDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
-    private toasty: ToastyService,
+    private toastyService: ToastyService,
     private bookingService: BookingService,
-    public auth: AuthService) { // ? public?
+    public auth: AuthService) {
 
     route.params.subscribe(p => {
       this.bookingId = +p['id']; // get the Id from the route 
       if (isNaN(this.bookingId) || this.bookingId <= 0) { // if bookingId is not a number or less than 1, navigate back
-        router.navigate(['/pages/bookings']); // ? '/pages//bookings' why were there 2 slashes?
+        router.navigate(['/pages/bookings']);
         return; 
       }
     });
@@ -41,9 +41,17 @@ export class BookingDetailsComponent implements OnInit {
   }
 
   delete() {
+    // todo: use a popup
     if (confirm("Are you sure?")) { // if confirm() == true
       this.bookingService.delete(this.booking.id) // delete in db
         .subscribe(x => {
+          this.toastyService.success({
+            title: 'Success', 
+            msg: 'Booking was sucessfully deleted.',
+            theme: 'bootstrap',
+            showClose: true,
+            timeout: 5000
+          });
           this.router.navigate(['/pages/bookings']);
         });
     }

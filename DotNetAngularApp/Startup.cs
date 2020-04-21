@@ -39,18 +39,18 @@ namespace DotNetAngularApp
             services.AddDbContext<TabsDbContext>(options => //services - a container for all the dependencies in the app
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowSpecificOrigin",
-                    builder =>
-                    {
-                        builder
-                        .WithOrigins("https://localhost:5001")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials();
-                    });
-            });
+            // services.AddCors(options =>
+            // {
+            //     options.AddPolicy("AllowSpecificOrigin",
+            //         builder =>
+            //         {
+            //             builder
+            //             .WithOrigins("https://localhost:5001")
+            //             .AllowAnyMethod()
+            //             .AllowAnyHeader()
+            //             .AllowCredentials();
+            //         });
+            // });
 
             string domain = $"https://{Configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>
@@ -61,15 +61,22 @@ namespace DotNetAngularApp
             {
                 options.Authority = domain;
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                NameClaimType = ClaimTypes.NameIdentifier
-                };
+                // options.TokenValidationParameters = new TokenValidationParameters
+                // {
+                // NameClaimType = ClaimTypes.NameIdentifier
+                // };
             });
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("write:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("write:bookings", domain)));
+                options.AddPolicy("create:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("create:bookings", domain)));
+                options.AddPolicy("read:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("read:bookings", domain)));
+                options.AddPolicy("update:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("update:bookings", domain)));
+                options.AddPolicy("delete:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("delete:bookings", domain)));
+                options.AddPolicy("create:rooms", policy => policy.Requirements.Add(new HasScopeRequirement("create:rooms", domain)));
+                options.AddPolicy("read:rooms", policy => policy.Requirements.Add(new HasScopeRequirement("read:rooms", domain)));
+                options.AddPolicy("update:rooms", policy => policy.Requirements.Add(new HasScopeRequirement("update:rooms", domain)));
+                options.AddPolicy("delete:rooms", policy => policy.Requirements.Add(new HasScopeRequirement("delete:rooms", domain)));
             });
 
             // register the scope authorization handler
@@ -106,10 +113,8 @@ namespace DotNetAngularApp
 
             app.UseRouting();
 
-            app.UseCors("AllowSpecificOrigin");
-
+            // app.UseCors("AllowSpecificOrigin");
             app.UseAuthentication();
-
             app.UseAuthorization();
             
             app.UseEndpoints(endpoints =>

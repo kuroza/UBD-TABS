@@ -57,15 +57,15 @@ import { JwtModule } from "@auth0/angular-jwt";
 
     CoreModule.forRoot(),
     NbEvaIconsModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: function tokenGetter() {
-          return localStorage.getItem('access_token');
-        },
-        whitelistedDomains: ['https://localhost:5001'],
-        blacklistedRoutes: ['https://localhost:5001/auth/login']
-      }
-    })
+    // JwtModule.forRoot({ // ! during Auth0
+    //   config: {
+    //     tokenGetter: function tokenGetter() {
+    //       return localStorage.getItem('access_token');
+    //     },
+    //     whitelistedDomains: ['https://localhost:5001'],
+    //     blacklistedRoutes: ['https://localhost:5001/auth/login']
+    //   }
+    // })
   ],
   bootstrap: [AppComponent],
   providers: [
