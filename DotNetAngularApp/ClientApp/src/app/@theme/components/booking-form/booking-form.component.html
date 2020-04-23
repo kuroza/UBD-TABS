@@ -22,12 +22,19 @@
     <div class="alert alert-danger" *ngIf="room.touched && !room.valid">Please specify the room.</div>
   </div>
 
-  <!-- Date picker -->
+  <!-- ng-bootstrap Datepicker -->
   <div class="form-group">
     <label for="bookDate">Date *</label>
     <div class="input-group">
-      <input id="bookDate" class="form-control" placeholder="yyyy/mm/dd"
-        [(ngModel)]="booking.bookDate" ngbDatepicker name="bookDate" required #bookDate="ngbDatepicker">
+      <input 
+      id="bookDate" 
+      class="form-control" 
+      required 
+      ngbDatepicker 
+      name="bookDate" 
+      placeholder="dd/mm/yyyy" 
+      [(ngModel)]="booking.bookDate" 
+      #bookDate="ngbDatepicker">
       <div class="input-group-append">
         <button class="fa fa-calendar" (click)="bookDate.toggle()" type="button"></button>
       </div>
@@ -54,7 +61,7 @@
     </ng-select>
   </div>
   <!-- (change)="onTimeSlotToggle(t.id, $event)"
-  [(selected)]="booking.timeSlots"
+    [(selected)]="booking.timeSlots"
   bindLabel="name"
   bindValue="t.id" -->
   <!-- todo: Implement validation -->

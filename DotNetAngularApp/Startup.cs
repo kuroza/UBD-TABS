@@ -1,3 +1,4 @@
+using System;
 using System.Security.Claims;
 using AutoMapper;
 using DotNetAngularApp.Core;
@@ -133,6 +134,7 @@ namespace DotNetAngularApp
 
                 if (env.IsDevelopment())
                 {
+                    spa.Options.StartupTimeout = new TimeSpan(0, 0, 80);
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });

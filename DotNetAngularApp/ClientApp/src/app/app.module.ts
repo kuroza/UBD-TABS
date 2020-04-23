@@ -26,6 +26,8 @@ import {
 } from '@nebular/theme';
 import { AppErrorHandler } from './app.error-handler';
 import { JwtModule } from "@auth0/angular-jwt";
+import { CustomAdapter, CustomDateParserFormatter } from './@theme/components/room-form/room-form.component';
+import { NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
 // import * as Sentry from "@sentry/browser"; // ? should I try sentry again?
 

@@ -10,7 +10,7 @@ import { NgbCalendar, NgbDateStruct, NgbDateAdapter, NgbDateParserFormatter } fr
 import { formatDate } from '@angular/common';
 import { FormControl } from '@angular/forms';
 
-@Injectable() // ng-bootstrap datepicker
+@Injectable() // ng-bootstrap datepicker (value)
 export class CustomAdapter extends NgbDateAdapter<string> {
 
   readonly DELIMITER = '-';
@@ -19,20 +19,20 @@ export class CustomAdapter extends NgbDateAdapter<string> {
     if (value) {
       let date = value.split(this.DELIMITER);
       return {
-        month : parseInt(date[0], 10),
-        day : parseInt(date[1], 10),
-        year : parseInt(date[2], 10)
+        year : parseInt(date[2], 10),
+        month : parseInt(date[1], 10),
+        day : parseInt(date[0], 10),
       };
     }
     return null;
   }
 
   toModel(date: NgbDateStruct | null): string | null {
-    return date ? date.month + this.DELIMITER + date.day + this.DELIMITER + date.year : null;
+    return date ? date.year + this.DELIMITER + date.month + this.DELIMITER + date.day : null;
   }
 }
 
-@Injectable() // ng-bootstrap datepicker
+@Injectable() // ng-bootstrap datepicker (input form)
 export class CustomDateParserFormatter extends NgbDateParserFormatter {
 
   readonly DELIMITER = '/';
@@ -41,16 +41,16 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
     if (value) {
       let date = value.split(this.DELIMITER);
       return {
-        month : parseInt(date[0], 10),
-        day : parseInt(date[1], 10),
-        year : parseInt(date[2], 10)
+        day : parseInt(date[0], 10),
+        month : parseInt(date[1], 10),
+        year : parseInt(date[2], 10),
       };
     }
     return null;
   }
 
   format(date: NgbDateStruct | null): string {
-    return date ? date.month + this.DELIMITER + date.day + this.DELIMITER + date.year : '';
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
   }
 }
 
