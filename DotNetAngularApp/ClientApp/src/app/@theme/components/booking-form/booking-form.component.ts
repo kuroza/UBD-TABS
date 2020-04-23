@@ -6,9 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/Observable/forkJoin';
 import { SaveBooking } from '../../../models/booking';
-import { NgbCalendar, NgbDateStruct, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { formatDate } from '@angular/common';
-import { FormControl } from '@angular/forms';
+import { NgbDateStruct, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable() // ng-bootstrap datepicker (value)
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -19,16 +17,16 @@ export class CustomAdapter extends NgbDateAdapter<string> {
     if (value) {
       let date = value.split(this.DELIMITER);
       return {
-        year : parseInt(date[2], 10),
-        month : parseInt(date[1], 10),
-        day : parseInt(date[0], 10),
+        month : parseInt(date[0], 10),
+        day : parseInt(date[1], 10),
+        year : parseInt(date[2], 10)
       };
     }
     return null;
   }
 
   toModel(date: NgbDateStruct | null): string | null {
-    return date ? date.year + this.DELIMITER + date.month + this.DELIMITER + date.day : null;
+    return date ? date.month + this.DELIMITER + date.day + this.DELIMITER + date.year : null;
   }
 }
 
@@ -41,16 +39,16 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
     if (value) {
       let date = value.split(this.DELIMITER);
       return {
-        day : parseInt(date[0], 10),
-        month : parseInt(date[1], 10),
-        year : parseInt(date[2], 10),
+        month : parseInt(date[0], 10),
+        day : parseInt(date[1], 10),
+        year : parseInt(date[2], 10)
       };
     }
     return null;
   }
 
   format(date: NgbDateStruct | null): string {
-    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
+    return date ? date.month + this.DELIMITER + date.day + this.DELIMITER + date.year : '';
   }
 }
 
@@ -160,7 +158,7 @@ export class BookingFormComponent implements OnInit {
 
   submit() {
     var result$ = (this.booking.id) ? this.bookingService.update(this.booking) : this.bookingService.create(this.booking); 
-    result$.subscribe(booking => {
+    result$.subscribe(b => {
       this.toastyService.success({
         title: 'Success', 
         msg: 'Booking was sucessfully saved.',

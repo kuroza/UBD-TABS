@@ -19,7 +19,7 @@ namespace DotNetAngularApp.Persistence
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<BookingTimeSlot>()
-                .HasKey(bt => new { bt.BookingId, bt.TimeSlotId }); //specify that the key for this entity has these 2 properties
+                .HasKey(bt => new { bt.BookingId, bt.TimeSlotId });
         }
     }
 }

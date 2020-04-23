@@ -64,6 +64,7 @@
     "nebular-icons": "1.1.0",
     "ng2-smart-table": "^1.6.0",
     "ng2-toasty": "^4.0.3",
+    "ngx-bootstrap": "^5.6.1",
     "node-sass": "^4.13.1",
     "normalize.css": "6.0.0",
     "pace-js": "1.0.2",

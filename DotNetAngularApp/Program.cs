@@ -17,11 +17,11 @@ namespace DotNetAngularApp
             CreateHostBuilder(args).Build().Run();
 
             // todo: check this
-            var client = new RestClient("https://ubd-tabs.auth0.com/oauth/token");
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("content-type", "application/json");
-            request.AddParameter("application/json", "{\"client_id\":\"m2l7tmlIZmDBm5JtLEUAj9X3xmxJK1aA\",\"client_secret\":\"LnA0Yz6ygnQcNdEavMUji80XwqYsOEYtZIO-QU-1eZ1wGMX6WAsC1EGp5fM4-6dX\",\"audience\":\"https://api.ubd-tabs.com\",\"grant_type\":\"client_credentials\"}", ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
+            // var client = new RestClient("https://ubd-tabs.auth0.com/oauth/token");
+            // var request = new RestRequest(Method.POST);
+            // request.AddHeader("content-type", "application/json");
+            // request.AddParameter("application/json", "{\"client_id\":\"m2l7tmlIZmDBm5JtLEUAj9X3xmxJK1aA\",\"client_secret\":\"LnA0Yz6ygnQcNdEavMUji80XwqYsOEYtZIO-QU-1eZ1wGMX6WAsC1EGp5fM4-6dX\",\"audience\":\"https://api.ubd-tabs.com\",\"grant_type\":\"client_credentials\"}", ParameterType.RequestBody);
+            // IRestResponse response = client.Execute(request);
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

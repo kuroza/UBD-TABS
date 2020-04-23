@@ -5,13 +5,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DotNetAngularApp.Controllers.Resources
 {
-    //for CreateBooking() and UpdateBooking()
     public class SaveBookingResource
     {
         public int Id { get; set; }
 
         [Required]
-        public int RoomId { get; set; } //only send the Id
+        public int RoomId { get; set; }
 
         [Required]
         public DateTime BookDate { get; set; }
@@ -22,7 +21,7 @@ namespace DotNetAngularApp.Controllers.Resources
         [StringLength(255)]
         public string Purpose { get; set; }
 
-        public ICollection<int> TimeSlots { get; set; } //can select multiple TimeSlotId
+        public ICollection<int> TimeSlots { get; set; }
 
         public SaveBookingResource()
         {

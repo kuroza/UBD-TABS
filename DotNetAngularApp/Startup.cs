@@ -26,32 +26,18 @@ namespace DotNetAngularApp
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IBookingRepository, BookingRepository>();
             
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             
-            services.AddControllers().AddNewtonsoftJson(); //install package first
+            services.AddControllers().AddNewtonsoftJson();
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddDbContext<TabsDbContext>(options => //services - a container for all the dependencies in the app
+            services.AddDbContext<TabsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
-
-            // services.AddCors(options =>
-            // {
-            //     options.AddPolicy("AllowSpecificOrigin",
-            //         builder =>
-            //         {
-            //             builder
-            //             .WithOrigins("https://localhost:5001")
-            //             .AllowAnyMethod()
-            //             .AllowAnyHeader()
-            //             .AllowCredentials();
-            //         });
-            // });
 
             string domain = $"https://{Configuration["Auth0:Domain"]}/";
             services.AddAuthentication(options =>
@@ -62,10 +48,6 @@ namespace DotNetAngularApp
             {
                 options.Authority = domain;
                 options.Audience = Configuration["Auth0:ApiIdentifier"];
-                // options.TokenValidationParameters = new TokenValidationParameters
-                // {
-                // NameClaimType = ClaimTypes.NameIdentifier
-                // };
             });
 
             services.AddAuthorization(options =>
@@ -114,7 +96,6 @@ namespace DotNetAngularApp
 
             app.UseRouting();
 
-            // app.UseCors("AllowSpecificOrigin");
             app.UseAuthentication();
             app.UseAuthorization();
             
@@ -134,7 +115,6 @@ namespace DotNetAngularApp
 
                 if (env.IsDevelopment())
                 {
-                    spa.Options.StartupTimeout = new TimeSpan(0, 0, 80);
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });

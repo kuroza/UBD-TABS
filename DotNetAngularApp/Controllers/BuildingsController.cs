@@ -20,12 +20,11 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpGet("/api/buildings")]
-        public async Task<IEnumerable<BuildingResource>> GetBuildings() //returns an IEnumerable of BuildingResource
+        public async Task<IEnumerable<BuildingResource>> GetBuildings()
         {
-            var buildings = await context.Buildings.Include(b => b.Rooms).ToListAsync(); //map to API resources and then return them
+            var buildings = await context.Buildings.Include(b => b.Rooms).ToListAsync();
 
             return mapper.Map<List<Building>, List<BuildingResource>>(buildings);
-            //how does AutoMapper know how to map properties of one class to another? create a mapping profile.
         }
     }
 }

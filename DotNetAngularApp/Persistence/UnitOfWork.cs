@@ -13,7 +13,7 @@ namespace DotNetAngularApp.Persistence
 
         public async Task CompleteAsync()
         {
-            await context.SaveChangesAsync(); //delegate to this context
+            await context.SaveChangesAsync();
         }
     }
 }
