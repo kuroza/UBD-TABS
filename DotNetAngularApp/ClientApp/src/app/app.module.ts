@@ -1,15 +1,15 @@
-import { AuthService } from './services/auth.service';
-import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { ToastyModule } from 'ng2-toasty';
-import { BookingService } from './services/booking.service';
-import { CommonModule } from '@angular/common';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
+import { AuthService } from './services/auth.service';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { ToastyModule } from 'ng2-toasty';
+import { BookingService } from './services/booking.service';
+import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, ErrorHandler, Injectable } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
@@ -17,7 +17,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {
   NbChatModule,
-  NbDatepickerModule,
   NbDialogModule,
   NbMenuModule,
   NbSidebarModule,
@@ -42,24 +41,22 @@ import { AppErrorHandler } from './app.error-handler';
     AppRoutingModule,
 
     ThemeModule.forRoot(),
-
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
-    NbDatepickerModule.forRoot(),
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
-    NbDatepickerModule.forRoot(),
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
+
     CoreModule.forRoot(),
     NbEvaIconsModule,
   ],
   bootstrap: [AppComponent],
   providers: [
     AuthService,
-    BookingService, //for dependency injection in BookingService.ts
+    BookingService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
   ]
 })

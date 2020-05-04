@@ -1,21 +1,22 @@
 import { NgbModule, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // for binding forms
+import { FormsModule } from '@angular/forms';
 import { BookingFormComponent, CustomAdapter, CustomDateParserFormatter } from './booking-form.component';
-import { NbDatepickerModule, NbCardModule, NbButtonModule, NbCheckboxModule, NbInputModule, NbSelectModule } from '@nebular/theme';
+import { NbCardModule, NbButtonModule, NbCheckboxModule, NbInputModule, NbSelectModule } from '@nebular/theme';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   imports: [
     CommonModule, 
-    FormsModule, 
-    NbDatepickerModule, 
+    FormsModule,
     NbCardModule, 
     NgbModule,
     NbButtonModule,
     NbCheckboxModule,
     NbInputModule,
     NbSelectModule,
+    NgSelectModule
   ],
   declarations: [BookingFormComponent],
   exports: [BookingFormComponent],

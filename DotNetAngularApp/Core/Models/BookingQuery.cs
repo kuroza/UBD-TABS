@@ -2,7 +2,7 @@ using DotNetAngularApp.Extensions;
 
 namespace DotNetAngularApp.Core.Models
 {
-    public class BookingQuery : IQueryObject // filtering, sorting and pagination
+    public class BookingQuery : IQueryObject
     {
         public int? BuildingId { get; set; }
         public int? RoomId { get; set; }

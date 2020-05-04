@@ -4,7 +4,7 @@ namespace DotNetAngularApp.Controllers.Resources
 {
     public class ContactResource
     {
-        [Required] //here in resource, data annotations used for validation
+        [Required]
         [StringLength(255)]
         public string Name { get; set; }
 

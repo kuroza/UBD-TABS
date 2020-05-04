@@ -2,9 +2,9 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // for binding forms
+import { FormsModule } from '@angular/forms';
 import { NbDatepickerModule, NbCardModule, NbButtonModule } from '@nebular/theme';
-import { RoomDetailsComponent } from './room-details.component';
+// import { RoomDetailsComponent } from './room-details.component';
 
 @NgModule({
   imports: [
@@ -16,9 +16,9 @@ import { RoomDetailsComponent } from './room-details.component';
     NgbModule,
     NbButtonModule
   ],
-  declarations: [RoomDetailsComponent],
-  exports: [RoomDetailsComponent],
-  bootstrap: [RoomDetailsComponent],
+  // declarations: [RoomDetailsComponent],
+  // exports: [RoomDetailsComponent],
+  // bootstrap: [RoomDetailsComponent],
   providers: [
     DatePipe,
   ],

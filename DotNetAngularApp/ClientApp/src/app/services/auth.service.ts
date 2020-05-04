@@ -14,12 +14,20 @@ export class AuthService {
     createAuth0Client({
       domain: "ubd-tabs.auth0.com",
       client_id: "55jpbhKXwmq1rmpDUeFOSxF6lDwQsqPm",
+      audience: "https://api.ubd-tabs.com", // "YOUR_API_IDENTIFIER"
       redirect_uri: `${window.location.origin}`
     })
   ) as Observable<Auth0Client>).pipe(
     shareReplay(1), // Every subscription receives the same shared value
     catchError(err => throwError(err))
   );
+
+  getTokenSilently$(options?): Observable<string> {
+    return this.auth0Client$.pipe(
+      concatMap((client: Auth0Client) => from(client.getTokenSilently(options)))
+    );
+  }
+
   // Define observables for SDK methods that return promises by default
   // For each Auth0 SDK method, first ensure the client instance is ready
   // concatMap: Using the client instance, call SDK method; SDK returns a promise
@@ -77,6 +85,7 @@ export class AuthService {
     // Ensure Auth0 client instance exists
     this.auth0Client$.subscribe((client: Auth0Client) => {
       // Call method to log in
+      // client.loginWithPopup();
       client.loginWithRedirect({
         redirect_uri: `${window.location.origin}`,
         appState: { target: redirectPath }

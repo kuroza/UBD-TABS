@@ -24,11 +24,11 @@ namespace DotNetAngularApp.Persistence
             if (!includeRelated)
                 return await context.Bookings.FindAsync(id);
 
-            return await context.Bookings //read booking from db
-                .Include(b => b.TimeSlots) //eager load TimeSlots here
-                    .ThenInclude(bt => bt.TimeSlot) //eager load nested objects
-                .Include(b => b.Room) //eager load room also
-                    .ThenInclude(r => r.Building) //when eager loading the room, we should also include the building
+            return await context.Bookings
+                .Include(b => b.TimeSlots)
+                    .ThenInclude(bt => bt.TimeSlot)
+                .Include(b => b.Room)
+                    .ThenInclude(r => r.Building)
                 .SingleOrDefaultAsync(b => b.Id == id);
         }
 
@@ -47,16 +47,16 @@ namespace DotNetAngularApp.Persistence
             var result = new QueryResult<Booking>();
 
             var query = context.Bookings
-                .Include(b => b.Room) // from bookings, get the room
-                    .ThenInclude(r => r.Building) // from room, get the building
-                .Include(b => b.TimeSlots) // get the collection of BookingTimeSlot
-                    .ThenInclude(bt => bt.TimeSlot) // also its start and end time
-                .AsQueryable(); // convert from IEnumerable to IQueryable, so that we can use LINQ below
+                .Include(b => b.Room)
+                    .ThenInclude(r => r.Building)
+                .Include(b => b.TimeSlots)
+                    .ThenInclude(bt => bt.TimeSlot)
+                .AsQueryable();
 
-            if (queryObj.BuildingId.HasValue) // if the queryObj includes BuildingId value, then filter context by BuildingId
+            if (queryObj.BuildingId.HasValue)
                 query = query.Where(b => b.Room.BuildingId == queryObj.BuildingId.Value);
             
-            if (queryObj.RoomId.HasValue) // if the queryObj includes RoomId value, then filter context by RoomId
+            if (queryObj.RoomId.HasValue)
                 query = query.Where(b => b.RoomId == queryObj.RoomId.Value);
 
             // Dictionary for storing keys (strings) and values (from context)
@@ -69,20 +69,48 @@ namespace DotNetAngularApp.Persistence
                 ["contactName"] = b => b.ContactName
             };
 
-            query = query.ApplyOrdering(queryObj, columnsMap); // sorting
+            query = query.ApplyOrdering(queryObj, columnsMap);
 
-            result.TotalItems = await query.CountAsync(); // show total
+            result.TotalItems = await query.CountAsync();
 
             query = query.ApplyPaging(queryObj);
 
-            result.Items = await query.ToListAsync(); // return booking list, after all filtering
+            result.Items = await query.ToListAsync();
 
             return result;
         }
 
-        // //if you want to only load a Booking and its Room
-        // public async Task<Booking> GetBookingWithRoom(int id)
+        // todo: Check if no clash
+        // public bool CheckBooking(Booking booking)
         // {
+        //     var result = context.Bookings
+        //         .Where(b => b.RoomId == booking.RoomId && b.BookDate == booking.BookDate)
+        //         .Include(b => b.TimeSlots)
+        //         .ThenInclude(b => b.TimeSlotId)
+        //         .AsQueryable();
+
+        //     List<int> context_tId = new List<int>();
+        //     foreach (var b in result)
+        //     {
+        //         foreach (var t in b.TimeSlots)
+        //         {
+        //             context_tId.Add(t.TimeSlotId);
+        //         }
+        //     }
+
+        //     List<int> tId = new List<int>();
+        //     foreach (var timeSlots in booking.TimeSlots)
+        //     {
+        //         tId.Add(timeSlots.TimeSlotId);
+        //     }
+
+        //     foreach (var i in context_tId)
+        //     {
+        //         if (tId.Contains(i))
+        //             return true;
+        //     }
+
+        //     return false;
         // }
 
         public void Add(Booking booking)

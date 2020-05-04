@@ -10,7 +10,8 @@ export class BookingService {
 
   private readonly bookingsEndpoint = '/api/bookings';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient) { }
 
   getBooking(id) {
     return this.http.get(this.bookingsEndpoint + '/' + id)
@@ -19,7 +20,6 @@ export class BookingService {
 
   async getAllBookings() {
     return this.http.get('/api/allbookings').toPromise();
-      // .pipe(map(response => response));
   }
 
   getBookings(filter) {
@@ -53,12 +53,12 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
-  getBuildings() { //gets buildings from server and return the data in json format to client
+  getBuildings() {
     return this.http.get('/api/buildings')
       .pipe(map(response => response));
   }
 
-  // todo: getBuilding(id) {}
+  // ? todo: getBuilding(id) {}
   
   getRooms() {
     return this.http.get('/api/rooms')

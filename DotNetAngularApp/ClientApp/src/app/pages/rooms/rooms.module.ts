@@ -8,7 +8,6 @@ import { RoomListComponent } from './room-list/room-list.component';
 import { RouterModule } from '@angular/router';
 import { ViewRoomComponent } from './view-room/view-room';
 import { RoomDetailsModule } from '../../@theme/components/room-details/room-details.module';
-import { RoomDetailsComponent } from '../../@theme/components/room-details/room-details.component';
 
 @NgModule({
     imports: [

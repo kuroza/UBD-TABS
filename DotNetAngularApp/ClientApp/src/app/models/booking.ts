@@ -1,5 +1,3 @@
-import { Time } from '@angular/common';
-
 export interface KeyValuePair {
     id: string;
     name: string;
@@ -18,7 +16,7 @@ export interface Booking { // like BookingResource form the server
     bookDate: string;
     contact: Contact;
     purpose: string;
-    timeSlots: { id: number; startTime: string; endTime: string; }[]; // what is the data type for time?
+    timeSlots: { id: number; startTime: string; endTime: string; }[];
 }
 
 export interface SaveBooking {

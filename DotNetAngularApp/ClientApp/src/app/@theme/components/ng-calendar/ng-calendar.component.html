@@ -13,7 +13,7 @@
         <div class="form-group">
           <div class="mr-2">
             <select style="width: 28rem;" name="buildingId" id="building" class="form-control" [(ngModel)]="filter.buildingId" (change)="onBuildingChange()">
-              <option value="0"></option>
+              <option value="" disabled selected>Select building</option>
               <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
             </select>
           </div>

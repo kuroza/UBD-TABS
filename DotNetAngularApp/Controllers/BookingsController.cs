@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DotNetAngularApp.Controllers
 {
     [Route("/api/bookings")]
+    [Authorize]
     public class BookingsController : Controller
     {
         private readonly IMapper mapper;
@@ -24,7 +25,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        // [Authorize("create:bookings")]
         public async Task<IActionResult> CreateBooking([FromBody] SaveBookingResource bookingResource)
         {
             if (!ModelState.IsValid)
@@ -32,58 +33,62 @@ namespace DotNetAngularApp.Controllers
 
             var booking = mapper.Map<SaveBookingResource, Booking>(bookingResource);
 
+            // todo check for clashes: query from repository
+            // if (repository.CheckBooking(booking))
+            // {
+            //     return Conflict();
+            // }
+
             repository.Add(booking);
             await unitOfWork.CompleteAsync();
 
-            // await context.Rooms.Include(r => r.Building).SingleOrDefaultAsync(r => r.Id == booking.RoomId); //add the objects in the context, explicitly load that this booking is related to
-
-            //load the TimeSlots that this booking is related to
             booking = await repository.GetBooking(booking.Id);
 
-            var result = mapper.Map<Booking, BookingResource>(booking); //to return a complete representation of the booking
+            var result = mapper.Map<Booking, BookingResource>(booking);
 
-            return Ok(result); //Ok() inherited from base controller. this will serialize as json object.
+            return Ok(result);
         }
 
-        [HttpPut("{id}")] // /api/bookings/{id}
-        [Authorize]
-        public async Task<IActionResult> UpdateBooking(int id, [FromBody] SaveBookingResource bookingResource) //id from route, and bookingResource from body
+        [HttpPut("{id}")]
+        // [Authorize("update:bookings")]
+        public async Task<IActionResult> UpdateBooking(int id, [FromBody] SaveBookingResource bookingResource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var booking = await repository.GetBooking(id); //1st call
+            var booking = await repository.GetBooking(id);
 
             if (booking == null)
                 return NotFound();
 
-            mapper.Map<SaveBookingResource, Booking>(bookingResource, booking); //when mapping a bookingResource to booking, use a booking object that we load from db
+            mapper.Map<SaveBookingResource, Booking>(bookingResource, booking);
 
-            await unitOfWork.CompleteAsync(); //2nd call
+            await unitOfWork.CompleteAsync();
             
-            booking = await repository.GetBooking(booking.Id); //without this there's an error that says automapper cannot map //refetch this vehicle object //3rd call
+            booking = await repository.GetBooking(booking.Id);
 
-            var result = mapper.Map<Booking, BookingResource>(booking); //after saving the changes, map the Booking to BookingResource
+            var result = mapper.Map<Booking, BookingResource>(booking);
 
             return Ok(result);
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        // [Authorize("delete:bookings")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
-            var booking = await repository.GetBooking(id, includeRelated: false); //get a booking with this id
+            var booking = await repository.GetBooking(id, includeRelated: false);
 
-            if (booking == null) //check if the booking is null
+            if (booking == null)
                 return NotFound();
 
-            repository.Remove(booking); //otherwise, remove from context
-            await unitOfWork.CompleteAsync(); //save
+            repository.Remove(booking);
+            await unitOfWork.CompleteAsync();
 
-            return Ok(id); //return Ok with the same Id
+            return Ok(id);
         }
 
         [HttpGet("{id}")]
+        // [Authorize("read:bookings")]
         public async Task<IActionResult> GetBooking(int id)
         {
             var booking = await repository.GetBooking(id);
@@ -91,21 +96,23 @@ namespace DotNetAngularApp.Controllers
             if (booking == null)
                 return NotFound();
 
-            var bookingResource = mapper.Map<Booking, BookingResource>(booking); //if have booking object, map it to resource and return it
+            var bookingResource = mapper.Map<Booking, BookingResource>(booking);
 
             return Ok(bookingResource);
         }
 
         [HttpGet]
-        public async Task<QueryResultResource<BookingResource>> GetBookings(BookingQueryResource filterResource) // accepts the filtering and sorting queries
+        // [Authorize("read:bookings")]
+        public async Task<QueryResultResource<BookingResource>> GetBookings(BookingQueryResource filterResource)
         {
             var filter = mapper.Map<BookingQueryResource, BookingQuery>(filterResource);
-            var queryResult = await repository.GetBookings(filter); // GetBookings() is called from the interface
+            var queryResult = await repository.GetBookings(filter);
 
-            return mapper.Map<QueryResult<Booking>, QueryResultResource<BookingResource>>(queryResult); // returns a list of bookings
+            return mapper.Map<QueryResult<Booking>, QueryResultResource<BookingResource>>(queryResult);
         }
 
         [HttpGet("/api/allbookings")]
+        // [Authorize("read:bookings")]
         public async Task<IEnumerable<BookingResource>> GetAllBookings()
         {
             var bookings = await repository.GetAllBookings();

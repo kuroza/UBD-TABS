@@ -44,7 +44,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     { title: 'Settings', link: '/pages/account/settings' }, 
     { title: 'Log out', itemClick: 'onItemClick()' }
   ];
-  // , itemClick: 'onItemClick()'
 
   constructor(
     private sidebarService: NbSidebarService,
@@ -76,11 +75,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       )
       .subscribe(themeName => this.currentTheme = themeName);
 
-      this.menuService.onItemClick().subscribe((event) => {
-        if (event.item.title === 'Log out') {
-          this.auth.logout();
-        }
-      });
+      this.menuService.onItemClick()
+        .subscribe((event) => {
+          if (event.item.title === 'Log out')
+            this.auth.logout();
+        });
   }
 
   ngOnDestroy() {

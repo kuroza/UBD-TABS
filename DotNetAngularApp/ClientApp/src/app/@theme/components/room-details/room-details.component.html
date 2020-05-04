@@ -1,31 +1,16 @@
-<div *ngIf="booking">
+<!-- <div *ngIf="room"> -->
   <!-- todo: Here display all room details -->
-  <h6>Contact details:</h6>
+  <!-- <li>Building: {{ room.building.name }}</li> -->
+  <!-- <h6>Room details:</h6>
   <ul>
-    <li>Name: {{ booking.contact.name }}</li>
-    <li>Phone: {{ booking.contact.phone }}</li>
-    <li>Email: {{ booking.contact.email }}</li>
+    <li>Room: {{ room.name }}</li>
+    <li>Capacity: {{ room.capacity }}</li>
   </ul>
-  <h6>Venue:</h6>
-  <ul>
-    <li>Building: {{ booking.building.name }}</li>
-    <li>Room: {{ booking.room.name }}</li>
-    <li>Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}</li>
-    <li>Purpose: {{ booking.purpose }}</li>
-  </ul>
-  <div class="card" style="width: 18rem;">
-    <div class="card-header">
-      Booked time slots
-    </div>
-    <ul class="list-group list-group-flush">
-      <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>
-    </ul>
-  </div>
 
   <br />
   <p>
-    <button *ngIf="auth.loggedIn" class="mx-2" nbButton status="primary" [routerLink]="['/pages/rooms/edit/', booking.id]">Edit</button>
+    <button *ngIf="auth.loggedIn" class="mx-2" nbButton status="primary" [routerLink]="['/pages/rooms/edit/', room.id]">Edit</button>
     <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="danger" (click)="delete()">Delete</button>
     <button nbButton status="warning" [routerLink]="['/pages/rooms']">View all rooms</button>
-  </p>
-</div>
+  </p> -->
+<!-- </div> -->

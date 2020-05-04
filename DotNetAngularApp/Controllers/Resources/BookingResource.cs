@@ -4,12 +4,9 @@ using System.Collections.ObjectModel;
 
 namespace DotNetAngularApp.Controllers.Resources
 {
-    //for GetBooking()
     public class BookingResource
     {
         public int Id { get; set; }
-
-        // public int RoomId { get; set; } //only used as the foreign key property in domain class
 
         public RoomResource Room { get; set; }
 
