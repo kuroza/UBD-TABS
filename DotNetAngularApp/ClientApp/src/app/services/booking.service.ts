@@ -53,7 +53,7 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
-  getBuildings() { //gets buildings from server and return the data in json format to client
+  getBuildings() {
     return this.http.get('/api/buildings')
       .pipe(map(response => response));
   }

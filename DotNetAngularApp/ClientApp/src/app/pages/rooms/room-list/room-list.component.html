@@ -46,9 +46,6 @@
       <nb-card-body>
         <nb-tabset>
           <!-- todo: show details if click 'view' -->
-          <nb-tab tabTitle="Details">
-            <!-- <ngx-room-details></ngx-room-details> -->
-          </nb-tab>
           <nb-tab *ngIf="!auth.loggedIn" disabled tabTitle="Edit">
             <ngx-room-form></ngx-room-form>
           </nb-tab>
@@ -60,6 +57,9 @@
           </nb-tab>
           <nb-tab *ngIf="auth.loggedIn" tabTitle="Add">
             <ngx-room-form></ngx-room-form>
+          </nb-tab>
+          <nb-tab tabTitle="Details">
+            <!-- <ngx-room-details></ngx-room-details> -->
           </nb-tab>
          </nb-tabset>
       </nb-card-body>

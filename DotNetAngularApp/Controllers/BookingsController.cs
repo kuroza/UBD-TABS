@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DotNetAngularApp.Controllers
 {
     [Route("/api/bookings")]
+    [Authorize]
     public class BookingsController : Controller
     {
         private readonly IMapper mapper;
@@ -24,7 +25,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPost]
-        [Authorize] // [Authorize("create:bookings")]
+        // [Authorize("create:bookings")]
         public async Task<IActionResult> CreateBooking([FromBody] SaveBookingResource bookingResource)
         {
             if (!ModelState.IsValid)
@@ -33,6 +34,10 @@ namespace DotNetAngularApp.Controllers
             var booking = mapper.Map<SaveBookingResource, Booking>(bookingResource);
 
             // todo check for clashes: query from repository
+            // if (repository.CheckBooking(booking))
+            // {
+            //     return Conflict();
+            // }
 
             repository.Add(booking);
             await unitOfWork.CompleteAsync();
@@ -45,7 +50,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize] // [Authorize("update:bookings")]
+        // [Authorize("update:bookings")]
         public async Task<IActionResult> UpdateBooking(int id, [FromBody] SaveBookingResource bookingResource)
         {
             if (!ModelState.IsValid)
@@ -68,7 +73,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize] // [Authorize("delete:bookings")]
+        // [Authorize("delete:bookings")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
             var booking = await repository.GetBooking(id, includeRelated: false);
@@ -83,7 +88,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize] // [Authorize("read:bookings")]
+        // [Authorize("read:bookings")]
         public async Task<IActionResult> GetBooking(int id)
         {
             var booking = await repository.GetBooking(id);
@@ -97,7 +102,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpGet]
-        [Authorize] // [Authorize("read:bookings")]
+        // [Authorize("read:bookings")]
         public async Task<QueryResultResource<BookingResource>> GetBookings(BookingQueryResource filterResource)
         {
             var filter = mapper.Map<BookingQueryResource, BookingQuery>(filterResource);
@@ -107,7 +112,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpGet("/api/allbookings")]
-        [Authorize] // [Authorize("read:bookings")]
+        // [Authorize("read:bookings")]
         public async Task<IEnumerable<BookingResource>> GetAllBookings()
         {
             var bookings = await repository.GetAllBookings();

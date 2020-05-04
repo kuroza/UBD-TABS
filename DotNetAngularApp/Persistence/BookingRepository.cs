@@ -81,10 +81,36 @@ namespace DotNetAngularApp.Persistence
         }
 
         // todo: Check if no clash
-        // public bool Check(Booking booking)
+        // public bool CheckBooking(Booking booking)
         // {
-        //     // do checking here
-        //     return true;
+        //     var result = context.Bookings
+        //         .Where(b => b.RoomId == booking.RoomId && b.BookDate == booking.BookDate)
+        //         .Include(b => b.TimeSlots)
+        //         .ThenInclude(b => b.TimeSlotId)
+        //         .AsQueryable();
+
+        //     List<int> context_tId = new List<int>();
+        //     foreach (var b in result)
+        //     {
+        //         foreach (var t in b.TimeSlots)
+        //         {
+        //             context_tId.Add(t.TimeSlotId);
+        //         }
+        //     }
+
+        //     List<int> tId = new List<int>();
+        //     foreach (var timeSlots in booking.TimeSlots)
+        //     {
+        //         tId.Add(timeSlots.TimeSlotId);
+        //     }
+
+        //     foreach (var i in context_tId)
+        //     {
+        //         if (tId.Contains(i))
+        //             return true;
+        //     }
+
+        //     return false;
         // }
 
         public void Add(Booking booking)

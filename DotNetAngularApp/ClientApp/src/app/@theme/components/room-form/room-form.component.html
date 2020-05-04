@@ -28,7 +28,7 @@
   </div>
 
   <div *ngIf="!booking.id">
-    <button nbButton fullWidth status="success" [disabled]="!f.valid">Book</button>
+    <button nbButton fullWidth status="success" [disabled]="!f.valid">Save</button>
   </div>
   <div *ngIf="booking.id">
     <button nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>

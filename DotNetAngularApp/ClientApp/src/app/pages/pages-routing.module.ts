@@ -17,24 +17,17 @@ const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [
-    {
-      path: 'dashboard',
-      component: DashboardComponent,
-    },
-    {
-      path: '',
-      redirectTo: 'dashboard',
-      pathMatch: 'full',
-    },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     { path: 'bookings/new', component: NewBookingComponent, canActivate: [AuthGuard] },
-    { path: 'bookings/test', component: TestAddBookingComponent },
-    { path: 'bookings/:id', component: ViewBookingComponent },
+    { path: 'bookings/test', component: TestAddBookingComponent, canActivate: [AuthGuard] },
+    { path: 'bookings/:id', component: ViewBookingComponent, canActivate: [AuthGuard] },
     { path: 'bookings/edit/:id', component: NewBookingComponent, canActivate: [AuthGuard] },
-    { path: 'bookings', component: BookingListComponent }, // view all bookings / table
-    { path: 'rooms/new', component: NewRoomComponent },
-    { path: 'rooms/:id', component: ViewRoomComponent },
-    { path: 'rooms/edit/:id', component: NewRoomComponent },
-    { path: 'rooms', component: RoomListComponent },
+    { path: 'bookings', component: BookingListComponent, canActivate: [AuthGuard] },
+    { path: 'rooms/new', component: NewRoomComponent, canActivate: [AuthGuard] },
+    { path: 'rooms/:id', component: ViewRoomComponent, canActivate: [AuthGuard] },
+    { path: 'rooms/edit/:id', component: NewRoomComponent, canActivate: [AuthGuard] },
+    { path: 'rooms', component: RoomListComponent, canActivate: [AuthGuard] },
     { path: 'account/profile', component: UserProfileComponent, canActivate: [AuthGuard]},  // ? change to auth/profile?
   ],
 }];

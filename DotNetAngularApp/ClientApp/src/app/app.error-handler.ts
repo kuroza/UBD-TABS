@@ -2,11 +2,11 @@
 import { ToastyService } from 'ng2-toasty';
 import { ErrorHandler, Inject, NgZone, isDevMode } from '@angular/core';
 
-export class AppErrorHandler implements ErrorHandler { // global error handling
+export class AppErrorHandler implements ErrorHandler {
 
     constructor(
         private ngZone: NgZone,
-        @Inject(ToastyService)  private toastyService: ToastyService) {}  // i think the @Inject can be removed but I'm gonna keep it there
+        @Inject(ToastyService)  private toastyService: ToastyService) {}
 
     handleError(error: any): void {
         // if (!isDevMode()) // only in development mode
@@ -14,7 +14,7 @@ export class AppErrorHandler implements ErrorHandler { // global error handling
         // else
         //     throw error; // otherwise rethrow exception
 
-        this.ngZone.run(() => { // angular will run its change detection afterwards
+        this.ngZone.run(() => {
             this.toastyService.error({
                 title: 'Error',
                 msg: 'An unexpected error happened.',
