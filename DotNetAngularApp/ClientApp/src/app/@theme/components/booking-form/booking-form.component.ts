@@ -17,8 +17,8 @@ export class CustomAdapter extends NgbDateAdapter<string> {
     if (value) {
       let date = value.split(this.DELIMITER);
       return {
-        month : parseInt(date[0], 10),
-        day : parseInt(date[1], 10),
+        day : parseInt(date[0], 10),
+        month : parseInt(date[1], 10),
         year : parseInt(date[2], 10)
       };
     }
@@ -26,14 +26,14 @@ export class CustomAdapter extends NgbDateAdapter<string> {
   }
 
   toModel(date: NgbDateStruct | null): string | null {
-    return date ? date.month + this.DELIMITER + date.day + this.DELIMITER + date.year : null;
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
   }
 }
 
 @Injectable()
 export class CustomDateParserFormatter extends NgbDateParserFormatter {
 
-  readonly DELIMITER = '/';
+  readonly DELIMITER = '-'; // change in input form
 
   parse(value: string): NgbDateStruct | null {
     if (value) {
@@ -86,10 +86,10 @@ export class BookingFormComponent implements OnInit {
     private bookingService: BookingService,
     private toastyService: ToastyService) {
 
-      route.params.subscribe(p => {
-        this.booking.id = +p['id'] || 0;
-      });
-    }
+    route.params.subscribe(p => {
+      this.booking.id = +p['id'] || 0;
+    });
+  }
 
   ngOnInit() {
     var sources = [
@@ -140,7 +140,7 @@ export class BookingFormComponent implements OnInit {
     if ($event.target.selected)
       this.booking.timeSlots.push(timeSlotId);
     else {
-      var index = this.booking.timeSlots.indexOf(timeSlotId);
+      let index = this.booking.timeSlots.indexOf(timeSlotId);
       this.booking.timeSlots.splice(index, 1);
     }
   }
@@ -152,7 +152,7 @@ export class BookingFormComponent implements OnInit {
   }
 
   private populateRooms() {
-    var selectedBuilding = this.buildings.find(b => b.id == this.booking.buildingId);
+    let selectedBuilding = this.buildings.find(b => b.id == this.booking.buildingId);
     this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
   }
 
@@ -163,7 +163,7 @@ export class BookingFormComponent implements OnInit {
     this.year = parseInt(date[2], 10);
     this.booking.bookDate = this.month + this.DELIMITER + this.day + this.DELIMITER + this.year;
 
-    var result$ = (this.booking.id) ? this.bookingService.update(this.booking) : this.bookingService.create(this.booking); 
+    let result$ = (this.booking.id) ? this.bookingService.update(this.booking) : this.bookingService.create(this.booking); 
     result$.subscribe(b => {
       this.toastyService.success({
         title: 'Success', 

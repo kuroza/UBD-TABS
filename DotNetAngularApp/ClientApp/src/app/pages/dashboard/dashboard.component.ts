@@ -12,21 +12,21 @@ export class DashboardComponent {
   booking: any;
 
   constructor(
-    public auth: AuthService, // ? private?
+    public auth: AuthService,
     private route: ActivatedRoute, 
     private router: Router,
     private toasty: ToastyService,
     private bookingService: BookingService,
     ) {}
 
-  onEventClicked($event) {
+  receiveBookingId($event) {
     this.bookingService.getBooking($event)
       .subscribe(b => this.booking = b);
   }
 
   delete() {
-    if (confirm("Are you sure?")) { // if confirm() == true
-      this.bookingService.delete(this.booking.id) // delete in db
+    if (confirm("Are you sure?")) {
+      this.bookingService.delete(this.booking.id)
         .subscribe(x => {
           this.router.navigate(['/pages/bookings']);
         });

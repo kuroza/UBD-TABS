@@ -1,5 +1,5 @@
 import { BookingService } from '../../../services/booking.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -20,7 +20,9 @@ export class RoomListComponent implements OnInit {
       .subscribe(buildings => this.buildings = buildings);
   }
 
-  // viewOnClick(id) {
-  //   get roomId from template
-  // }
+  @Output() selectedRoomId = new EventEmitter<number>();
+  
+  sendRoomId(event): void {
+    this.selectedRoomId.emit(event.id);
+  }
 }

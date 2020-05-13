@@ -23,8 +23,12 @@
                 <tr *ngFor="let t of timeSlots" class="checkbox">
                   <!-- class="form-check" -->
                   <th>
-                    <input type="checkbox" id="timeSlot{{ t.id }}" (change)="onTimeSlotToggle(t.id, $event)"
-                      [checked]="booking.timeSlots.includes(t.id)"> <!-- class="form-check-input" -->
+                    <input
+                    type="checkbox"
+                    id="timeSlot{{ t.id }}"
+                    (change)="onTimeSlotToggle(t.id, $event)"
+                    [checked]="booking.timeSlots.includes(t.id)"
+                    >
                   </th>
                   <td>
                     {{ t.startTime | date:'shortTime' }}

@@ -23,8 +23,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
   bootstrap: [BookingFormComponent],
   providers: [
     DatePipe,
-    { provide: NgbDateAdapter, useClass: CustomAdapter },
-    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
   ],
 })
 export class BookingFormModule {}

@@ -39,7 +39,7 @@
     [refresh]="refresh"
     [activeDayIsOpen]="activeDayIsOpen"
     (dayClicked)="dayClicked($event.day)"
-    (eventClicked)="eventClicked($event)"
+    (eventClicked)="sendBookingId($event)"
     [weekStartsOn]="weekStartsOn"
   >
   </mwl-calendar-month-view>
@@ -51,7 +51,7 @@
     [weekStartsOn]="weekStartsOn"
     [dayStartHour]="7"
     [dayEndHour]="20"
-    (eventClicked)="eventClicked($event)"
+    (eventClicked)="sendBookingId($event)"
     (dayHeaderClicked)="changeDay($event.day.date)"
   >
   </mwl-calendar-week-view>
@@ -62,7 +62,7 @@
     [dayStartHour]="7"
     [dayEndHour]="20"
     [refresh]="refresh"
-    (eventClicked)="eventClicked($event)"
+    (eventClicked)="sendBookingId($event)"
   >
   </mwl-calendar-day-view>
 </div>

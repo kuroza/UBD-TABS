@@ -3,9 +3,14 @@
   <!-- Building drop down list -->
   <div class="form-group">
     <label for="building">Building *</label>
-    <select id="building" class="form-control" (change)="onBuildingChange()" [(ngModel)]="booking.buildingId"
-      name="buildingId" required #building="ngModel">
-      <option value=""></option>
+    <select id="building"
+    class="form-control"
+    (change)="onBuildingChange()"
+    [(ngModel)]="booking.buildingId"
+    name="buildingId"
+    required
+    #building="ngModel">
+      <option value="" disabled selected>Select building</option>
       <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
     </select>
     <div class="alert alert-danger" *ngIf="building.touched && !building.valid">Please specify the building.
@@ -70,25 +75,25 @@
   <div class="form-group">
     <label for="contactName">Name *</label>
     <input id="contactName" type="text" class="form-control" [(ngModel)]="booking.contact.name"
-      name="contactName" placeholder="e.g. Ghassani" required #contactName="ngModel"> <!-- * class="form-control" -->
+      name="contactName" placeholder="" required #contactName="ngModel"> <!-- * class="form-control" -->
     <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">Please specify the name.</div>
   </div>
   <div class="form-group">
     <label for="contactEmail">Email</label>
     <input id="contactEmail" type="text" class="form-control" [(ngModel)]="booking.contact.email"
-      name="contactEmail" placeholder="e.g. ghas@ubd.com.com">
+      name="contactEmail" placeholder="">
   </div>
   <div class="form-group">
     <label for="contactPhone">Phone</label>
     <input id="contactPhone" type="text" class="form-control" [(ngModel)]="booking.contact.phone"
-      name="contactPhone" placeholder="e.g. +673-2226111">
+      name="contactPhone" placeholder="">
   </div>
 
   <!-- Purpose form -->
   <div class="form-group">
     <label for="purpose">Purpose</label>
     <input id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose" 
-    placeholder="e.g. LE-1503">
+    placeholder="">
   </div>
   <div *ngIf="!booking.id">
     <!-- <button nbButton fullWidth status="default" (click)="onClickReset()">Reset</button> --> <!-- ? why it outputs a 401 error? -->

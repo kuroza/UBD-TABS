@@ -143,7 +143,7 @@ export class NgCalendarComponent {
 
   @Output() selectedBookingId = new EventEmitter<number>();
   
-  eventClicked({ event }: { event: CalendarEvent }): void {
+  sendBookingId({ event }: { event: CalendarEvent }): void {
     this.selectedBookingId.emit(event.meta.id); // * gets the bookingId when event is clicked
   }
 

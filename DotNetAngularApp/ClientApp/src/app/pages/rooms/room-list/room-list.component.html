@@ -32,7 +32,7 @@
                 <!-- <th scope="row">{{ room.id }}</th> -->
                 <th scope="row">{{ room.name }}</th>
                 <td>{{ room.capacity }}</td>
-                <td><a [routerLink]="['/pages/rooms/', room.id]">View</a></td> <!-- todo: bind view to right panel or page -->
+                <td><a (eventClicked)="sendRoomId($event)">View</a></td> <!-- todo: bind view to right panel or page -->
               </tr>
             </tbody>
           </table>
@@ -46,6 +46,14 @@
       <nb-card-body>
         <nb-tabset>
           <!-- todo: show details if click 'view' -->
+          <nb-tab tabTitle="Details">
+            <div *ngIf="!room">
+              <p>Click on a room from the list to view its details</p>
+            </div>
+            <div *ngIf="room">
+              <!-- <ngx-room-details></ngx-room-details> -->
+            </div>
+          </nb-tab>
           <nb-tab *ngIf="!auth.loggedIn" disabled tabTitle="Edit">
             <ngx-room-form></ngx-room-form>
           </nb-tab>
@@ -57,9 +65,6 @@
           </nb-tab>
           <nb-tab *ngIf="auth.loggedIn" tabTitle="Add">
             <ngx-room-form></ngx-room-form>
-          </nb-tab>
-          <nb-tab tabTitle="Details">
-            <!-- <ngx-room-details></ngx-room-details> -->
           </nb-tab>
          </nb-tabset>
       </nb-card-body>

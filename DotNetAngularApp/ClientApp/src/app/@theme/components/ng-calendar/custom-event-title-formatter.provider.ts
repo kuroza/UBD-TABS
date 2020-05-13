@@ -8,8 +8,6 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
     super();
   }
 
-  // you can override any of the methods defined in the parent class
-
   month(event: CalendarEvent): string {
     return `<b>${new DatePipe(this.locale).transform(
       event.start,
@@ -22,27 +20,27 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
     )}</b> ${event.title}`;
   }
 
-  week(event: CalendarEvent): string {
-    return `<b>${new DatePipe(this.locale).transform(
-      event.start,
-      'hh:mm a',
-      this.locale,
-    )}-${new DatePipe(this.locale).transform(
-      event.end,
-      'hh:mm a',
-      this.locale,
-    )}</b> ${event.title}`;
-  }
+  // week(event: CalendarEvent): string {
+  //   return `<b>${new DatePipe(this.locale).transform(
+  //     event.start,
+  //     'hh:mm a',
+  //     this.locale,
+  //   )}-${new DatePipe(this.locale).transform(
+  //     event.end,
+  //     'hh:mm a',
+  //     this.locale,
+  //   )}</b> ${event.title}`;
+  // }
 
-  day(event: CalendarEvent): string {
-    return `<b>${new DatePipe(this.locale).transform(
-      event.start,
-      'hh:mm a',
-      this.locale,
-    )}-${new DatePipe(this.locale).transform(
-      event.end,
-      'hh:mm a',
-      this.locale,
-    )}</b> ${event.title}`;
-  }
+  // day(event: CalendarEvent): string {
+  //   return `<b>${new DatePipe(this.locale).transform(
+  //     event.start,
+  //     'hh:mm a',
+  //     this.locale,
+  //   )}-${new DatePipe(this.locale).transform(
+  //     event.end,
+  //     'hh:mm a',
+  //     this.locale,
+  //   )}</b> ${event.title}`;
+  // }
 }
