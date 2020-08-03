@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/Observable/forkJoin';
 import { SaveBooking } from '../../../models/booking';
 import { NgbDateStruct, NgbCalendar, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl } from '@angular/forms';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -66,6 +67,7 @@ export class BookingFormComponent implements OnInit {
   buildings: any;
   rooms: any;
   timeSlots: any;
+  // toppings = new FormControl();
   booking: SaveBooking = {
     id: 0,
     roomId: 0,
@@ -77,7 +79,7 @@ export class BookingFormComponent implements OnInit {
       phone: '',
     },
     purpose: '',
-    timeSlots: [1, 2], // ! temp
+    timeSlots: [3],
   };
 
   constructor(
@@ -152,18 +154,18 @@ export class BookingFormComponent implements OnInit {
   }
 
   private populateRooms() {
-    let selectedBuilding = this.buildings.find(b => b.id == this.booking.buildingId);
+    var selectedBuilding = this.buildings.find(b => b.id == this.booking.buildingId);
     this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
   }
 
   submit() {
-    let date = this.booking.bookDate.split(this.DELIMITER);
+    var date = this.booking.bookDate.split(this.DELIMITER);
     this.day = parseInt(date[0], 10);
     this.month = parseInt(date[1], 10);
     this.year = parseInt(date[2], 10);
     this.booking.bookDate = this.month + this.DELIMITER + this.day + this.DELIMITER + this.year;
 
-    let result$ = (this.booking.id) ? this.bookingService.update(this.booking) : this.bookingService.create(this.booking); 
+    var result$ = (this.booking.id) ? this.bookingService.update(this.booking) : this.bookingService.create(this.booking); 
     result$.subscribe(b => {
       this.toastyService.success({
         title: 'Success', 

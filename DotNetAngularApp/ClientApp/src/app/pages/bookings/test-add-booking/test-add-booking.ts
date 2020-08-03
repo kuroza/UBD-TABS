@@ -76,7 +76,7 @@ export class TestAddBookingComponent implements OnInit {
       phone: '',
     },
     purpose: '',
-    timeSlots: [],
+    timeSlots: [1],
   };
 
   constructor(
