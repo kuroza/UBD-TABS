@@ -9,15 +9,15 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
   }
 
   month(event: CalendarEvent): string {
-    return `<b>${new DatePipe(this.locale).transform(
+    return `<b>Time:</b> ${new DatePipe(this.locale).transform(
       event.start,
-      'hh:mm a',
+      'HH:mm',
       this.locale,
-    )}-${new DatePipe(this.locale).transform(
+    )} - ${new DatePipe(this.locale).transform(
       event.end,
-      'hh:mm a',
+      'HH:mm',
       this.locale,
-    )}</b> ${event.title}`;
+    )} ${event.title}`;
   }
 
   // week(event: CalendarEvent): string {

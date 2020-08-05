@@ -79,7 +79,7 @@ export class BookingFormComponent implements OnInit {
       phone: '',
     },
     purpose: '',
-    timeSlots: [3],
+    timeSlots: [8],
   };
 
   constructor(

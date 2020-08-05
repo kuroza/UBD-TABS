@@ -13,13 +13,14 @@
         <div class="form-group">
           <div class="mr-2">
             <select style="width: 28rem;" name="buildingId" id="building" class="form-control" [(ngModel)]="filter.buildingId" (change)="onBuildingChange()">
-              <option value="" disabled selected>Select building</option>
+              <!-- <option value="" disabled selected>Select building</option> -->
+              <option value="" placeholder="Select a building"></option>
               <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
             </select>
           </div>
           <div class="mr-2">
             <select style="width: 12rem;" name="roomId" id="room" class="form-control" [(ngModel)]="filter.roomId" (change)="onFilterChange()">
-              <option value="0"></option>
+              <option value="" placeholder="Select a room"></option>
               <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
             </select>
           </div>

@@ -55,19 +55,19 @@ export class NgCalendarComponent {
       .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
 
     this.bookings = this.allBookings = await this.bookingService.getAllBookings() // ! using Promise instead
-    this.populateCalendar();
+    this.populateCalendar(); // show all events on init
     this.refresh.next(); // refresh calendar after loading
   }
 
-  onFilterChange() {
+  onFilterChange() { // anytime the filters are changed
     this.activeDayIsOpen = false;
     this.events = []; // reset events after every filter change
     var bookings = this.allBookings;
 
-    if (this.filter.buildingId == 0 || this.filter.roomId == 0) { // if none is selected, empty events
-      // this.events = [];
-      this.populateCalendar();
-    }
+    // redundant code
+    // if (this.filter.buildingId == 0 || this.filter.roomId == 0) { // if none is selected, empty events
+    //   this.showAllBookings();
+    // }
 
     if (this.filter.buildingId)
       bookings = bookings.filter(b => b.building.id == this.filter.buildingId);
@@ -76,7 +76,6 @@ export class NgCalendarComponent {
       bookings = bookings.filter(b => b.room.id == this.filter.roomId);
 
     this.bookings = bookings;
-
     this.populateCalendar();
   }
 
@@ -84,14 +83,17 @@ export class NgCalendarComponent {
     this.filter = {}; // empty filter drop down
     this.rooms = []; // clear room drop down filter
     this.emptyRoomFilter();
-    this.bookings = this.allBookings;
-    this.populateCalendar();
+    this.showAllBookings(); // show all if reset
   }
 
   onBuildingChange() { // for cascading
     var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
     this.rooms = selectedBuilding ? selectedBuilding.rooms : []; // cascade rooms drop down
     this.emptyRoomFilter();
+    
+    var bookings = this.allBookings;;
+    this.bookings = bookings.filter(b => b.building.id == this.filter.buildingId); // filter events by building
+    this.populateCalendar();
   }
 
   emptyRoomFilter() {
@@ -99,6 +101,11 @@ export class NgCalendarComponent {
     this.events = []; // clear events
     delete this.filter.roomId; // clear selected roomId
     this.refresh.next();// refresh calendar after loading
+  }
+
+  showAllBookings() {
+    this.bookings = this.allBookings;
+    this.populateCalendar();
   }
 
   private populateCalendar() {
@@ -118,7 +125,7 @@ export class NgCalendarComponent {
           {
             start: new Date(this.startDateTime),
             end: new Date(this.endDateTime),
-            title: "Purpose: " + b.purpose + " | Name: " + b.contact.name,
+            title: "&nbsp;<b>Room:</b> " + b.room.name + " | <b>Name:</b> " + b.contact.name + " | <b>Purpose:</b> " + b.purpose,
             color: colors.blue,
             meta: {
               id: b.id, // * just the id
