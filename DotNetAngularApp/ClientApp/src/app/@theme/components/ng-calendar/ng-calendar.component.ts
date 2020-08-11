@@ -28,7 +28,7 @@ import { colors } from '../calendar-header/colors';
 })
 export class NgCalendarComponent {
 
-  // excludeDays: number[] = [0, 5];
+  excludeDays: number[] = [0, 5];
   weekStartsOn = DAYS_OF_WEEK.MONDAY;
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;

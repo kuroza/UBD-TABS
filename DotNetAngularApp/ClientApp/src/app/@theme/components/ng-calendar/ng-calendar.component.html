@@ -42,6 +42,7 @@
     (dayClicked)="dayClicked($event.day)"
     (eventClicked)="sendBookingId($event)"
     [weekStartsOn]="weekStartsOn"
+    [excludeDays]="excludeDays"
   >
   </mwl-calendar-month-view>
   <mwl-calendar-week-view
@@ -50,18 +51,21 @@
     [events]="events"
     [refresh]="refresh"
     [weekStartsOn]="weekStartsOn"
+    [hourSegments]="1"
     [dayStartHour]="7"
-    [dayEndHour]="20"
+    [dayEndHour]="18"
     (eventClicked)="sendBookingId($event)"
     (dayHeaderClicked)="changeDay($event.day.date)"
+    [excludeDays]="excludeDays"
   >
   </mwl-calendar-week-view>
   <mwl-calendar-day-view
     *ngSwitchCase="CalendarView.Day"
     [viewDate]="viewDate"
     [events]="events"
+    [hourSegments]="1"
     [dayStartHour]="7"
-    [dayEndHour]="20"
+    [dayEndHour]="18"
     [refresh]="refresh"
     (eventClicked)="sendBookingId($event)"
   >

@@ -9,6 +9,9 @@ namespace DotNetAngularApp.Persistence
         public DbSet<Room> Rooms { get; set; }
         public DbSet<TimeSlot> TimeSlots { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Faculty> Faculties { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        
         // public DbSet<Module> Modules { get; set; }
 
         public TabsDbContext(DbContextOptions<TabsDbContext> options) : base(options)

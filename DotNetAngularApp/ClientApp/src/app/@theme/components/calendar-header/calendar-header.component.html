@@ -7,6 +7,7 @@
           [view]="view"
           [(viewDate)]="viewDate"
           (viewDateChange)="viewDateChange.next(viewDate)"
+          [excludeDays]="excludeDays"
         >
           Previous
         </div>
@@ -24,6 +25,7 @@
           [view]="view"
           [(viewDate)]="viewDate"
           (viewDateChange)="viewDateChange.next(viewDate)"
+          [excludeDays]="excludeDays"
         >
           Next
         </div>
@@ -31,6 +33,10 @@
     </div>
     <div class="col-md-4">
       <h4>{{ viewDate | calendarDate: view + 'ViewTitle':locale }}</h4>
+      <!-- <h4>
+        {{ viewDate | calendarDate:(view +
+        'ViewTitle'):'en':weekStartsOn:excludeDays }}
+      </h4> -->
     </div>
     <div class="col-md-4">
       <div class="btn-group">
