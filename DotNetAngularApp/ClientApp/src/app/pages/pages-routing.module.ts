@@ -12,6 +12,7 @@ import { AuthGuard } from '../services/auth.guard';
 import { ViewRoomComponent } from './rooms/view-room/view-room';
 import { UserProfileComponent } from './users/user-profile/user-profile';
 import { TestAddBookingComponent } from './bookings/test-add-booking/test-add-booking';
+import { NewFacultyComponent } from './faculties/new-faculty/new-faculty.component';
 
 const routes: Routes = [{
   path: '',
@@ -29,6 +30,7 @@ const routes: Routes = [{
     { path: 'rooms/edit/:id', component: NewRoomComponent, canActivate: [AuthGuard] },
     { path: 'rooms', component: RoomListComponent, canActivate: [AuthGuard] },
     { path: 'account/profile', component: UserProfileComponent, canActivate: [AuthGuard]},  // ? change to auth/profile?
+    { path: 'faculties/new', component: NewFacultyComponent, canActivate: [AuthGuard] },
   ],
 }];
 

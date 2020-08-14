@@ -8,6 +8,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { BookingsModule } from './bookings/bookings.module';
+import { FacultiesModule } from './faculties/faculties.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { BookingsModule } from './bookings/bookings.module';
     DashboardModule,
     BookingsModule,
     RoomsModule,
-    UsersModule
+    UsersModule,
+    FacultiesModule,
   ],
   declarations: [
     PagesComponent,

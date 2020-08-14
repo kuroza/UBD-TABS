@@ -83,13 +83,15 @@ namespace DotNetAngularApp.Persistence
         // todo: Check if no clash
         // public bool CheckBooking(Booking booking)
         // {
+        //     // get booked timeSlots from db for room and date
         //     var result = context.Bookings
         //         .Where(b => b.RoomId == booking.RoomId && b.BookDate == booking.BookDate)
         //         .Include(b => b.TimeSlots)
-        //         .ThenInclude(b => b.TimeSlotId)
+        //          .ThenInclude(ts => ts.TimeSlotId)
         //         .AsQueryable();
 
         //     List<int> context_tId = new List<int>();
+        //     // iterate timeSlots to get the booked ID
         //     foreach (var b in result)
         //     {
         //         foreach (var t in b.TimeSlots)
@@ -99,11 +101,13 @@ namespace DotNetAngularApp.Persistence
         //     }
 
         //     List<int> tId = new List<int>();
+        //     // iterate to get ID from booking request
         //     foreach (var timeSlots in booking.TimeSlots)
         //     {
         //         tId.Add(timeSlots.TimeSlotId);
         //     }
 
+        //     // compare the timeSlots ID
         //     foreach (var i in context_tId)
         //     {
         //         if (tId.Contains(i))
