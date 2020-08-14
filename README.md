@@ -1,5 +1,7 @@
 # ⚡ Timetabling and Room Booking System ⚡
 
+![](DotNetAngularApp/images/dashboard.png)
+
 ## To run Angular + ASP.NET Core Web API project:
 
 1. Download and install latest .NET Core SDK.
