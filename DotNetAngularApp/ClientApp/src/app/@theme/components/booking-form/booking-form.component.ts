@@ -116,6 +116,7 @@ export class BookingFormComponent implements OnInit {
     });
   }
 
+  // ! change to lecturer and module
   onClickReset() {
     this.booking.id = 0;
     this.booking.roomId = 0;
@@ -128,6 +129,7 @@ export class BookingFormComponent implements OnInit {
     this.booking.timeSlots = [];
   }
 
+  // ! change contact & purpose to lecturer & module
   private setBooking(b) {
     this.booking.id = b.id;
     this.booking.buildingId = b.building.id;

@@ -7,6 +7,7 @@ import { AuthService } from './services/auth.service';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ToastyModule } from 'ng2-toasty';
 import { BookingService } from './services/booking.service';
+import { FacultyService } from './services/faculty.service';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -59,6 +60,7 @@ import { NgbDateParserFormatter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstr
   providers: [
     AuthService,
     BookingService,
+    FacultyService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
     { provide: NgbDateAdapter, useClass: CustomAdapter },
     { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }

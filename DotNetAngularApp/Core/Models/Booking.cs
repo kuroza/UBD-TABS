@@ -21,7 +21,7 @@ namespace DotNetAngularApp.Core.Models
 
         [Required]
         [StringLength(255)]
-        public string ContactName { get; set; }
+        public string ContactName { get; set; } // ! change to lecturer name
 
         [StringLength(255)]
         public string ContactEmail { get; set; }
@@ -30,7 +30,7 @@ namespace DotNetAngularApp.Core.Models
         public string ContactPhone { get; set; }
         
         [StringLength(255)]
-        public string Purpose { get; set; }
+        public string Purpose { get; set; } // ! change to module
 
         public ICollection<BookingTimeSlot> TimeSlots { get; set; }
 
