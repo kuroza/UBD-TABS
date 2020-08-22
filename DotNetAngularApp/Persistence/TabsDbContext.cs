@@ -11,8 +11,8 @@ namespace DotNetAngularApp.Persistence
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Course> Courses { get; set; }
-        
-        // public DbSet<Module> Modules { get; set; }
+        public DbSet<Module> Modules { get; set; }
+        public DbSet<Lecturer> Lecturers { get; set; }
 
         public TabsDbContext(DbContextOptions<TabsDbContext> options) : base(options)
         {
@@ -23,6 +23,8 @@ namespace DotNetAngularApp.Persistence
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<BookingTimeSlot>()
                 .HasKey(bt => new { bt.BookingId, bt.TimeSlotId });
+            modelBuilder.Entity<BookingModule>()
+                .HasKey(bm => new { bm.BookingId, bm.ModuleId });
         }
     }
 }
