@@ -70,12 +70,8 @@ export class TestAddBookingComponent implements OnInit {
     roomId: 0,
     buildingId: 0,
     bookDate: '',
-    contact: {
-      name: '',
-      email: '',
-      phone: '',
-    },
-    purpose: '',
+    modules: [1],
+    lecturers: [35],
     timeSlots: [1],
   };
 
@@ -119,8 +115,8 @@ export class TestAddBookingComponent implements OnInit {
     this.booking.buildingId = b.building.id;
     this.booking.roomId = b.room.id;
     this.booking.bookDate = b.bookDate;
-    this.booking.contact = b.contact;
-    this.booking.purpose = b.purpose;
+    this.booking.modules = _.pluck(b.modules, 'id');
+    this.booking.lecturers = _.pluck(b.lecturers, 'id');
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
   }
 

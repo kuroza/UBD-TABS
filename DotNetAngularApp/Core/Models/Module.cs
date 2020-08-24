@@ -18,6 +18,10 @@ namespace DotNetAngularApp.Core.Models
         [StringLength(255)]
         public string Code { get; set; }
 
+        public int CourseId { get; set; }
+        
+        public Course Course { get; set; }
+
         [Required]
         public ICollection<ModuleLecturer> Lecturers { get; set; }
 

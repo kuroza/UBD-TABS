@@ -1,9 +1,9 @@
 namespace DotNetAngularApp.Controllers.Resources
 {
-    public class CourseResource : KeyValuePairResource
+    public class LecturerResource : KeyValuePairResource
     {
         // public int Id { get; set; }
         // public string Name { get; set; }
-        // inverse relationship here caused a loop
+        public string Title { get; set; }
     }
 }

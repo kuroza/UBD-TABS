@@ -3,19 +3,13 @@ export interface KeyValuePair {
     name: string;
 }
 
-export interface Contact {
-    name: string;
-    phone: string;
-    email: string;
-}
-
 export interface Booking { // like BookingResource form the server
     id: number;
     room: { id: number; name: string; capacity: number; };
     building: { id: number; name: string; };
     bookDate: string;
-    contact: Contact;
-    purpose: string;
+    modules: { id: number, name: string, code: string }[];
+    lecturers: { id: number, name: string, title: string }[];
     timeSlots: { id: number; startTime: string; endTime: string; }[];
 }
 
@@ -24,7 +18,7 @@ export interface SaveBooking {
     roomId: number;
     buildingId: number;
     bookDate: string;
-    contact: Contact;
-    purpose: string;
+    modules: number[];
+    lecturers: number[];
     timeSlots: number[];
 }

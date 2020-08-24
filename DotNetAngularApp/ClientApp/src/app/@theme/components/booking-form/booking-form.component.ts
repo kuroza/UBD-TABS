@@ -73,12 +73,8 @@ export class BookingFormComponent implements OnInit {
     roomId: 0,
     buildingId: 0,
     bookDate: '',
-    contact: {
-      name: '',
-      email: '',
-      phone: '',
-    },
-    purpose: '',
+    modules: [1],
+    lecturers: [35],
     timeSlots: [8],
   };
 
@@ -116,28 +112,24 @@ export class BookingFormComponent implements OnInit {
     });
   }
 
-  // ! change to lecturer and module
   onClickReset() {
     this.booking.id = 0;
     this.booking.roomId = 0;
     this.booking.buildingId = 0;
     this.booking.bookDate = '';
-    this.booking.contact.name = '';
-    this.booking.contact.email = '';
-    this.booking.contact.phone = '';
-    this.booking.purpose = '';
+    this.booking.modules = [];
+    this.booking.lecturers = [];
     this.booking.timeSlots = [];
   }
 
-  // ! change contact & purpose to lecturer & module
   private setBooking(b) {
     this.booking.id = b.id;
     this.booking.buildingId = b.building.id;
     this.booking.roomId = b.room.id;
     this.booking.bookDate = b.bookDate;
-    this.booking.contact = b.contact;
-    this.booking.purpose = b.purpose;
-    this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
+    this.booking.modules = _.pluck(b.modules, 'id');
+    this.booking.lecturers = _.pluck(b.lecturers, 'id');
+    this.booking.timeSlots = _.pluck(b.timeSlots, 'id'); // is this the reason where timeslot not added to form?
   }
 
   onTimeSlotToggle(timeSlotId, $event) {
