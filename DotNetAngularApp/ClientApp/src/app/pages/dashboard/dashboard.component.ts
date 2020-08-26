@@ -1,4 +1,4 @@
-import { AuthService } from './../../services/auth.service';
+// import { AuthService } from './../../services/auth.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { BookingService } from './../../services/booking.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -12,7 +12,6 @@ export class DashboardComponent {
   booking: any;
 
   constructor(
-    public auth: AuthService,
     private route: ActivatedRoute, 
     private router: Router,
     private toasty: ToastyService,

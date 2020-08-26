@@ -1,4 +1,4 @@
-import { AuthGuard } from './services/auth.guard';
+// import { AuthGuard } from './services/auth.guard';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import {
@@ -10,7 +10,7 @@ import {
   NbResetPasswordComponent,
 } from '@nebular/auth';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { InterceptorService } from './services/interceptor.service';
+// import { InterceptorService } from './services/interceptor.service';
 
 const routes: Routes = [
   {
@@ -59,13 +59,7 @@ const config: ExtraOptions = {
 @NgModule({
   imports: [RouterModule.forRoot(routes, config)],
   exports: [RouterModule],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: InterceptorService,
-      multi: true
-    }
-  ]
+  providers: []
 })
 export class AppRoutingModule {
 }

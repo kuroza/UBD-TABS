@@ -1,4 +1,4 @@
-import { AuthService } from './../../../services/auth.service';
+// import { AuthService } from './../../../services/auth.service';
 import { BookingService } from './../../../services/booking.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -24,8 +24,7 @@ export class BookingListComponent implements OnInit {
   ];
   
   constructor( // injecting service
-    private bookingService: BookingService, 
-    public auth: AuthService) { }
+    private bookingService: BookingService) { }
 
   ngOnInit() { // when the page starts
     this.bookingService.getBuildings() // get the buildings from service for filter drop down

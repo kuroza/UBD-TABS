@@ -24,8 +24,8 @@
 
   <br />
   <p>
-    <button *ngIf="auth.loggedIn" class="mx-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
-    <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="danger" (click)="delete()">Delete</button>
+    <!-- <button *ngIf="auth.loggedIn" class="mx-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+    <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="danger" (click)="delete()">Delete</button> -->
     <button nbButton status="warning" [routerLink]="['/pages/bookings']">View All Bookings</button>
   </p>
 </div>

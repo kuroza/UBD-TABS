@@ -1,4 +1,4 @@
-import { AuthService } from './../services/auth.service';
+// import { AuthService } from './../services/auth.service';
 import { Component } from '@angular/core';
 
 import { MENU_ITEMS } from './pages-menu';
@@ -15,7 +15,7 @@ import { MENU_ITEMS } from './pages-menu';
 })
 export class PagesComponent {
   
-  constructor(public auth: AuthService) {}
+  constructor() {}
 
   menu = MENU_ITEMS;
 }

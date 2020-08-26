@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DotNetAngularApp.Controllers
 {
     [Route("/api/bookings")]
-    [Authorize]
+    // [Authorize]
     public class BookingsController : Controller
     {
         private readonly IMapper mapper;

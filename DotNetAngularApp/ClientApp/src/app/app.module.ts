@@ -3,7 +3,7 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-import { AuthService } from './services/auth.service';
+// import { AuthService } from './services/auth.service';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ToastyModule } from 'ng2-toasty';
 import { BookingService } from './services/booking.service';
@@ -58,7 +58,6 @@ import { NgbDateParserFormatter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstr
   ],
   bootstrap: [AppComponent],
   providers: [
-    AuthService,
     BookingService,
     FacultyService,
     { provide: ErrorHandler, useClass: AppErrorHandler },

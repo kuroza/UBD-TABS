@@ -50,18 +50,18 @@
                 </ul>
               </div>
               <br />
-              <p>
+              <!-- <p>
                 <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
                 <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="danger" (click)="delete()">Delete</button>
                 <button nbButton status="warning" [routerLink]="['/pages/bookings']">View all</button>
-              </p>
+              </p> -->
             </div>
           </nb-tab>
-          <nb-tab *ngIf="!auth.loggedIn" tabTitle="Add booking" disabled>
+          <!-- <nb-tab *ngIf="!auth.loggedIn" tabTitle="Add booking" disabled>
           </nb-tab>
           <nb-tab *ngIf="auth.loggedIn" tabTitle="Add booking">
             <ngx-booking-form></ngx-booking-form>
-          </nb-tab>
+          </nb-tab> -->
          </nb-tabset>
       </nb-card-body>
     </nb-card>
