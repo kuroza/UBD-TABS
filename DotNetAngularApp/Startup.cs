@@ -39,6 +39,10 @@ namespace DotNetAngularApp
             services.AddDbContext<TabsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
+            // services.AddIdentity<ApplicationUser, IdentityRole>()
+            //     .AddEntityFrameworkStores<TabsDbContext>()
+            //     .AddDefaultTokenProviders();
+
             // string domain = $"https://{Configuration["Auth0:Domain"]}/";
             // services.AddAuthentication(options =>
             // {

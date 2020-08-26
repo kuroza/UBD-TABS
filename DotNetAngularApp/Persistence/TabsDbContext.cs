@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotNetAngularApp.Persistence
 {
-    public class TabsDbContext : DbContext
+    public class TabsDbContext : Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext
     {
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Room> Rooms { get; set; }
