@@ -20,17 +20,15 @@ namespace DotNetAngularApp.Core.Models
         public DateTime BookDate { get; set; }
 
         [Required]
-        public ICollection<BookingModule> Modules { get; set; }
-
-        public Module Module { get; set; }
+        public ICollection<BookingTimeSlot> TimeSlots { get; set; }
 
         [Required]
-        public ICollection<BookingTimeSlot> TimeSlots { get; set; }
+        public ICollection<BookingModule> Modules { get; set; }
 
         public Booking()
         {
-            Modules = new Collection<BookingModule>();
             TimeSlots = new Collection<BookingTimeSlot>();
+            Modules = new Collection<BookingModule>();
         }
     }
 }

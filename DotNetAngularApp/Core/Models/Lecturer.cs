@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,5 +16,12 @@ namespace DotNetAngularApp.Core.Models
 
         [StringLength(255)]
         public string Title { get; set; }
+
+        public ICollection<ModuleLecturer> Modules { get; set; }
+
+        public Lecturer()
+        {
+            Modules = new Collection<ModuleLecturer>();
+        }
     }
 }
