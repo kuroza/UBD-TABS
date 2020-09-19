@@ -19,24 +19,28 @@ namespace DotNetAngularApp.Core.Models
         [Required]
         public DateTime BookDate { get; set; }
 
-        [Required]
-        [StringLength(255)]
-        public string ContactName { get; set; } // ! change to lecturer name
+        // [Required]
+        // [StringLength(255)]
+        // public string ContactName { get; set; } // ! change to lecturer name
 
-        [StringLength(255)]
-        public string ContactEmail { get; set; }
+        // [StringLength(255)]
+        // public string ContactEmail { get; set; }
 
-        [StringLength(255)]
-        public string ContactPhone { get; set; }
+        // [StringLength(255)]
+        // public string ContactPhone { get; set; }
         
-        [StringLength(255)]
-        public string Purpose { get; set; } // ! change to module
+        // [StringLength(255)]
+        // public string Purpose { get; set; } // ! change to module
 
         public ICollection<BookingTimeSlot> TimeSlots { get; set; }
+
+        [Required]
+        public ICollection<BookingModule> Modules { get; set; }
 
         public Booking()
         {
             TimeSlots = new Collection<BookingTimeSlot>();
+            Modules = new Collection<BookingModule>();
         }
     }
 }

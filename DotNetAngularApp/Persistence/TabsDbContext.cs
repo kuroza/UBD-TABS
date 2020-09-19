@@ -11,8 +11,8 @@ namespace DotNetAngularApp.Persistence
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
         public DbSet<Course> Courses { get; set; }
-        
-        // public DbSet<Module> Modules { get; set; }
+        public DbSet<Module> Modules { get; set; }
+        public DbSet<Lecturer> Lecturers { get; set; }
 
         public TabsDbContext(DbContextOptions<TabsDbContext> options) : base(options)
         {
@@ -21,8 +21,34 @@ namespace DotNetAngularApp.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            
+            // BookingTimeSlot
             modelBuilder.Entity<BookingTimeSlot>()
                 .HasKey(bt => new { bt.BookingId, bt.TimeSlotId });
+
+            // ModuleLecturer
+            modelBuilder.Entity<ModuleLecturer>()
+                .HasKey(ml => new { ml.ModuleId, ml.LecturerId });
+            modelBuilder.Entity<ModuleLecturer>()
+                .HasOne(ml => ml.Module)
+                .WithMany(m => m.Lecturers)
+                .HasForeignKey(ml => ml.ModuleId);
+            modelBuilder.Entity<ModuleLecturer>()
+                .HasOne(ml => ml.Lecturer)
+                .WithMany(l => l.Modules)
+                .HasForeignKey(ml => ml.LecturerId);
+
+            // BookingModule
+            modelBuilder.Entity<BookingModule>()
+                .HasKey(bm => new { bm.BookingId, bm.ModuleId });
+            modelBuilder.Entity<BookingModule>()
+                .HasOne(bm => bm.Booking)
+                .WithMany(b => b.Modules)
+                .HasForeignKey(bm => bm.BookingId);
+            modelBuilder.Entity<BookingModule>()
+                .HasOne(bm => bm.Module)
+                .WithMany(m => m.Bookings)
+                .HasForeignKey(bm => bm.ModuleId);
         }
     }
 }

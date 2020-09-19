@@ -15,5 +15,19 @@ namespace DotNetAngularApp.Core.Models
         [Required]
         [StringLength(255)]
         public string Code { get; set; }
+
+        public ICollection<BookingModule> Bookings { get; set; }
+
+        public ICollection<ModuleLecturer> Lecturers { get; set; }
+
+        // public int CourseId { get; set; }
+        
+        // public Course Course { get; set; }
+        
+        public Module()
+        {
+            Bookings = new Collection<BookingModule>();
+            Lecturers = new Collection<ModuleLecturer>();
+        }
     }
 }
