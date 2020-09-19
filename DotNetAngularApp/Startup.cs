@@ -39,29 +39,6 @@ namespace DotNetAngularApp
             services.AddDbContext<TabsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
-            // string domain = $"https://{Configuration["Auth0:Domain"]}/";
-            // services.AddAuthentication(options =>
-            // {
-            //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            // }).AddJwtBearer(options =>
-            // {
-            //     options.Authority = domain;
-            //     options.Audience = Configuration["Auth0:ApiIdentifier"];
-            // });
-
-            // services.AddAuthorization(options =>
-            // {
-            //     options.AddPolicy("create:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("create:bookings", domain)));
-            //     options.AddPolicy("read:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("read:bookings", domain)));
-            //     options.AddPolicy("update:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("update:bookings", domain)));
-            //     options.AddPolicy("delete:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("delete:bookings", domain)));
-            //     options.AddPolicy("create:rooms", policy => policy.Requirements.Add(new HasScopeRequirement("create:rooms", domain)));
-            //     options.AddPolicy("read:rooms", policy => policy.Requirements.Add(new HasScopeRequirement("read:rooms", domain)));
-            //     options.AddPolicy("update:rooms", policy => policy.Requirements.Add(new HasScopeRequirement("update:rooms", domain)));
-            //     options.AddPolicy("delete:rooms", policy => policy.Requirements.Add(new HasScopeRequirement("delete:rooms", domain)));
-            // });
-
             // register the scope authorization handler
             // services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
