@@ -19,24 +19,20 @@ namespace DotNetAngularApp.Mapping
             CreateMap<Room, RoomResource>();
             CreateMap<TimeSlot, TimeSlotResource>();
             CreateMap<Booking, SaveBookingResource>()
-                // .ForMember(br => br.Contact, opt => opt.MapFrom(b => new ContactResource { Name = b.ContactName, Email = b.ContactEmail, Phone = b.ContactPhone }))
                 .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => bt.TimeSlotId)))
                 .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => bt.ModuleId)));
             CreateMap<Booking, BookingResource>()
                 .ForMember(br => br.Building, opt => opt.MapFrom(b => b.Room.Building))
-                // include datetime here?
-                // .ForMember(br => br.Contact, opt => opt.MapFrom(b => new ContactResource { Name = b.ContactName, Email = b.ContactEmail, Phone = b.ContactPhone }))
+                // include datetime here? for what ah.. aku lupa
                 .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => new TimeSlotResource { Id = bt.TimeSlot.Id, StartTime = bt.TimeSlot.StartTime, EndTime = bt.TimeSlot.EndTime }))) // load the association class
-                .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => bt.ModuleId )));
+                .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => bt.ModuleId ))); // ? select by ModuleResource?
+                // map Room here?
 
             // API Resource to Domain, saving to database
             CreateMap<BookingQueryResource, BookingQuery>();
             CreateMap<SaveBookingResource, Booking>()
                 .ForMember(b => b.Id, opt => opt.Ignore())
-                // .ForMember(b => b.ContactName, opt => opt.MapFrom(br => br.Contact.Name))
-                // .ForMember(b => b.ContactEmail, opt => opt.MapFrom(br => br.Contact.Email))
-                // .ForMember(b => b.ContactPhone, opt => opt.MapFrom(br => br.Contact.Phone))
-                .ForMember(b => b.TimeSlots, opt => opt.Ignore()) // ?
+                .ForMember(b => b.TimeSlots, opt => opt.Ignore()) // ? what is ignore() for?
                 .AfterMap((br, b) => {
                     var removedTimeSlots = b.TimeSlots.Where(t => !br.TimeSlots.Contains(t.TimeSlotId)).ToList();
                     foreach (var t in removedTimeSlots)

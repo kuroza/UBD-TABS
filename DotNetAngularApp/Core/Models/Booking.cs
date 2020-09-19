@@ -11,22 +11,27 @@ namespace DotNetAngularApp.Core.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public int RoomId { get; set; } // ! change to collection
-
         public Room Room { get; set; }
 
         [Required]
         public DateTime BookDate { get; set; } // ! might need to change this to a collection if using recurring
 
+        // [Required]
         public ICollection<BookingTimeSlot> TimeSlots { get; set; }
 
         public ICollection<BookingModule> Modules { get; set; }
+        
+        // [Required]
+        // public int RoomId { get; set; } // ! change to collection
+
+        [Required]
+        public ICollection<int> Rooms { get; set; }
 
         public Booking()
         {
             TimeSlots = new Collection<BookingTimeSlot>();
             Modules = new Collection<BookingModule>();
+            Rooms = new Collection<Room>();
         }
     }
 }

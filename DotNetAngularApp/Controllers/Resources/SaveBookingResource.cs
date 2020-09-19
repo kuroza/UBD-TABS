@@ -10,25 +10,23 @@ namespace DotNetAngularApp.Controllers.Resources
         public int Id { get; set; }
 
         [Required]
-        public int RoomId { get; set; }
-
-        [Required]
         public DateTime BookDate { get; set; }
-
-        // [Required]
-        // public ContactResource Contact { get; set; }
-        
-        // [StringLength(255)]
-        // public string Purpose { get; set; }
 
         public ICollection<int> TimeSlots { get; set; }
 
         public ICollection<int> Modules { get; set; }
 
+        // [Required]
+        // public int RoomId { get; set; } // ? how to get the IDs into a collection
+
+        [Required]
+        public ICollection<int> Rooms { get; set; }
+
         public SaveBookingResource()
         {
             TimeSlots = new Collection<int>();
             Modules = new Collection<int>();
+            Rooms = new Collection<int>();
         }
     }
 }
