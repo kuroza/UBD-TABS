@@ -15,17 +15,20 @@ namespace DotNetAngularApp.Controllers.Resources
         [Required]
         public DateTime BookDate { get; set; }
 
-        [Required]
-        public ContactResource Contact { get; set; }
+        // [Required]
+        // public ContactResource Contact { get; set; }
         
-        [StringLength(255)]
-        public string Purpose { get; set; }
+        // [StringLength(255)]
+        // public string Purpose { get; set; }
 
         public ICollection<int> TimeSlots { get; set; }
+
+        public ICollection<int> Modules { get; set; }
 
         public SaveBookingResource()
         {
             TimeSlots = new Collection<int>();
+            Modules = new Collection<int>();
         }
     }
 }

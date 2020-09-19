@@ -34,7 +34,7 @@ namespace DotNetAngularApp.Core.Models
 
         public ICollection<BookingTimeSlot> TimeSlots { get; set; }
 
-        [Required]
+        // [Required]
         public ICollection<BookingModule> Modules { get; set; }
 
         public Booking()
