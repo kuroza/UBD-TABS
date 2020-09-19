@@ -6,9 +6,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'Dashboard',
+    title: 'Home',
     icon: 'home-outline',
-    link: '/pages/dashboard',
+    link: '/pages/home',
     home: true,
   },
   // * Account settings on sidebar
@@ -52,7 +52,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
       {
         title: 'View calendar',
-        link: '/pages/dashboard',
+        link: '/pages/home',
       },
     ],
   },

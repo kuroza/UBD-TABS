@@ -12,29 +12,15 @@ namespace DotNetAngularApp.Core.Models
         public int Id { get; set; }
 
         [Required]
-        public int RoomId { get; set; }
+        public int RoomId { get; set; } // ! change to collection
 
         public Room Room { get; set; }
 
         [Required]
-        public DateTime BookDate { get; set; }
-
-        // [Required]
-        // [StringLength(255)]
-        // public string ContactName { get; set; } // ! change to lecturer name
-
-        // [StringLength(255)]
-        // public string ContactEmail { get; set; }
-
-        // [StringLength(255)]
-        // public string ContactPhone { get; set; }
-        
-        // [StringLength(255)]
-        // public string Purpose { get; set; } // ! change to module
+        public DateTime BookDate { get; set; } // ! might need to change this to a collection if using recurring
 
         public ICollection<BookingTimeSlot> TimeSlots { get; set; }
 
-        // [Required]
         public ICollection<BookingModule> Modules { get; set; }
 
         public Booking()
