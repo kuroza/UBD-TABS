@@ -25,7 +25,7 @@ namespace DotNetAngularApp.Core.Models
         // public int RoomId { get; set; } // ! change to collection
 
         [Required]
-        public ICollection<int> Rooms { get; set; }
+        public ICollection<Room> Rooms { get; set; }
 
         public Booking()
         {

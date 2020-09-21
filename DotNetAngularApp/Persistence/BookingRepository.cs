@@ -48,16 +48,18 @@ namespace DotNetAngularApp.Persistence
 
             var query = context.Bookings
                 .Include(b => b.Room)
-                    .ThenInclude(r => r.Building)
+                    .ThenInclude(r => r.Building) // ! i might need to change this to b.Rooms
                 .Include(b => b.TimeSlots)
                     .ThenInclude(bt => bt.TimeSlot)
                 .AsQueryable();
 
             if (queryObj.BuildingId.HasValue)
-                query = query.Where(b => b.Room.BuildingId == queryObj.BuildingId.Value);
+                query = query.Where(b => b.Room.BuildingId == queryObj.BuildingId.Value); // ! and change this as well
             
             if (queryObj.RoomId.HasValue)
-                query = query.Where(b => b.RoomId == queryObj.RoomId.Value);
+                // * iterate through list of rooms and check their Id or get Bookings from query above
+
+                query = query.Where(b => b.Room.Id == queryObj.RoomId.Value); // ! b.RoomId <-- the error could be here atm
 
             // Dictionary for storing keys (strings) and values (from context)
             // Expression<> is a type of lambda expression
