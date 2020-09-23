@@ -66,7 +66,7 @@ namespace DotNetAngularApp.Persistence
             {
                 ["building"] = b => b.Room.Building.Name,
                 ["room"] = b => b.Room.Name,
-                ["contactName"] = b => b.ContactName
+                // ["contactName"] = b => b.ContactName
             };
 
             query = query.ApplyOrdering(queryObj, columnsMap);

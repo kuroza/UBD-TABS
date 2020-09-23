@@ -17,22 +17,23 @@ namespace DotNetAngularApp.Mapping
             CreateMap<Building, BuildingResource>();
             CreateMap<Building, KeyValuePairResource>();
             CreateMap<Room, RoomResource>();
+            CreateMap<Lecturer, LecturerResource>();
             CreateMap<TimeSlot, TimeSlotResource>();
             CreateMap<Booking, SaveBookingResource>()
-                .ForMember(br => br.Contact, opt => opt.MapFrom(b => new ContactResource { Name = b.ContactName, Email = b.ContactEmail, Phone = b.ContactPhone }))
-                .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => bt.TimeSlotId)));
+                .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => bt.TimeSlotId)))
+                .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => bt.ModuleId)));
             CreateMap<Booking, BookingResource>()
                 .ForMember(br => br.Building, opt => opt.MapFrom(b => b.Room.Building))
-                .ForMember(br => br.Contact, opt => opt.MapFrom(b => new ContactResource { Name = b.ContactName, Email = b.ContactEmail, Phone = b.ContactPhone }))
-                .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => new TimeSlotResource { Id = bt.TimeSlot.Id, StartTime = bt.TimeSlot.StartTime, EndTime = bt.TimeSlot.EndTime }))); //load the association class
+                .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => new TimeSlotResource { Id = bt.TimeSlot.Id, StartTime = bt.TimeSlot.StartTime, EndTime = bt.TimeSlot.EndTime }))) //load the association class
+                .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => new ModuleResource { Id = bt.Module.Id, Name = bt.Module.Name, Code = bt.Module.Code })));
+                // .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => bt.ModuleId )));
+            CreateMap<Module, ModuleResource>()
+                .ForMember(mr => mr.Lecturers, opt => opt.MapFrom(m => m.Lecturers.Select(ml => new LecturerResource { Id = ml.Lecturer.Id, Name = ml.Lecturer.Name, Title = ml.Lecturer.Title })));
 
             //API Resource to Domain, saving to database
             CreateMap<BookingQueryResource, BookingQuery>();
             CreateMap<SaveBookingResource, Booking>()
                 .ForMember(b => b.Id, opt => opt.Ignore())
-                .ForMember(b => b.ContactName, opt => opt.MapFrom(br => br.Contact.Name))
-                .ForMember(b => b.ContactEmail, opt => opt.MapFrom(br => br.Contact.Email))
-                .ForMember(b => b.ContactPhone, opt => opt.MapFrom(br => br.Contact.Phone))
                 .ForMember(b => b.TimeSlots, opt => opt.Ignore()) // ?
                 .AfterMap((br, b) => {
                     var removedTimeSlots = b.TimeSlots.Where(t => !br.TimeSlots.Contains(t.TimeSlotId)).ToList();
@@ -42,6 +43,14 @@ namespace DotNetAngularApp.Mapping
                     var addedTimeSlots = br.TimeSlots.Where(id => !b.TimeSlots.Any(t => t.TimeSlotId == id)).Select(id => new BookingTimeSlot { TimeSlotId = id });
                     foreach (var t in addedTimeSlots)
                         b.TimeSlots.Add(t);
+
+                    var removedModules = b.Modules.Where(m => !br.Modules.Contains(m.ModuleId)).ToList();
+                    foreach (var m in removedModules)
+                        b.Modules.Remove(m);
+
+                    var addedModules = br.Modules.Where(id => !b.Modules.Any(m => m.ModuleId == id)).Select(id => new BookingModule { ModuleId = id });
+                    foreach (var m in addedModules)
+                        b.Modules.Add(m);
                 });
         }
     }

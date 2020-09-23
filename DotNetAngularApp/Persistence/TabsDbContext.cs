@@ -29,26 +29,10 @@ namespace DotNetAngularApp.Persistence
             // ModuleLecturer
             modelBuilder.Entity<ModuleLecturer>()
                 .HasKey(ml => new { ml.ModuleId, ml.LecturerId });
-            modelBuilder.Entity<ModuleLecturer>()
-                .HasOne(ml => ml.Module)
-                .WithMany(m => m.Lecturers)
-                .HasForeignKey(ml => ml.ModuleId);
-            modelBuilder.Entity<ModuleLecturer>()
-                .HasOne(ml => ml.Lecturer)
-                .WithMany(l => l.Modules)
-                .HasForeignKey(ml => ml.LecturerId);
 
             // BookingModule
             modelBuilder.Entity<BookingModule>()
                 .HasKey(bm => new { bm.BookingId, bm.ModuleId });
-            modelBuilder.Entity<BookingModule>()
-                .HasOne(bm => bm.Booking)
-                .WithMany(b => b.Modules)
-                .HasForeignKey(bm => bm.BookingId);
-            modelBuilder.Entity<BookingModule>()
-                .HasOne(bm => bm.Module)
-                .WithMany(m => m.Bookings)
-                .HasForeignKey(bm => bm.ModuleId);
         }
     }
 }

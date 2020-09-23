@@ -14,15 +14,14 @@ namespace DotNetAngularApp.Controllers.Resources
 
         public DateTime BookDate { get; set; }
 
-        public ContactResource Contact { get; set; }
-        
-        public string Purpose { get; set; }
-
         public ICollection<TimeSlotResource> TimeSlots { get; set; }
+
+        public ICollection<ModuleResource> Modules { get; set; }
 
         public BookingResource()
         {
             TimeSlots = new Collection<TimeSlotResource>();
+            Modules = new Collection<ModuleResource>();
         }
     }
 }

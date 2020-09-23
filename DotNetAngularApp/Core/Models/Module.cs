@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace DotNetAngularApp.Core.Models
 {
@@ -16,8 +18,6 @@ namespace DotNetAngularApp.Core.Models
         [StringLength(255)]
         public string Code { get; set; }
 
-        public ICollection<BookingModule> Bookings { get; set; }
-
         public ICollection<ModuleLecturer> Lecturers { get; set; }
 
         // public int CourseId { get; set; }
@@ -26,7 +26,6 @@ namespace DotNetAngularApp.Core.Models
         
         public Module()
         {
-            Bookings = new Collection<BookingModule>();
             Lecturers = new Collection<ModuleLecturer>();
         }
     }
