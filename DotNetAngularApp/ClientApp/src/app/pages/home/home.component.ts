@@ -1,14 +1,14 @@
 // import { AuthService } from './../../services/auth.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { BookingService } from './../../services/booking.service';
+import { BookingService } from '../../services/booking.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
 
 @Component({
-  selector: 'ngx-dashboard',
-  templateUrl: './dashboard.component.html',
+  selector: 'ngx-home',
+  templateUrl: './home.component.html',
 })
-export class DashboardComponent {
+export class HomeComponent {
   booking: any;
 
   constructor(

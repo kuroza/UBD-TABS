@@ -73,12 +73,6 @@ export class BookingFormComponent implements OnInit {
     roomId: 0,
     buildingId: 0,
     bookDate: '',
-    contact: {
-      name: '',
-      email: '',
-      phone: '',
-    },
-    purpose: '',
     timeSlots: [8],
   };
 
@@ -122,10 +116,6 @@ export class BookingFormComponent implements OnInit {
     this.booking.roomId = 0;
     this.booking.buildingId = 0;
     this.booking.bookDate = '';
-    this.booking.contact.name = '';
-    this.booking.contact.email = '';
-    this.booking.contact.phone = '';
-    this.booking.purpose = '';
     this.booking.timeSlots = [];
   }
 
@@ -135,8 +125,6 @@ export class BookingFormComponent implements OnInit {
     this.booking.buildingId = b.building.id;
     this.booking.roomId = b.room.id;
     this.booking.bookDate = b.bookDate;
-    this.booking.contact = b.contact;
-    this.booking.purpose = b.purpose;
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
   }
 

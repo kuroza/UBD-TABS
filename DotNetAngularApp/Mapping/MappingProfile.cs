@@ -24,11 +24,17 @@ namespace DotNetAngularApp.Mapping
                 .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => bt.ModuleId)));
             CreateMap<Booking, BookingResource>()
                 .ForMember(br => br.Building, opt => opt.MapFrom(b => b.Room.Building))
-                .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => new TimeSlotResource { Id = bt.TimeSlot.Id, StartTime = bt.TimeSlot.StartTime, EndTime = bt.TimeSlot.EndTime }))) //load the association class
-                .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => new ModuleResource { Id = bt.Module.Id, Name = bt.Module.Name, Code = bt.Module.Code })));
+                .ForMember(br => br.TimeSlots, opt => 
+                    opt.MapFrom(b => b.TimeSlots.Select(bt => 
+                    new TimeSlotResource { Id = bt.TimeSlot.Id, StartTime = bt.TimeSlot.StartTime, EndTime = bt.TimeSlot.EndTime }))) //load the association class
+                .ForMember(br => br.Modules, opt => 
+                    opt.MapFrom(b => b.Modules.Select(bm => 
+                    new ModuleResource { Id = bm.Module.Id, Name = bm.Module.Name, Code = bm.Module.Code })));
                 // .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => bt.ModuleId )));
             CreateMap<Module, ModuleResource>()
-                .ForMember(mr => mr.Lecturers, opt => opt.MapFrom(m => m.Lecturers.Select(ml => new LecturerResource { Id = ml.Lecturer.Id, Name = ml.Lecturer.Name, Title = ml.Lecturer.Title })));
+                .ForMember(mr => mr.Lecturers, opt => 
+                    opt.MapFrom(m => m.Lecturers.Select(ml => 
+                    new LecturerResource { Id = ml.Lecturer.Id, Name = ml.Lecturer.Name, Title = ml.Lecturer.Title })));
 
             //API Resource to Domain, saving to database
             CreateMap<BookingQueryResource, BookingQuery>();
@@ -40,7 +46,9 @@ namespace DotNetAngularApp.Mapping
                     foreach (var t in removedTimeSlots)
                         b.TimeSlots.Remove(t);
 
-                    var addedTimeSlots = br.TimeSlots.Where(id => !b.TimeSlots.Any(t => t.TimeSlotId == id)).Select(id => new BookingTimeSlot { TimeSlotId = id });
+                    var addedTimeSlots = br.TimeSlots
+                        .Where(id => !b.TimeSlots.Any(t => t.TimeSlotId == id))
+                        .Select(id => new BookingTimeSlot { TimeSlotId = id });
                     foreach (var t in addedTimeSlots)
                         b.TimeSlots.Add(t);
 
@@ -48,7 +56,9 @@ namespace DotNetAngularApp.Mapping
                     foreach (var m in removedModules)
                         b.Modules.Remove(m);
 
-                    var addedModules = br.Modules.Where(id => !b.Modules.Any(m => m.ModuleId == id)).Select(id => new BookingModule { ModuleId = id });
+                    var addedModules = br.Modules
+                        .Where(id => !b.Modules.Any(m => m.ModuleId == id))
+                        .Select(id => new BookingModule { ModuleId = id });
                     foreach (var m in addedModules)
                         b.Modules.Add(m);
                 });

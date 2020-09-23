@@ -19,7 +19,6 @@ export class BookingListComponent implements OnInit {
     { title: 'Building', key: 'building', isSortable: true },
     { title: 'Room', key: 'room', isSortable: true },
     { title: 'Date', key: 'bookDate', isSortable: false },
-    { title: 'Name', key: 'contactName', isSortable: true },
     { }
   ];
   

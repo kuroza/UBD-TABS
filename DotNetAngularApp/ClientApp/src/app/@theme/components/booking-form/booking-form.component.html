@@ -109,12 +109,12 @@
 
   <!-- ! change to lecturer -->
   <!-- Contact from -->
-  <div class="form-group">
+  <!-- <div class="form-group">
     <label for="contactName">Name *</label>
     <input id="contactName" type="text" class="form-control" [(ngModel)]="booking.contact.name"
-      name="contactName" placeholder="" required #contactName="ngModel"> <!-- * class="form-control" -->
+      name="contactName" placeholder="" required #contactName="ngModel">
     <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">Please specify the name.</div>
-  </div>
+  </div> -->
   <!-- <div class="form-group">
     <label for="contactEmail">Email</label>
     <input id="contactEmail" type="text" class="form-control" [(ngModel)]="booking.contact.email"
@@ -129,8 +129,8 @@
   <!-- ! change to module -->
   <!-- Purpose form -->
   <div class="form-group">
-    <label for="purpose">Purpose</label>
-    <input id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose" 
+    <label for="module">Module</label>
+    <input id="module" type="text" class="form-control" [(ngModel)]="booking.module" name="module" 
     placeholder="">
   </div>
   <div *ngIf="!booking.id">

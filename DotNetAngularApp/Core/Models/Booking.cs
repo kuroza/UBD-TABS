@@ -21,7 +21,7 @@ namespace DotNetAngularApp.Core.Models
 
         public ICollection<BookingTimeSlot> TimeSlots { get; set; }
 
-        [Required]
+        [Required] // is this correct?
         public ICollection<BookingModule> Modules { get; set; }
 
         public Booking()

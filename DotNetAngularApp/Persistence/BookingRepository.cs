@@ -39,6 +39,9 @@ namespace DotNetAngularApp.Persistence
                     .ThenInclude(r => r.Building)
                 .Include(b => b.TimeSlots)
                     .ThenInclude(bt => bt.TimeSlot)
+                .Include(b => b.Modules)
+                    .ThenInclude(bm => bm.Module)
+                    // .ThenInclude(m => m.Lecturers)
                 .ToListAsync();
         }
 
