@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace DotNetAngularApp.Controllers.Resources
 {
@@ -11,7 +12,7 @@ namespace DotNetAngularApp.Controllers.Resources
         public string Name { get; set; }
 
         public string Title { get; set; }
-
+        // [JsonIgnore]
         public ICollection<ModuleResource> Modules { get; set; }
 
         public LecturerResource()

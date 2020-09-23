@@ -18,11 +18,11 @@ namespace DotNetAngularApp.Core.Models
         [StringLength(255)]
         public string Title { get; set; }
 
-        public ICollection<ModuleLecturer> Modules { get; set; }
+        // public ICollection<ModuleLecturer> Modules { get; set; }
 
-        public Lecturer()
-        {
-            Modules = new Collection<ModuleLecturer>();
-        }
+        // public Lecturer()
+        // {
+        //     Modules = new Collection<ModuleLecturer>();
+        // }
     }
 }
