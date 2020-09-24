@@ -19,9 +19,11 @@ namespace DotNetAngularApp.Mapping
             CreateMap<Room, RoomResource>();
             CreateMap<Lecturer, LecturerResource>();
             CreateMap<TimeSlot, TimeSlotResource>();
+
             CreateMap<Booking, SaveBookingResource>()
                 .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => bt.TimeSlotId)))
                 .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => bt.ModuleId)));
+
             CreateMap<Booking, BookingResource>()
                 .ForMember(br => br.Building, opt => opt.MapFrom(b => b.Room.Building))
                 .ForMember(br => br.TimeSlots, opt => 
@@ -29,8 +31,10 @@ namespace DotNetAngularApp.Mapping
                     new TimeSlotResource { Id = bt.TimeSlot.Id, StartTime = bt.TimeSlot.StartTime, EndTime = bt.TimeSlot.EndTime }))) //load the association class
                 .ForMember(br => br.Modules, opt => 
                     opt.MapFrom(b => b.Modules.Select(bm => 
-                    new ModuleResource { Id = bm.Module.Id, Name = bm.Module.Name, Code = bm.Module.Code })));
-                // .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => bt.ModuleId )));
+                    new ModuleResource { Id = bm.Module.Id, Name = bm.Module.Name, Code = bm.Module.Code, 
+                    Lecturers = bm.Module.Lecturers.Select(ml => 
+                    new LecturerResource { Id = ml.Lecturer.Id, Name = ml.Lecturer.Name, Title = ml.Lecturer.Title }).ToList() })));
+
             CreateMap<Module, ModuleResource>()
                 .ForMember(mr => mr.Lecturers, opt => 
                     opt.MapFrom(m => m.Lecturers.Select(ml => 

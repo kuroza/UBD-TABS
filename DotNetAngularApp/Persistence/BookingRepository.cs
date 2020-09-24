@@ -29,6 +29,10 @@ namespace DotNetAngularApp.Persistence
                     .ThenInclude(bt => bt.TimeSlot)
                 .Include(b => b.Room)
                     .ThenInclude(r => r.Building)
+                .Include(b => b.Modules)
+                    .ThenInclude(bm => bm.Module)
+                        .ThenInclude(m => m.Lecturers)
+                            .ThenInclude(l => l.Lecturer)
                 .SingleOrDefaultAsync(b => b.Id == id);
         }
 
@@ -41,7 +45,8 @@ namespace DotNetAngularApp.Persistence
                     .ThenInclude(bt => bt.TimeSlot)
                 .Include(b => b.Modules)
                     .ThenInclude(bm => bm.Module)
-                    // .ThenInclude(m => m.Lecturers)
+                        .ThenInclude(m => m.Lecturers)
+                            .ThenInclude(l => l.Lecturer)
                 .ToListAsync();
         }
 
@@ -54,6 +59,10 @@ namespace DotNetAngularApp.Persistence
                     .ThenInclude(r => r.Building)
                 .Include(b => b.TimeSlots)
                     .ThenInclude(bt => bt.TimeSlot)
+                // .Include(b => b.Modules)
+                //     .ThenInclude(bm => bm.Module)
+                        // .ThenInclude(m => m.Lecturers)
+                        //     .ThenInclude(l => l.Lecturer)
                 .AsQueryable();
 
             if (queryObj.BuildingId.HasValue)

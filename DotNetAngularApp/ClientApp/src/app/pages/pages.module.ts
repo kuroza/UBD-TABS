@@ -9,6 +9,10 @@ import { HomeModule } from './home/home.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { FacultiesModule } from './faculties/faculties.module';
+import { ModulesComponent } from './modules/modules.component';
+import { LecturersComponent } from './lecturers/lecturers.component';
+import { SemestersComponent } from './semesters/semesters.component';
+import { CoursesComponent } from './courses/courses.component';
 
 @NgModule({
   imports: [
@@ -23,6 +27,10 @@ import { FacultiesModule } from './faculties/faculties.module';
   ],
   declarations: [
     PagesComponent,
+    ModulesComponent,
+    LecturersComponent,
+    SemestersComponent,
+    CoursesComponent,
   ],
 })
 export class PagesModule {

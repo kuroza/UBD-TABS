@@ -9,7 +9,17 @@ export interface Booking { // like BookingResource form the server
     building: { id: number; name: string; };
     bookDate: string;
     timeSlots: { id: number; startTime: string; endTime: string; }[];
-    // modules: 
+    // modules: { id: number; name: string; code: string; }[];
+    modules: { 
+        id: number; 
+        name: string; 
+        code: string; 
+        lecturers: { 
+            id: number; 
+            name: string; 
+            title: string; 
+        }[]; 
+    }[];
 }
 
 export interface SaveBooking {

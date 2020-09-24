@@ -5,9 +5,18 @@
     Building: {{ booking.building.name }}<br>
     Room: {{ booking.room.name }}<br>
     Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
-    <!-- Modules: {{ booking.module }}<br> -->
-    Lecturers: <br>
   </p>
+  <div class="card" style="width: 18rem;">
+    <div class="card-header">
+      Modules
+    </div>
+    <ul class="list-group list-group-flush">
+      <li *ngFor="let m of booking.modules" class="list-group-item">
+        {{ m.code }}: {{ m.name }}
+      </li>
+    </ul>
+  </div>
+  <br />
   <div class="card" style="width: 18rem;">
     <div class="card-header">
       Booked time slots
@@ -21,6 +30,8 @@
   <p>
     <!-- <button *ngIf="auth.loggedIn" class="mx-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
     <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="danger" (click)="delete()">Delete</button> -->
+    <button class="mx-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+    <button class="mr-2" nbButton status="danger" (click)="delete()">Delete</button>
     <button nbButton status="warning" [routerLink]="['/pages/bookings']">View All Bookings</button>
   </p>
 </div>

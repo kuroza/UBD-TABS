@@ -33,9 +33,15 @@
                 Building: {{ booking.building.name }}<br>
                 Room: {{ booking.room.name }}<br>
                 Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
-                Modules: <br>
-                Lecturers: <br>
               </p>
+              <!-- <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                  <b>Modules</b>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li *ngFor="let m of booking.modules" class="list-group-item">{{ m.code }}</li>
+                </ul>
+              </div> -->
               <div class="card" style="width: 18rem;">
                 <div class="card-header">
                   <b>Booked time slots</b>
