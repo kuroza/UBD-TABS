@@ -34,17 +34,20 @@
                 Room: {{ booking.room.name }}<br>
                 Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
               </p>
-              <!-- <div class="card" style="width: 18rem;">
-                <div class="card-header">
-                  <b>Modules</b>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li *ngFor="let m of booking.modules" class="list-group-item">{{ m.code }}</li>
-                </ul>
-              </div> -->
               <div class="card" style="width: 18rem;">
                 <div class="card-header">
-                  <b>Booked time slots</b>
+                  Modules
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li *ngFor="let m of booking.modules" class="list-group-item">
+                    {{ m.code }}: {{ m.name }}
+                  </li>
+                </ul>
+              </div>
+              <br />
+              <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                  Time slots
                 </div>
                 <ul class="list-group list-group-flush">
                   <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>

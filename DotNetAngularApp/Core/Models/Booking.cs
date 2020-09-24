@@ -16,6 +16,10 @@ namespace DotNetAngularApp.Core.Models
 
         public Room Room { get; set; }
 
+        // public int SemesterId { get; set; }
+
+        // public Semester Semester { get; set; }
+
         [Required]
         public DateTime BookDate { get; set; }
 

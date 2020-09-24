@@ -25,7 +25,6 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import { AppErrorHandler } from './app.error-handler';
-import { CustomAdapter, CustomDateParserFormatter } from './@theme/components/room-form/room-form.component';
 import { NgbDateParserFormatter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 
 // import * as Sentry from "@sentry/browser"; // ? should I try sentry again?
@@ -61,8 +60,6 @@ import { NgbDateParserFormatter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstr
     BookingService,
     FacultyService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
-    { provide: NgbDateAdapter, useClass: CustomAdapter },
-    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
   ]
 })
 export class AppModule {

@@ -55,7 +55,9 @@ namespace DotNetAngularApp.Mapping
                         .Select(id => new BookingTimeSlot { TimeSlotId = id });
                     foreach (var t in addedTimeSlots)
                         b.TimeSlots.Add(t);
-
+                })
+                .ForMember(b => b.Modules, opt => opt.Ignore())
+                .AfterMap((br, b) => {
                     var removedModules = b.Modules.Where(m => !br.Modules.Contains(m.ModuleId)).ToList();
                     foreach (var m in removedModules)
                         b.Modules.Remove(m);

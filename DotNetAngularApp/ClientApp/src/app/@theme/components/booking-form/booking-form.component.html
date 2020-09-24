@@ -107,32 +107,24 @@
     </mat-select>
   </mat-form-field> -->
 
-  <!-- ! change to lecturer -->
-  <!-- Contact from -->
-  <!-- <div class="form-group">
-    <label for="contactName">Name *</label>
-    <input id="contactName" type="text" class="form-control" [(ngModel)]="booking.contact.name"
-      name="contactName" placeholder="" required #contactName="ngModel">
-    <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">Please specify the name.</div>
-  </div> -->
-  <!-- <div class="form-group">
-    <label for="contactEmail">Email</label>
-    <input id="contactEmail" type="text" class="form-control" [(ngModel)]="booking.contact.email"
-      name="contactEmail" placeholder="">
-  </div>
+  <!-- Module form -->
   <div class="form-group">
-    <label for="contactPhone">Phone</label>
-    <input id="contactPhone" type="text" class="form-control" [(ngModel)]="booking.contact.phone"
-      name="contactPhone" placeholder="">
-  </div> -->
+    <label>Modules *</label>
+    <ng-select
+    required
+    id="module"
+    placeholder="Select modules"
+    [multiple]="true"
+    [clearable]="true"
+    [closeOnSelect]="false"
+    [hideSelected]="true"
+    >
+      <ng-option *ngFor="let m of modules">
+        {{ m.code }}
+      </ng-option>
+    </ng-select>
+  </div>
 
-  <!-- ! change to module -->
-  <!-- Purpose form -->
-  <div class="form-group">
-    <label for="module">Module</label>
-    <input id="module" type="text" class="form-control" [(ngModel)]="booking.module" name="module" 
-    placeholder="">
-  </div>
   <div *ngIf="!booking.id">
     <!-- <button nbButton fullWidth status="default" (click)="onClickReset()">Reset</button> --> <!-- ? why it outputs a 401 error? -->
     <button nbButton fullWidth status="success" [disabled]="!f.valid">Book</button>

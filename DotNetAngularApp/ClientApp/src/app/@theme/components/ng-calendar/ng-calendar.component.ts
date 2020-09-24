@@ -109,6 +109,9 @@ export class NgCalendarComponent {
   }
 
   private populateCalendar() {
+    var allottedModules: string;
+    var allottedLecturers: string;
+
     for (let b of this.bookings) {
       var dateFormat = require('dateformat');
       this.bookDate = dateFormat(b.bookDate, 'yyyy-mm-dd'); // * format date
@@ -125,7 +128,7 @@ export class NgCalendarComponent {
           {
             start: new Date(this.startDateTime),
             end: new Date(this.endDateTime),
-            title: "&nbsp;<b>Room:</b> " + b.room.name + " | <b>Module:</b> ",
+            title: "&nbsp;<b>Room:</b> " + b.room.name + " | <b>Modules:</b> ",
             color: colors.blue,
             meta: {
               id: b.id, // * just the id

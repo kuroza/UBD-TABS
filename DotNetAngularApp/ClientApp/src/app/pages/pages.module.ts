@@ -9,10 +9,10 @@ import { HomeModule } from './home/home.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { FacultiesModule } from './faculties/faculties.module';
-import { ModulesComponent } from './modules/modules.component';
-import { LecturersComponent } from './lecturers/lecturers.component';
 import { SemestersComponent } from './semesters/semesters.component';
 import { CoursesComponent } from './courses/courses.component';
+import { NewModuleComponent } from './modules/new-module/new-module.component';
+import { ModuleListComponent } from './modules/module-list/module-list.component';
 
 @NgModule({
   imports: [
@@ -27,10 +27,10 @@ import { CoursesComponent } from './courses/courses.component';
   ],
   declarations: [
     PagesComponent,
-    ModulesComponent,
-    LecturersComponent,
     SemestersComponent,
     CoursesComponent,
+    NewModuleComponent,
+    ModuleListComponent,
   ],
 })
 export class PagesModule {

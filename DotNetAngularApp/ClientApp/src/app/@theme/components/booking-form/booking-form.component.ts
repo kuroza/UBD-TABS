@@ -67,13 +67,15 @@ export class BookingFormComponent implements OnInit {
   buildings: any;
   rooms: any;
   timeSlots: any;
+  modules: any;
   // toppings = new FormControl();
   booking: SaveBooking = {
     id: 0,
     roomId: 0,
     buildingId: 0,
     bookDate: '',
-    timeSlots: [8],
+    timeSlots: [1],
+    modules: [1, 3],
   };
 
   constructor(
@@ -91,17 +93,20 @@ export class BookingFormComponent implements OnInit {
     var sources = [
       this.bookingService.getBuildings(),
       this.bookingService.getTimeSlots(),
+      this.bookingService.getModules(),
     ];
 
+    // for edit Booking
     if (this.booking.id)
       sources.push(this.bookingService.getBooking(this.booking.id));
 
     Observable.forkJoin(sources).subscribe(data => {
       this.buildings = data[0];
       this.timeSlots = data[1];
+      this.modules = data[2];
 
       if (this.booking.id) {
-        this.setBooking(data[2]);
+        this.setBooking(data[3]);
         this.populateRooms();
       }
     }, err => {
@@ -110,22 +115,22 @@ export class BookingFormComponent implements OnInit {
     });
   }
 
-  // ! change to lecturer and module
   onClickReset() {
     this.booking.id = 0;
     this.booking.roomId = 0;
     this.booking.buildingId = 0;
     this.booking.bookDate = '';
     this.booking.timeSlots = [];
+    this.booking.modules = [];
   }
 
-  // ! change contact & purpose to lecturer & module
   private setBooking(b) {
     this.booking.id = b.id;
     this.booking.buildingId = b.building.id;
     this.booking.roomId = b.room.id;
     this.booking.bookDate = b.bookDate;
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
+    this.booking.modules = _.pluck(b.modules, 'id');
   }
 
   onTimeSlotToggle(timeSlotId, $event) {
