@@ -3,7 +3,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // for binding forms
-import { NbDatepickerModule, NbCardModule, NbButtonModule } from '@nebular/theme';
+import { NbDatepickerModule, NbCardModule, NbButtonModule, NbAccordionModule } from '@nebular/theme';
 import { BookingDetailsComponent } from './booking-details.component';
 
 @NgModule({
@@ -11,7 +11,8 @@ import { BookingDetailsComponent } from './booking-details.component';
     CommonModule, 
     FormsModule, 
     RouterModule,
-    NbDatepickerModule, 
+    NbDatepickerModule,
+    NbAccordionModule,
     NbCardModule, 
     NgbModule,
     NbButtonModule

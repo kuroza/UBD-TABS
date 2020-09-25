@@ -6,7 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'ngx-booking-details',
-    templateUrl: 'booking-details.component.html'
+    templateUrl: 'booking-details.component.html',
+    styleUrls: ['./booking-details.component.scss'],
 })
 export class BookingDetailsComponent implements OnInit {
   booking: any; // store all the booking details here

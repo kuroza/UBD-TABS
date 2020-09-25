@@ -28,43 +28,69 @@
               <button nbButton status="warning" [routerLink]="['/pages/bookings']">View all bookings</button>
             </div>
             <div *ngIf="booking">
+              <!-- Venue -->
               <h6>Venue</h6>
               <p>
                 Building: {{ booking.building.name }}<br>
                 Room: {{ booking.room.name }}<br>
                 Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
               </p>
-              <div class="card" style="width: 18rem;">
+            
+              <!-- Modules -->
+              <!-- <div class="card" style="width: 18rem;">
                 <div class="card-header">
                   Modules
                 </div>
                 <ul class="list-group list-group-flush">
-                  <li *ngFor="let m of booking.modules" class="list-group-item">
-                    {{ m.code }}: {{ m.name }}
+                  <li *ngFor="let module of booking.modules" class="list-group-item">
+                    {{ module.code }}: {{ module.name }}
                   </li>
                 </ul>
-              </div>
+              </div> -->
+              <h6>Modules</h6>
+              <nb-accordion>
+                <nb-accordion-item *ngFor="let module of booking.modules">
+                  <nb-accordion-item-header>
+                    {{ module.code }}: {{ module.name }}
+                  </nb-accordion-item-header>
+                  <nb-accordion-item-body>
+                    <table class="table table-hover">
+                      <thead class="thead-dark text-center">
+                        <tr>
+                          <th style="width: 100%" scope="col">Lecturer</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let lecturer of module.lecturers">
+                          <td>{{ lecturer.name }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </nb-accordion-item-body>
+                </nb-accordion-item>
+              </nb-accordion>
+            
               <br />
+            
+              <!-- TimeSlots -->
               <div class="card" style="width: 18rem;">
                 <div class="card-header">
-                  Time slots
+                  <h6>Time slots</h6>
                 </div>
                 <ul class="list-group list-group-flush">
                   <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>
                 </ul>
               </div>
+            
               <br />
-              <!-- <p>
-                <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
-                <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="danger" (click)="delete()">Delete</button>
-                <button nbButton status="warning" [routerLink]="['/pages/bookings']">View all</button>
-              </p> -->
               <p>
-                <button class="mr-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+                <!-- <button *ngIf="auth.loggedIn" class="mx-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+                <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="danger" (click)="delete()">Delete</button> -->
+                <button class="mx-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
                 <button class="mr-2" nbButton status="danger" (click)="delete()">Delete</button>
-                <button nbButton status="warning" [routerLink]="['/pages/bookings']">View all</button>
+                <button nbButton status="warning" [routerLink]="['/pages/bookings']">View All Bookings</button>
               </p>
-            </div>
+            </div>            
           </nb-tab>
           <!-- <nb-tab *ngIf="!auth.loggedIn" tabTitle="Add booking" disabled>
           </nb-tab>

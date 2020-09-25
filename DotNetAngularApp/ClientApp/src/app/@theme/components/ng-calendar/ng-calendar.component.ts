@@ -59,6 +59,8 @@ export class NgCalendarComponent {
     this.refresh.next(); // refresh calendar after loading
   }
 
+  // * this will need to be considered when changing the filter/search
+  // * reset the current calendar if changing to other searching type (eg. by modules)
   onFilterChange() { // anytime the filters are changed
     this.activeDayIsOpen = false;
     this.events = []; // reset events after every filter change
@@ -109,12 +111,15 @@ export class NgCalendarComponent {
   }
 
   private populateCalendar() {
-    var allottedModules: string;
-    var allottedLecturers: string;
-
     for (let b of this.bookings) {
       var dateFormat = require('dateformat');
       this.bookDate = dateFormat(b.bookDate, 'yyyy-mm-dd'); // * format date
+
+      var modulesLength = b.modules.length;
+      var modules: string = b.modules[0].code;
+      for (var i=1; i<modulesLength; i++) {
+        modules += ", " + b.modules[i].code;
+      }
 
       for (let timeSlot of b.timeSlots) { // * nested loop for each time slots under each booking
         var timeFormat = require('dateformat');
@@ -128,10 +133,10 @@ export class NgCalendarComponent {
           {
             start: new Date(this.startDateTime),
             end: new Date(this.endDateTime),
-            title: "&nbsp;<b>Room:</b> " + b.room.name + " | <b>Modules:</b> ",
+            title: ` <b>Module:</b> ${ modules } | <b>Room:</b> ${ b.building.name } - ${ b.room.name }`,
             color: colors.blue,
             meta: {
-              id: b.id, // * just the id
+              id: b.id, // * just the id for component call
               // b, // * the whole booking object
             },
           },
