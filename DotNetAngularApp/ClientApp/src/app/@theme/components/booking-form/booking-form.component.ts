@@ -75,7 +75,7 @@ export class BookingFormComponent implements OnInit {
     buildingId: 0,
     bookDate: '',
     timeSlots: [1],
-    modules: [1, 3],
+    modules: [2],
   };
 
   constructor(

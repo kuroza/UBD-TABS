@@ -17,6 +17,7 @@ namespace DotNetAngularApp.Controllers.Resources
 
         public ICollection<int> TimeSlots { get; set; }
 
+        [Required]
         public ICollection<int> Modules { get; set; }
 
         public SaveBookingResource()

@@ -6,7 +6,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'Dashboard',
+    title: 'Home',
     icon: 'home-outline',
     link: '/pages/home',
     home: true,
@@ -67,6 +67,34 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'View all rooms',
         link: '/pages/rooms',
+      },
+    ],
+  },
+  {
+    title: 'Lecturers',
+    icon: 'twitter-outline',
+    children: [
+      {
+        title: 'Add lecturer',
+        link: '/pages/lecturers/new',
+      },
+      {
+        title: 'View all lecturers',
+        link: '/pages/lecturers',
+      },
+    ],
+  },
+  {
+    title: 'Modules',
+    icon: 'book-open-outline',
+    children: [
+      {
+        title: 'Add module',
+        link: '/pages/modules/new',
+      },
+      {
+        title: 'View all modules',
+        link: '/pages/modules',
       },
     ],
   },
