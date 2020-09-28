@@ -15,8 +15,10 @@
 //         [StringLength(255)]
 //         public string Session { get; set; } // 2020/2021 Semester 1
 
+//         [Required]
 //         public DateTime StartDate { get; set; }
 
+//         [Required]
 //         public DateTime EndDate { get; set; }
 
 //         public ICollection<Booking> Bookings { get; set; }

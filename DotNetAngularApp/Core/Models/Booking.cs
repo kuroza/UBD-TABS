@@ -12,7 +12,7 @@ namespace DotNetAngularApp.Core.Models
         public int Id { get; set; }
 
         [Required]
-        public int RoomId { get; set; }
+        public int RoomId { get; set; } // change to collection of rooms
 
         public Room Room { get; set; }
 
@@ -23,7 +23,7 @@ namespace DotNetAngularApp.Core.Models
         [Required]
         public DateTime BookDate { get; set; }
 
-        public ICollection<BookingTimeSlot> TimeSlots { get; set; }
+        public ICollection<BookingTimeSlot> TimeSlots { get; set; } // required?
 
         [Required] // is this correct?
         public ICollection<BookingModule> Modules { get; set; }

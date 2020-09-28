@@ -11,6 +11,7 @@ namespace DotNetAngularApp.Core.Models
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
+        // public string ShortName { get; set; }
 
         public Faculty Faculty { get; set; }// navigation property, association
 
