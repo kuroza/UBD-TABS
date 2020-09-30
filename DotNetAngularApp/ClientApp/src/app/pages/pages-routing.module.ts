@@ -8,10 +8,11 @@ import { ViewBookingComponent } from './bookings/view-booking/view-booking';
 import { NewBookingComponent } from './bookings/new-booking/new-booking.component';
 import { RoomListComponent } from './rooms/room-list/room-list.component';
 import { NewRoomComponent } from './rooms/new-room/new-room.component';
-// import { AuthGuard } from '../services/auth.guard';
 import { ViewRoomComponent } from './rooms/view-room/view-room';
 import { UserProfileComponent } from './users/user-profile/user-profile';
 import { NewFacultyComponent } from './faculties/new-faculty/new-faculty.component';
+import { ViewModuleComponent } from './modules/view-module/view-module.component';
+import { ModuleListComponent } from './modules/module-list/module-list.component';
 
 const routes: Routes = [{
   path: '',
@@ -29,6 +30,8 @@ const routes: Routes = [{
     { path: 'rooms', component: RoomListComponent },
     { path: 'account/profile', component: UserProfileComponent },  // ? change to auth/profile?
     { path: 'faculties/new', component: NewFacultyComponent },
+    { path: 'modules/:id', component: ViewModuleComponent },
+    { path: 'modules', component: ModuleListComponent },
   ],
 }];
 

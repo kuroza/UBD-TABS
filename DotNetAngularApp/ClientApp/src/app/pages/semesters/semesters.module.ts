@@ -3,9 +3,7 @@ import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ViewModuleComponent } from './view-module/view-module.component';
-import { NewModuleComponent } from './new-module/new-module.component';
-import { ModuleListComponent } from './module-list/module-list.component';
+import { SemestersComponent } from './semesters.component';
 
 @NgModule({
     imports: [
@@ -18,9 +16,7 @@ import { ModuleListComponent } from './module-list/module-list.component';
       RouterModule,
     ],
     declarations: [
-        ModuleListComponent,
-        NewModuleComponent,
-        ViewModuleComponent,
+        SemestersComponent,
     ],
   })
-  export class ModulesModule { }
+  export class SemestersModule { }

@@ -11,8 +11,10 @@ import { BookingsModule } from './bookings/bookings.module';
 import { FacultiesModule } from './faculties/faculties.module';
 import { SemestersComponent } from './semesters/semesters.component';
 import { CoursesComponent } from './courses/courses.component';
-import { NewModuleComponent } from './modules/new-module/new-module.component';
-import { ModuleListComponent } from './modules/module-list/module-list.component';
+import { ModulesModule } from './modules/modules.module';
+import { LecturersModule } from './lecturers/lecturers.module';
+import { SemestersModule } from './semesters/semesters.module';
+import { CoursesModule } from './courses/courses.module';
 
 @NgModule({
   imports: [
@@ -24,13 +26,13 @@ import { ModuleListComponent } from './modules/module-list/module-list.component
     RoomsModule,
     UsersModule,
     FacultiesModule,
+    ModulesModule,
+    LecturersModule,
+    SemestersModule,
+    CoursesModule,
   ],
   declarations: [
     PagesComponent,
-    SemestersComponent,
-    CoursesComponent,
-    NewModuleComponent,
-    ModuleListComponent,
   ],
 })
 export class PagesModule {

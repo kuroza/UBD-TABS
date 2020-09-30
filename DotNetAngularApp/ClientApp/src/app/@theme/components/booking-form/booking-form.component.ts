@@ -75,7 +75,7 @@ export class BookingFormComponent implements OnInit {
     buildingId: 0,
     bookDate: '',
     timeSlots: [1],
-    modules: [2],
+    modules: [1],
   };
 
   constructor(
@@ -96,7 +96,7 @@ export class BookingFormComponent implements OnInit {
       this.bookingService.getModules(),
     ];
 
-    // for edit Booking
+    // for editing Booking events
     if (this.booking.id)
       sources.push(this.bookingService.getBooking(this.booking.id));
 
