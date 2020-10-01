@@ -52,6 +52,7 @@
     "@types/underscore": "^1.9.4",
     "angular-calendar": "^0.28.5",
     "angular-jwt": "^0.1.11",
+    "angular2-multiselect-dropdown": "^4.6.4",
     "bootstrap": "4.3.1",
     "classlist.js": "1.1.20150312",
     "core-js": "2.5.1",

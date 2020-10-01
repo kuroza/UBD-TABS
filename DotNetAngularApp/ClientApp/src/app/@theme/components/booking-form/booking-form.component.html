@@ -1,35 +1,70 @@
 <form #f="ngForm" (ngSubmit)="submit()" novalidate>
   
-  <!-- Building drop down list -->
+  <!-- * Building drop down list -->
   <div class="form-group">
-    <label for="building">Select Building *</label>
-    <select id="building"
-    class="form-control"
-    (change)="onBuildingChange()"
-    [(ngModel)]="booking.buildingId"
-    name="buildingId"
-    required
-    #building="ngModel">
+    <label for="building">Building</label>
+    <br>
+    <nb-select
+      filled
+      required
+      placeholder="Select Building"
+      [(selected)]="booking.buildingId"
+      fullWidth="true"
+      (selectedChange)="onBuildingChange()"
+    >
+      <nb-option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</nb-option>
+    </nb-select>
+    
+    <!-- <select
+      id="building"
+      class="form-control"
+      (change)="onBuildingChange()"
+      [(ngModel)]="booking.buildingId"
+      name="buildingId"
+      required
+      #building="ngModel"
+    >
       <option value=""></option>
       <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
     </select>
-    <div class="alert alert-danger" *ngIf="building.touched && !building.valid">Please specify the building.
-    </div>
+    <div class="alert alert-danger" *ngIf="building.touched && !building.valid">Please specify the building.</div> -->
   </div>
 
-  <!-- Room drop down list -->
+  <!-- * Room drop down list -->
   <div class="form-group">
-    <label for="room">Select Room *</label>
-    <select id="room" class="form-control" [(ngModel)]="booking.roomId" name="roomId" required #room="ngModel">
+    <label for="room">Room</label>
+    <br>
+    <nb-select
+      filled
+      required
+      placeholder="Select Room"
+      [(selected)]="booking.roomId"
+      fullWidth="true"
+    >
+      <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
+    </nb-select>
+
+    <!-- <select
+      id="room"
+      class="form-control"
+      [(ngModel)]="booking.roomId"
+      name="roomId"
+      required
+      #room="ngModel"
+    >
       <option value=""></option>
       <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
     </select>
-    <div class="alert alert-danger" *ngIf="room.touched && !room.valid">Please specify the room.</div>
+    <div class="alert alert-danger" *ngIf="room.touched && !room.valid">Please specify the room.</div> -->
   </div>
 
-  <!-- ng-bootstrap Datepicker -->
+  <!-- * ng-bootstrap Datepicker -->
   <div class="form-group">
-    <label for="bookDate">Select Date *</label>
+    <label for="bookDate">Date</label>
+    <!-- <br>
+    <input nbInput placeholder="Choose Date" [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate">
+    <nb-datepicker #ngmodel></nb-datepicker> -->
+
     <div class="input-group">
       <input 
       id="bookDate" 
@@ -37,92 +72,52 @@
       required 
       ngbDatepicker 
       name="bookDate" 
-      placeholder="dd/mm/yyyy" 
-      [(ngModel)]="booking.bookDate" 
+      placeholder="yyyy-mm-dd" 
+      [(ngModel)]="booking.bookDate"
       #bookDate="ngbDatepicker">
       <div class="input-group-append">
         <button class="fa fa-calendar" (click)="bookDate.toggle()" type="button"></button>
       </div>
     </div>
     <div class="alert alert-danger" *ngIf="bookDate.touched && !bookDate.valid">Please specify the date.</div>
+
+    <br>
+    <p>{{ booking.bookDate | json }}</p>
   </div>
-  
+
   <!-- * Time slot multiple select -->
-  <!-- todo: Bind selected values -->
   <div class="form-group">
-    <label>Time slots *</label>
-    <ng-select
-    required
-    id="timeSlots"
-    placeholder="Select time slots"
-    [multiple]="true"
-    [clearable]="true"
-    [closeOnSelect]="false"
-    [hideSelected]="true"
-    >
-      <ng-option *ngFor="let t of timeSlots">
-        {{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}
-      </ng-option>
-    </ng-select>
+    <label>Time slots</label>
+    <br>
+    <nb-select
+      filled
+      multiple
+      required
+      placeholder="Select Time Slots"
+      [(selected)]="booking.timeSlots"
+      fullWidth="true"
+    >  
+      <nb-option *ngFor="let t of timeSlots" value="{{ t.id }}">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</nb-option>
+    </nb-select>
+    <br><br>
+    <p>{{ booking.timeSlots | json }}</p>
   </div>
-  <!-- (change)="onTimeSlotToggle(t.id, $event)"
-    [(selected)]="booking.timeSlots"
-  bindLabel="name"
-  bindValue="t.id" -->
 
-  <!-- * ng-select Multiselect -->
-  <!-- <ng-select
-    [items]="timeSlots"
-    [multiple]="true"
-    [closeOnSelect]="false"
-    [searchable]="false"
-    bindLabel="label"
-    placeholder="Select time slots"
-    [(ngModel)]="booking.timeSlots">
-  </ng-select>
-  <small>{{ booking.timeSlots | json }}</small> -->
-
-  <!-- * ng-select Multiselect checkbox -->
-  <!-- <ng-select
-  [items]="timeSlots"
-  [multiple]="true"
-  bindLabel="name"
-  [closeOnSelect]="false"
-  bindValue="id"
-  [(ngModel)]="booking.timeSlots"
-  >
-    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-      <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{ item.startTime | date:'shortTime' }} - {{ item.endTime | date:'shortTime' }}
-    </ng-template>
-  </ng-select>
-
-  <br>
-  <small>{{ booking.timeSlots | json }}</small> -->
-
-  <!-- * Angular Material Multiple Selection -->
-  <!-- <mat-form-field>
-    <mat-label>Select Time Slots</mat-label>
-    <mat-select [formControl]="toppings" multiple>
-      <mat-option *ngFor="let timeSlot of booking.timeSlots" [value]="timeSlot">{{ item.startTime | date:'shortTime' }} - {{ item.endTime | date:'shortTime' }}</mat-option>
-    </mat-select>
-  </mat-form-field> -->
-
-  <!-- Module form -->
+  <!-- * Module form -->
   <div class="form-group">
-    <label>Modules *</label>
-    <ng-select
-    required
-    id="module"
-    placeholder="Select modules"
-    [multiple]="true"
-    [clearable]="true"
-    [closeOnSelect]="false"
-    [hideSelected]="true"
+    <label>Modules</label>
+    <br>
+    <nb-select
+      filled
+      multiple
+      placeholder="Select Modules"
+      [(selected)]="booking.modules"
+      fullWidth="true"
     >
-      <ng-option *ngFor="let m of modules">
-        {{ m.code }}
-      </ng-option>
-    </ng-select>
+      <nb-option *ngFor="let m of modules" value="{{ m.id }}">{{ m.code }}: {{ m.name }}</nb-option>
+    </nb-select>
+    <br><br>
+    <p>{{ booking.modules | json }}</p>
   </div>
 
   <div *ngIf="!booking.id">
@@ -132,8 +127,4 @@
   <div *ngIf="booking.id">
     <button nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>
   </div>
-
-  <br>
-  <p>{{ booking | json }}</p>
-
 </form>

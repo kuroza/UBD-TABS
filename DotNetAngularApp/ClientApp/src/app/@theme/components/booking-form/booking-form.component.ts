@@ -60,6 +60,7 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
 })
 export class BookingFormComponent implements OnInit {
   readonly DELIMITER = '-';
+  nbDate: any;
   day: number;
   month: number;
   year: number;
@@ -68,14 +69,13 @@ export class BookingFormComponent implements OnInit {
   rooms: any;
   timeSlots: any;
   modules: any;
-  // toppings = new FormControl();
   booking: SaveBooking = {
     id: 0,
     roomId: 0,
     buildingId: 0,
     bookDate: '',
-    timeSlots: [1],
-    modules: [1],
+    timeSlots: [], // selectedTimeSlots
+    modules: [],
   };
 
   constructor(
@@ -133,15 +133,6 @@ export class BookingFormComponent implements OnInit {
     this.booking.modules = _.pluck(b.modules, 'id');
   }
 
-  onTimeSlotToggle(timeSlotId, $event) {
-    if ($event.target.selected)
-      this.booking.timeSlots.push(timeSlotId);
-    else {
-      let index = this.booking.timeSlots.indexOf(timeSlotId);
-      this.booking.timeSlots.splice(index, 1);
-    }
-  }
-
   onBuildingChange() {
     this.populateRooms();
 
@@ -154,11 +145,19 @@ export class BookingFormComponent implements OnInit {
   }
 
   submit() {
-    var date = this.booking.bookDate.split(this.DELIMITER);
-    this.day = parseInt(date[0], 10);
-    this.month = parseInt(date[1], 10);
-    this.year = parseInt(date[2], 10);
-    this.booking.bookDate = this.month + this.DELIMITER + this.day + this.DELIMITER + this.year;
+    // Rearrange date
+    // var date = this.booking.bookDate.split(this.DELIMITER);
+    // this.year = parseInt(date[2], 10);
+    // this.month = parseInt(date[1], 10);
+    // this.day = parseInt(date[0], 10);
+    // this.booking.bookDate = this.month + this.DELIMITER + this.day + this.DELIMITER + this.year;
+
+    // Convert JSON values into string
+    var date: any = this.booking.bookDate; // date has to be of 'any' type
+    this.year = date.year;
+    this.month = date.month;
+    this.day = date.day;
+    this.booking.bookDate = this.year + this.DELIMITER + this.month + this.DELIMITER + this.day;
 
     var result$ = (this.booking.id) ? this.bookingService.update(this.booking) : this.bookingService.create(this.booking); 
     result$.subscribe(b => {
