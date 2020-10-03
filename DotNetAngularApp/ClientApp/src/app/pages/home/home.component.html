@@ -14,52 +14,43 @@
   </div>
 
   <div class="col-md-4">
-    <!-- <nb-accordion>
-      <nb-accordion-item>
-        <nb-accordion-item-header>Search</nb-accordion-item-header>
-        <nb-accordion-item-body>
-          <nb-card>
-            <nb-card-body>
-              <nb-tabset>
-                <nb-tab tabTitle="Modules"></nb-tab>
-                <nb-tab tabTitle="Room"></nb-tab>
-              </nb-tabset>
-            </nb-card-body>
-          </nb-card>
-        </nb-accordion-item-body>
-      </nb-accordion-item>
-    </nb-accordion> -->
-
-    <nb-card>
-      <nb-card-header>Filter Calendar</nb-card-header>
-      <nb-card-body>
-        <div class="form-inline">
-          <div class="form-group">
-            <div class="mr-2">
-              <!-- <select style="width: 28rem;" name="buildingId" id="building" class="form-control" [(ngModel)]="filter.buildingId" (change)="onBuildingChange()">
-                <option value="" placeholder="Select a building"></option>
-                <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
-              </select> -->
-              <select name="" id="" class="form-control"></select>
-            </div>
-            <div class="mr-2">
-              <!-- <select style="width: 12rem;" name="roomId" id="room" class="form-control" [(ngModel)]="filter.roomId" (change)="onFilterChange()">
-                <option value="" placeholder="Select a room"></option>
-                <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
-              </select> -->
-              <select name="" id="" class="form-control"></select>
-            </div>
-            <!-- <button nbButton status="basic" (click)="resetFilter()">Reset</button> -->
-          </div>
-        </div>
-      </nb-card-body>
-    </nb-card>
-    
-    <!-- <br> -->
 
     <nb-card>
       <nb-card-body>
         <nb-tabset>
+          <nb-tab tabTitle="Search">
+            <div class="form-group">
+              <div>
+                <!-- <select style="width: 28rem;" name="buildingId" id="building" class="form-control" [(ngModel)]="filter.buildingId" (change)="onBuildingChange()">
+                  <option value="" placeholder="Select a building"></option>
+                  <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
+                </select> -->
+                <nb-select
+                  filled
+                  fullWidth
+                  placeholder="Select Building"
+                >
+                <nb-option *ngFor="let building of buildings" value="building.id">{{ building.name }}</nb-option>
+                </nb-select>
+              </div>
+              <br>
+              <div>
+                <!-- <select style="width: 12rem;" name="roomId" id="room" class="form-control" [(ngModel)]="filter.roomId" (change)="onFilterChange()">
+                  <option value="" placeholder="Select a room"></option>
+                  <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
+                </select> -->
+                <nb-select
+                  filled
+                  fullWidth
+                  placeholder="Select Room"
+                >  
+                </nb-select>
+              </div>
+              <br>
+              <!-- <button nbButton status="basic" (click)="resetFilter()">Reset</button> -->
+              <button nbButton hero shape="round" status="primary" style="float: right">Search</button>
+            </div>
+          </nb-tab>
           <nb-tab tabTitle="Details">
             <div *ngIf="!booking">
               <p>Click on a booking event from the calendar to show its details</p>
@@ -135,7 +126,7 @@
           <nb-tab *ngIf="auth.loggedIn" tabTitle="Add booking">
             <ngx-booking-form></ngx-booking-form>
           </nb-tab> -->
-          <nb-tab tabTitle="Add booking">
+          <nb-tab tabTitle="Add">
             <ngx-booking-form></ngx-booking-form>
           </nb-tab>
          </nb-tabset>

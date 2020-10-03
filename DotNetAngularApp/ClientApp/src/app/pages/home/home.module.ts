@@ -2,7 +2,7 @@ import { BookingDetailsModule } from '../../@theme/components/booking-details/bo
 import { BookingFormModule } from '../../@theme/components/booking-form/booking-form.module';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { NbCardModule, NbTabsetModule, NbButtonModule, NbAccordionModule } from '@nebular/theme';
+import { NbCardModule, NbTabsetModule, NbButtonModule, NbAccordionModule, NbSelectModule } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
 import { HomeComponent } from './home.component';
 import { NgCalendarModule } from '../../@theme/components/ng-calendar/ng-calendar.module';
@@ -19,7 +19,8 @@ import { RouterModule } from '@angular/router';
     NgCalendarModule,
     BookingFormModule,
     BookingDetailsModule,
-    NbButtonModule
+    NbButtonModule,
+    NbSelectModule
   ],
   declarations: [
     HomeComponent,

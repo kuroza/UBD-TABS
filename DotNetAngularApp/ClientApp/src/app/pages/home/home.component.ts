@@ -10,6 +10,7 @@ import { ToastyService } from 'ng2-toasty';
 })
 export class HomeComponent {
   booking: any;
+  buildings: any;
 
   constructor(
     private route: ActivatedRoute, 
@@ -17,6 +18,11 @@ export class HomeComponent {
     private toasty: ToastyService,
     private bookingService: BookingService,
     ) {}
+
+  ngOnInit() {
+    this.bookingService.getBuildings()
+      .subscribe(buildings => this.buildings = buildings);
+  }
 
   receiveBookingId($event) {
     this.bookingService.getBooking($event)

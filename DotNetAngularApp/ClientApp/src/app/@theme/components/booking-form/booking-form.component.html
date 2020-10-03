@@ -82,7 +82,7 @@
     <div class="alert alert-danger" *ngIf="bookDate.touched && !bookDate.valid">Please specify the date.</div>
 
     <br>
-    <p>{{ booking.bookDate | json }}</p>
+    <!-- <p>{{ booking.bookDate | json }}</p> -->
   </div>
 
   <!-- * Time slot multiple select -->
@@ -99,8 +99,8 @@
     >  
       <nb-option *ngFor="let t of timeSlots" value="{{ t.id }}">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</nb-option>
     </nb-select>
-    <br><br>
-    <p>{{ booking.timeSlots | json }}</p>
+    <br>
+    <!-- <p>{{ booking.timeSlots | json }}</p> -->
   </div>
 
   <!-- * Module form -->
@@ -116,8 +116,8 @@
     >
       <nb-option *ngFor="let m of modules" value="{{ m.id }}">{{ m.code }}: {{ m.name }}</nb-option>
     </nb-select>
-    <br><br>
-    <p>{{ booking.modules | json }}</p>
+    <br>
+    <!-- <p>{{ booking.modules | json }}</p> -->
   </div>
 
   <div *ngIf="!booking.id">
