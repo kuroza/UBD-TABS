@@ -32,13 +32,8 @@
     </nb-action> -->
     
   </nb-actions>
-  <!-- <button *ngIf="!auth.loggedIn" class="mr-2" nbButton status="primary" (click)="auth.login()" shape="round">Login</button>
-  <button *ngIf="!auth.loggedIn" class="mr-4" nbButton status="default" (click)="auth.login()" shape="round">Sign up</button> -->
-
-  <!-- <div *ngIf="auth.userProfile$ | async as profile">
-    <button *ngIf="auth.loggedIn" class="mr-4" nbButton outline status="primary" 
-      nbContextMenuTrigger="hover" [nbContextMenu]="userMenu" shape="round">
-      {{ profile.nickname }}
-    </button>
-  </div> -->
+  
+  <button nbButton size="small" (click)="login()">Login</button>
+  <a class="p-2" (click)="register()">Register</a>
+  <!-- <button nbButton size="small" (click)="signout()" href="javascript:void(0)">Logout</button> -->
 </div>
