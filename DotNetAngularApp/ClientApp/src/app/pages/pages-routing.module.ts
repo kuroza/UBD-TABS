@@ -13,6 +13,10 @@ import { UserProfileComponent } from './users/user-profile/user-profile';
 import { NewFacultyComponent } from './faculties/new-faculty/new-faculty.component';
 import { ViewModuleComponent } from './modules/view-module/view-module.component';
 import { ModuleListComponent } from './modules/module-list/module-list.component';
+import { LoginComponent } from './account/login/login.component';
+import { RegisterComponent } from './account/register/register.component';
+import { IndexComponent } from './top-secret/index/index.component';
+import { AuthGuard } from '../services/auth.guard';
 
 const routes: Routes = [{
   path: '',
@@ -32,6 +36,9 @@ const routes: Routes = [{
     { path: 'faculties/new', component: NewFacultyComponent },
     { path: 'modules/:id', component: ViewModuleComponent },
     { path: 'modules', component: ModuleListComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: 'topsecret', component: IndexComponent, canActivate: [AuthGuard] }
   ],
 }];
 

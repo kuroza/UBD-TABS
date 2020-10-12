@@ -3,7 +3,6 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-// import { AuthService } from './services/auth.service';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ToastyModule } from 'ng2-toasty';
 import { BookingService } from './services/booking.service';
@@ -26,13 +25,11 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import { AppErrorHandler } from './app.error-handler';
-import { NgbDateParserFormatter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
-
-// import * as Sentry from "@sentry/browser"; // ? should I try sentry again?
-
-// Sentry.init({
-//   dsn: "https://c911f2c6b01742fd83e853133d6a4b06@sentry.io/5182636"
-// });
+import { SharedModule } from './shared/shared.module';
+import { ConfigService } from './shared/config.service';
+import { FakeBackendProvider } from './shared/mocks/fake-backend-interceptor';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './services/auth.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -42,6 +39,7 @@ import { NgbDateParserFormatter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstr
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    SharedModule,
 
     ThemeModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -59,6 +57,10 @@ import { NgbDateParserFormatter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstr
   ],
   bootstrap: [AppComponent],
   providers: [
+    ConfigService,
+    FakeBackendProvider,
+    AuthService,
+    AuthGuard,
     BookingService,
     FacultyService,
     { provide: ErrorHandler, useClass: AppErrorHandler },

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +29,26 @@ namespace DotNetAngularApp
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;                
+            }).AddJwtBearer(o =>
+            {
+                o.Authority = "https://localhost:6001/";
+                o.Audience = "resourceapi";
+                o.RequireHttpsMetadata = false;
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ApiReader", policy => policy.RequireClaim("scope", "api.read"));
+                options.AddPolicy("Consumer", policy => policy.RequireClaim(ClaimTypes.Role, "consumer"));
+                // options.AddPolicy("Admin", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+                // options.AddPolicy("Staff", policy => policy.RequireClaim(ClaimTypes.Role, "staff"));
+                // options.AddPolicy("Student", policy => policy.RequireClaim(ClaimTypes.Role, "student"));
+            });
+
             services.AddScoped<IBookingRepository, BookingRepository>();
             
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -38,32 +59,6 @@ namespace DotNetAngularApp
 
             services.AddDbContext<TabsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
-
-            // string domain = $"https://{Configuration["Auth0:Domain"]}/";
-            // services.AddAuthentication(options =>
-            // {
-            //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            // }).AddJwtBearer(options =>
-            // {
-            //     options.Authority = domain;
-            //     options.Audience = Configuration["Auth0:ApiIdentifier"];
-            // });
-
-            // services.AddAuthorization(options =>
-            // {
-            //     options.AddPolicy("create:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("create:bookings", domain)));
-            //     options.AddPolicy("read:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("read:bookings", domain)));
-            //     options.AddPolicy("update:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("update:bookings", domain)));
-            //     options.AddPolicy("delete:bookings", policy => policy.Requirements.Add(new HasScopeRequirement("delete:bookings", domain)));
-            //     options.AddPolicy("create:rooms", policy => policy.Requirements.Add(new HasScopeRequirement("create:rooms", domain)));
-            //     options.AddPolicy("read:rooms", policy => policy.Requirements.Add(new HasScopeRequirement("read:rooms", domain)));
-            //     options.AddPolicy("update:rooms", policy => policy.Requirements.Add(new HasScopeRequirement("update:rooms", domain)));
-            //     options.AddPolicy("delete:rooms", policy => policy.Requirements.Add(new HasScopeRequirement("delete:rooms", domain)));
-            // });
-
-            // register the scope authorization handler
-            // services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -97,9 +92,12 @@ namespace DotNetAngularApp
 
             app.UseRouting();
 
-            // app.UseAuthentication();
-            // app.UseAuthorization();
+            app.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+            app.UseAuthentication();
             
+            // app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

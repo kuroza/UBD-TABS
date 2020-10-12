@@ -15,6 +15,9 @@ import { ModulesModule } from './modules/modules.module';
 import { LecturersModule } from './lecturers/lecturers.module';
 import { SemestersModule } from './semesters/semesters.module';
 import { CoursesModule } from './courses/courses.module';
+import { TopSecretModule } from './top-secret/top-secret.module';
+import { AccountModule } from './account/account.module';
+import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 
 @NgModule({
   imports: [
@@ -30,9 +33,12 @@ import { CoursesModule } from './courses/courses.module';
     LecturersModule,
     SemestersModule,
     CoursesModule,
+    TopSecretModule,
+    AccountModule,
   ],
   declarations: [
     PagesComponent,
+    AuthCallbackComponent
   ],
 })
 export class PagesModule {

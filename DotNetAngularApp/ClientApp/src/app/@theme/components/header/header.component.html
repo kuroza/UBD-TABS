@@ -33,7 +33,14 @@
     
   </nb-actions>
   
-  <button nbButton size="small" (click)="login()">Login</button>
-  <a class="p-2" (click)="register()">Register</a>
-  <!-- <button nbButton size="small" (click)="signout()" href="javascript:void(0)">Logout</button> -->
+  <div *ngIf="!isAuthenticated">
+    <button nbButton size="small" (click)="login()">Login</button>
+    <a class="p-2" (click)="register()">Register</a>
+  </div>
+  <div *ngIf="isAuthenticated">
+    <button nbButton size="small" (click)="signout()" href="javascript:void(0)">Logout</button>
+  </div>
+  
+  <!-- <a class="p-2 text-light" routerLink="/pages/topsecret">Top Secret Area</a>
+  <a class="p-2" (click)="signout()" href="javascript:void(0)">Signout {{name}}</a> -->
 </div>

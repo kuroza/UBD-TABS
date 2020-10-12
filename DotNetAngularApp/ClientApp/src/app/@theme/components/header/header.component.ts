@@ -3,7 +3,9 @@ import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeServ
 
 import { UserData } from '../../../@core/data/users';
 import { map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -15,6 +17,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+
+  name: string;
+  isAuthenticated: boolean;
+  subscription: Subscription;
 
   themes = [
     {
@@ -48,9 +54,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private menuService: NbMenuService,
     private themeService: NbThemeService,
     private userService: UserData,
-    private breakpointService: NbMediaBreakpointsService) {}
+    private breakpointService: NbMediaBreakpointsService,
+    private authService: AuthService,
+    private router: Router
+    ) {}
 
   ngOnInit() {
+    this.subscription = this.authService.authNavStatus$.subscribe(status => this.isAuthenticated = status);
+    this.name = this.authService.name;
+
+    console.log(this.name);
+    console.log(this.isAuthenticated);
+
     this.currentTheme = this.themeService.currentTheme;
 
     this.userService.getUsers()
@@ -72,16 +87,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
       )
       .subscribe(themeName => this.currentTheme = themeName);
 
-      // this.menuService.onItemClick()
-      //   .subscribe((event) => {
-      //     if (event.item.title === 'Log out')
-      //       this.auth.logout();
-      //   });
+    // this.menuService.onItemClick()
+    //   .subscribe((event) => {
+    //     if (event.item.title === 'Log out')
+    //       this.auth.logout();
+    //   });
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+
+    // prevent memory leak when component is destroyed
+    this.subscription.unsubscribe();
+  }
+
+  async signout() {
+    await this.authService.signout();     
+  }
+
+  login() {
+    this.authService.login();
+  }
+
+  register() {
+    this.router.navigate(['/pages/register']);
   }
 
   changeTheme(themeName: string) {
