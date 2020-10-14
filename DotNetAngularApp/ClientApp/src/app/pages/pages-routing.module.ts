@@ -14,6 +14,9 @@ import { NewFacultyComponent } from './faculties/new-faculty/new-faculty.compone
 import { ViewModuleComponent } from './modules/view-module/view-module.component';
 import { ModuleListComponent } from './modules/module-list/module-list.component';
 import { NewModuleComponent } from './modules/new-module/new-module.component';
+import { TimeSlotListComponent } from './time-slots/time-slot-list/time-slot-list.component';
+import { NewTimeSlotComponent } from './time-slots/new-time-slot/new-time-slot.component';
+import { ViewTimeSlotComponent } from './time-slots/view-time-slot/view-time-slot';
 
 const routes: Routes = [{
   path: '',
@@ -35,6 +38,10 @@ const routes: Routes = [{
     { path: 'modules/new', component: NewModuleComponent },
     { path: 'modules/:id', component: ViewModuleComponent },
     { path: 'modules/edit/:id', component: NewModuleComponent },
+    { path: 'timeslots', component: TimeSlotListComponent },
+    { path: 'timeslots/new', component: NewTimeSlotComponent },
+    { path: 'timeslots/:id', component: ViewTimeSlotComponent },
+    { path: 'timeslots/edit/:id', component: NewTimeSlotComponent },
   ],
 }];
 

@@ -98,27 +98,31 @@ export const MENU_ITEMS: NbMenuItem[] = [
       },
     ],
   },
-  {
-    title: 'Staff',
-    icon: 'people-outline',
-    children: [
-      {
-        title: 'Add staff',
-        link: '/',
-      },
-      {
-        title: 'View all staffs',
-        link: '/',
-      },
-    ],
-  },
+  // {
+  //   title: 'Staff',
+  //   icon: 'people-outline',
+  //   children: [
+  //     {
+  //       title: 'Add staff',
+  //       link: '/',
+  //     },
+  //     {
+  //       title: 'View all staffs',
+  //       link: '/',
+  //     },
+  //   ],
+  // },
   {
     title: 'Time slot',
     icon: 'clock-outline',
     children: [
       {
-        title: 'Edit time slot',
-        link: '/',
+        title: 'Add time slot',
+        link: '/pages/timeslots/new',
+      },
+      {
+        title: 'View all time slots',
+        link: '/pages/timeslots',
       },
     ],
   },

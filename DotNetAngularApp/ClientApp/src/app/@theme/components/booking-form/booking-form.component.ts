@@ -9,6 +9,7 @@ import { SaveBooking } from '../../../models/booking';
 import { NgbDateStruct, NgbCalendar, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl } from '@angular/forms';
 import { ModuleService } from '../../../services/module.service';
+import { TimeSlotService } from '../../../services/timeSlot.service';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -84,6 +85,7 @@ export class BookingFormComponent implements OnInit {
     private router: Router,
     private bookingService: BookingService,
     private moduleService: ModuleService,
+    private timeSlotService: TimeSlotService,
     private toastyService: ToastyService) {
 
     route.params.subscribe(p => {
@@ -94,7 +96,7 @@ export class BookingFormComponent implements OnInit {
   ngOnInit() {
     var sources = [
       this.bookingService.getBuildings(),
-      this.bookingService.getTimeSlots(),
+      this.timeSlotService.getAllTimeSlots(),
       this.moduleService.getAllModules(),
     ];
 
@@ -163,7 +165,7 @@ export class BookingFormComponent implements OnInit {
     this.booking.bookDate = this.year + this.DELIMITER + this.month + this.DELIMITER + this.day;
 
     var result$ = (this.booking.id) ? this.bookingService.update(this.booking) : this.bookingService.create(this.booking); 
-    result$.subscribe(b => {
+    result$.subscribe(() => {
       this.toastyService.success({
         title: 'Success', 
         msg: 'Booking was sucessfully saved.',

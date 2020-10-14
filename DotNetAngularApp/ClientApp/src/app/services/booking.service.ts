@@ -58,23 +58,6 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
-  // ? todo: getBuilding(id) {}
-  
-  getRooms() {
-    return this.http.get('/api/rooms')
-      .pipe(map(response => response));
-  }
-
-  getRoom(id) {
-    return this.http.get('/api/rooms/' + id)
-      .pipe(map(response => response));
-  }
-
-  getTimeSlots() {
-    return this.http.get('/api/timeslots')
-      .pipe(map(response => response));
-  }
-
   getLecturers() {
     return this.http.get('/api/lecturers')
       .pipe(map(response => response));

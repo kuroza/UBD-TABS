@@ -122,6 +122,8 @@
     <!-- <p>{{ booking.modules | json }}</p> -->
   </div>
 
+  <pre>{{ booking | json }}</pre>
+
   <div *ngIf="!booking.id">
     <!-- <button nbButton fullWidth status="default" (click)="onClickReset()">Reset</button> --> <!-- ? why it outputs a 401 error? -->
     <button nbButton fullWidth status="success" [disabled]="!f.valid">Add</button>

@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-4">
+    <nb-card>
+      <nb-card-body>
+        <h3>Time Slot Details</h3>
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-body>
+        <div *ngIf="timeSlot">
+          <p>
+            <b>Start time:</b> {{ timeSlot.startTime | date:'shortTime' }}<br>
+            <b>End time:</b> {{ timeSlot.endTime | date:'shortTime' }}<br>
+          </p>
+
+          <br>
+          <p>
+            <button class="mx-2" nbButton status="primary" [routerLink]="['/pages/timeSlots/edit/', timeSlot.id]">Edit</button>
+            <button class="mr-2" nbButton status="danger" (click)="delete()">Delete</button>
+            <!-- <button nbButton status="warning" [routerLink]="['/pages/timeSlots']">View All Time Slots</button> -->
+          </p>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-5">
+    <nb-card>
+      <nb-card-body>
+        <h4>Add Time Slot</h4>
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-body>
+        <form #f="ngForm" (ngSubmit)="submit()" novalidate>
+          <div class="form-group">
+            <ngb-timepicker [(ngModel)]="time"></ngb-timepicker>
+            <hr>
+            <pre>Selected time: {{time | json}}</pre>
+          </div>
+          
+          <div>
+            <button nbButton fullWidth [disabled]="!f.valid">Add</button>
+          </div>
+          <!-- <br><p>{{ room | json }}</p> -->
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-7"></div>
+</div>

@@ -15,6 +15,7 @@ import { ModulesModule } from './modules/modules.module';
 import { LecturersModule } from './lecturers/lecturers.module';
 import { SemestersModule } from './semesters/semesters.module';
 import { CoursesModule } from './courses/courses.module';
+import { TimeSlotsModule } from './time-slots/time-slots.module';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { CoursesModule } from './courses/courses.module';
     LecturersModule,
     SemestersModule,
     CoursesModule,
+    TimeSlotsModule
   ],
   declarations: [
     PagesComponent,
