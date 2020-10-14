@@ -1,1 +1,25 @@
-<p>view-module works!</p>
+<div class="row">
+  <div class="col-md-4">
+    <nb-card>
+      <nb-card-body>
+        <h3>Module details</h3>
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-body>
+        <p>
+          Name: {{ module.name }}<br>
+          Code: {{ module.code }}<br>
+        </p>
+        <!-- <div class="card" style="width: 18rem;">
+          <div class="card-header">
+            <h6>Lecturers</h6>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let l of module.lecturers" class="list-group-item">{{ l.title }} {{ l.name }}</li>
+          </ul>
+        </div> -->
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

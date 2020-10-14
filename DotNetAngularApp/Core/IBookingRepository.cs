@@ -8,10 +8,10 @@ namespace DotNetAngularApp.Core
     public interface IBookingRepository
     {
         void Add(Booking booking);
-        // bool CheckBooking(Booking booking);
+        void Remove(Booking booking);
         Task<IEnumerable<Booking>> GetAllBookings();
         Task<Booking> GetBooking(int id, bool includeRelated = true);
         Task<QueryResult<Booking>> GetBookings(BookingQuery filter);
-        void Remove(Booking booking);
+        // bool CheckBooking(Booking booking);
     }
 }

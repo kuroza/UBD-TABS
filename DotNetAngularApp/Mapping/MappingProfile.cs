@@ -35,6 +35,9 @@ namespace DotNetAngularApp.Mapping
                     Lecturers = bm.Module.Lecturers.Select(ml => 
                     new LecturerResource { Id = ml.Lecturer.Id, Name = ml.Lecturer.Name, Title = ml.Lecturer.Title }).ToList() })));
 
+            CreateMap<Module, SaveModuleResource>()
+                .ForMember(mr => mr.Lecturers, opt => opt.MapFrom(m => m.Lecturers.Select(ml => ml.LecturerId)));
+
             CreateMap<Module, ModuleResource>()
                 .ForMember(mr => mr.Lecturers, opt => 
                     opt.MapFrom(m => m.Lecturers.Select(ml => 
@@ -42,6 +45,22 @@ namespace DotNetAngularApp.Mapping
 
             //API Resource to Domain, saving to database
             CreateMap<BookingQueryResource, BookingQuery>();
+
+            CreateMap<SaveModuleResource, Module>()
+                .ForMember(m => m.Id, opt => opt.Ignore())
+                .ForMember(m => m.Lecturers, opt => opt.Ignore())
+                .AfterMap((mr, m) => {
+                    var removedLecturers = m.Lecturers.Where(l => !mr.Lecturers.Contains(l.LecturerId)).ToList();
+                    foreach (var l in removedLecturers)
+                        m.Lecturers.Remove(l);
+
+                    var addedLecturers = mr.Lecturers
+                        .Where(id => !m.Lecturers.Any(l => l.LecturerId == id))
+                        .Select(id => new ModuleLecturer { LecturerId = id });
+                    foreach (var l in addedLecturers)
+                        m.Lecturers.Add(l);
+                });
+
             CreateMap<SaveBookingResource, Booking>()
                 .ForMember(b => b.Id, opt => opt.Ignore())
                 .ForMember(b => b.TimeSlots, opt => opt.Ignore()) // ?

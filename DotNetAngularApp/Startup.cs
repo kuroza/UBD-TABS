@@ -29,6 +29,8 @@ namespace DotNetAngularApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IBookingRepository, BookingRepository>();
+
+            services.AddScoped<IModuleRepository, ModuleRepository>();
             
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             

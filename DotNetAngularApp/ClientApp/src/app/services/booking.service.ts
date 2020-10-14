@@ -74,9 +74,9 @@ export class BookingService {
     return this.http.get('/api/timeslots')
       .pipe(map(response => response));
   }
-  
-  getModules() {
-    return this.http.get('/api/modules')
+
+  getLecturers() {
+    return this.http.get('/api/lecturers')
       .pipe(map(response => response));
-  } 
+  }
 }

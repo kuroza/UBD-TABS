@@ -13,6 +13,7 @@ import { UserProfileComponent } from './users/user-profile/user-profile';
 import { NewFacultyComponent } from './faculties/new-faculty/new-faculty.component';
 import { ViewModuleComponent } from './modules/view-module/view-module.component';
 import { ModuleListComponent } from './modules/module-list/module-list.component';
+import { NewModuleComponent } from './modules/new-module/new-module.component';
 
 const routes: Routes = [{
   path: '',
@@ -30,8 +31,9 @@ const routes: Routes = [{
     { path: 'rooms', component: RoomListComponent },
     { path: 'account/profile', component: UserProfileComponent },  // ? change to auth/profile?
     { path: 'faculties/new', component: NewFacultyComponent },
-    { path: 'modules/:id', component: ViewModuleComponent },
     { path: 'modules', component: ModuleListComponent },
+    { path: 'modules/new', component: NewModuleComponent },
+    { path: 'modules/:id', component: ViewModuleComponent },
   ],
 }];
 

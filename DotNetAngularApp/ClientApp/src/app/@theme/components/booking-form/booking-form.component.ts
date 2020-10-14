@@ -8,6 +8,7 @@ import 'rxjs/add/Observable/forkJoin';
 import { SaveBooking } from '../../../models/booking';
 import { NgbDateStruct, NgbCalendar, NgbDateAdapter, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl } from '@angular/forms';
+import { ModuleService } from '../../../services/module.service';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -82,6 +83,7 @@ export class BookingFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private bookingService: BookingService,
+    private moduleService: ModuleService,
     private toastyService: ToastyService) {
 
     route.params.subscribe(p => {
@@ -93,7 +95,7 @@ export class BookingFormComponent implements OnInit {
     var sources = [
       this.bookingService.getBuildings(),
       this.bookingService.getTimeSlots(),
-      this.bookingService.getModules(),
+      this.moduleService.getModules(),
     ];
 
     // for editing Booking events
@@ -124,6 +126,7 @@ export class BookingFormComponent implements OnInit {
     this.booking.modules = [];
   }
 
+  // editing
   private setBooking(b) {
     this.booking.id = b.id;
     this.booking.buildingId = b.building.id;

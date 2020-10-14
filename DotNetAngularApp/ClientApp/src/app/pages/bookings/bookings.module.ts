@@ -3,7 +3,7 @@ import { PaginationComponent } from './../../@theme/components/shared/pagination
 import { RouterModule } from '@angular/router';
 import { BookingFormModule } from '../../@theme/components/booking-form/booking-form.module';
 import { NewBookingComponent } from './new-booking/new-booking.component';
-import { NbCardModule, NbTabsetModule, NbIconModule, NbButtonModule, NbTreeGridModule } from '@nebular/theme';
+import { NbCardModule, NbTabsetModule, NbIconModule, NbButtonModule, NbTreeGridModule, NbInputModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +16,7 @@ import { BookingDetailsModule } from '../../@theme/components/booking-details/bo
     NbButtonModule,
     NbTabsetModule,
     NbIconModule,
+    NbInputModule,
     NbTreeGridModule,
     ThemeModule,
     FormsModule,
