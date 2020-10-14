@@ -1,17 +1,37 @@
 <div class="row">
-    <div class="col-md-4">
-      <nb-card>
-        <nb-card-body>
-          <!-- <h3 *ngIf="booking.id">Edit room</h3>
-          <h3 *ngIf="!booking.id">Add new room</h3> -->
-          <h3>Add/Edit room</h3>
-        </nb-card-body>
-      </nb-card>
-        <nb-card>
-            <nb-card-body>
-                <ngx-room-form></ngx-room-form>
-            </nb-card-body>
-        </nb-card>
-    </div>
-    <div class="col-md-8"></div>
+  <div class="col-md-5">
+    <nb-card>
+      <nb-card-body>
+        <h4>Add Room</h4>
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-body>
+        <form #f="ngForm" (ngSubmit)="submit()" novalidate>
+          <div class="form-group">
+            <nb-select
+              filled
+              fullWidth
+              placeholder="Select building"
+              [(selected)]="room.buildingId">
+              <nb-option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</nb-option>
+            </nb-select><br>
+          </div>
+          <div class="form-group">
+            <input id="name" type="text" class="form-control" [(ngModel)]="room.name"
+            name="name" placeholder="Room name">
+          </div>
+          <div class="form-group">
+            <input id="capacity" type="text" class="form-control" [(ngModel)]="room.capacity"
+            name="capacity" placeholder="Room capacity">
+          </div>
+          <div>
+            <button nbButton fullWidth [disabled]="!f.valid">Add</button>
+          </div>
+          <br><p>{{ room | json }}</p>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-7"></div>
 </div>

@@ -34,6 +34,7 @@ const routes: Routes = [{
     { path: 'modules', component: ModuleListComponent },
     { path: 'modules/new', component: NewModuleComponent },
     { path: 'modules/:id', component: ViewModuleComponent },
+    { path: 'modules/edit/:id', component: NewModuleComponent },
   ],
 }];
 

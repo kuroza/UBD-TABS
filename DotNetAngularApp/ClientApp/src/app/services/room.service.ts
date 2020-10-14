@@ -22,22 +22,6 @@ export class RoomService {
     return this.http.get('/api/allrooms').toPromise();
   }
 
-//   getRooms(filter) {
-//     return this.http.get(this.roomsEndpoint + '?' + this.toQueryString(filter))
-//       .pipe(map(response => response));
-//   }
-
-//   toQueryString(obj) { // * for multiple query strings eg. 'buildingId=1&roomId=2'
-//     var parts = [];
-//     for (var property in obj) {
-//       var value = obj[property];
-//       if (value != null && value != undefined)
-//         parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(value));
-//     }
-
-//     return parts.join('&');
-//   }
-
   create(room) {
     return this.http.post(this.roomsEndpoint, room)
       .pipe(map(response => response));

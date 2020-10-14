@@ -95,7 +95,7 @@ export class BookingFormComponent implements OnInit {
     var sources = [
       this.bookingService.getBuildings(),
       this.bookingService.getTimeSlots(),
-      this.moduleService.getModules(),
+      this.moduleService.getAllModules(),
     ];
 
     // for editing Booking events

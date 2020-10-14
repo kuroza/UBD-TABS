@@ -14,7 +14,6 @@ namespace DotNetAngularApp.Persistence
             this.context = context;
         }
 
-        // ! check if this api is working
         public async Task<IEnumerable<Room>> GetAllRooms()
         {
             return await context.Rooms
@@ -22,7 +21,6 @@ namespace DotNetAngularApp.Persistence
                 .ToListAsync();
         }
 
-        // ! check if this api is working
         public async Task<Room> GetRoom(int id, bool includeRelated = true)
         {
             if (!includeRelated)

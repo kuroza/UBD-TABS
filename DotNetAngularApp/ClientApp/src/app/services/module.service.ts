@@ -18,13 +18,27 @@ export class ModuleService {
       .pipe(map(response => response));
   }
   
-  getModules() {
-    return this.http.get('/api/modules')
-      .pipe(map(response => response));
+  async getAllModules() {
+    return this.http.get('/api/allmodules').toPromise();
   }
+
+  // getAllModules() {
+  //   return this.http.get('/api/allmodules')
+  //     .pipe(map(response => response));
+  // }
 
   create(module) {
     return this.http.post(this.modulesEndpoint, module)
+      .pipe(map(response => response));
+  }
+
+  update(module: SaveModule) {
+    return this.http.put(this.modulesEndpoint + '/' + module.id, module)
+      .pipe(map(response => response));
+  }
+
+  delete(id) {
+    return this.http.delete(this.modulesEndpoint + '/' + id)
       .pipe(map(response => response));
   }
 }

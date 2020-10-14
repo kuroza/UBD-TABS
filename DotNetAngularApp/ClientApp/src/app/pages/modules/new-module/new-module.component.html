@@ -10,13 +10,13 @@
         <form #f="ngForm" (ngSubmit)="submit()" novalidate>
           <div class="form-group">
             <!-- <input [(ngModel)]="module.name" type="text" nbInput placeholder="Module name" fullWidth><br> -->
-            <input id="moduleName" type="text" class="form-control" [(ngModel)]="module.name"
-            name="moduleName" placeholder="Module name">
+            <input id="name" type="text" class="form-control" [(ngModel)]="module.name"
+            name="name" placeholder="Module name">
           </div>
           <div class="form-group">
             <!-- <input [(ngModel)]="module.code" type="text" nbInput placeholder="Module code" fullWidth><br> -->
-            <input id="moduleCode" type="text" class="form-control" [(ngModel)]="module.code"
-            name="moduleCode" placeholder="Module code">
+            <input id="code" type="text" class="form-control" [(ngModel)]="module.code"
+            name="code" placeholder="Module code">
           </div>
           <div class="form-group">
             <nb-select

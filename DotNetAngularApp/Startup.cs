@@ -34,6 +34,8 @@ namespace DotNetAngularApp
 
             services.AddScoped<IRoomRepository, RoomRepository>();
             
+            services.AddScoped<ITimeSlotRepository, TimeSlotRepository>();
+            
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             
             services.AddControllers().AddNewtonsoftJson();

@@ -7,18 +7,28 @@
     </nb-card>
     <nb-card>
       <nb-card-body>
-        <p>
-          Name: {{ module.name }}<br>
-          Code: {{ module.code }}<br>
-        </p>
-        <!-- <div class="card" style="width: 18rem;">
-          <div class="card-header">
-            <h6>Lecturers</h6>
+        <div *ngIf="module">
+          <p>
+            <b>Name:</b> {{ module.name }}<br>
+            <b>Code:</b> {{ module.code }}<br>
+          </p>
+          
+          <div class="card" style="width: 18rem;">
+            <div class="card-header">
+              <h6>Lecturers</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let l of module.lecturers" class="list-group-item">{{ l.title }} {{ l.name }}</li>
+            </ul>
           </div>
-          <ul class="list-group list-group-flush">
-            <li *ngFor="let l of module.lecturers" class="list-group-item">{{ l.title }} {{ l.name }}</li>
-          </ul>
-        </div> -->
+        </div>
+
+        <br>
+        <p>
+          <button class="mx-2" nbButton status="primary" [routerLink]="['/pages/modules/edit/', module.id]">Edit</button>
+          <button class="mr-2" nbButton status="danger" (click)="delete()">Delete</button>
+          <!-- <button nbButton status="warning" [routerLink]="['/pages/modules']">View All Modules</button> -->
+        </p>
       </nb-card-body>
     </nb-card>
   </div>

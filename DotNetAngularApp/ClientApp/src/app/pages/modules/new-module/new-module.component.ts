@@ -42,7 +42,7 @@ export class NewModuleComponent implements OnInit {
         showClose: true,
         timeout: 5000
       });
-      // this.router.navigate(['/pages/modules/', this.module.id]);
+      this.router.navigate(['/pages/modules/', this.module.id]);
     });
   }
 }

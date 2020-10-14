@@ -39,20 +39,19 @@ export class ViewModuleComponent implements OnInit {
         });
   }
 
-//   delete() {
-//     // todo: use a popup
-//     if (confirm("Are you sure?")) { // if confirm() == true
-//       this.bookingService.delete(this.booking.id) // delete in db
-//         .subscribe(x => {
-//           this.toastyService.success({
-//             title: 'Success', 
-//             msg: 'Booking was sucessfully deleted.',
-//             theme: 'bootstrap',
-//             showClose: true,
-//             timeout: 5000
-//           });
-//           this.router.navigate(['/pages/bookings']);
-//         });
-//     }
-//   }
+  delete() {
+    if (confirm("Are you sure?")) {
+      this.moduleService.delete(this.module.id)
+        .subscribe(x => {
+          this.toastyService.success({
+            title: 'Success', 
+            msg: 'Module was sucessfully deleted.',
+            theme: 'bootstrap',
+            showClose: true,
+            timeout: 5000
+          });
+          this.router.navigate(['/pages/modules']);
+        });
+    }
+  }
 }

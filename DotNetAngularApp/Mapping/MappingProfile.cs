@@ -16,10 +16,10 @@ namespace DotNetAngularApp.Mapping
             CreateMap<Course, CourseResource>();
             CreateMap<Building, BuildingResource>();
             CreateMap<Building, KeyValuePairResource>();
-            CreateMap<Room, RoomResource>();
             CreateMap<Lecturer, LecturerResource>();
             CreateMap<TimeSlot, TimeSlotResource>();
-
+            CreateMap<TimeSlot, SaveTimeSlotResource>();
+            CreateMap<Room, RoomResource>();
             CreateMap<Room, SaveRoomResource>();
 
             CreateMap<Booking, SaveBookingResource>()
@@ -50,6 +50,9 @@ namespace DotNetAngularApp.Mapping
 
             CreateMap<SaveRoomResource, Room>()
                 .ForMember(r => r.Id, opt => opt.Ignore());
+
+            CreateMap<SaveTimeSlotResource, TimeSlot>()
+                .ForMember(t => t.Id, opt => opt.Ignore());
 
             CreateMap<SaveModuleResource, Module>()
                 .ForMember(m => m.Id, opt => opt.Ignore())
