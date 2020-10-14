@@ -20,6 +20,8 @@ namespace DotNetAngularApp.Mapping
             CreateMap<Lecturer, LecturerResource>();
             CreateMap<TimeSlot, TimeSlotResource>();
 
+            CreateMap<Room, SaveRoomResource>();
+
             CreateMap<Booking, SaveBookingResource>()
                 .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => bt.TimeSlotId)))
                 .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => bt.ModuleId)));
@@ -43,8 +45,11 @@ namespace DotNetAngularApp.Mapping
                     opt.MapFrom(m => m.Lecturers.Select(ml => 
                     new LecturerResource { Id = ml.Lecturer.Id, Name = ml.Lecturer.Name, Title = ml.Lecturer.Title })));
 
-            //API Resource to Domain, saving to database
+            // API Resource to Domain, saving to database
             CreateMap<BookingQueryResource, BookingQuery>();
+
+            CreateMap<SaveRoomResource, Room>()
+                .ForMember(r => r.Id, opt => opt.Ignore());
 
             CreateMap<SaveModuleResource, Module>()
                 .ForMember(m => m.Id, opt => opt.Ignore())

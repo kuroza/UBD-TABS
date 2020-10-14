@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using DotNetAngularApp.Controllers.Resources;
+using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
 using DotNetAngularApp.Persistence;
 using Microsoft.AspNetCore.Mvc;
@@ -9,24 +10,92 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotNetAngularApp.Controllers
 {
+    [Route("/api/rooms")]
     public class RoomsController : Controller
     {
-        private readonly TabsDbContext context;
         private readonly IMapper mapper;
-        public RoomsController(TabsDbContext context, IMapper mapper)
+        private readonly IRoomRepository repository;
+        private readonly IUnitOfWork unitOfWork;
+        public RoomsController(IMapper mapper, IRoomRepository repository, IUnitOfWork unitOfWork)
         {
+            this.unitOfWork = unitOfWork;
+            this.repository = repository;
             this.mapper = mapper;
-            this.context = context;
         }
 
-        [HttpGet("/api/rooms")]
-        public async Task<IEnumerable<RoomResource>> GetRooms()
+        [HttpGet("/api/allrooms")]
+        public async Task<IEnumerable<RoomResource>> GetAllRooms()
         {
-            var rooms = await context.Rooms.ToListAsync();
+            var rooms = await repository.GetAllRooms();
 
-            return mapper.Map<List<Room>, List<RoomResource>>(rooms);
+            return mapper.Map<IEnumerable<Room>, IEnumerable<RoomResource>>(rooms);
         }
 
-        // todo: create a GetRoom(id) method
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRoom(int id)
+        {
+            var room = await repository.GetRoom(id);
+
+            if (room == null)
+                return NotFound();
+
+            var roomResource = mapper.Map<Room, RoomResource>(room);
+
+            return Ok(roomResource);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateRoom([FromBody] SaveRoomResource roomResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var room = mapper.Map<SaveRoomResource, Room>(roomResource);
+
+            repository.Add(room);
+            await unitOfWork.CompleteAsync();
+
+            room = await repository.GetRoom(room.Id);
+
+            var result = mapper.Map<Room, RoomResource>(room);
+
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRoom(int id)
+        {
+            var room = await repository.GetRoom(id, includeRelated: false);
+
+            if (room == null)
+                return NotFound();
+
+            repository.Remove(room);
+            await unitOfWork.CompleteAsync();
+
+            return Ok(id);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateRoom(int id, [FromBody] SaveRoomResource roomResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var room = await repository.GetRoom(id);
+
+            if (room == null)
+                return NotFound();
+
+            mapper.Map<SaveRoomResource, Room>(roomResource, room);
+
+            await unitOfWork.CompleteAsync();
+
+            room = await repository.GetRoom(room.Id);
+
+            var result = mapper.Map<Room, RoomResource>(room);
+
+            return Ok(result);
+        }
     }
 }

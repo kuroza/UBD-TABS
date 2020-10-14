@@ -24,23 +24,14 @@ namespace DotNetAngularApp.Controllers
             this.mapper = mapper;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateModule([FromBody] SaveModuleResource moduleResource)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        // [HttpGet]
+        // public async Task<QueryResultResource<ModuleResource>> GetModules(ModuleQueryResource filterResource)
+        // {
+        //     var filter = mapper.Map<ModuleQueryResource, ModuleQuery>(filterResource);
+        //     var queryResult = await repository.GetModules(filter);
 
-            var module = mapper.Map<SaveModuleResource, Module>(moduleResource);
-
-            repository.Add(module);
-            await unitOfWork.CompleteAsync();
-
-            module = await repository.GetModule(module.Id);
-
-            var result = mapper.Map<Module, ModuleResource>(module);
-
-            return Ok(result);
-        }
+        //     return mapper.Map<QueryResult<Module>, QueryResultResource<ModuleResource>>(queryResult);
+        // }
 
         [HttpGet("/api/allmodules")]
         public async Task<IEnumerable<ModuleResource>> GetAllModules()
@@ -61,6 +52,24 @@ namespace DotNetAngularApp.Controllers
             var moduleResource = mapper.Map<Module, ModuleResource>(module);
 
             return Ok(moduleResource);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateModule([FromBody] SaveModuleResource moduleResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var module = mapper.Map<SaveModuleResource, Module>(moduleResource);
+
+            repository.Add(module);
+            await unitOfWork.CompleteAsync();
+
+            module = await repository.GetModule(module.Id);
+
+            var result = mapper.Map<Module, ModuleResource>(module);
+
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]

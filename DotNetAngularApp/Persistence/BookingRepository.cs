@@ -50,7 +50,7 @@ namespace DotNetAngularApp.Persistence
                 .ToListAsync();
         }
 
-        // ? for booking table
+        // * for booking table
         public async Task<QueryResult<Booking>> GetBookings(BookingQuery queryObj)
         {
             var result = new QueryResult<Booking>();

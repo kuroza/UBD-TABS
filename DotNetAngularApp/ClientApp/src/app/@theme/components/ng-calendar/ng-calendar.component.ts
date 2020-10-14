@@ -45,7 +45,7 @@ export class NgCalendarComponent {
   endTime: any;
   buildings: any;
   rooms: any;
-  filter: any = {};
+  filterRoom: any = {};
   allBookings: any;
 
   constructor(private bookingService: BookingService) {}
@@ -66,42 +66,37 @@ export class NgCalendarComponent {
     this.events = []; // reset events after every filter change
     var bookings = this.allBookings;
 
-    // redundant code
-    // if (this.filter.buildingId == 0 || this.filter.roomId == 0) { // if none is selected, empty events
-    //   this.showAllBookings();
-    // }
+    if (this.filterRoom.buildingId)
+      bookings = bookings.filter(b => b.building.id == this.filterRoom.buildingId);
 
-    if (this.filter.buildingId)
-      bookings = bookings.filter(b => b.building.id == this.filter.buildingId);
-
-    if (this.filter.roomId)
-      bookings = bookings.filter(b => b.room.id == this.filter.roomId);
+    if (this.filterRoom.roomId)
+      bookings = bookings.filter(b => b.room.id == this.filterRoom.roomId);
 
     this.bookings = bookings;
     this.populateCalendar();
   }
 
   resetFilter() {
-    this.filter = {}; // empty filter drop down
+    this.filterRoom = {}; // empty filter drop down
     this.rooms = []; // clear room drop down filter
     this.emptyRoomFilter();
     this.showAllBookings(); // show all if reset
   }
 
   onBuildingChange() { // for cascading
-    var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
+    var selectedBuilding = this.buildings.find(b => b.id == this.filterRoom.buildingId);
     this.rooms = selectedBuilding ? selectedBuilding.rooms : []; // cascade rooms drop down
     this.emptyRoomFilter();
     
     var bookings = this.allBookings;;
-    this.bookings = bookings.filter(b => b.building.id == this.filter.buildingId); // filter events by building
+    this.bookings = bookings.filter(b => b.building.id == this.filterRoom.buildingId); // filter events by building
     this.populateCalendar();
   }
 
   emptyRoomFilter() {
     this.activeDayIsOpen = false;
     this.events = []; // clear events
-    delete this.filter.roomId; // clear selected roomId
+    delete this.filterRoom.roomId; // clear selected roomId
     this.refresh.next();// refresh calendar after loading
   }
 

@@ -31,6 +31,8 @@ namespace DotNetAngularApp
             services.AddScoped<IBookingRepository, BookingRepository>();
 
             services.AddScoped<IModuleRepository, ModuleRepository>();
+
+            services.AddScoped<IRoomRepository, RoomRepository>();
             
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             
