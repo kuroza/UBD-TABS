@@ -18,43 +18,10 @@
     <nb-card>
       <nb-card-body>
         <nb-tabset>
-          <nb-tab tabTitle="Search">
-            <div class="form-group">
-              <div>
-                <!-- <select style="width: 28rem;" name="buildingId" id="building" class="form-control" [(ngModel)]="filter.buildingId" (change)="onBuildingChange()">
-                  <option value="" placeholder="Select a building"></option>
-                  <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
-                </select> -->
-                <nb-select
-                  filled
-                  fullWidth
-                  placeholder="Select Building"
-                >
-                <nb-option *ngFor="let building of buildings" value="building.id">{{ building.name }}</nb-option>
-                </nb-select>
-              </div>
-              <br>
-              <div>
-                <!-- <select style="width: 12rem;" name="roomId" id="room" class="form-control" [(ngModel)]="filter.roomId" (change)="onFilterChange()">
-                  <option value="" placeholder="Select a room"></option>
-                  <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
-                </select> -->
-                <nb-select
-                  filled
-                  fullWidth
-                  placeholder="Select Room"
-                >  
-                </nb-select>
-              </div>
-              <br>
-              <!-- <button nbButton status="basic" (click)="resetFilter()">Reset</button> -->
-              <button nbButton hero shape="round" status="primary" style="float: right">Search</button>
-            </div>
-          </nb-tab>
           <nb-tab tabTitle="Details">
             <div *ngIf="!booking">
               <p>Click on a booking event from the calendar to show its details</p>
-              <button nbButton status="warning" [routerLink]="['/pages/bookings']">View all bookings</button>
+              <button nbButton status="warning" fullWidth [routerLink]="['/pages/bookings']">View All Bookings</button>
             </div>
             <div *ngIf="booking">
               <!-- Venue -->
@@ -112,13 +79,15 @@
               </div>
             
               <br />
-              <p>
+              <div>
                 <!-- <button *ngIf="auth.loggedIn" class="mx-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
                 <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="danger" (click)="delete()">Delete</button> -->
-                <button class="mx-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
-                <button class="mr-2" nbButton status="danger" (click)="delete()">Delete</button>
-                <button nbButton status="warning" [routerLink]="['/pages/bookings']">View All Bookings</button>
-              </p>
+                <button class="mb-2" fullWidth nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+                <button class="mb-2" fullWidth nbButton status="danger" (click)="delete()">Delete</button>
+                <button fullWidth nbButton status="warning" [routerLink]="['/pages/bookings']">View All Bookings</button>
+              </div>
+              <div>
+              </div>
             </div>            
           </nb-tab>
           <!-- <nb-tab *ngIf="!auth.loggedIn" tabTitle="Add booking" disabled>
@@ -126,7 +95,7 @@
           <nb-tab *ngIf="auth.loggedIn" tabTitle="Add booking">
             <ngx-booking-form></ngx-booking-form>
           </nb-tab> -->
-          <nb-tab tabTitle="Add">
+          <nb-tab tabTitle="Add Booking">
             <ngx-booking-form></ngx-booking-form>
           </nb-tab>
          </nb-tabset>
