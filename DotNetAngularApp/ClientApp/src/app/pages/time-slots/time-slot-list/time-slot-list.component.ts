@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { TimeSlotService } from '../../../services/timeSlot.service';
 
 @Component({
   selector: 'ngx-view-time-slots',
@@ -6,8 +7,14 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class TimeSlotListComponent implements OnInit {
 
-  constructor() { }
+  timeSlots: any;
+
+  constructor(
+    private timeSlotService: TimeSlotService,
+  ) { }
 
   ngOnInit() {
+    this.timeSlotService.getAllTimeSlots()
+      .subscribe(timeSlots => this.timeSlots = timeSlots);
   }
 }

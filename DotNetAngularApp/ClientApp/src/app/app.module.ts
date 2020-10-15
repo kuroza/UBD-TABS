@@ -1,3 +1,7 @@
+import { TimeSlotService } from './services/timeSlot.service';
+import { RoomService } from './services/room.service';
+import { ModuleService } from './services/module.service';
+import { LecturerService } from './services/lecturer.service';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
@@ -27,6 +31,7 @@ import {
 } from '@nebular/theme';
 import { AppErrorHandler } from './app.error-handler';
 import { NgbDateParserFormatter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { BuildingService } from './services/building.service';
 
 // import * as Sentry from "@sentry/browser"; // ? should I try sentry again?
 
@@ -61,6 +66,11 @@ import { NgbDateParserFormatter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstr
   providers: [
     BookingService,
     FacultyService,
+    BuildingService,
+    LecturerService,
+    ModuleService,
+    RoomService,
+    TimeSlotService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
   ]
 })

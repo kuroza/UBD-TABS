@@ -8,8 +8,18 @@
     <nb-card-body>
         <table class="table">
             <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Module name
+                    </th>
+                </tr>
             </thead>
-            <tbody>  
+            <tbody>
+                <tr *ngFor="let module of modules">
+                    <td>
+                        {{ module.name }}
+                    </td>
+                </tr>
             </tbody>
         </table>
     </nb-card-body>

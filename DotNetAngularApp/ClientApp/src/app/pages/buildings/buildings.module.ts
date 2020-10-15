@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { LecturerListComponent } from './lecturer-list/lecturer-list.component';
-import { NewLecturerComponent } from './new-lecturer/new-lecturer.component';
-import { ViewLecturerComponent } from './view-lecturer/view-lecturer.component';
+import { ViewBuildingComponent } from './view-building/view-building.component';
+import { NewBuildingComponent } from './new-building/new-building.component';
+import { BuildingListComponent } from './building-list/building-list.component';
 
 @NgModule({
     imports: [
@@ -20,9 +20,9 @@ import { ViewLecturerComponent } from './view-lecturer/view-lecturer.component';
       RouterModule,
     ],
     declarations: [
-        LecturerListComponent,
-        NewLecturerComponent,
-        ViewLecturerComponent,
+        BuildingListComponent,
+        NewBuildingComponent,
+        ViewBuildingComponent,
     ],
   })
-  export class LecturersModule { }
+  export class BuildingsModule { }

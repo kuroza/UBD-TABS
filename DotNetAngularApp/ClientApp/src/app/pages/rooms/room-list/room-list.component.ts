@@ -1,5 +1,6 @@
 import { BookingService } from '../../../services/booking.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { BuildingService } from '../../../services/building.service';
 // import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -12,10 +13,12 @@ export class RoomListComponent implements OnInit {
   buildings: any;
 
   constructor(
-    private bookingService: BookingService) { }
+    private bookingService: BookingService,
+    private buildingService: BuildingService
+    ) { }
 
   ngOnInit() {
-    this.bookingService.getBuildings()
+    this.buildingService.getAllBuildings()
       .subscribe(buildings => this.buildings = buildings);
   }
 

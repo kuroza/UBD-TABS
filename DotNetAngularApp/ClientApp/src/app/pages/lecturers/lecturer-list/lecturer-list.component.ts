@@ -1,15 +1,18 @@
+import { LecturerService } from './../../../services/lecturer.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'lecturer-list',
   templateUrl: './lecturer-list.component.html',
-  styleUrls: ['./lecturer-list.component.scss']
 })
 export class LecturerListComponent implements OnInit {
 
-  constructor() { }
+  lecturers: any;
+
+  constructor(private lecturerService: LecturerService) { }
 
   ngOnInit() {
+    this.lecturerService.getAllLecturers()
+      .subscribe(lecturers => this.lecturers = lecturers);
   }
-
 }

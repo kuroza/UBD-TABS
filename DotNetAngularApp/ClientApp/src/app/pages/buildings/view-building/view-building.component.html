@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-4">
+      <nb-card>
+        <nb-card-body>
+          <h3>Building details</h3>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <div *ngIf="building">
+            <p>
+              <b>Name:</b> {{ building.name }}<br>
+            </p>
+  
+            <br>
+            <p>
+              <button class="mx-2" nbButton status="primary" [routerLink]="['/pages/buildings/edit/', building.id]">Edit</button>
+              <button class="mr-2" nbButton status="danger" (click)="delete()">Delete</button>
+              <!-- <button nbButton status="warning" [routerLink]="['/pages/buildings']">View All Buildings</button> -->
+            </p>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  

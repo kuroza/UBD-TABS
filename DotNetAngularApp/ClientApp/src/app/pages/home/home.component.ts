@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BookingService } from '../../services/booking.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
+import { BuildingService } from '../../services/building.service';
 
 @Component({
   selector: 'ngx-home',
@@ -17,10 +18,11 @@ export class HomeComponent {
     private router: Router,
     private toasty: ToastyService,
     private bookingService: BookingService,
+    private buildingService: BuildingService,
     ) {}
 
   ngOnInit() {
-    this.bookingService.getBuildings()
+    this.buildingService.getAllBuildings()
       .subscribe(buildings => this.buildings = buildings);
   }
 

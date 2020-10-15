@@ -13,7 +13,8 @@
           {{ b.name }}
         </nb-accordion-item-header>
         <nb-accordion-item-body>
-          <button [routerLink]="['/pages/rooms/new']" class="mb-2" nbButton status="primary">Add room</button>
+          <button [routerLink]="['/pages/buildings/edit', b.id]" size="small" class="mr-2 mb-2" nbButton status="primary">Edit building details</button>
+          <button [routerLink]="['/pages/rooms/new']" size="small" class="mb-2" nbButton status="primary">Add new room</button>
           <!-- <ul>
             <li *ngFor="let room of b.rooms">{{ room.name }}</li>
           </ul> -->

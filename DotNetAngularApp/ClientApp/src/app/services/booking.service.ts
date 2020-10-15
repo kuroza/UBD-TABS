@@ -52,14 +52,4 @@ export class BookingService {
     return this.http.delete(this.bookingsEndpoint + '/' + id)
       .pipe(map(response => response));
   }
-
-  getBuildings() {
-    return this.http.get('/api/buildings')
-      .pipe(map(response => response));
-  }
-
-  getLecturers() {
-    return this.http.get('/api/lecturers')
-      .pipe(map(response => response));
-  }
 }

@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/Observable/forkJoin';
 import { SaveBooking } from '../../../models/booking';
 import { FormControl } from '@angular/forms';
+import { BuildingService } from '../../../services/building.service';
 
 @Component({
   selector: 'ngx-room-form',
@@ -20,12 +21,13 @@ export class RoomFormComponent implements OnInit {
     private route: ActivatedRoute, // to read route parameters
     private router: Router, // to navigate user to different page if they pass an invalid id
     private bookingService: BookingService,
+    private buildingService: BuildingService,
     private toastyService: ToastyService) {
 
     }
 
   ngOnInit() {
-    this.buildings = this.bookingService.getBuildings();
+    this.buildings = this.buildingService.getAllBuildings();
   }
 
   submit() {

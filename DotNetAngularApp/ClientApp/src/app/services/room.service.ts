@@ -18,9 +18,14 @@ export class RoomService {
       .pipe(map(response => response));
   }
 
-  async getAllRooms() {
-    return this.http.get('/api/allrooms').toPromise();
+  getAllRooms() {
+    return this.http.get('/api/allrooms')
+      .pipe(map(response => response));
   }
+
+  // async getAllRooms() {
+  //   return this.http.get('/api/allrooms').toPromise();
+  // }
 
   create(room) {
     return this.http.post(this.roomsEndpoint, room)

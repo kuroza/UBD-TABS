@@ -10,6 +10,7 @@ import { NgbDateStruct, NgbCalendar, NgbDateAdapter, NgbDateParserFormatter } fr
 import { FormControl } from '@angular/forms';
 import { ModuleService } from '../../../services/module.service';
 import { TimeSlotService } from '../../../services/timeSlot.service';
+import { BuildingService } from '../../../services/building.service';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -84,6 +85,7 @@ export class BookingFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private bookingService: BookingService,
+    private buildingService: BuildingService,
     private moduleService: ModuleService,
     private timeSlotService: TimeSlotService,
     private toastyService: ToastyService) {
@@ -95,7 +97,7 @@ export class BookingFormComponent implements OnInit {
 
   ngOnInit() {
     var sources = [
-      this.bookingService.getBuildings(),
+      this.buildingService.getAllBuildings(),
       this.timeSlotService.getAllTimeSlots(),
       this.moduleService.getAllModules(),
     ];

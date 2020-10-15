@@ -13,6 +13,7 @@ import { Subject } from 'rxjs';
 import { CustomEventTitleFormatter } from './custom-event-title-formatter.provider';
 import { BookingService } from '../../../services/booking.service';
 import { colors } from '../calendar-header/colors';
+import { BuildingService } from '../../../services/building.service';
 
 @Component({
   selector: 'ngx-calendar',
@@ -48,10 +49,13 @@ export class NgCalendarComponent {
   filter: any = {};
   allBookings: any;
 
-  constructor(private bookingService: BookingService) {}
+  constructor(
+    private bookingService: BookingService,
+    private buildingService: BuildingService
+    ) {}
 
   async ngOnInit() {
-    this.bookingService.getBuildings() // get the buildings from service for filter drop down
+    this.buildingService.getAllBuildings() // get the buildings from service for filter drop down
       .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
 
     this.bookings = this.allBookings = await this.bookingService.getAllBookings() // ! using Promise instead

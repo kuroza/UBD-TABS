@@ -1,38 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
-import { LecturerService } from '../../../services/lecturer.service';
+import { BuildingService } from '../../../services/building.service';
 
 @Component({
-  selector: 'view-lecturer',
-  templateUrl: './view-lecturer.component.html',
+  selector: 'view-building',
+  templateUrl: './view-building.component.html',
 })
-export class ViewLecturerComponent implements OnInit {
-  lecturer: any;
-  lecturerId: number;
+export class ViewBuildingComponent implements OnInit {
+  building: any;
+  buildingId: number;
 
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
     private toastyService: ToastyService,
-    private lecturerService: LecturerService) {
+    private buildingService: BuildingService) {
 
     route.params.subscribe(p => {
-      this.lecturerId = +p['id'];
-      if (isNaN(this.lecturerId) || this.lecturerId <= 0) {
-        router.navigate(['/pages/lecturers']);
+      this.buildingId = +p['id'];
+      if (isNaN(this.buildingId) || this.buildingId <= 0) {
+        router.navigate(['/pages/buildings']);
         return; 
       }
     });
   }
 
   ngOnInit() { 
-    this.lecturerService.getLecturer(this.lecturerId)
+    this.buildingService.getBuilding(this.buildingId)
       .subscribe(
-        l => this.lecturer = l,
+        b => this.building = b,
         err => {
           if (err.status == 404) {
-            this.router.navigate(['/pages/lecturers']);
+            this.router.navigate(['/pages/buildings']);
             return; 
           }
         });
@@ -40,16 +40,16 @@ export class ViewLecturerComponent implements OnInit {
 
   delete() {
     if (confirm("Are you sure?")) {
-      this.lecturerService.delete(this.lecturer.id)
+      this.buildingService.delete(this.building.id)
         .subscribe(x => {
           this.toastyService.success({
             title: 'Success', 
-            msg: 'Lecturer was sucessfully removed.',
+            msg: 'Building was sucessfully removed.',
             theme: 'bootstrap',
             showClose: true,
             timeout: 5000
           });
-          this.router.navigate(['/pages/lecturers']);
+          this.router.navigate(['/pages/buildings']);
         });
     }
   }

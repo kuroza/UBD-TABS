@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-md-5">
+    <nb-card>
+      <nb-card-body>
+        <h4>Add Building</h4>
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-body>
+        <form #f="ngForm" (ngSubmit)="submit()" novalidate>
+          <div class="form-group">
+            <input id="name" type="text" class="form-control" [(ngModel)]="building.name"
+            name="name" placeholder="Building name">
+          </div>
+          <div>
+            <button nbButton fullWidth [disabled]="!f.valid">Add</button>
+          </div>
+          <br><pre>{{ building | json }}</pre>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-md-7"></div>
+</div>

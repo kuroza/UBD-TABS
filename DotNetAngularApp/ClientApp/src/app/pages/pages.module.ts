@@ -1,3 +1,4 @@
+import { BuildingsModule } from './buildings/buildings.module';
 import { UsersModule } from './users/users.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { NgModule } from '@angular/core';
@@ -31,7 +32,8 @@ import { TimeSlotsModule } from './time-slots/time-slots.module';
     LecturersModule,
     SemestersModule,
     CoursesModule,
-    TimeSlotsModule
+    TimeSlotsModule,
+    BuildingsModule
   ],
   declarations: [
     PagesComponent,

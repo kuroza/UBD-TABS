@@ -1,1 +1,27 @@
-<p>view-lecturer works!</p>
+<div class="row">
+    <div class="col-md-4">
+      <nb-card>
+        <nb-card-body>
+          <h3>Lecturer details</h3>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <div *ngIf="lecturer">
+            <p>
+              <b>Name:</b> {{ lecturer.name }}<br>
+              <!-- * here maybe add lecturer office, contact no, email and other info -->
+            </p>
+  
+            <br>
+            <p>
+              <button class="mx-2" nbButton status="primary" [routerLink]="['/pages/lecturers/edit/', lecturer.id]">Edit</button>
+              <button class="mr-2" nbButton status="danger" (click)="delete()">Delete</button>
+              <!-- <button nbButton status="warning" [routerLink]="['/pages/lecturers']">View All Lecturers</button> -->
+            </p>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  

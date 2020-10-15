@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using DotNetAngularApp.Controllers.Resources;
+using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
 using DotNetAngularApp.Persistence;
 using Microsoft.AspNetCore.Authorization;
@@ -10,23 +11,92 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotNetAngularApp.Controllers
 {
+    [Route("/api/lecturers")]
     public class LecturersController : Controller
     {
-        private readonly TabsDbContext context;
         private readonly IMapper mapper;
-        public LecturersController(TabsDbContext context, IMapper mapper)
+        private readonly ILecturerRepository repository;
+        private readonly IUnitOfWork unitOfWork;
+        public LecturersController(IMapper mapper, ILecturerRepository repository, IUnitOfWork unitOfWork)
         {
+            this.unitOfWork = unitOfWork;
+            this.repository = repository;
             this.mapper = mapper;
-            this.context = context;
         }
 
-        [HttpGet("/api/lecturers")]
-        public async Task<IEnumerable<LecturerResource>> GetLecturers()
+        [HttpGet("/api/alllecturers")]
+        public async Task<IEnumerable<LecturerResource>> GetAllLecturers()
         {
-            var lecturers = await context.Lecturers.ToListAsync();
+            var lecturers = await repository.GetAllLecturers();
 
-            return mapper.Map<List<Lecturer>, List <LecturerResource>>(lecturers);
-            // return lecturers;
+            return mapper.Map<IEnumerable<Lecturer>, IEnumerable<LecturerResource>>(lecturers);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetLecturer(int id)
+        {
+            var lecturer = await repository.GetLecturer(id);
+
+            if (lecturer == null)
+                return NotFound();
+
+            var lecturerResource = mapper.Map<Lecturer, LecturerResource>(lecturer);
+
+            return Ok(lecturerResource);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateLecturer([FromBody] SaveLecturerResource lecturerResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var lecturer = mapper.Map<SaveLecturerResource, Lecturer>(lecturerResource);
+
+            repository.Add(lecturer);
+            await unitOfWork.CompleteAsync();
+
+            lecturer = await repository.GetLecturer(lecturer.Id);
+
+            var result = mapper.Map<Lecturer, LecturerResource>(lecturer);
+
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteLecturer(int id)
+        {
+            var lecturer = await repository.GetLecturer(id, includeRelated: false);
+
+            if (lecturer == null)
+                return NotFound();
+
+            repository.Remove(lecturer);
+            await unitOfWork.CompleteAsync();
+
+            return Ok(id);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateLecturer(int id, [FromBody] SaveLecturerResource lecturerResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var lecturer = await repository.GetLecturer(id);
+
+            if (lecturer == null)
+                return NotFound();
+
+            mapper.Map<SaveLecturerResource, Lecturer>(lecturerResource, lecturer);
+
+            await unitOfWork.CompleteAsync();
+
+            lecturer = await repository.GetLecturer(lecturer.Id);
+
+            var result = mapper.Map<Lecturer, LecturerResource>(lecturer);
+
+            return Ok(result);
         }
     }
-} 
+}

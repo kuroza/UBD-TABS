@@ -1,1 +1,26 @@
-<p>lecturer-list works!</p>
+<nb-card>
+    <nb-card-body>
+        <h3>Lecturer list</h3>
+    </nb-card-body>
+</nb-card>
+
+<nb-card>
+    <nb-card-body>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let lecturer of lecturers">
+                    <td>
+                        {{ lecturer.title }} {{ lecturer.name }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </nb-card-body>
+</nb-card>

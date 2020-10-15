@@ -65,14 +65,18 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: '/pages/rooms/new',
       },
       {
-        title: 'View all rooms',
+        title: 'Add building',
+        link: '/pages/buildings/new',
+      },
+      {
+        title: 'View all rooms and buildings',
         link: '/pages/rooms',
       },
     ],
   },
   {
     title: 'Lecturers',
-    icon: 'twitter-outline',
+    icon: 'people-outline',
     children: [
       {
         title: 'Add lecturer',

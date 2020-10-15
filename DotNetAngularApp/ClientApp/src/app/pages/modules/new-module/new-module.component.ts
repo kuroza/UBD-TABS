@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
 import { SaveModule } from '../../../models/module';
 import { BookingService } from '../../../services/booking.service';
+import { LecturerService } from '../../../services/lecturer.service';
 import { ModuleService } from '../../../services/module.service';
 
 @Component({
@@ -22,12 +23,13 @@ export class NewModuleComponent implements OnInit {
   constructor(
     private bookingService: BookingService,
     private moduleService: ModuleService,
+    private lecturerService: LecturerService,
     private toastyService: ToastyService,
     private router: Router,
     ) { }
 
   ngOnInit() {
-    this.bookingService.getLecturers()
+    this.lecturerService.getAllLecturers()
       .subscribe(lecturers => this.lecturers = lecturers);
   }
 

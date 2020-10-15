@@ -14,13 +14,19 @@ namespace DotNetAngularApp.Mapping
             CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
             CreateMap<Faculty, FacultyResource>();
             CreateMap<Course, CourseResource>();
-            CreateMap<Building, BuildingResource>();
-            CreateMap<Building, KeyValuePairResource>();
-            CreateMap<Lecturer, LecturerResource>();
+            
             CreateMap<TimeSlot, TimeSlotResource>();
             CreateMap<TimeSlot, SaveTimeSlotResource>();
+            
             CreateMap<Room, RoomResource>();
             CreateMap<Room, SaveRoomResource>();
+
+            CreateMap<Lecturer, LecturerResource>();
+            CreateMap<Lecturer, SaveLecturerResource>();
+
+            CreateMap<Building, BuildingResource>();
+            CreateMap<Building, KeyValuePairResource>();
+            CreateMap<Building, SaveBuildingResource>();
 
             CreateMap<Booking, SaveBookingResource>()
                 .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => bt.TimeSlotId)))
@@ -39,7 +45,7 @@ namespace DotNetAngularApp.Mapping
 
             CreateMap<Module, SaveModuleResource>()
                 .ForMember(mr => mr.Lecturers, opt => opt.MapFrom(m => m.Lecturers.Select(ml => ml.LecturerId)));
-
+                
             CreateMap<Module, ModuleResource>()
                 .ForMember(mr => mr.Lecturers, opt => 
                     opt.MapFrom(m => m.Lecturers.Select(ml => 
@@ -50,6 +56,9 @@ namespace DotNetAngularApp.Mapping
 
             CreateMap<SaveRoomResource, Room>()
                 .ForMember(r => r.Id, opt => opt.Ignore());
+            
+            CreateMap<SaveLecturerResource, Lecturer>()
+                .ForMember(l => l.Id, opt => opt.Ignore());
 
             CreateMap<SaveTimeSlotResource, TimeSlot>()
                 .ForMember(t => t.Id, opt => opt.Ignore());
@@ -69,9 +78,12 @@ namespace DotNetAngularApp.Mapping
                         m.Lecturers.Add(l);
                 });
 
+            CreateMap<SaveBuildingResource, Building>()
+                .ForMember(b => b.Id, opt => opt.Ignore());
+
             CreateMap<SaveBookingResource, Booking>()
                 .ForMember(b => b.Id, opt => opt.Ignore())
-                .ForMember(b => b.TimeSlots, opt => opt.Ignore()) // ?
+                .ForMember(b => b.TimeSlots, opt => opt.Ignore())
                 .AfterMap((br, b) => {
                     var removedTimeSlots = b.TimeSlots.Where(t => !br.TimeSlots.Contains(t.TimeSlotId)).ToList();
                     foreach (var t in removedTimeSlots)

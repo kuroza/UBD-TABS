@@ -17,6 +17,12 @@ import { NewModuleComponent } from './modules/new-module/new-module.component';
 import { TimeSlotListComponent } from './time-slots/time-slot-list/time-slot-list.component';
 import { NewTimeSlotComponent } from './time-slots/new-time-slot/new-time-slot.component';
 import { ViewTimeSlotComponent } from './time-slots/view-time-slot/view-time-slot';
+import { LecturerListComponent } from './lecturers/lecturer-list/lecturer-list.component';
+import { NewLecturerComponent } from './lecturers/new-lecturer/new-lecturer.component';
+import { ViewLecturerComponent } from './lecturers/view-lecturer/view-lecturer.component';
+import { NewBuildingComponent } from './buildings/new-building/new-building.component';
+import { ViewBuildingComponent } from './buildings/view-building/view-building.component';
+import { BuildingListComponent } from './buildings/building-list/building-list.component';
 
 const routes: Routes = [{
   path: '',
@@ -32,6 +38,10 @@ const routes: Routes = [{
     { path: 'rooms/:id', component: ViewRoomComponent },
     { path: 'rooms/edit/:id', component: NewRoomComponent },
     { path: 'rooms', component: RoomListComponent },
+    { path: 'buildings/new', component: NewBuildingComponent },
+    { path: 'buildings/:id', component: ViewBuildingComponent },
+    { path: 'buildings/edit/:id', component: NewBuildingComponent },
+    { path: 'buildings', component: BuildingListComponent },
     { path: 'account/profile', component: UserProfileComponent },  // ? change to auth/profile?
     { path: 'faculties/new', component: NewFacultyComponent },
     { path: 'modules', component: ModuleListComponent },
@@ -42,6 +52,10 @@ const routes: Routes = [{
     { path: 'timeslots/new', component: NewTimeSlotComponent },
     { path: 'timeslots/:id', component: ViewTimeSlotComponent },
     { path: 'timeslots/edit/:id', component: NewTimeSlotComponent },
+    { path: 'lecturers', component: LecturerListComponent },
+    { path: 'lecturers/new', component: NewLecturerComponent },
+    { path: 'lecturers/:id', component: ViewLecturerComponent },
+    { path: 'lecturers/edit/:id', component: NewLecturerComponent },
   ],
 }];
 

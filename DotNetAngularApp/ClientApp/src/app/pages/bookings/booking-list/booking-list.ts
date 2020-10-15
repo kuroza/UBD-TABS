@@ -1,6 +1,7 @@
 // import { AuthService } from './../../../services/auth.service';
 import { BookingService } from './../../../services/booking.service';
 import { Component, OnInit } from '@angular/core';
+import { BuildingService } from '../../../services/building.service';
 
 @Component({
   selector: 'ngx-booking-list',
@@ -22,11 +23,13 @@ export class BookingListComponent implements OnInit {
     { }
   ];
   
-  constructor( // injecting service
-    private bookingService: BookingService) { }
+  constructor(
+    private bookingService: BookingService,
+    private buildingService: BuildingService
+    ) { }
 
   ngOnInit() { // when the page starts
-    this.bookingService.getBuildings() // get the buildings from service for filter drop down
+    this.buildingService.getAllBuildings() // get the buildings from service for filter drop down
       .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
 
     this.populateBookings(); // initially, get the unfiltered bookings to show in table
