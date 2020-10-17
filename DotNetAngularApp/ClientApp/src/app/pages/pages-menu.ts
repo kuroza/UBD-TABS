@@ -40,7 +40,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Bookings',
-    icon: 'calendar-outline',
+    icon: 'file-add-outline',
     children: [
       {
         title: 'Add new booking',
@@ -50,6 +50,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'View all bookings',
         link: '/pages/bookings',
       },
+    ],
+  },
+  {
+    title: 'Calendar',
+    icon: 'calendar-outline',
+    children: [
       {
         title: 'View calendar',
         link: '/pages/home',

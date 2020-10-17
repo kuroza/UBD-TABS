@@ -60,10 +60,10 @@ namespace DotNetAngularApp.Persistence
                     .ThenInclude(r => r.Building)
                 .Include(b => b.TimeSlots)
                     .ThenInclude(bt => bt.TimeSlot)
-                // .Include(b => b.Modules)
-                //     .ThenInclude(bm => bm.Module)
-                        // .ThenInclude(m => m.Lecturers)
-                        //     .ThenInclude(l => l.Lecturer)
+                .Include(b => b.Modules)
+                    .ThenInclude(bm => bm.Module)
+                        .ThenInclude(m => m.Lecturers)
+                            .ThenInclude(l => l.Lecturer)
                 .AsQueryable();
 
             if (queryObj.BuildingId.HasValue)
@@ -79,7 +79,6 @@ namespace DotNetAngularApp.Persistence
             {
                 ["building"] = b => b.Room.Building.Name,
                 ["room"] = b => b.Room.Name,
-                // ["contactName"] = b => b.ContactName
             };
 
             query = query.ApplyOrdering(queryObj, columnsMap);

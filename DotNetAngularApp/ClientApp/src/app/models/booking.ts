@@ -3,10 +3,10 @@ export interface KeyValuePair {
     name: string;
 }
 
-export interface Booking { // like BookingResource form the server
+export interface Booking { // from resource
     id: number;
-    room: { id: number; name: string; capacity: number; };
-    building: { id: number; name: string; };
+    room: { id: number; name: string; capacity: number; }; // []
+    building: { id: number; name: string; }; // []
     bookDate: string;
     timeSlots: { id: number; startTime: string; endTime: string; }[];
     modules: { 
@@ -21,10 +21,10 @@ export interface Booking { // like BookingResource form the server
     }[];
 }
 
-export interface SaveBooking {
+export interface SaveBooking { // save to database
     id: number;
-    roomId: number;
-    buildingId: number;
+    roomId: number; // []
+    buildingId: number; // []
     bookDate: string;
     timeSlots: number[];
     modules: number[];

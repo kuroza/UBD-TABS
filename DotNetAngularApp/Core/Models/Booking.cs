@@ -16,17 +16,18 @@ namespace DotNetAngularApp.Core.Models
 
         public Room Room { get; set; }
 
-        // public int SemesterId { get; set; }
-
-        // public Semester Semester { get; set; }
-
         [Required]
         public DateTime BookDate { get; set; }
 
-        public ICollection<BookingTimeSlot> TimeSlots { get; set; } // required?
+        // [Required]
+        public ICollection<BookingTimeSlot> TimeSlots { get; set; }
 
-        [Required] // is this correct?
+        [Required]
         public ICollection<BookingModule> Modules { get; set; }
+
+        // public int SemesterId { get; set; }
+
+        // public Semester Semester { get; set; }
 
         public Booking()
         {

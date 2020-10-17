@@ -10,12 +10,18 @@
             <thead class="thead-dark">
                 <tr>
                     <th>
-                        Module name
+                        Module Code
+                    </th>
+                    <th>
+                        Module Name
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let module of modules">
+                    <td>
+                        {{ module.code }}
+                    </td>
                     <td>
                         {{ module.name }}
                     </td>
