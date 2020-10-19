@@ -10,11 +10,20 @@
           <div *ngIf="lecturer">
             <p>
               <b>Name:</b> {{ lecturer.title }} {{ lecturer.name }}<br>
-              <b>Faculty:</b> <br>
+              <!-- <b>Faculty:</b> <br>
               <b>Office:</b> <br>
-              <b>Contact:</b> <br>
+              <b>Contact:</b> <br> -->
+
               <!-- * add modules that the lecturer is teaching -->
-            </p>
+              <!-- <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                  <h6>Modules</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li *ngFor="let m of lecturer.modules" class="list-group-item">{{ m.code }}</li>
+                </ul>
+              </div>
+            </p> -->
   
             <br>
             <p>

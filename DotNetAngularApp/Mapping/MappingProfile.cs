@@ -22,6 +22,10 @@ namespace DotNetAngularApp.Mapping
                 .ForMember(rr => rr.Building, opt => opt.MapFrom(r => r.Building));
             CreateMap<Room, SaveRoomResource>();
 
+            // CreateMap<Lecturer, LecturerResource>()
+            //     .ForMember(lr => lr.Modules, opt => opt.Ignore());
+            // CreateMap<Module, LecturerResource>()
+            //     .ForMember(lr => lr.Modules, opt => opt.MapFrom(m => new ModuleResource { Id = m.Id, Name = m.Name, Code = m.Code }));
             CreateMap<Lecturer, LecturerResource>();
             CreateMap<Lecturer, SaveLecturerResource>();
 

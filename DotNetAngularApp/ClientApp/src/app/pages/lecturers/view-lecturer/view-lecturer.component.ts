@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
+import { Lecturer } from '../../../models/lecturer';
 import { LecturerService } from '../../../services/lecturer.service';
 
 @Component({
