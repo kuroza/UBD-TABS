@@ -27,6 +27,7 @@ namespace DotNetAngularApp.Persistence
             if (!includeRelated)
                 return await context.Modules.FindAsync(id);
 
+            // ! order by module code
             return await context.Modules
                 .Include(m => m.Lecturers)
                     .ThenInclude(ml => ml.Lecturer)

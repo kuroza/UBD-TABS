@@ -119,10 +119,9 @@
       <nb-option *ngFor="let m of modules" value="{{ m.id }}">{{ m.code }}: {{ m.name }}</nb-option>
     </nb-select>
     <br>
-    <!-- <p>{{ booking.modules | json }}</p> -->
   </div>
 
-  <pre>{{ booking | json }}</pre>
+  <!-- <pre>{{ booking | json }}</pre> -->
 
   <div *ngIf="!booking.id">
     <!-- <button nbButton fullWidth status="default" (click)="onClickReset()">Reset</button> --> <!-- ? why it outputs a 401 error? -->

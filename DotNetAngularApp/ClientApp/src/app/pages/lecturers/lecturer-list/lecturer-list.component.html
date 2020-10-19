@@ -9,16 +9,14 @@
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th>
-                        Name
-                    </th>
+                    <th>Name</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let lecturer of lecturers">
-                    <td>
-                        {{ lecturer.title }} {{ lecturer.name }}
-                    </td>
+                    <td>{{ lecturer.title }} {{ lecturer.name }}</td>
+                    <td><a [routerLink]="['/pages/lecturers/', lecturer.id]">View</a></td>
                 </tr>
             </tbody>
         </table>

@@ -15,9 +15,6 @@
         <nb-accordion-item-body>
           <button [routerLink]="['/pages/buildings/edit', b.id]" size="small" class="mr-2 mb-2" nbButton status="primary">Edit building details</button>
           <button [routerLink]="['/pages/rooms/new']" size="small" class="mb-2" nbButton status="primary">Add new room</button>
-          <!-- <ul>
-            <li *ngFor="let room of b.rooms">{{ room.name }}</li>
-          </ul> -->
 
           <table class="table table-hover text-center">
             <thead class="thead-dark">
@@ -33,7 +30,8 @@
                 <!-- <th scope="row">{{ room.id }}</th> -->
                 <th scope="row">{{ room.name }}</th>
                 <td>{{ room.capacity }}</td>
-                <td><a (eventClicked)="sendRoomId($event)">View</a></td> <!-- todo: bind view to right panel or page -->
+                <td><a [routerLink]="['/pages/rooms/', room.id]">View</a></td>
+                <!-- <td><a (eventClicked)="sendRoomId($event)">View</a></td> --> <!-- todo: bind view to right panel or page -->
               </tr>
             </tbody>
           </table>

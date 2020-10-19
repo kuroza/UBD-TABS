@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
+import { Observable } from 'rxjs/Observable';
 import { SaveRoom } from '../../../models/room';
-import { BookingService } from '../../../services/booking.service';
 import { BuildingService } from '../../../services/building.service';
-import { ModuleService } from '../../../services/module.service';
 import { RoomService } from '../../../services/room.service';
 
 @Component({
@@ -25,20 +24,46 @@ export class NewRoomComponent implements OnInit {
     private roomService: RoomService,
     private toastyService: ToastyService,
     private router: Router,
-    ) { }
+    private route: ActivatedRoute,
+    ) { 
+      route.params.subscribe(p => {
+        this.room.id = +p['id'] || 0;
+      });
+    }
 
   ngOnInit() {
     this.buildingService.getAllBuildings()
       .subscribe(buildings => this.buildings = buildings);
+
+      var sources = [];
+
+      if (this.room.id)
+        sources.push(this.roomService.getRoom(this.room.id));
+      
+      Observable.forkJoin(sources).subscribe(data => {
+        if (this.room.id) {
+          this.setRoom(data[0]);
+        }
+      }, err => {
+        if (err.status == 404)
+          this.router.navigate(['/']);
+      });
+  }
+
+  setRoom(r) {
+    this.room.id = r.id;
+    this.room.name = r.name;
+    this.room.capacity = r.capacity;
+    this.room.buildingId = r.buildingId;
   }
 
   submit() {
-    var result$ = this.roomService.create(this.room);
+    var result$ = (this.room.id) ? this.roomService.update(this.room) : this.roomService.create(this.room); 
 
     result$.subscribe(() => {
       this.toastyService.success({
         title: 'Success', 
-        msg: 'Room was sucessfully created.',
+        msg: 'Room was sucessfully saved.',
         theme: 'bootstrap',
         showClose: true,
         timeout: 5000

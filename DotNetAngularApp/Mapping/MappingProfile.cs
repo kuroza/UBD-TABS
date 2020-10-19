@@ -18,7 +18,8 @@ namespace DotNetAngularApp.Mapping
             CreateMap<TimeSlot, TimeSlotResource>();
             CreateMap<TimeSlot, SaveTimeSlotResource>();
             
-            CreateMap<Room, RoomResource>();
+            CreateMap<Room, RoomResource>()
+                .ForMember(rr => rr.Building, opt => opt.MapFrom(r => r.Building));
             CreateMap<Room, SaveRoomResource>();
 
             CreateMap<Lecturer, LecturerResource>();

@@ -2,7 +2,9 @@
   <div class="col-md-5">
     <nb-card>
       <nb-card-body>
-        <h4>Add Room</h4>
+        <!-- <h4>Add Room</h4> -->
+        <h4 *ngIf="room.id">Edit room</h4>
+        <h4 *ngIf="!room.id">Add new room</h4>
       </nb-card-body>
     </nb-card>
     <nb-card>
@@ -28,7 +30,7 @@
           <div>
             <button nbButton fullWidth [disabled]="!f.valid">Add</button>
           </div>
-          <br><pre>{{ room | json }}</pre>
+          <!-- <br><pre>{{ room | json }}</pre> -->
         </form>
       </nb-card-body>
     </nb-card>

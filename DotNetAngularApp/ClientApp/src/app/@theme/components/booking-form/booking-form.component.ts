@@ -122,6 +122,10 @@ export class BookingFormComponent implements OnInit {
   }
 
   onClickReset() {
+    this.resetBookingField();
+  }
+
+  resetBookingField() {
     this.booking.id = 0;
     this.booking.roomId = 0;
     this.booking.buildingId = 0;
@@ -175,7 +179,9 @@ export class BookingFormComponent implements OnInit {
         showClose: true,
         timeout: 5000
       });
-      this.router.navigate(['/pages/bookings/', this.booking.id]);
+      // this.router.navigate(['/pages/bookings/', this.booking.id]);
     });
+
+    this.resetBookingField();
   }
 }

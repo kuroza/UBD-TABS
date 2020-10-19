@@ -2,24 +2,26 @@
     <div class="col-md-5">
       <nb-card>
         <nb-card-body>
-          <h4>Add Lecturer</h4>
+          <!-- <h4>Add Lecturer</h4> -->
+          <h4 *ngIf="lecturer.id">Edit lecturer</h4>
+          <h4 *ngIf="!lecturer.id">Add new lecturer</h4>
         </nb-card-body>
       </nb-card>
       <nb-card>
         <nb-card-body>
           <form #f="ngForm" (ngSubmit)="submit()" novalidate>
             <div class="form-group">
-              <input id="name" type="text" class="form-control" [(ngModel)]="lecturer.name"
-              name="name" placeholder="Lecturer name">
-            </div>
-            <div class="form-group">
               <input id="title" type="text" class="form-control" [(ngModel)]="lecturer.title"
               name="title" placeholder="Title">
+            </div>
+            <div class="form-group">
+              <input id="name" type="text" class="form-control" [(ngModel)]="lecturer.name"
+              name="name" placeholder="Lecturer name">
             </div>
             <div>
               <button nbButton fullWidth [disabled]="!f.valid">Add</button>
             </div>
-            <br><pre>{{ lecturer | json }}</pre>
+            <!-- <br><pre>{{ lecturer | json }}</pre> -->
           </form>
         </nb-card-body>
       </nb-card>
