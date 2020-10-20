@@ -7,7 +7,7 @@
     <nb-select
       filled
       placeholder="Select Semester"
-      [(selected)]="booking.semester"
+      [(selected)]="booking.semesterId"
       fullWidth="true"
     >
       <nb-option *ngFor="let s of semesters" value="{{ s.id }}">{{ s.session }}</nb-option>

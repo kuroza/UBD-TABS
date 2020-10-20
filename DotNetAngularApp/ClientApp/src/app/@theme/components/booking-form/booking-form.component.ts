@@ -121,7 +121,7 @@ export class BookingFormComponent implements OnInit {
       this.semesters = data[3];
 
       if (this.booking.id) {
-        this.setBooking(data[3]);
+        this.setBooking(data[4]);
         this.populateRooms();
       }
     }, err => {
