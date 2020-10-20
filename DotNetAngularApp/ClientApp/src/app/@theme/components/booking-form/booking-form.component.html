@@ -1,5 +1,53 @@
 <form #f="ngForm" (ngSubmit)="submit()" novalidate>
   
+  <!-- * Semester form -->
+  <div class="form-group">
+    <label>Semester</label>
+    <br>
+    <nb-select
+      filled
+      placeholder="Select Semester"
+      [(selected)]="booking.semester"
+      fullWidth="true"
+    >
+      <nb-option *ngFor="let s of semesters" value="{{ s.id }}">{{ s.session }}</nb-option>
+    </nb-select>
+    <br>
+  </div>
+
+  <!-- * Module form -->
+  <div class="form-group">
+    <label>Modules</label>
+    <br>
+    <nb-select
+      filled
+      multiple
+      placeholder="Select Modules"
+      [(selected)]="booking.modules"
+      fullWidth="true"
+    >
+      <nb-option *ngFor="let m of modules" value="{{ m.id }}">{{ m.code }}: {{ m.name }}</nb-option>
+    </nb-select>
+    <br>
+  </div>
+
+  <!-- * Time slot multiple select -->
+  <div class="form-group">
+    <label>Time slots</label>
+    <br>
+    <nb-select
+      filled
+      multiple
+      required
+      placeholder="Select Time Slots"
+      [(selected)]="booking.timeSlots"
+      fullWidth="true"
+    >  
+      <nb-option *ngFor="let t of timeSlots" value="{{ t.id }}">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</nb-option>
+    </nb-select>
+    <br>
+  </div>
+
   <!-- * Building drop down list -->
   <div class="form-group">
     <label for="building">Building</label>
@@ -83,45 +131,9 @@
     </div>
     <div class="alert alert-danger" *ngIf="bookDate.touched && !bookDate.valid">Please specify the date.</div>
 
-    <br>
-    <!-- <p>{{ booking.bookDate | json }}</p> -->
   </div>
 
-  <!-- * Time slot multiple select -->
-  <div class="form-group">
-    <label>Time slots</label>
-    <br>
-    <nb-select
-      filled
-      multiple
-      required
-      placeholder="Select Time Slots"
-      [(selected)]="booking.timeSlots"
-      fullWidth="true"
-    >  
-      <nb-option *ngFor="let t of timeSlots" value="{{ t.id }}">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</nb-option>
-    </nb-select>
-    <br>
-    <!-- <p>{{ booking.timeSlots | json }}</p> -->
-  </div>
-
-  <!-- * Module form -->
-  <div class="form-group">
-    <label>Modules</label>
-    <br>
-    <nb-select
-      filled
-      multiple
-      placeholder="Select Modules"
-      [(selected)]="booking.modules"
-      fullWidth="true"
-    >
-      <nb-option *ngFor="let m of modules" value="{{ m.id }}">{{ m.code }}: {{ m.name }}</nb-option>
-    </nb-select>
-    <br>
-  </div>
-
-  <!-- <pre>{{ booking | json }}</pre> -->
+  <pre>{{ booking | json }}</pre>
 
   <div *ngIf="!booking.id">
     <!-- <button nbButton fullWidth status="default" (click)="onClickReset()">Reset</button> --> <!-- ? why it outputs a 401 error? -->

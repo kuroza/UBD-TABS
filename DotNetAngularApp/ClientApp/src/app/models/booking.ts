@@ -7,7 +7,7 @@ export interface Booking { // from resource
     id: number;
     room: { id: number; name: string; capacity: number; }; // []
     building: { id: number; name: string; }; // []
-    bookDate: string;
+    bookDate: string; // []
     timeSlots: { id: number; startTime: string; endTime: string; }[];
     modules: { 
         id: number; 
@@ -19,6 +19,7 @@ export interface Booking { // from resource
             title: string; 
         }[]; 
     }[];
+    semesters: { id: number; session: string; startDate: string; endDate: string; }[];
 }
 
 export interface SaveBooking { // save to database
@@ -28,4 +29,5 @@ export interface SaveBooking { // save to database
     bookDate: string;
     timeSlots: number[];
     modules: number[];
+    semesterId: number;
 }

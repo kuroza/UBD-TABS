@@ -12,22 +12,22 @@ namespace DotNetAngularApp.Core.Models
         public int Id { get; set; }
 
         [Required]
-        public int RoomId { get; set; } // change to collection of rooms
+        public int RoomId { get; set; } // ! change to collection of Rooms
 
         public Room Room { get; set; }
 
         [Required]
-        public DateTime BookDate { get; set; }
+        public DateTime BookDate { get; set; } // ! change to collection of BookDate
 
-        // [Required]
+        [Required]
         public ICollection<BookingTimeSlot> TimeSlots { get; set; }
 
         [Required]
         public ICollection<BookingModule> Modules { get; set; }
 
-        // public int SemesterId { get; set; }
+        public int SemesterId { get; set; }
 
-        // public Semester Semester { get; set; }
+        public Semester Semester { get; set; }
 
         public Booking()
         {

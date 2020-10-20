@@ -11,6 +11,7 @@ import { FormControl } from '@angular/forms';
 import { ModuleService } from '../../../services/module.service';
 import { TimeSlotService } from '../../../services/timeSlot.service';
 import { BuildingService } from '../../../services/building.service';
+import { SemesterService } from '../../../services/semester.service';
 
 @Injectable()
 export class CustomAdapter extends NgbDateAdapter<string> {
@@ -62,16 +63,20 @@ export class CustomDateParserFormatter extends NgbDateParserFormatter {
   templateUrl: './booking-form.component.html',
 })
 export class BookingFormComponent implements OnInit {
+  
   readonly DELIMITER = '-';
   nbDate: any;
   day: number;
   month: number;
   year: number;
   datePicker: string;
+  
   buildings: any;
   rooms: any;
   timeSlots: any;
   modules: any;
+  semesters: any;
+
   booking: SaveBooking = {
     id: 0,
     roomId: 0,
@@ -79,6 +84,7 @@ export class BookingFormComponent implements OnInit {
     bookDate: '',
     timeSlots: [], // selectedTimeSlots
     modules: [],
+    semesterId: 0,
   };
 
   constructor(
@@ -87,6 +93,7 @@ export class BookingFormComponent implements OnInit {
     private bookingService: BookingService,
     private buildingService: BuildingService,
     private moduleService: ModuleService,
+    private semesterService: SemesterService,
     private timeSlotService: TimeSlotService,
     private toastyService: ToastyService) {
 
@@ -100,6 +107,7 @@ export class BookingFormComponent implements OnInit {
       this.buildingService.getAllBuildings(),
       this.timeSlotService.getAllTimeSlots(),
       this.moduleService.getAllModules(),
+      this.semesterService.getAllSemesters(),
     ];
 
     // for editing Booking events
@@ -110,6 +118,7 @@ export class BookingFormComponent implements OnInit {
       this.buildings = data[0];
       this.timeSlots = data[1];
       this.modules = data[2];
+      this.semesters = data[3];
 
       if (this.booking.id) {
         this.setBooking(data[3]);
@@ -132,6 +141,7 @@ export class BookingFormComponent implements OnInit {
     this.booking.bookDate = '';
     this.booking.timeSlots = [];
     this.booking.modules = [];
+    this.booking.semesterId = 0;
   }
 
   // editing
@@ -139,6 +149,7 @@ export class BookingFormComponent implements OnInit {
     this.booking.id = b.id;
     this.booking.buildingId = b.building.id;
     this.booking.roomId = b.room.id;
+    this.booking.semesterId = b.semester.id;
     this.booking.bookDate = b.bookDate;
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
     this.booking.modules = _.pluck(b.modules, 'id');
@@ -179,7 +190,7 @@ export class BookingFormComponent implements OnInit {
         showClose: true,
         timeout: 5000
       });
-      // this.router.navigate(['/pages/bookings/', this.booking.id]);
+      this.router.navigate(['/pages/bookings/', this.booking.id]);
     });
 
     this.resetBookingField();

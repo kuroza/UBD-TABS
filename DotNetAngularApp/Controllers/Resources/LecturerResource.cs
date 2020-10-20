@@ -15,4 +15,4 @@ namespace DotNetAngularApp.Controllers.Resources
         //     Modules = new Collection<ModuleResource>();
         // }
     }
-} 
+}

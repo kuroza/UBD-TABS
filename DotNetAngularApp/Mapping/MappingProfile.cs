@@ -22,6 +22,7 @@ namespace DotNetAngularApp.Mapping
                 .ForMember(rr => rr.Building, opt => opt.MapFrom(r => r.Building));
             CreateMap<Room, SaveRoomResource>();
 
+            // ? How to show list of Modules in View Lecturer
             // CreateMap<Lecturer, LecturerResource>()
             //     .ForMember(lr => lr.Modules, opt => opt.Ignore());
             // CreateMap<Module, LecturerResource>()
@@ -29,9 +30,12 @@ namespace DotNetAngularApp.Mapping
             CreateMap<Lecturer, LecturerResource>();
             CreateMap<Lecturer, SaveLecturerResource>();
 
-            CreateMap<Building, BuildingResource>();
             CreateMap<Building, KeyValuePairResource>();
+            CreateMap<Building, BuildingResource>();
             CreateMap<Building, SaveBuildingResource>();
+
+            CreateMap<Semester, SemesterResource>();
+            CreateMap<Semester, SaveSemesterResource>();
 
             CreateMap<Booking, SaveBookingResource>()
                 .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => bt.TimeSlotId)))
@@ -85,6 +89,9 @@ namespace DotNetAngularApp.Mapping
 
             CreateMap<SaveBuildingResource, Building>()
                 .ForMember(b => b.Id, opt => opt.Ignore());
+
+            CreateMap<SaveSemesterResource, Semester>()
+                .ForMember(s => s.Id, opt => opt.Ignore());
 
             CreateMap<SaveBookingResource, Booking>()
                 .ForMember(b => b.Id, opt => opt.Ignore())

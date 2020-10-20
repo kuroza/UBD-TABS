@@ -13,6 +13,7 @@ namespace DotNetAngularApp.Core.Models
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
+        
         // public string ShortName { get; set; }
 
         public ICollection<Course> Courses { get; set; }

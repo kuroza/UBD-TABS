@@ -12,6 +12,8 @@ namespace DotNetAngularApp.Controllers.Resources
         [Required]
         public int RoomId { get; set; }
 
+        public int SemesterId { get; set; }
+
         [Required]
         public DateTime BookDate { get; set; }
 

@@ -1,13 +1,14 @@
-import { TimeSlotService } from './services/timeSlot.service';
-import { RoomService } from './services/room.service';
-import { ModuleService } from './services/module.service';
-import { LecturerService } from './services/lecturer.service';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
+
 // import { AuthService } from './services/auth.service';
+import { TimeSlotService } from './services/timeSlot.service';
+import { RoomService } from './services/room.service';
+import { ModuleService } from './services/module.service';
+import { LecturerService } from './services/lecturer.service';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { ToastyModule } from 'ng2-toasty';
 import { BookingService } from './services/booking.service';
@@ -30,24 +31,19 @@ import {
   NbWindowModule,
 } from '@nebular/theme';
 import { AppErrorHandler } from './app.error-handler';
-import { NgbDateParserFormatter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { BuildingService } from './services/building.service';
-
-// import * as Sentry from "@sentry/browser"; // ? should I try sentry again?
-
-// Sentry.init({
-//   dsn: "https://c911f2c6b01742fd83e853133d6a4b06@sentry.io/5182636"
-// });
+import { SemesterService } from './services/semester.service';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    ToastyModule.forRoot(),
     CommonModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-
+    NbEvaIconsModule,
+    
+    ToastyModule.forRoot(),
     ThemeModule.forRoot(),
     NbDatepickerModule.forRoot(),
     NbSidebarModule.forRoot(),
@@ -55,21 +51,20 @@ import { BuildingService } from './services/building.service';
     NbDialogModule.forRoot(),
     NbWindowModule.forRoot(),
     NbToastrModule.forRoot(),
+    CoreModule.forRoot(),
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
-
-    CoreModule.forRoot(),
-    NbEvaIconsModule,
   ],
   bootstrap: [AppComponent],
   providers: [
     BookingService,
-    FacultyService,
     BuildingService,
+    FacultyService,
     LecturerService,
     ModuleService,
     RoomService,
+    SemesterService,
     TimeSlotService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
   ]
