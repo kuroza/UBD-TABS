@@ -13,6 +13,8 @@ namespace DotNetAngularApp.Controllers.Resources
 
         public int Capacity { get; set; }
 
+        public string Code { get; set; }
+
         public int BuildingId { get; set; }
     }
 }

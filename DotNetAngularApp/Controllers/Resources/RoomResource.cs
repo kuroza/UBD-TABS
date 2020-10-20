@@ -4,6 +4,8 @@ namespace DotNetAngularApp.Controllers.Resources
     {
         public int Capacity { get; set; }
 
+        public string Code { get; set; }
+
         public KeyValuePairResource Building { get; set; }
     }
 }

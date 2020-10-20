@@ -5,6 +5,8 @@ namespace DotNetAngularApp.Controllers.Resources
 {
     public class BuildingResource : KeyValuePairResource
     {
+        public string OtherName { get; set; }
+
         public ICollection<RoomResource> Rooms { get; set; }
 
         public BuildingResource()

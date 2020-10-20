@@ -11,6 +11,8 @@ namespace DotNetAngularApp.Controllers.Resources
         [Required]
         public string Name { get; set; }
 
+        public string OtherName { get; set; }
+
         // public ICollection<int> Rooms { get; set; }
 
         // public SaveBuildingResource()

@@ -12,12 +12,14 @@ namespace DotNetAngularApp.Core.Models
         [StringLength(255)]
         public string Name { get; set; }
         
+        [StringLength(255)]
         public string Code { get; set; }
 
         public int Capacity { get; set; }
+        
+        [Required]
+        public int BuildingId { get; set; }
 
         public Building Building { get; set; }
-        
-        public int BuildingId { get; set; }
     }
 }

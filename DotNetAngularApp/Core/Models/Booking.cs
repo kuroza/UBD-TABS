@@ -25,6 +25,7 @@ namespace DotNetAngularApp.Core.Models
         [Required]
         public ICollection<BookingModule> Modules { get; set; }
 
+        [Required]
         public int SemesterId { get; set; }
 
         public Semester Semester { get; set; }
