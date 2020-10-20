@@ -9,15 +9,23 @@
       <nb-card-body>
         <form #f="ngForm" (ngSubmit)="submit()" novalidate>
           <div class="form-group">
+            <label>Start time</label>
             <ngb-timepicker [(ngModel)]="time"></ngb-timepicker>
             <hr>
-            <pre>Selected time: {{time | json}}</pre>
+            <pre>Start time: {{time | json}}</pre>
+          </div>
+
+          <div class="form-group">
+            <label>End time</label>
+            <ngb-timepicker [(ngModel)]="time"></ngb-timepicker>
+            <hr>
+            <pre>End time: {{time | json}}</pre>
           </div>
           
           <div>
             <button nbButton fullWidth [disabled]="!f.valid">Add</button>
           </div>
-          <!-- <br><p>{{ room | json }}</p> -->
+
         </form>
       </nb-card-body>
     </nb-card>

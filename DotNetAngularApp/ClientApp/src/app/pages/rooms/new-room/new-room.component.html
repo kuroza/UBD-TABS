@@ -11,6 +11,7 @@
       <nb-card-body>
         <form #f="ngForm" (ngSubmit)="submit()" novalidate>
           <div class="form-group">
+            <label>Building</label>
             <nb-select
               filled
               fullWidth
@@ -20,10 +21,12 @@
             </nb-select><br>
           </div>
           <div class="form-group">
+            <label>Room name</label>
             <input id="name" type="text" class="form-control" [(ngModel)]="room.name"
             name="name" placeholder="Room name">
           </div>
           <div class="form-group">
+            <label>Room capacity</label>
             <input id="capacity" type="text" class="form-control" [(ngModel)]="room.capacity"
             name="capacity" placeholder="Room capacity">
           </div>
