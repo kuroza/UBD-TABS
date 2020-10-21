@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
 import { Lecturer } from '../../../models/lecturer';
 import { LecturerService } from '../../../services/lecturer.service';
+import { ModuleService } from '../../../services/module.service';
 
 @Component({
   selector: 'view-lecturer',
@@ -11,12 +12,15 @@ import { LecturerService } from '../../../services/lecturer.service';
 export class ViewLecturerComponent implements OnInit {
   lecturer: any;
   lecturerId: number;
+  lecturerModules: any;
 
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
     private toastyService: ToastyService,
-    private lecturerService: LecturerService) {
+    private lecturerService: LecturerService,
+    private moduleService: ModuleService
+    ) {
 
     route.params.subscribe(p => {
       this.lecturerId = +p['id'];
@@ -27,7 +31,7 @@ export class ViewLecturerComponent implements OnInit {
     });
   }
 
-  ngOnInit() { 
+  async ngOnInit() { 
     this.lecturerService.getLecturer(this.lecturerId)
       .subscribe(
         l => this.lecturer = l,
@@ -37,6 +41,10 @@ export class ViewLecturerComponent implements OnInit {
             return; 
           }
         });
+
+    this.lecturerModules = await this.moduleService.getAllModules()
+
+    console.log(this.lecturerModules);
   }
 
   delete() {

@@ -12,8 +12,10 @@ export class ModuleListComponent implements OnInit {
     private moduleService: ModuleService,
   ) { }
 
-  ngOnInit() {
-    this.moduleService.getAllModules()
-      .subscribe(modules => this.modules = modules);
+  async ngOnInit() {
+    // this.moduleService.getAllModules()
+    //   .subscribe(modules => this.modules = modules);
+
+    this.modules = await this.moduleService.getAllModules()
   }
 }

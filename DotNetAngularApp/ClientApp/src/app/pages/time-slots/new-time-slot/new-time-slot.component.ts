@@ -17,8 +17,8 @@ export class NewTimeSlotComponent implements OnInit {
   };
 
   time = {
-    hour: null,
-    minute: null
+    hour: 13,
+    minute: 30
   };
   
   constructor(
