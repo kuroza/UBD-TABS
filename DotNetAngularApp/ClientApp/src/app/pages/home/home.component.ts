@@ -3,6 +3,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BookingService } from '../../services/booking.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
+import { AuthService } from '../../services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-home',
@@ -12,14 +14,21 @@ export class HomeComponent {
   booking: any;
   buildings: any;
 
+  isAuthenticated: boolean;
+  subscription: Subscription;
+
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
     private toasty: ToastyService,
     private bookingService: BookingService,
+    private authService: AuthService
     ) {}
 
   ngOnInit() {
+    this.subscription = this.authService.authNavStatus$
+      .subscribe(status => this.isAuthenticated = status);
+
     this.bookingService.getBuildings()
       .subscribe(buildings => this.buildings = buildings);
   }

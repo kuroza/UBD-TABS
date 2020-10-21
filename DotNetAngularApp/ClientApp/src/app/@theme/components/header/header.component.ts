@@ -14,10 +14,6 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  // private destroy$: Subject<void> = new Subject<void>();
-  // userPictureOnly: boolean = false;
-  // user: any;
-
   name: string;
   isAuthenticated: boolean;
   subscription: Subscription;
@@ -64,32 +60,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.subscription = this.authService.authNavStatus$
       .subscribe(status => this.isAuthenticated = status);
-    this.name = this.authService.name;
-
-    // this.userService.getUsers()
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe((users: any) => this.user = users.harith);
-
-    // const { xl } = this.breakpointService.getBreakpointsMap();
-    // this.themeService.onMediaQueryChange()
-    //   .pipe(
-    //     map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
-    //     takeUntil(this.destroy$),
-    //   )
-    //   .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
-
-    // this.themeService.onThemeChange()
-    //   .pipe(
-    //     map(({ name }) => name),
-    //     takeUntil(this.destroy$),
-    //   )
-    //   .subscribe(themeName => this.currentTheme = themeName);
-
-    // this.menuService.onItemClick()
-    //   .subscribe((event) => {
-    //     if (event.item.title === 'Log out')
-    //       this.auth.logout();
-    //   });
+    this.name = this.authService.name;    
   }
 
   ngAfterViewInit() {
@@ -98,9 +69,6 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    // this.destroy$.next();
-    // this.destroy$.complete();
-
     // prevent memory leak when component is destroyed
     this.subscription.unsubscribe();
   }

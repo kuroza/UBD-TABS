@@ -40,7 +40,7 @@ const routes: Routes = [{
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'topsecret', component: IndexComponent, canActivate: [AuthGuard] },
-    { path: 'auth-callback', component: AuthCallbackComponent  },
+    { path: 'auth-callback', component: AuthCallbackComponent },
   ],
 }];
 
