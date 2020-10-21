@@ -96,7 +96,7 @@ namespace DotNetAngularApp
 
             app.UseAuthentication();
             
-            // app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

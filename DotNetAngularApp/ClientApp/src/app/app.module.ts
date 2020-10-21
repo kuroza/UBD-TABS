@@ -26,8 +26,6 @@ import {
 } from '@nebular/theme';
 import { AppErrorHandler } from './app.error-handler';
 import { SharedModule } from './shared/shared.module';
-import { ConfigService } from './shared/config.service';
-import { FakeBackendProvider } from './shared/mocks/fake-backend-interceptor';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth.guard';
 
@@ -57,8 +55,6 @@ import { AuthGuard } from './services/auth.guard';
   ],
   bootstrap: [AppComponent],
   providers: [
-    ConfigService,
-    FakeBackendProvider,
     AuthService,
     AuthGuard,
     BookingService,

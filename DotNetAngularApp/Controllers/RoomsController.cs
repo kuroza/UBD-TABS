@@ -4,11 +4,13 @@ using AutoMapper;
 using DotNetAngularApp.Controllers.Resources;
 using DotNetAngularApp.Core.Models;
 using DotNetAngularApp.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNetAngularApp.Controllers
 {
+    [AllowAnonymous]
     public class RoomsController : Controller
     {
         private readonly TabsDbContext context;

@@ -38,7 +38,7 @@ import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
   ],
   declarations: [
     PagesComponent,
-    AuthCallbackComponent
+    AuthCallbackComponent,
   ],
 })
 export class PagesModule {

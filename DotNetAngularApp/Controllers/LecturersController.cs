@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DotNetAngularApp.Controllers
 {
+    [AllowAnonymous]
     public class LecturersController : Controller
     {
         private readonly TabsDbContext context;

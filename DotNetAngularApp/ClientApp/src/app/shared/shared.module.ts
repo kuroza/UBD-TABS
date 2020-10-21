@@ -8,6 +8,8 @@ import { CommonModule }       from '@angular/common';
  
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AutofocusDirective } from './directives/auto-focus.directive';
+import { ConfigService } from './config.service';
+import { FakeBackendProvider } from './mocks/fake-backend-interceptor';
 
 //https://stackoverflow.com/questions/41433766/directive-doesnt-work-in-a-sub-module
 //https://stackoverflow.com/questions/45032043/uncaught-error-unexpected-module-formsmodule-declared-by-the-module-appmodul/45032201
@@ -16,6 +18,9 @@ import { AutofocusDirective } from './directives/auto-focus.directive';
   imports:      [CommonModule, NgxSpinnerModule],
   declarations: [AutofocusDirective],
   exports:      [NgxSpinnerModule, AutofocusDirective],
-  providers:    []
+  providers:    [
+    ConfigService,
+    FakeBackendProvider,
+  ]
 })
 export class SharedModule { }
