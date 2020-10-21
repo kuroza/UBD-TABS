@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
 import { UserData } from '../../../@core/data/users';
@@ -12,11 +12,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  private destroy$: Subject<void> = new Subject<void>();
-  userPictureOnly: boolean = false;
-  user: any;
+  // private destroy$: Subject<void> = new Subject<void>();
+  // userPictureOnly: boolean = false;
+  // user: any;
 
   name: string;
   isAuthenticated: boolean;
@@ -60,33 +60,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
     ) {}
 
   ngOnInit() {
+    this.currentTheme = this.themeService.currentTheme;
+
     this.subscription = this.authService.authNavStatus$
       .subscribe(status => this.isAuthenticated = status);
     this.name = this.authService.name;
 
-    console.log(this.name);
-    console.log(this.isAuthenticated);
+    // this.userService.getUsers()
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((users: any) => this.user = users.harith);
 
-    this.currentTheme = this.themeService.currentTheme;
+    // const { xl } = this.breakpointService.getBreakpointsMap();
+    // this.themeService.onMediaQueryChange()
+    //   .pipe(
+    //     map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
+    //     takeUntil(this.destroy$),
+    //   )
+    //   .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
 
-    this.userService.getUsers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.harith);
-
-    const { xl } = this.breakpointService.getBreakpointsMap();
-    this.themeService.onMediaQueryChange()
-      .pipe(
-        map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
-        takeUntil(this.destroy$),
-      )
-      .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
-
-    this.themeService.onThemeChange()
-      .pipe(
-        map(({ name }) => name),
-        takeUntil(this.destroy$),
-      )
-      .subscribe(themeName => this.currentTheme = themeName);
+    // this.themeService.onThemeChange()
+    //   .pipe(
+    //     map(({ name }) => name),
+    //     takeUntil(this.destroy$),
+    //   )
+    //   .subscribe(themeName => this.currentTheme = themeName);
 
     // this.menuService.onItemClick()
     //   .subscribe((event) => {
@@ -95,9 +92,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     //   });
   }
 
+  ngAfterViewInit() {
+    console.log("Name: " + this.name);
+    console.log("isAuthenticated: " + this.isAuthenticated);
+  }
+
   ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+    // this.destroy$.next();
+    // this.destroy$.complete();
 
     // prevent memory leak when component is destroyed
     this.subscription.unsubscribe();

@@ -64,12 +64,12 @@ export function getClientSettings(): UserManagerSettings {
       authority: 'https://localhost:6001',
       client_id: 'angular_spa',
       redirect_uri: 'https://localhost:5001/pages/auth-callback',
-      post_logout_redirect_uri: 'https://localhost:5001',
+      post_logout_redirect_uri: 'https://localhost:5001/pages/home',
       response_type:"id_token token",
       scope:"openid profile email api.read",
       filterProtocolClaims: true,
       loadUserInfo: true,
       automaticSilentRenew: true,
-      silent_redirect_uri: 'https://localhost:5001/pages/silent-refresh.html'
+      silent_redirect_uri: 'https://localhost:5001/silent-refresh.html'
   };
 }

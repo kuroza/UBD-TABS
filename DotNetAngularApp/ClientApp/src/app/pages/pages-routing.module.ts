@@ -17,6 +17,7 @@ import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 import { IndexComponent } from './top-secret/index/index.component';
 import { AuthGuard } from '../services/auth.guard';
+import { AuthCallbackComponent } from './auth-callback/auth-callback.component';
 
 const routes: Routes = [{
   path: '',
@@ -38,7 +39,8 @@ const routes: Routes = [{
     { path: 'modules', component: ModuleListComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
-    { path: 'topsecret', component: IndexComponent, canActivate: [AuthGuard] }
+    { path: 'topsecret', component: IndexComponent, canActivate: [AuthGuard] },
+    { path: 'auth-callback', component: AuthCallbackComponent  },
   ],
 }];
 

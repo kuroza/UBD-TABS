@@ -37,7 +37,7 @@ namespace AuthServer
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedScopes = { "openid", "profile", "email", "api.read" },
                     RedirectUris = {"https://localhost:5001/pages/auth-callback"},
-                    PostLogoutRedirectUris = {"https://localhost:5001/"},
+                    PostLogoutRedirectUris = {"https://localhost:5001/pages/home"},
                     AllowedCorsOrigins = {"https://localhost:5001"},
                     AllowAccessTokensViaBrowser = true,
                     AccessTokenLifetime = 3600
