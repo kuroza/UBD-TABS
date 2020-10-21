@@ -42,6 +42,7 @@
     "@angular/router": "^8.2.14",
     "@auth0/angular-jwt": "^4.0.0",
     "@auth0/auth0-spa-js": "^1.6.5",
+    "@babel/polyfill": "^7.12.1",
     "@nebular/auth": "4.1.2",
     "@nebular/eva-icons": "4.1.2",
     "@nebular/security": "4.1.2",
