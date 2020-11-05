@@ -80,12 +80,12 @@ namespace DotNetAngularApp.Persistence
 
         public async Task<Module> ModuleNameExist(Module module)
         {
-            return await context.Modules.SingleOrDefaultAsync(m => m.Name == module.Name);
+            return await context.Modules.FirstOrDefaultAsync(m => m.Name == module.Name);
         }
 
         public async Task<Module> ModuleCodeExist(Module module)
         {
-            return await context.Modules.SingleOrDefaultAsync(m => m.Code == module.Code);
+            return await context.Modules.FirstOrDefaultAsync(m => m.Code == module.Code);
         }
     }
 }

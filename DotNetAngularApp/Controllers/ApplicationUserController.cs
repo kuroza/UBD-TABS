@@ -106,7 +106,7 @@ namespace DotNetAngularApp.Controllers
                 var result = await _userManager.RemoveFromRolesAsync(user, role);
 
                 if (!result.Succeeded)
-                    return BadRequest(new { message = "Cannot remove user existing roles." });
+                    return BadRequest(new { message = "Cannot remove user's existing role." });
 
                 // add new role to user
                 result = await _userManager.AddToRoleAsync(user, model.Role);
@@ -130,5 +130,8 @@ namespace DotNetAngularApp.Controllers
 
             return users;
         }
+
+        // todo DeleteUser()
+        
     }
 }

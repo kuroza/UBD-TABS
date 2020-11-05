@@ -38,5 +38,10 @@ namespace DotNetAngularApp.Persistence
         {
             context.Remove(building);
         }
+
+        public async Task<Building> BuildingNameExist(Building building)
+        {
+            return await context.Buildings.FirstOrDefaultAsync(b => b.Name == building.Name);
+        }
     }
 }

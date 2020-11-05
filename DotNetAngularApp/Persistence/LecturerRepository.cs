@@ -36,5 +36,10 @@ namespace DotNetAngularApp.Persistence
         {
             context.Remove(lecturer);
         }
+
+        public async Task<Lecturer> LecturerNameExist(Lecturer lecturer)
+        {
+            return await context.Lecturers.FirstOrDefaultAsync(l => l.Name == lecturer.Name);
+        }
     }
 }

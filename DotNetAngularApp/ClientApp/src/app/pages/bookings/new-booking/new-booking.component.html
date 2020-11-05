@@ -51,7 +51,7 @@
           <nb-card-header *ngIf="booking.id"><h4>Edit Booking</h4></nb-card-header>
           <nb-card-body>
             <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert">
-              Time slot is already taken!
+              This room is already taken!
             </nb-alert>
             <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
               Please enter the required fields!

@@ -67,7 +67,6 @@ namespace DotNetAngularApp.Controllers
 
             var existName = await repository.ModuleNameExist(module);
             var existCode = await repository.ModuleCodeExist(module);
-
             if (existName != null && existCode != null)
                 return Conflict("Model name and code already exist.");
             else if (existName != null)

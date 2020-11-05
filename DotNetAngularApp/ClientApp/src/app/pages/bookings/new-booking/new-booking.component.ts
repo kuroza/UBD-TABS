@@ -125,7 +125,8 @@ export class NewBookingComponent implements OnInit {
     if (this.booking.id)
       sources.push(this.bookingService.getBooking(this.booking.id));
 
-    Observable.forkJoin(sources).subscribe(data => {
+    Observable.forkJoin(sources)
+    .subscribe(data => {
       this.buildings = data[0];
       this.timeSlots = data[1];
       this.modules = data[2];
@@ -267,7 +268,7 @@ export class NewBookingComponent implements OnInit {
     this.year = date.year;
     this.month = date.month;
     this.day = date.day;
-    // this.booking.bookDate = this.year + this.DELIMITER + this.month + this.DELIMITER + this.day;
+    this.booking.bookDate = this.year + this.DELIMITER + this.month + this.DELIMITER + this.day;
 
     var result$ = (this.booking.id) ? this.bookingService.update(this.booking) : this.bookingService.create(this.booking); 
     result$.subscribe(() => {
@@ -285,8 +286,7 @@ export class NewBookingComponent implements OnInit {
     err => {
       if (err.status == 409) {
         this.existAlert = true;
-      }
-      else if (err.status == 400) {
+      } else if (err.status == 400) {
         this.requiredAlert = true;
       }
     });

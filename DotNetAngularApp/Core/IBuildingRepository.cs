@@ -8,6 +8,7 @@ namespace DotNetAngularApp.Core
     {
         void Add(Building building);
         void Remove(Building building);
+        Task<Building> BuildingNameExist(Building building);
         Task<IEnumerable<Building>> GetAllBuildings();
         Task<Building> GetBuilding(int id, bool includeRelated = true);
     }
