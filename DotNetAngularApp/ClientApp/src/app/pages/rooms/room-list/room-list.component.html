@@ -1,37 +1,43 @@
 <nb-card>
   <nb-card-body>
-    <h3>Room list</h3>
+    <h3>Buildings and Rooms List</h3>
   </nb-card-body>
 </nb-card>
 
 <div class="row">
   <div class="col-md-8">
     <!-- todo: change to send data to side details component -->
-    <nb-accordion> <!-- * include 'multi' to open multiple body -->
+    <nb-accordion>
+      <!-- * include 'multi' to open multiple body -->
       <nb-accordion-item *ngFor="let b of buildings">
         <nb-accordion-item-header>
           {{ b.name }}
         </nb-accordion-item-header>
         <nb-accordion-item-body>
-          <button [routerLink]="['/pages/buildings/edit', b.id]" size="small" class="mr-2 mb-2" nbButton status="primary">Edit building details</button>
-          <button [routerLink]="['/pages/rooms/new']" size="small" class="mb-2" nbButton status="primary">Add new room</button>
+          <div *ngIf="hasAccess">
+            <button href="javascript:void(0);" (click)="editBuilding(b.id)" size="small" class="mr-2 mb-2" nbButton status="warning">Edit building
+              details</button>
+            <button href="javascript:void(0);" (click)="deleteBuilding(b.id)" size="small" class="mb-2" nbButton status="danger">Delete
+              building</button>
+          </div>
 
           <table class="table table-hover text-center">
-            <thead class="thead-dark">
+            <thead>
               <tr>
                 <!-- <th style="width: 10%" scope="col">Id</th> -->
                 <th style="width: 50%" scope="col">Room</th>
                 <th style="width: 40%" scope="col">Capacity</th>
-                <th style="width: 10%" scope="col"></th>
+                <th style="width: 5%" scope="col"></th>
+                <th style="width: 5%" scope="col"></th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let room of b.rooms">
+              <tr *ngFor="let room of b.rooms" (click)="selectRoom(room.id)">
                 <!-- <th scope="row">{{ room.id }}</th> -->
                 <th scope="row">{{ room.name }}</th>
                 <td>{{ room.capacity }}</td>
-                <td><a [routerLink]="['/pages/rooms/', room.id]">View</a></td>
-                <!-- <td><a (eventClicked)="sendRoomId($event)">View</a></td> --> <!-- todo: bind view to right panel or page -->
+                <td><a href="javascript:void(0);" (click)="editRoom(room.id)"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
+                <td><a href="javascript:void(0);" (click)="deleteRoom(room.id)"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
               </tr>
             </tbody>
           </table>
@@ -43,29 +49,99 @@
   <div class="col-md-4">
     <nb-card>
       <nb-card-body>
-        <nb-tabset>
-          <!-- todo: show details if click 'view' -->
-          <nb-tab tabTitle="Details">
-            <div *ngIf="!room">
-              <p>Click on a room from the list to view its details</p>
+        <nb-tabset fullWidth>
+          <nb-tab *ngIf="hasAccess" tabTitle="Room" active="{{ setActiveAddRoom }}">
+            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existRoomAlert">
+              Room name already exists!
+            </nb-alert>
+            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
+              Please enter the required fields!
+            </nb-alert>
+            <h5 *ngIf="room.id" style="margin-top: 10px;">Edit Room</h5>
+            <h5 *ngIf="!room.id" style="margin-top: 10px;">Add Room</h5>
+            <form #f="ngForm" (ngSubmit)="submitRoom()" novalidate>
+              <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
+                <label>Building *</label>
+                <nb-select filled fullWidth placeholder="Select building" [(selected)]="room.buildingId">
+                  <nb-option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</nb-option>
+                </nb-select><br>
+              </div>
+              <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
+                <label>Room name *</label>
+                <input id="name" type="text" class="form-control" [(ngModel)]="room.name" name="name"
+                  placeholder="Room name">
+              </div>
+              <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
+                <label>Room capacity *</label>
+                <input id="capacity" type="text" class="form-control" [(ngModel)]="room.capacity" name="capacity"
+                  placeholder="Room capacity">
+              </div>
+              <div style="margin-left: 10px; margin-top: 10px;">
+                <button *ngIf="!room.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
+                <button *ngIf="room.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
+              </div>
+              <!-- <br><pre>{{ room | json }}</pre> -->
+            </form>
+          </nb-tab>
+
+          <nb-tab *ngIf="hasAccess" tabTitle="Building" active="{{ setActiveAddBuilding }}">
+            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existBuildingAlert">
+              Building name already exists!
+            </nb-alert>
+            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
+              Please enter the required fields!
+            </nb-alert>
+            <h5 *ngIf="building.id" style="margin-top: 10px;">Edit Building</h5>
+            <h5 *ngIf="!building.id" style="margin-top: 10px;">Add Building</h5>
+            <form #f="ngForm" (ngSubmit)="submitBuilding()" novalidate>
+              <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
+                <label>Building *</label>
+                <input id="name" type="text" class="form-control" [(ngModel)]="building.name" name="name"
+                  placeholder="Building name">
+              </div>
+              <div style="margin-left: 10px; margin-top: 10px;">
+                <button *ngIf="!building.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
+                <button *ngIf="building.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
+              </div>
+              <!-- <br><pre>{{ building | json }}</pre> -->
+            </form>
+          </nb-tab>
+
+          <nb-tab tabTitle="Details" active="{{ setActiveDetails }}">
+            <div *ngIf="!roomDetails" style="margin-top: 10px;">
+              <nb-alert status="basic" closable (close)="onClose()" *ngIf="detailsAlert">
+                Click on a room from the table to show its details
+              </nb-alert>
             </div>
-            <div *ngIf="room">
-              <!-- <ngx-room-details></ngx-room-details> -->
+            <div *ngIf="roomDetails">
+              <p>
+                <b>Building:</b> {{ roomDetails.building.name }}<br>
+                <b>Room name:</b> {{ roomDetails.name }}<br>
+                <b>Capacity:</b> {{ roomDetails.capacity }}<br>
+              </p>
+
+              <br>
+              <div class="inline" *ngIf="hasAccess">
+                <button style="margin-left: 10px; margin-top: 10px;" nbButton status="warning"
+                  (click)="editRoom(roomDetails.id)">Edit</button>
+                <button style="margin-left: 10px; margin-top: 10px;" nbButton status="danger"
+                  (click)="deleteRoom(roomDetails.id)">Delete</button>
+              </div>
             </div>
+            <!-- <div *ngIf="buildingDetails && !roomDetails">
+              <p>
+                <b>Name:</b> {{ buildingDetails.name }}<br>
+              </p>
+
+              <div class="inline" *ngIf="hasAccess">
+                <button style="margin-left: 10px; margin-top: 10px;" nbButton status="warning"
+                  (click)="editBuilding(buildingDetails.id)">Edit</button>
+                <button style="margin-left: 10px; margin-top: 10px;" nbButton status="danger"
+                  (click)="delete(buildingDetails.id)">Delete</button>
+              </div>
+            </div> -->
           </nb-tab>
-          <!-- <nb-tab *ngIf="!auth.loggedIn" disabled tabTitle="Edit">
-            <ngx-room-form></ngx-room-form>
-          </nb-tab>
-          <nb-tab *ngIf="auth.loggedIn" tabTitle="Edit">
-            <ngx-room-form></ngx-room-form>
-          </nb-tab>
-          <nb-tab *ngIf="!auth.loggedIn" disabled tabTitle="Add">
-            <ngx-room-form></ngx-room-form>
-          </nb-tab>
-          <nb-tab *ngIf="auth.loggedIn" tabTitle="Add">
-            <ngx-room-form></ngx-room-form>
-          </nb-tab> -->
-         </nb-tabset>
+        </nb-tabset>
       </nb-card-body>
     </nb-card>
   </div>

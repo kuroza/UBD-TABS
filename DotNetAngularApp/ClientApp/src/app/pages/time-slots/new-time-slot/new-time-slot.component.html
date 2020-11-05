@@ -1,11 +1,8 @@
 <div class="row">
   <div class="col-md-5">
     <nb-card>
-      <nb-card-body>
-        <h4>Add Time Slot</h4>
-      </nb-card-body>
-    </nb-card>
-    <nb-card>
+      <nb-card-header *ngIf="!timeSlot.id"><h4>Add Time Slot</h4></nb-card-header>
+      <nb-card-header *ngIf="timeSlot.id"><h4>Edit Time Slot</h4></nb-card-header>
       <nb-card-body>
         <form #f="ngForm" (ngSubmit)="submit()" novalidate>
           <div class="form-group">

@@ -5,6 +5,7 @@ using DotNetAngularApp.Controllers.Resources;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
 using DotNetAngularApp.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,6 +46,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> CreateBuilding([FromBody] SaveBuildingResource buildingResource)
         {
             if (!ModelState.IsValid)
@@ -63,6 +65,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> DeleteBuilding(int id)
         {
             var building = await repository.GetBuilding(id, includeRelated: false);
@@ -77,6 +80,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> UpdateBuilding(int id, [FromBody] SaveBuildingResource buildingResource)
         {
             if (!ModelState.IsValid)

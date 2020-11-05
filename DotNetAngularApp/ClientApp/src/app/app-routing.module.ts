@@ -10,7 +10,9 @@ import {
   NbResetPasswordComponent,
 } from '@nebular/auth';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-// import { InterceptorService } from './services/interceptor.service';
+import { AccountComponent } from './account/account.component';
+import { RegistrationComponent } from './account/registration/registration.component';
+import { LoginComponent } from './account/login/login.component';
 
 const routes: Routes = [
   {
@@ -18,36 +20,22 @@ const routes: Routes = [
     loadChildren: () => import('./pages/pages.module')
       .then(m => m.PagesModule),
   },
-  // {
-  //   path: 'auth', // todo: change its component to... idk
-  //   component: NbAuthComponent,
-  //   children: [
-  //     {
-  //       path: '',
-  //       component: NbLoginComponent,
-  //     },
-  //     {
-  //       path: 'login',
-  //       component: NbLoginComponent,
-  //     },
-  //     {
-  //       path: 'register',
-  //       component: NbRegisterComponent,
-  //     },
-  //     {
-  //       path: 'logout',
-  //       component: NbLogoutComponent,
-  //     },
-  //     {
-  //       path: 'request-password',
-  //       component: NbRequestPasswordComponent,
-  //     },
-  //     {
-  //       path: 'reset-password',
-  //       component: NbResetPasswordComponent,
-  //     },
-  //   ],
-  // },
+  { path: 'account', component: AccountComponent, 
+    children: [
+      { path: 'register', component: RegistrationComponent },
+      { path: 'login', component: LoginComponent },
+    ]
+  },
+  {
+    path: 'auth',
+    component: NbAuthComponent,
+    children: [
+      {
+        path: 'reset-password',
+        component: NbResetPasswordComponent,
+      },
+    ],
+  },
   { path: '', redirectTo: 'pages', pathMatch: 'full' },
   { path: '**', redirectTo: 'pages' },
 ];

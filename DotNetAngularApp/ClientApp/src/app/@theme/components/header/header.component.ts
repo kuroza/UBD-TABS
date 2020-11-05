@@ -1,9 +1,12 @@
+import { ToastyService } from 'ng2-toasty';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 
 import { UserData } from '../../../@core/data/users';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'ngx-header',
@@ -12,76 +15,45 @@ import { Subject } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  private destroy$: Subject<void> = new Subject<void>();
-  userPictureOnly: boolean = false;
-  user: any;
-
-  themes = [
-    {
-      value: 'default',
-      name: 'Light',
-    },
-    {
-      value: 'dark',
-      name: 'Dark',
-    },
-    {
-      value: 'cosmic',
-      name: 'Cosmic',
-    },
-    {
-      value: 'corporate',
-      name: 'Corporate',
-    },
-  ];
-
-  currentTheme = 'default';
+  isAuthenticated = false;
+  userDetails;
 
   userMenu = [ 
     { title: 'Profile', link: '/pages/account/profile' }, 
-    { title: 'Reset password', link: '/pages/account/reset-password' }, 
-    { title: 'Settings', link: '/pages/account/settings' }
+    { title: 'Reset password', link: '/pages/account/reset-password' },
+    { title: 'Log out' },
   ];
 
   constructor(
     private sidebarService: NbSidebarService,
     private menuService: NbMenuService,
     private themeService: NbThemeService,
-    private userService: UserData,
-    private breakpointService: NbMediaBreakpointsService) {}
+    private toasty: ToastyService,
+    private router: Router,
+    private userService: UserService
+    ) {}
 
   ngOnInit() {
-    this.currentTheme = this.themeService.currentTheme;
+    if (localStorage.getItem('token') != null) {
+      this.isAuthenticated = true;
+      this.userService.getUserProfile()
+        .subscribe(
+          res => {
+            this.userDetails = res;
+          },
+          err => {
+            console.log(err);
+          });
+    }
 
-    this.userService.getUsers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.harith);
-
-    const { xl } = this.breakpointService.getBreakpointsMap();
-    this.themeService.onMediaQueryChange()
-      .pipe(
-        map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
-        takeUntil(this.destroy$),
-      )
-      .subscribe((isLessThanXl: boolean) => this.userPictureOnly = isLessThanXl);
-
-    this.themeService.onThemeChange()
-      .pipe(
-        map(({ name }) => name),
-        takeUntil(this.destroy$),
-      )
-      .subscribe(themeName => this.currentTheme = themeName);
-
-      // this.menuService.onItemClick()
-      //   .subscribe((event) => {
-      //     if (event.item.title === 'Log out')
-      //       this.auth.logout();
-      //   });
+    this.menuService.onItemClick()
+      .subscribe((event) => {
+        if (event.item.title === 'Log out')
+          this.onLogout();
+      });
   }
 
   ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   changeTheme(themeName: string) {
@@ -97,5 +69,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
+  }
+
+  onLogout() {
+    localStorage.removeItem('token');
+    this.isAuthenticated = false;
+    this.router.navigate(['/account/login']);
+    this.toasty.info({
+      title: 'Logout successful', 
+      msg: 'User successfully logged out!',
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 3000
+    });
+  }
+
+  onLogin() {
+    this.router.navigate(['/account/login']);
+  }
+
+  onRegister() {
+    this.router.navigate(['/account/register']);
   }
 }

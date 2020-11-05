@@ -9,10 +9,6 @@ export class AppErrorHandler implements ErrorHandler {
         @Inject(ToastyService)  private toastyService: ToastyService) {}
 
     handleError(error: any): void {
-        // if (!isDevMode()) // only in development mode
-        //     Sentry.captureException(error.originalError || error);
-        // else
-        //     throw error; // otherwise rethrow exception
 
         this.ngZone.run(() => {
             this.toastyService.error({
@@ -20,7 +16,7 @@ export class AppErrorHandler implements ErrorHandler {
                 msg: 'An unexpected error happened.',
                 theme: 'bootstrap',
                 showClose: true,
-                timeout: 5000
+                timeout: 3000
             });
         });
     }

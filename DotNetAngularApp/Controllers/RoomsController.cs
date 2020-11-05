@@ -5,6 +5,7 @@ using DotNetAngularApp.Controllers.Resources;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
 using DotNetAngularApp.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,12 +46,17 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> CreateRoom([FromBody] SaveRoomResource roomResource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var room = mapper.Map<SaveRoomResource, Room>(roomResource);
+
+            var existName = await repository.RoomNameExist(room);
+            if (existName != null)
+                return Conflict("Room name already exists.");
 
             repository.Add(room);
             await unitOfWork.CompleteAsync();
@@ -63,6 +69,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> DeleteRoom(int id)
         {
             var room = await repository.GetRoom(id, includeRelated: false);
@@ -77,6 +84,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> UpdateRoom(int id, [FromBody] SaveRoomResource roomResource)
         {
             if (!ModelState.IsValid)
@@ -87,7 +95,11 @@ namespace DotNetAngularApp.Controllers
             if (room == null)
                 return NotFound();
 
-            mapper.Map<SaveRoomResource, Room>(roomResource, room);
+            room = mapper.Map<SaveRoomResource, Room>(roomResource, room);
+
+            // var existName = await repository.RoomNameExist(room);
+            // if (existName != null)
+            //     return Conflict("Room name already exists.");
 
             await unitOfWork.CompleteAsync();
 

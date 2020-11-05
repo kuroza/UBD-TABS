@@ -1,14 +1,14 @@
-import { NbCardModule, NbTabsetModule, NbAccordionModule, NbButtonModule, NbSelectModule, NbInputModule } from '@nebular/theme';
+import { NbCardModule, NbTabsetModule, NbAccordionModule, NbButtonModule, NbSelectModule, NbInputModule, NbAlertModule, NbIconModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LecturerListComponent } from './lecturer-list/lecturer-list.component';
-import { NewLecturerComponent } from './new-lecturer/new-lecturer.component';
-import { ViewLecturerComponent } from './view-lecturer/view-lecturer.component';
 
 @NgModule({
     imports: [
+      NbIconModule,
+      NbAlertModule,
       NbCardModule,
       NbTabsetModule,
       NbAccordionModule,
@@ -21,8 +21,6 @@ import { ViewLecturerComponent } from './view-lecturer/view-lecturer.component';
     ],
     declarations: [
         LecturerListComponent,
-        NewLecturerComponent,
-        ViewLecturerComponent,
     ],
   })
   export class LecturersModule { }

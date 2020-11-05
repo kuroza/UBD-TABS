@@ -1,32 +1,38 @@
-<nb-card>
-  <nb-card-body>
-      <h3>Time Slot list</h3>
-  </nb-card-body>
-</nb-card>
-
-<nb-card>
-  <nb-card-body>
-      <table class="table">
-          <thead class="thead-dark">
-              <tr>
-                  <th>
-                      Start Time
-                  </th>
-                  <th>
-                      End Time
-                  </th>
-              </tr>
+<div class="row">
+  <div class="col-md-8">
+    <nb-card>
+      <nb-card-header>
+        <h4>Time Slot List</h4>
+      </nb-card-header>
+      <nb-card-body>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>
+                Start Time
+              </th>
+              <th>
+                End Time
+              </th>
+            </tr>
           </thead>
           <tbody>
-              <tr *ngFor="let timeSlot of timeSlots">
-                  <td>
-                      {{ timeSlot.startTime | date:'shortTime' }}
-                  </td>
-                  <td>
-                      {{ timeSlot.endTime | date:'shortTime' }}
-                  </td>
-              </tr>
+            <tr *ngFor="let timeSlot of timeSlots">
+              <td>
+                {{ timeSlot.startTime | date:'shortTime' }}
+              </td>
+              <td>
+                {{ timeSlot.endTime | date:'shortTime' }}
+              </td>
+            </tr>
           </tbody>
-      </table>
-  </nb-card-body>
-</nb-card>
+        </table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-md-4">
+
+    
+  </div>
+</div>

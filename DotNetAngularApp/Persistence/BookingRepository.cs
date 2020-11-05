@@ -25,6 +25,7 @@ namespace DotNetAngularApp.Persistence
                 return await context.Bookings.FindAsync(id);
 
             return await context.Bookings
+            // include semester
                 .Include(b => b.TimeSlots)
                     .ThenInclude(bt => bt.TimeSlot)
                 .Include(b => b.Room)
@@ -39,6 +40,7 @@ namespace DotNetAngularApp.Persistence
         public async Task<IEnumerable<Booking>> GetAllBookings()
         {
             return await context.Bookings
+            // include semester
                 .Include(b => b.Room)
                     .ThenInclude(r => r.Building)
                 .Include(b => b.TimeSlots)
@@ -56,6 +58,7 @@ namespace DotNetAngularApp.Persistence
             var result = new QueryResult<Booking>();
 
             var query = context.Bookings
+            // include semester
                 .Include(b => b.Room)
                     .ThenInclude(r => r.Building)
                 .Include(b => b.TimeSlots)
@@ -92,43 +95,6 @@ namespace DotNetAngularApp.Persistence
             return result;
         }
 
-        // todo: Check if no clash
-        // public bool CheckBooking(Booking booking)
-        // {
-        //     // get booked timeSlots from db for room and date
-        //     var result = context.Bookings
-        //         .Where(b => b.RoomId == booking.RoomId && b.BookDate == booking.BookDate)
-        //         .Include(b => b.TimeSlots)
-        //          .ThenInclude(ts => ts.TimeSlotId)
-        //         .AsQueryable();
-
-        //     List<int> context_tId = new List<int>();
-        //     // iterate timeSlots to get the booked ID
-        //     foreach (var b in result)
-        //     {
-        //         foreach (var t in b.TimeSlots)
-        //         {
-        //             context_tId.Add(t.TimeSlotId);
-        //         }
-        //     }
-
-        //     List<int> tId = new List<int>();
-        //     // iterate to get ID from booking request
-        //     foreach (var timeSlots in booking.TimeSlots)
-        //     {
-        //         tId.Add(timeSlots.TimeSlotId);
-        //     }
-
-        //     // compare the timeSlots ID
-        //     foreach (var i in context_tId)
-        //     {
-        //         if (tId.Contains(i))
-        //             return true;
-        //     }
-
-        //     return false;
-        // }
-
         public void Add(Booking booking)
         {
             context.Bookings.Add(booking);
@@ -137,6 +103,16 @@ namespace DotNetAngularApp.Persistence
         public void Remove(Booking booking)
         {
             context.Remove(booking);
+        }
+
+        public async Task<Booking> BookingExist(Booking booking)
+        {
+            var result = await context.Bookings
+                .Include(b => b.Room)
+                .FirstOrDefaultAsync(b => b.Room.Id == booking.RoomId);
+                // b.BookDate == booking.BookDate && b.TimeSlots == booking.TimeSlots && 
+
+            return result;
         }
     }
 }

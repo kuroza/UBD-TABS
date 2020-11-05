@@ -2,7 +2,7 @@
     <div class="col-md-4">
       <div class="btn-group">
         <div
-          class="btn btn-primary"
+          class="btn btn-info"
           mwlCalendarPreviousView
           [view]="view"
           [(viewDate)]="viewDate"
@@ -20,7 +20,7 @@
           Today
         </div>
         <div
-          class="btn btn-primary"
+          class="btn btn-info"
           mwlCalendarNextView
           [view]="view"
           [(viewDate)]="viewDate"
@@ -41,21 +41,21 @@
     <div class="col-md-4">
       <div class="btn-group">
         <div
-          class="btn btn-primary"
+          class="btn btn-info"
           (click)="viewChange.emit('month')"
           [class.active]="view === 'month'"
         >
           Month
         </div>
         <div
-          class="btn btn-primary"
+          class="btn btn-info"
           (click)="viewChange.emit('week')"
           [class.active]="view === 'week'"
         >
           Week
         </div>
         <div
-          class="btn btn-primary"
+          class="btn btn-info"
           (click)="viewChange.emit('day')"
           [class.active]="view === 'day'"
         >

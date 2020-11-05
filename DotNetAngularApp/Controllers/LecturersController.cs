@@ -46,6 +46,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> CreateLecturer([FromBody] SaveLecturerResource lecturerResource)
         {
             if (!ModelState.IsValid)
@@ -64,6 +65,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> DeleteLecturer(int id)
         {
             var lecturer = await repository.GetLecturer(id, includeRelated: false);
@@ -78,6 +80,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> UpdateLecturer(int id, [FromBody] SaveLecturerResource lecturerResource)
         {
             if (!ModelState.IsValid)

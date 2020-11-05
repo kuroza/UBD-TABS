@@ -1,14 +1,55 @@
-<!-- <nb-card>
-  <nb-card-body>
-    <h3>Home</h3>
-  </nb-card-body>
-</nb-card> -->
 <div class="row">
-
   <div class="col-md-8">
     <nb-card>
+      <nb-card-header fullWidth>
+        <h4>Calendar</h4>
+      </nb-card-header>
       <nb-card-body>
-        <ngx-calendar (selectedBookingId)="receiveBookingId($event)"></ngx-calendar>
+        <br>
+        <ngx-calendar-header 
+          [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()"
+        >
+        </ngx-calendar-header>
+
+        <div [ngSwitch]="view">
+          <mwl-calendar-month-view
+            *ngSwitchCase="CalendarView.Month"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            [activeDayIsOpen]="activeDayIsOpen"
+            (dayClicked)="dayClicked($event.day)"
+            [weekStartsOn]="weekStartsOn"
+            [excludeDays]="excludeDays"
+            (eventClicked)="eventClicked($event)"
+          >
+          </mwl-calendar-month-view>
+          <mwl-calendar-week-view
+            *ngSwitchCase="CalendarView.Week"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            [weekStartsOn]="weekStartsOn"
+            [hourSegments]="1"
+            [dayStartHour]="7"
+            [dayEndHour]="18"
+            (dayHeaderClicked)="changeDay($event.day.date)"
+            [excludeDays]="excludeDays"
+            (eventClicked)="eventClicked($event)"
+          >
+          </mwl-calendar-week-view>
+          <mwl-calendar-day-view
+            *ngSwitchCase="CalendarView.Day"
+            [viewDate]="viewDate"
+            [events]="events"
+            [hourSegments]="1"
+            [dayStartHour]="7"
+            [dayEndHour]="18"
+            [refresh]="refresh"
+            (eventClicked)="eventClicked($event)"
+          >
+          </mwl-calendar-day-view>
+        </div>
       </nb-card-body>
     </nb-card>
   </div>
@@ -17,88 +58,136 @@
 
     <nb-card>
       <nb-card-body>
-        <nb-tabset>
-          <nb-tab tabTitle="Details">
-            <div *ngIf="!booking">
-              <p>Click on a booking event from the calendar to show its details</p>
-              <button nbButton status="warning" fullWidth [routerLink]="['/pages/bookings']">View All Bookings</button>
+        <nb-tabset fullWidth>
+          <nb-tab tabTitle="Filter By Room">
+            <div class="form-group">
+              <div class="mr-2" style="margin-top: 10px">
+                <label>Filter Building</label>
+                <nb-select
+                  filled
+                  fullWidth
+                  required
+                  placeholder="Select Building"
+                  [(selected)]="filter.buildingId"
+                  (selectedChange)="onBuildingChange()"
+                >
+                  <nb-option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</nb-option>
+                </nb-select>
+
+                <!-- <select style="width: 24rem;" name="buildingId" id="building" class="form-control" [(ngModel)]="filter.buildingId" (change)="onBuildingChange()">
+                  <option value="" placeholder="Select a building"></option>
+                  <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
+                </select> -->
+              </div>
+              <div class="mr-2" style="margin-top: 20px">
+                <label>Filter Room</label>
+                <nb-select
+                  filled
+                  fullWidth
+                  required
+                  placeholder="Select Room"
+                  [(selected)]="filter.roomId"
+                >
+                  <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
+                </nb-select>
+
+                <!-- <select style="width: 24rem;" name="roomId" id="room" class="form-control" [(ngModel)]="filter.roomId" (change)="onFilterChange()">
+                  <option value="" placeholder="Select a room"></option>
+                  <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
+                </select> -->
+              </div>
+              <button nbButton size="small" status="basic" hero (click)="resetFilter()" style="margin-top: 20px; float: right;">Reset</button>
             </div>
-            <div *ngIf="booking">
-              <!-- Venue -->
-              <h6>Venue</h6>
-              <p>
-                Building: {{ booking.building.name }}<br>
-                Room: {{ booking.room.name }}<br>
-                Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
-              </p>
-            
-              <!-- Modules -->
-              <!-- <div class="card" style="width: 18rem;">
-                <div class="card-header">
-                  Modules
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li *ngFor="let module of booking.modules" class="list-group-item">
-                    {{ module.code }}: {{ module.name }}
-                  </li>
-                </ul>
-              </div> -->
-              <h6>Modules</h6>
-              <nb-accordion multi>
-                <nb-accordion-item *ngFor="let module of booking.modules">
-                  <nb-accordion-item-header>
-                    {{ module.code }}: {{ module.name }}
-                  </nb-accordion-item-header>
-                  <nb-accordion-item-body>
-                    <table class="table table-hover">
-                      <thead class="thead-dark text-center">
-                        <tr>
-                          <th style="width: 100%" scope="col">Lecturer</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let lecturer of module.lecturers">
-                          <td>{{ lecturer.title }} {{ lecturer.name }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </nb-accordion-item-body>
-                </nb-accordion-item>
-              </nb-accordion>
-            
-              <br />
-            
-              <!-- TimeSlots -->
-              <div class="card" style="width: 18rem;">
-                <div class="card-header">
-                  <h6>Time slots</h6>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>
-                </ul>
-              </div>
-            
-              <br />
-              <div>
-                <!-- <button *ngIf="auth.loggedIn" class="mx-2" nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
-                <button *ngIf="auth.loggedIn" class="mr-2" nbButton status="danger" (click)="delete()">Delete</button> -->
-                <button class="mb-2" fullWidth nbButton status="primary" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
-                <button class="mb-2" fullWidth nbButton status="danger" (click)="delete()">Delete</button>
-                <button fullWidth nbButton status="warning" [routerLink]="['/pages/bookings']">View All Bookings</button>
-              </div>
-              <div>
-              </div>
-            </div>            
           </nb-tab>
-          <!-- <nb-tab *ngIf="!auth.loggedIn" tabTitle="Add booking" disabled>
-          </nb-tab>
-          <nb-tab *ngIf="auth.loggedIn" tabTitle="Add booking">
-            <ngx-booking-form></ngx-booking-form>
-          </nb-tab> -->
-          <nb-tab tabTitle="Add Booking">
-            <ngx-booking-form></ngx-booking-form>
+
+          <nb-tab tabTitle="Filter By Module">
+            
           </nb-tab>
          </nb-tabset>
+      </nb-card-body>
+    </nb-card>
+
+    <nb-card>
+      <nb-card-header>Details</nb-card-header>
+      <nb-card-body>
+        <div *ngIf="!booking">
+          <nb-alert status="basic" closable (close)="onCloseDetails()" *ngIf="detailsAlert">
+            Click on a booking event from the calendar to show its details
+          </nb-alert>
+          <div class="row">
+            <div class="col"></div>
+            <div class="col-md-8">
+              <button nbButton status="warning" fullWidth [routerLink]="['/pages/bookings']">View All Bookings</button>
+            </div>
+            <div class="col"></div>
+          </div>
+        </div>
+        <div *ngIf="booking">
+          <!-- Venue -->
+          <h6>Venue</h6>
+          <p>
+            Building: {{ booking.building.name }}<br>
+            Room: {{ booking.room.name }}<br>
+            Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
+          </p>
+        
+          <!-- Modules -->
+          <!-- <div class="card" style="width: 18rem;">
+            <div class="card-header">
+              Modules
+            </div>
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let module of booking.modules" class="list-group-item">
+                {{ module.code }}: {{ module.name }}
+              </li>
+            </ul>
+          </div> -->
+          <h6>Modules</h6>
+          <nb-accordion multi>
+            <nb-accordion-item *ngFor="let module of booking.modules">
+              <nb-accordion-item-header>
+                {{ module.code }}: {{ module.name }}
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <table class="table table-hover">
+                  <thead class="thead-dark text-center">
+                    <tr>
+                      <th style="width: 100%" scope="col">Lecturer</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let lecturer of module.lecturers">
+                      <td>{{ lecturer.title }} {{ lecturer.name }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+        
+          <br />
+        
+          <!-- TimeSlots -->
+          <div class="card" style="width: 18rem;">
+            <div class="card-header">
+              <h6>Time slots</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>
+            </ul>
+          </div>
+        
+          <br />
+          <!-- <div class="row"> -->
+            <!-- <div class="col"></div> -->
+            <div class="inline">
+              <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="warning" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+              <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="danger" (click)="delete()">Delete</button>
+              <button style="margin-left: 10px; margin-top: 10px;" nbButton status="primary" [routerLink]="['/pages/bookings']">View All Bookings</button>
+            </div>
+            <!-- <div class="col"></div> -->
+          <!-- </div> -->
+        </div>
       </nb-card-body>
     </nb-card>
   </div>

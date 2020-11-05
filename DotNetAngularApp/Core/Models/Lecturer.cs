@@ -14,5 +14,8 @@ namespace DotNetAngularApp.Core.Models
 
         [StringLength(255)]
         public string Title { get; set; }
+
+        // [StringLength(255)]
+        // public string Email { get; set; }
     }
 }

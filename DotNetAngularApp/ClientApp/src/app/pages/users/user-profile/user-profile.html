@@ -1,10 +1,36 @@
-<nb-card>
-    <nb-card-body>
-        <!-- <pre *ngIf="auth.userProfile$ | async as profile">
-            <p>
-                Name: {{ profile.nickname }}<br>
-                Email: {{ profile.email }}<br>
-            </p>
-        </pre> -->
-    </nb-card-body>
-</nb-card>
+<div class="col-md-4">
+    <nb-card>
+        <nb-card-header><h4>User Profile</h4></nb-card-header>
+        <nb-card-body>
+            <div style="margin-top: 10px;">
+                <nb-user size="giant"
+                 [name]="userDetails?.fullName"
+                 [title]="userDetails?.email"
+                 color="#cccccc">
+                </nb-user>
+            </div>
+
+            <div *ngIf="userDetails" style="margin-top: 10px;">
+                <p>
+                    <strong>Username : </strong>{{userDetails.userName}}<br>
+                    <strong>Full name : </strong>{{userDetails.fullName}}<br>
+                    <strong>Email : </strong>{{userDetails.email}}<br>
+                    <strong>User role : </strong><br>
+                    <strong>Phone no. : </strong><br>
+                </p>
+            </div>
+            <div class="inline">
+                <button nbButton size="small" status="warning" style="margin-left: 10px; margin-top: 10px;">Edit profile</button>
+                <button nbButton size="small" status="danger" style="margin-left: 10px; margin-top: 10px;">Delete profile</button>
+            </div>
+    
+            <!-- <div class="card" style="width:18rem" *ngIf="userDetails">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Username : </strong>{{userDetails.userName}}</li>
+                    <li class="list-group-item"><strong>Full name : </strong>{{userDetails.fullName}}</li>
+                    <li class="list-group-item"><strong>Email : </strong>{{userDetails.email}}</li>
+                </ul>
+            </div> -->
+        </nb-card-body>
+    </nb-card>
+</div>

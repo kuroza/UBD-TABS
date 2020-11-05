@@ -3,12 +3,12 @@
       <ngx-header></ngx-header>
     </nb-layout-header>
 
-    <nb-sidebar class="menu-sidebar" tag="menu-sidebar" state="compacted" responsive start>
+    <nb-sidebar *ngIf="isAuthenticated" class="menu-sidebar" tag="menu-sidebar" state="compacted" responsive start>
       <ng-content select="nb-menu"></ng-content>
     </nb-sidebar>
 
     <nb-layout-column>
-      <ng-content select="router-outlet"></ng-content>
+      <ng-content select="router-outlet"></ng-content> <!-- /pages/pages.menu.ts -->
     </nb-layout-column>
 
     <nb-layout-footer fixed>

@@ -8,6 +8,8 @@ using DotNetAngularApp.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
+using System.Net;
 
 namespace DotNetAngularApp.Controllers
 {
@@ -55,12 +57,23 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> CreateModule([FromBody] SaveModuleResource moduleResource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var module = mapper.Map<SaveModuleResource, Module>(moduleResource);
+
+            var existName = await repository.ModuleNameExist(module);
+            var existCode = await repository.ModuleCodeExist(module);
+
+            if (existName != null && existCode != null)
+                return Conflict("Model name and code already exist.");
+            else if (existName != null)
+                return Conflict("Model name already exists.");
+            else if (existCode != null)
+                return Conflict("Model code already exists.");
 
             repository.Add(module);
             await unitOfWork.CompleteAsync();
@@ -73,6 +86,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> DeleteModule(int id)
         {
             var module = await repository.GetModule(id, includeRelated: false);
@@ -87,6 +101,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> UpdateModule(int id, [FromBody] SaveModuleResource moduleResource)
         {
             if (!ModelState.IsValid)
@@ -97,7 +112,17 @@ namespace DotNetAngularApp.Controllers
             if (module == null)
                 return NotFound();
 
-            mapper.Map<SaveModuleResource, Module>(moduleResource, module);
+            module = mapper.Map<SaveModuleResource, Module>(moduleResource, module);
+            
+            // var existName = await repository.ModuleNameExist(module);
+            // var existCode = await repository.ModuleCodeExist(module);
+
+            // if (existName != null && existCode != null)
+            //     return Conflict("Model name and code already exist.");
+            // else if (existName != null)
+            //     return Conflict("Model name already exists.");
+            // else if (existCode != null)
+            //     return Conflict("Model code already exists.");
 
             await unitOfWork.CompleteAsync();
             

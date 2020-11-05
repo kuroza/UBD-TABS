@@ -1,27 +1,37 @@
-import { BookingDetailsModule } from '../../@theme/components/booking-details/booking-details.module';
-import { BookingFormModule } from '../../@theme/components/booking-form/booking-form.module';
+
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { NbCardModule, NbTabsetModule, NbButtonModule, NbAccordionModule, NbSelectModule } from '@nebular/theme';
+import { NbCardModule, NbTabsetModule, NbButtonModule, NbAccordionModule, NbSelectModule, NbAlertModule } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
 import { HomeComponent } from './home.component';
-import { NgCalendarModule } from '../../@theme/components/ng-calendar/ng-calendar.module';
 import { RouterModule } from '@angular/router';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { CommonModule } from '@angular/common';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { CalendarHeaderModule } from '../../@theme/components/calendar-header/calendar-header.module';
 
 @NgModule({
   imports: [
+    NbAlertModule,
     NbCardModule,
     ThemeModule,
     FormsModule,
     RouterModule,
     NbTabsetModule,
     NbAccordionModule,
-    NgCalendarModule,
-    BookingFormModule,
-    BookingDetailsModule,
     NbButtonModule,
-    NbSelectModule
+    NbSelectModule,
+    NgbModalModule,
+    CommonModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+    CalendarHeaderModule,
   ],
+  exports: [HomeComponent],
+  bootstrap: [HomeComponent],
   declarations: [
     HomeComponent,
   ],

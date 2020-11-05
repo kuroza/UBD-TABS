@@ -5,9 +5,9 @@ export interface KeyValuePair {
 
 export interface Booking { // from resource
     id: number;
-    room: { id: number; name: string; capacity: number; }; // []
-    building: { id: number; name: string; }; // []
-    bookDate: string; // []
+    room: { id: number; name: string; capacity: number; }; // {}[]
+    building: { id: number; name: string; }; // {}[]
+    bookDate: string; // string[]
     timeSlots: { id: number; startTime: string; endTime: string; }[];
     modules: { 
         id: number; 
@@ -24,8 +24,9 @@ export interface Booking { // from resource
 
 export interface SaveBooking { // save to database
     id: number;
-    roomId: number; // []
-    buildingId: number; // []
+    roomId: number; // number[]
+    buildingId: number; // number[]
+    // bookDate: string[];
     bookDate: string;
     timeSlots: number[];
     modules: number[];

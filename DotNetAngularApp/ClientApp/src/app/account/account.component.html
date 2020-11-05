@@ -1,0 +1,28 @@
+<nb-layout windowMode>
+    <nb-layout-column>
+            <nb-card size="giant">
+                <nb-card-header>
+                    <a (click)="onBackButton()" class="back-button">
+                        <nb-icon icon="arrow-back-outline"></nb-icon>
+                    </a>
+                </nb-card-header>
+                <nb-card-body>
+                    <div class="wrapper">
+                        <div class="wrapped-div">
+                            <!-- <div class="tab-header">
+                                <h2 routerLink='/account/login' routerLinkActive='active'>Sign In</h2>
+                                <h2 routerLink='/account/register' routerLinkActive='active'>Sign Up</h2>
+                            </div> -->
+                            <div class="row">
+                                <div class="col"></div>
+                                <div class="col-md-4">
+                                    <router-outlet></router-outlet>
+                                </div>
+                                <div class="col"></div>
+                            </div>
+                        </div>
+                    </div>
+                </nb-card-body>
+            </nb-card>
+    </nb-layout-column>
+</nb-layout>

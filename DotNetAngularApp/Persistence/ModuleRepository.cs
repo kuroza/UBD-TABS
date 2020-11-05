@@ -27,7 +27,6 @@ namespace DotNetAngularApp.Persistence
             if (!includeRelated)
                 return await context.Modules.FindAsync(id);
 
-            // ! order by module code
             return await context.Modules
                 .Include(m => m.Lecturers)
                     .ThenInclude(ml => ml.Lecturer)
@@ -77,6 +76,16 @@ namespace DotNetAngularApp.Persistence
         public void Remove(Module module)
         {
             context.Remove(module);
+        }
+
+        public async Task<Module> ModuleNameExist(Module module)
+        {
+            return await context.Modules.SingleOrDefaultAsync(m => m.Name == module.Name);
+        }
+
+        public async Task<Module> ModuleCodeExist(Module module)
+        {
+            return await context.Modules.SingleOrDefaultAsync(m => m.Code == module.Code);
         }
     }
 }

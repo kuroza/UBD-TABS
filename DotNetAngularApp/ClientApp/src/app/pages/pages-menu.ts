@@ -1,6 +1,6 @@
 import { NbMenuItem } from '@nebular/theme';
 
-export const MENU_ITEMS: NbMenuItem[] = [
+export const MENU_ITEMS_ADMIN: NbMenuItem[] = [
   {
     title: 'Main',
     group: true,
@@ -11,7 +11,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/home',
     home: true,
   },
-  // * Account settings on sidebar
   {
     title: 'Account',
     icon: 'lock-outline',
@@ -20,19 +19,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
         title: 'Profile',
         link: '/pages/account/profile',
       },
-  //     {
-  //       title: 'Request Password',
-  //       link: '/pages/account/request-password',
-  //     },
-  //     {
-  //       title: 'Reset Password',
-  //       link: '/pages/account/reset-password',
-  //     },
+      {
+        title: 'Reset Password',
+        link: '/pages/account/reset-password',
+      },
     ],
-  // },
-  // {
-  //   title: 'Settings',
-  //   icon: 'settings-outline',
   },
   {
     title: 'Admin',
@@ -53,87 +44,94 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
-    title: 'Calendar',
-    icon: 'calendar-outline',
-    children: [
-      {
-        title: 'View calendar',
-        link: '/pages/home',
-      },
-    ],
+    title: 'Buildings and Rooms',
+    icon: 'grid-outline',
+    link: '/pages/rooms',
   },
   {
-    title: 'Rooms',
-    icon: 'grid-outline',
-    children: [
-      {
-        title: 'Add room',
-        link: '/pages/rooms/new',
-      },
-      {
-        title: 'Add building',
-        link: '/pages/buildings/new',
-      },
-      {
-        title: 'View all rooms and buildings',
-        link: '/pages/rooms',
-      },
-    ],
+    title: 'Calendar',
+    icon: 'calendar-outline',
+    link: '/pages/calendar',
   },
   {
     title: 'Lecturers',
     icon: 'people-outline',
-    children: [
-      {
-        title: 'Add lecturer',
-        link: '/pages/lecturers/new',
-      },
-      {
-        title: 'View all lecturers',
-        link: '/pages/lecturers',
-      },
-    ],
+    link: '/pages/lecturers',
+  },
+  {
+    title: 'Manage users',
+    icon: 'person-add-outline',
+    link: '/pages/users/manage',
   },
   {
     title: 'Modules',
     icon: 'book-open-outline',
+    link: '/pages/modules',
+  },
+  {
+    title: 'Time slots',
+    icon: 'clock-outline',
+    link: '/pages/timeslots',
+  },
+];
+
+export const MENU_ITEMS_USER: NbMenuItem[] = [
+  {
+    title: 'Main',
+    group: true,
+  },
+  {
+    title: 'Home',
+    icon: 'home-outline',
+    link: '/pages/home',
+    home: true,
+  },
+  {
+    title: 'Account',
+    icon: 'lock-outline',
     children: [
       {
-        title: 'Add module',
-        link: '/pages/modules/new',
+        title: 'Profile',
+        link: '/pages/account/profile',
       },
       {
-        title: 'View all modules',
-        link: '/pages/modules',
+        title: 'Reset Password',
+        link: '/pages/account/reset-password',
       },
     ],
   },
-  // {
-  //   title: 'Staff',
-  //   icon: 'people-outline',
-  //   children: [
-  //     {
-  //       title: 'Add staff',
-  //       link: '/',
-  //     },
-  //     {
-  //       title: 'View all staffs',
-  //       link: '/',
-  //     },
-  //   ],
-  // },
   {
-    title: 'Time slot',
+    title: 'Menu',
+    group: true,
+  },
+  {
+    title: 'Bookings',
+    icon: 'file-add-outline',
+    link: '/pages/bookings',
+  },
+  {
+    title: 'Buildings and Rooms',
+    icon: 'grid-outline',
+    link: '/pages/rooms',
+  },
+  {
+    title: 'Calendar',
+    icon: 'calendar-outline',
+    link: '/pages/calendar',
+  },
+  {
+    title: 'Lecturers',
+    icon: 'people-outline',
+    link: '/pages/lecturers',
+  },
+  {
+    title: 'Modules',
+    icon: 'book-open-outline',
+    link: '/pages/modules',
+  },
+  {
+    title: 'Time slots',
     icon: 'clock-outline',
-    children: [
-      {
-        title: 'Add time slot',
-        link: '/pages/timeslots/new',
-      },
-      {
-        title: 'View all time slots',
-        link: '/pages/timeslots',
-      },
-    ],
+    link: '/pages/timeslots',
   },
 ];

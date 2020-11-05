@@ -40,5 +40,10 @@ namespace DotNetAngularApp.Persistence
         {
             context.Remove(room);
         }
+
+        public async Task<Room> RoomNameExist(Room room)
+        {
+            return await context.Rooms.SingleOrDefaultAsync(r => r.Name == room.Name);
+        }
     }
 }

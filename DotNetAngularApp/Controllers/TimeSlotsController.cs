@@ -46,6 +46,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> CreateTimeSlot([FromBody] SaveTimeSlotResource timeSlotResource)
         {
             if (!ModelState.IsValid)
@@ -64,6 +65,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> DeleteTimeSlot(int id)
         {
             var timeSlot = await repository.GetTimeSlot(id, includeRelated: false);
@@ -78,6 +80,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> UpdateTimeSlot(int id, [FromBody] SaveTimeSlotResource timeSlotResource)
         {
             if (!ModelState.IsValid)

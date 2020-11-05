@@ -1,0 +1,30 @@
+<div style="margin-top: 70px">
+    <div style="text-align: center;">
+        <h1 id="title" class="title">Login</h1>
+        <p class="sub-title">Hello! Log in with your email.</p>
+    </div>
+    
+    <form #form='ngForm' class="mb-4" autocomplete="off" (submit)="onSubmit(form)">
+        <!-- <div class="form-group">
+            <label>Username</label>
+            <input class="form-control" #UserName="ngModel" name="UserName" [(ngModel)]="formModel.UserName" required>
+        </div> -->
+        <div class="form-group">
+            <label>Email</label>
+            <input class="form-control" #UserName="ngModel" name="Email" [(ngModel)]="formModel.Email" required>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <show-hide-password btnStyle="primary" [btnOutline]="false">
+                <input type="password" name="Password" class="form-control" #Password="ngModel" [(ngModel)]="formModel.Password" required>
+            </show-hide-password>
+        </div>
+        <div class="form-group" style="margin-top: 30px;">
+            <button type="submit" nbButton fullWidth [disabled]="form.invalid">Login</button>
+        </div>
+    </form>
+    
+    <section class="another-action" aria-label="Register" style="text-align: center;">
+        Don't have an account? <a class="text-link" routerLink="/account/register">Register</a>
+    </section>
+</div>

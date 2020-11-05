@@ -5,6 +5,7 @@ using DotNetAngularApp.Controllers.Resources;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
 using DotNetAngularApp.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,6 +46,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> CreateSemester([FromBody] SaveSemesterResource semesterResource)
         {
             if (!ModelState.IsValid)
@@ -63,6 +65,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> DeleteSemester(int id)
         {
             var semester = await repository.GetSemester(id, includeRelated: false);
@@ -77,6 +80,7 @@ namespace DotNetAngularApp.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "SuperAdmin")]
         public async Task<IActionResult> UpdateSemester(int id, [FromBody] SaveSemesterResource semesterResource)
         {
             if (!ModelState.IsValid)

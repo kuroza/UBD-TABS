@@ -1,14 +1,17 @@
-import { ViewBookingComponent } from './view-booking/view-booking';
 import { PaginationComponent } from './../../@theme/components/shared/pagination.component';
 import { RouterModule } from '@angular/router';
-import { BookingFormModule } from '../../@theme/components/booking-form/booking-form.module';
 import { NewBookingComponent } from './new-booking/new-booking.component';
-import { NbCardModule, NbTabsetModule, NbIconModule, NbButtonModule, NbTreeGridModule, NbInputModule } from '@nebular/theme';
+import { NbCardModule, NbTabsetModule, NbIconModule, NbButtonModule, NbTreeGridModule, NbInputModule, NbDatepickerModule, NbSelectModule, NbCheckboxModule, NbAlertModule, NbAccordionModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
 import { BookingListComponent } from './booking-list/booking-list';
-import { BookingDetailsModule } from '../../@theme/components/booking-details/booking-details.module';
+import { CommonModule, DatePipe } from '@angular/common';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CalendarHeaderModule } from '../../@theme/components/calendar-header/calendar-header.module';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -21,14 +24,27 @@ import { BookingDetailsModule } from '../../@theme/components/booking-details/bo
     ThemeModule,
     FormsModule,
     RouterModule,
-    BookingFormModule,
-    BookingDetailsModule,
+    CommonModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+    CalendarHeaderModule,
+    NbAlertModule,
+    NgbModule,
+    NbCheckboxModule,
+    NbSelectModule,
+    NgSelectModule,
+    NbDatepickerModule,
+    NbAccordionModule,
   ],
   declarations: [
     BookingListComponent,
     NewBookingComponent,
-    ViewBookingComponent,
     PaginationComponent,
+  ],
+  providers: [
+    DatePipe,
   ],
 })
 export class BookingsModule { }

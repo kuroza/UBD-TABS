@@ -1,61 +1,118 @@
-<nb-card>
-  <nb-card-body>
-    <h3>Booking list</h3>
-  </nb-card-body>
-</nb-card>
-<nb-card>
-  <nb-card-body>
-    <div class="card card-body bg-light">
-      <div class="form-inline">
-        <div class="form-group">
-          <label for="building">Filter building:</label>
-        </div>
-        <div class="form-group mx-sm-3">
-          <select name="building" id="" class="form-control" [(ngModel)]="query.buildingId" (change)="onFilterChange()">
-            <option value=""></option>
-            <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
-          </select>
-        </div>
-        <button class="mr-2" nbButton status="basic" (click)="resetFilter()">Reset</button>
-        <!-- <button *ngIf="auth.loggedIn" [routerLink]="['/pages/bookings/new']" nbButton status="primary">New booking</button> ? change to auth.authenticated()? -->
-      </div>
-    </div>
-    <br>
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th *ngFor="let c of columns">
-            <div *ngIf="c.isSortable" (click)="sortBy(c.key)">
-              {{ c.title }}
-              <i *ngIf="query.sortBy === c.key" 
-                class="fa"
-                [class.fa-sort-asc]="query.isSortAscending"
-                [class.fa-sort-desc]="!query.isSortAscending"
-              ></i>
+<div class="row">
+  <div class="col-md-8">
+    <nb-card>
+      <nb-card-header><h4>Booking List</h4></nb-card-header>
+      <nb-card-body>
+        <div class="card card-body bg-light">
+          <div class="form-inline">
+            <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
+              <label for="building">Filter building:</label>
             </div>
-            <div *ngIf="!c.isSortable">
-              {{ c.title }}
+            <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
+              <select name="building" id="" class="form-control" [(ngModel)]="query.buildingId" (change)="onFilterChange()">
+                <option value=""></option>
+                <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
+              </select>
             </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let b of queryResult.items"> <!-- let b of bookings -->
-          <td>{{ b.id }}</td>
-          <td>{{ b.building.name }}</td>
-          <td>{{ b.room.name }}</td>
-          <td>{{ b.bookDate | date:'dd MMMM yyyy' }}</td>
-          <!-- todo: Figure out how to display times in table -->
-          <!-- <ul>
-            <li *ngFor="let timeSlot of b.timeSlots">{{ timeSlot.startTime | date:'shortTime' }}-{{ timeSlot.endTime | date:'shortTime' }}</li>
-          </ul> -->
-          <!-- <td>{{ b.contact.name }}</td> -->
-          <td>
-            <a [routerLink]="['/pages/bookings/', b.id]">View</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <pagination [total-items]="queryResult.totalItems" [page-size]="query.pageSize" (page-changed)="onPageChange($event)"></pagination>
-  </nb-card-body>
-</nb-card>
+            <button size="small" style="margin-left: 10px; margin-top: 10px;" nbButton status="basic" hero (click)="resetFilter()">Reset</button>
+          </div>
+        </div>
+        <br>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th *ngFor="let c of columns">
+                <div *ngIf="c.isSortable" (click)="sortBy(c.key)">
+                  {{ c.title }}
+                  <i *ngIf="query.sortBy === c.key" 
+                    class="fa"
+                    [class.fa-sort-asc]="query.isSortAscending"
+                    [class.fa-sort-desc]="!query.isSortAscending"
+                  ></i>
+                </div>
+                <div *ngIf="!c.isSortable">
+                  {{ c.title }}
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of queryResult.items" (click)="selectBooking(b.id)"> <!-- let b of bookings -->
+              <!-- <td>{{ b.id }}</td> -->
+              <td>{{ b.building.name }}</td>
+              <td>{{ b.room.name }}</td>
+              <td>{{ b.bookDate | date:'dd MMMM yyyy' }}</td> <!-- change next time for Collection -->
+              <!-- <td>
+                <button size="small" nbButton status="primary" (click)="selectBooking(b.id)">View</button>
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+        <pagination [total-items]="queryResult.totalItems" [page-size]="query.pageSize" (page-changed)="onPageChange($event)"></pagination>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-md-4">
+    <nb-card>
+      <nb-card-header>
+        <h4>Details</h4>
+      </nb-card-header>
+      <nb-card-body>
+        <div *ngIf="!booking">
+          <nb-alert status="basic" closable (close)="onClose()" *ngIf="detailsAlert">
+            Click on table row to show its details
+          </nb-alert>
+        </div>
+        <div *ngIf="booking">
+          <h6>Venue</h6>
+          <p>
+            Building: {{ booking.building.name }}<br>
+            Room: {{ booking.room.name }}<br>
+            Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
+          </p>
+        
+          <h6>Modules</h6>
+          <nb-accordion multi>
+            <nb-accordion-item *ngFor="let module of booking.modules">
+              <nb-accordion-item-header>
+                {{ module.code }}: {{ module.name }}
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <table class="table table-hover">
+                  <thead class="thead-dark text-center">
+                    <tr>
+                      <th style="width: 100%" scope="col">Lecturer</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let lecturer of module.lecturers">
+                      <td>{{ lecturer.title }} {{ lecturer.name }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+        
+          <br />
+          <div class="card" style="width: 18rem;">
+            <div class="card-header">
+              <h6>Time slots</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>
+            </ul>
+          </div>
+        
+          <br />
+            <div class="inline" *ngIf="hasAccess">
+              <button style="margin-left: 10px; margin-top: 10px;" nbButton status="warning" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+              <!-- <button style="margin-left: 10px; margin-top: 10px;" nbButton status="warning" (click)="edit(booking.id)">Edit</button> -->
+              <button style="margin-left: 10px; margin-top: 10px;" nbButton status="danger" (click)="delete(booking.id)">Delete</button>
+            </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
