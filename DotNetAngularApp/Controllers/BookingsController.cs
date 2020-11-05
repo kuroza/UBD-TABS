@@ -32,9 +32,9 @@ namespace DotNetAngularApp.Controllers
 
             var booking = mapper.Map<SaveBookingResource, Booking>(bookingResource);
 
-            // var exist = await repository.BookingExist(booking);
-            // if (exist != null)
-            //     return Conflict("The room on this time slot is already taken.");            
+            var exist = repository.BookingExist(booking);
+            if (exist)
+                return Conflict("The room in this time slot is already taken.");
 
             repository.Add(booking);
             await unitOfWork.CompleteAsync();

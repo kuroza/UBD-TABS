@@ -105,14 +105,19 @@ namespace DotNetAngularApp.Persistence
             context.Remove(booking);
         }
 
-        public async Task<Booking> BookingExist(Booking booking)
+        public bool BookingExist(Booking booking)
         {
-            var result = await context.Bookings
-                .Include(b => b.Room)
-                .FirstOrDefaultAsync(b => b.Room.Id == booking.RoomId);
-                // b.BookDate == booking.BookDate && b.TimeSlots == booking.TimeSlots && 
+            var resultContext = context.Bookings
+                .Where(b => b.Room.Id == booking.RoomId && b.BookDate == booking.BookDate)
+                .SelectMany(b => b.TimeSlots.Select(bt => bt.TimeSlotId))
+                .AsEnumerable();
 
-            return result;
+            var resultInput = booking.TimeSlots.Select(bt => bt.TimeSlotId);
+
+            if (resultContext.Intersect(resultInput).Count() > 0)
+                return true;
+            else
+                return false;
         }
     }
 }
