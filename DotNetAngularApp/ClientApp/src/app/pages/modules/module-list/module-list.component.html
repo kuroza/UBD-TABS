@@ -15,11 +15,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let module of modules" (click)="selectModule(module.id)">
-              <td>{{ module.code }}</td>
-              <td>{{ module.name }}</td>
-              <td><a href="javascript:void(0);" (click)="edit(module.id)"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
-              <td><a href="javascript:void(0);" (click)="delete(module.id)"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
+            <tr *ngFor="let module of modules">
+              <td (click)="selectModule(module.id)">{{ module.code }}</td>
+              <td (click)="selectModule(module.id)">{{ module.name }}</td>
+              <td><a href="javascript:void(0);" (click)="edit(module.id)" *ngIf="hasAccess"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
+              <td><a href="javascript:void(0);" (click)="delete(module.id)" *ngIf="hasAccess"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
             </tr>
           </tbody>
         </table>

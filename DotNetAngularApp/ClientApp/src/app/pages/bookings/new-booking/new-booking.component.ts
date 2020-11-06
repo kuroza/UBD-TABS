@@ -61,7 +61,7 @@ import { TimeSlotService } from '../../../services/timeSlot.service';
 @Component({
   selector: 'ngx-new-booking',
   templateUrl: './new-booking.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush, // ! I think this caused me to click add button twice to trigger
   styles: [
     `
       .cal-day-selected,
@@ -94,8 +94,7 @@ export class NewBookingComponent implements OnInit {
     id: 0,
     roomId: 0,
     buildingId: 0,
-    bookDate: '',
-    // bookDate: [],
+    bookDate: '', // []
     timeSlots: [], // selectedTimeSlots
     modules: [],
     semesterId: 0,
@@ -111,6 +110,9 @@ export class NewBookingComponent implements OnInit {
     private timeSlotService: TimeSlotService,
     private toastyService: ToastyService
   ) {
+    route.params.subscribe(p => {
+      this.booking.id = +p['id'] || 0;
+    });
   }
 
   ngOnInit() {
@@ -226,8 +228,7 @@ export class NewBookingComponent implements OnInit {
     this.booking.id = 0;
     this.booking.roomId = 0;
     this.booking.buildingId = 0;
-    // this.booking.bookDate = [];
-    this.booking.bookDate = '';
+    this.booking.bookDate = ''; // []
     this.booking.timeSlots = [];
     this.booking.modules = [];
     this.booking.semesterId = 0;

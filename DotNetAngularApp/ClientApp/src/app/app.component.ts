@@ -5,6 +5,7 @@
  */
 import { Component, OnInit } from '@angular/core';
 import { AnalyticsService } from './@core/utils/analytics.service';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'ngx-app',
@@ -15,10 +16,14 @@ import { AnalyticsService } from './@core/utils/analytics.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private analytics: AnalyticsService) {
+  constructor(
+    private analytics: AnalyticsService,
+    private spinner: NgxSpinnerService) {
   }
 
   ngOnInit() {
-    this.analytics.trackPageViews();
+    this.spinner.show();
+
+    // this.analytics.trackPageViews();
   }
 }

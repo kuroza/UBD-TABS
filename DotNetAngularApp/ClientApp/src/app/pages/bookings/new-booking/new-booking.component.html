@@ -193,10 +193,11 @@
               </div>
             
               <div *ngIf="!booking.id">
-                <!-- <button nbButton fullWidth status="default" (click)="onClickReset()">Reset</button> --> <!-- ? why it outputs a 401 error? -->
+                <button style="margin-bottom: 10px;" nbButton fullWidth status="default" outline (click)="onClickReset()">Reset</button> <!-- ? why it outputs a 401 error? -->
                 <button nbButton fullWidth status="success" [disabled]="!f.valid">Add</button>
               </div>
               <div *ngIf="booking.id">
+                <button style="margin-bottom: 10px;" nbButton fullWidth status="default" (click)="onClickReset()">Reset</button>
                 <button nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>
               </div>
             

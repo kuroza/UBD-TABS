@@ -16,12 +16,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let lecturer of lecturers" (click)="selectLecturer(lecturer.id)">
-              <td>{{ lecturer.title }}</td>
-              <td>{{ lecturer.name }}</td>
-              <td></td>
-              <td><a href="javascript:void(0);" (click)="edit(lecturer.id)"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
-              <td><a href="javascript:void(0);" (click)="delete(lecturer.id)"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
+            <tr *ngFor="let lecturer of lecturers">
+              <td (click)="selectLecturer(lecturer.id)">{{ lecturer.title }}</td>
+              <td (click)="selectLecturer(lecturer.id)">{{ lecturer.name }}</td>
+              <td (click)="selectLecturer(lecturer.id)"></td>
+              <td><a href="javascript:void(0);" (click)="edit(lecturer.id)" *ngIf="hasAccess"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
+              <td><a href="javascript:void(0);" (click)="delete(lecturer.id)" *ngIf="hasAccess"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
             </tr>
           </tbody>
         </table>

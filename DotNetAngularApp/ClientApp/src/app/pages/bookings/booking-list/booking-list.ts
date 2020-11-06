@@ -120,23 +120,25 @@ export class BookingListComponent implements OnInit {
       });
   }
 
-  private setBooking(b) {
-    this.booking.id = b.id;
-    this.booking.buildingId = b.building.id;
-    this.booking.roomId = b.room.id;
-    this.booking.semesterId = b.semester.id;
-    this.booking.bookDate = b.bookDate;
-    this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
-    this.booking.modules = _.pluck(b.modules, 'id');
-  }
+  // private setBooking(b) {
+  //   this.booking.id = b.id;
+  //   this.booking.buildingId = b.building.id;
+  //   this.booking.roomId = b.room.id;
+  //   this.booking.semesterId = b.semester.id;
+  //   this.booking.bookDate = b.bookDate;
+  //   this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
+  //   this.booking.modules = _.pluck(b.modules, 'id');
+  // }
 
   edit(id) {
-    this.bookingService.getBooking(id)
-    .subscribe(
-      m => {
-        this.setBooking(m);
-        this.router.navigate(['/pages/bookings/edit', this.booking.id])
-      });
+    // this.bookingService.getBooking(id)
+    // .subscribe(
+    //   m => {
+    //     this.setBooking(m);
+    //     this.router.navigate(['/pages/bookings/edit', this.booking.id])
+    //   });
+
+    this.redirectTo('/pages/bookings/edit/' + id);
   }
 
   onClose() {

@@ -44,6 +44,7 @@ import { AccountComponent } from './account/account.component';
 import { UserService } from './services/user.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { ShowHidePasswordModule } from 'ngx-show-hide-password';
     AppRoutingModule,
     NbEvaIconsModule,
     ShowHidePasswordModule,
+    NgxSpinnerModule,
     
     ToastyModule.forRoot(),
     ThemeModule.forRoot(),

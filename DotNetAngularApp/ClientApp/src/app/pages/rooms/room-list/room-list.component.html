@@ -32,12 +32,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let room of b.rooms" (click)="selectRoom(room.id)">
+              <tr *ngFor="let room of b.rooms">
                 <!-- <th scope="row">{{ room.id }}</th> -->
-                <th scope="row">{{ room.name }}</th>
-                <td>{{ room.capacity }}</td>
-                <td><a href="javascript:void(0);" (click)="editRoom(room.id)"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
-                <td><a href="javascript:void(0);" (click)="deleteRoom(room.id)"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
+                <th scope="row" (click)="selectRoom(room.id)">{{ room.name }}</th>
+                <td (click)="selectRoom(room.id)">{{ room.capacity }}</td>
+                <td><a href="javascript:void(0);" (click)="editRoom(room.id)" *ngIf="hasAccess"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
+                <td><a href="javascript:void(0);" (click)="deleteRoom(room.id)" *ngIf="hasAccess"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
               </tr>
             </tbody>
           </table>
