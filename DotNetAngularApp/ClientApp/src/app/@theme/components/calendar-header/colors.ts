@@ -13,6 +13,6 @@ export const colors: any = {
   },
   teal: {
     primary: '#117A8B',
-    secondary: '#74CEDC'
+    secondary: '#D1E8FF'
   }
 };
