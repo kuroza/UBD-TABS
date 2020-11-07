@@ -9,9 +9,9 @@ import { BookingListComponent } from './booking-list/booking-list';
 import { CommonModule, DatePipe } from '@angular/common';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { CalendarHeaderModule } from '../../@theme/components/calendar-header/calendar-header.module';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BookingCalendarHeaderModule } from './new-booking/booking-calendar-header/booking-calendar-header.module';
 
 @NgModule({
   imports: [
@@ -29,7 +29,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
-    CalendarHeaderModule,
+    BookingCalendarHeaderModule,
     NbAlertModule,
     NgbModule,
     NbCheckboxModule,

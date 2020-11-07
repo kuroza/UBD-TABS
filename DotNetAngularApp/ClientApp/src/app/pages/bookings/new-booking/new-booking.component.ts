@@ -8,7 +8,6 @@ import { ToastyService } from 'ng2-toasty';
 import { forkJoin, from, Observable } from 'rxjs';
 import { map, mergeMap, toArray } from 'rxjs/operators';
 import * as _ from 'underscore';
-import { zip } from 'underscore';
 import { SaveBooking } from '../../../models/booking';
 import { BookingService } from '../../../services/booking.service';
 import { BuildingService } from '../../../services/building.service';
@@ -23,10 +22,10 @@ import { TimeSlotService } from '../../../services/timeSlot.service';
     `
       .cal-day-selected,
       .cal-day-selected:hover {
-        background-color: lightblue !important;
+        background-color: #FFCCCB !important;
       }
     `,
-  ],
+  ], // lightblue
   encapsulation: ViewEncapsulation.None,
 })
 export class NewBookingComponent implements OnInit {
@@ -218,32 +217,35 @@ export class NewBookingComponent implements OnInit {
   }
 
   submit() {
-    // * Convert JSON values into string
-    // var date: any = this.booking.bookDate; // date has to be of 'any' type
-    // this.year = date.year;
-    // this.month = date.month;
-    // this.day = date.day;
-    // this.booking.bookDate = this.year + this.DELIMITER + this.month + this.DELIMITER + this.day;
-
-    // todo: iterate over selectedDate => get each value => store value in this.booking.bookDate => create
-    
-    var result$;
-    var observables = [];
-
     if (!this.booking.id) {
-      // for (let date of this.selectedDate) {
-      //   this.booking.bookDate = date;
-      //   observables.push(this.bookingService.create(this.booking));
-      // }
-
-      from(this.selectedDate)
-        .pipe(
-          mergeMap((date: string) => {
-            this.booking = {...this.booking, bookDate: date};
-            return this.bookingService.create(this.booking);
-          }),
-          toArray()
-        ).subscribe(() => {
+      from(this.selectedDate).pipe(
+        mergeMap((date: string) => {
+          this.booking = {...this.booking, bookDate: date};
+          return this.bookingService.create(this.booking);
+        }),
+        toArray())
+      .subscribe(() => {
+        this.toastyService.success({
+          title: 'Success', 
+          msg: 'All bookings were sucessfully saved.',
+          theme: 'bootstrap',
+          showClose: true,
+          timeout: 3000
+        });
+        this.resetBookingField();
+        this.redirectTo('/pages/bookings/new');
+      },
+      err => {
+        if (err.status == 409) {
+          this.existAlert = true;
+        } else if (err.status == 400) {
+          this.requiredAlert = true;
+        }
+      });
+    }
+    else if (this.booking.id) {
+      this.bookingService.update(this.booking)
+        .subscribe(() => {
           this.toastyService.success({
             title: 'Success', 
             msg: 'Booking was sucessfully saved.',
@@ -262,27 +264,6 @@ export class NewBookingComponent implements OnInit {
           }
         });
     }
-    else
-      result$ = this.bookingService.update(this.booking);
-
-    result$.subscribe(() => {
-      this.toastyService.success({
-        title: 'Success', 
-        msg: 'Booking was sucessfully saved.',
-        theme: 'bootstrap',
-        showClose: true,
-        timeout: 3000
-      });
-      this.resetBookingField();
-      this.redirectTo('/pages/bookings/');
-    },
-    err => {
-      if (err.status == 409) {
-        this.existAlert = true;
-      } else if (err.status == 400) {
-        this.requiredAlert = true;
-      }
-    });
 
     this.onClose();
   }

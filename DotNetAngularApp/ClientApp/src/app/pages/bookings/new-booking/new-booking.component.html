@@ -5,11 +5,11 @@
               <h4>Booking</h4>
           </nb-card-header>
           <nb-card-body>
-              <ngx-calendar-header [(view)]="view" [(viewDate)]="viewDate">
-              </ngx-calendar-header>
+              <booking-calendar-header [(view)]="view" [(viewDate)]="viewDate">
+              </booking-calendar-header>
 
-              <div class="alert alert-info">
-              <b>Click on a date to select it</b>
+              <div class="alert alert-danger">
+              <b>Click on any date to select it</b>
               </div>
 
               <div [ngSwitch]="view">
@@ -22,22 +22,6 @@
                   [excludeDays]="excludeDays"
               >
               </mwl-calendar-month-view>
-              <!-- <mwl-calendar-week-view
-                  *ngSwitchCase="'week'"
-                  [viewDate]="viewDate"
-                  [events]="events"
-                  (beforeViewRender)="beforeWeekOrDayViewRender($event)"
-                  (hourSegmentClicked)="hourSegmentClicked($event.date)"
-              >
-              </mwl-calendar-week-view>
-              <mwl-calendar-day-view
-                  *ngSwitchCase="'day'"
-                  [viewDate]="viewDate"
-                  [events]="events"
-                  (beforeViewRender)="beforeWeekOrDayViewRender($event)"
-                  (hourSegmentClicked)="hourSegmentClicked($event.date)"
-              >
-              </mwl-calendar-day-view> -->
               </div>
               
               <pre>{{ selectedDate | json }}</pre>

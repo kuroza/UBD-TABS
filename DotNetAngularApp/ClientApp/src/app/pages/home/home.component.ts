@@ -20,7 +20,6 @@ import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'ngx-home',
-  // changeDetection: ChangeDetectionStrategy.OnPush, // ! Is this needed?
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   providers: [
