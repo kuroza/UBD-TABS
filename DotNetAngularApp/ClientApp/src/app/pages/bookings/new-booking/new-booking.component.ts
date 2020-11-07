@@ -216,7 +216,26 @@ export class NewBookingComponent implements OnInit {
     this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
   }
 
+  validSubmitForm(): boolean {
+    if (
+      this.booking.semesterId > 0 && 
+      this.booking.modules.length != 0 &&
+      this.booking.timeSlots.length != 0 &&
+      this.booking.roomId > 0 &&
+      this.selectedDate.length != 0
+      ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   submit() {
+    if (this.validSubmitForm() == false) {
+      this.requiredAlert = true;
+      return false;
+    }
+
     if (!this.booking.id) {
       from(this.selectedDate).pipe(
         mergeMap((date: string) => {
@@ -224,16 +243,17 @@ export class NewBookingComponent implements OnInit {
           return this.bookingService.create(this.booking);
         }),
         toArray())
-      .subscribe(() => {
+      .subscribe(res => {
         this.toastyService.success({
           title: 'Success', 
           msg: 'All bookings were sucessfully saved.',
           theme: 'bootstrap',
           showClose: true,
-          timeout: 3000
+          timeout: 5000
         });
         this.resetBookingField();
         this.redirectTo('/pages/bookings/new');
+        console.log(res);
       },
       err => {
         if (err.status == 409) {
