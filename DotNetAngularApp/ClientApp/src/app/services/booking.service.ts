@@ -27,7 +27,8 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
-  toQueryString(obj) { // * for multiple query strings eg. 'buildingId=1&roomId=2'
+  // * for multiple query strings eg. 'buildingId=1&roomId=2'
+  toQueryString(obj) {
     var parts = [];
     for (var property in obj) {
       var value = obj[property];
@@ -38,7 +39,7 @@ export class BookingService {
     return parts.join('&');
   }
 
-  create(booking) {
+  create(booking: SaveBooking) {
     return this.http.post(this.bookingsEndpoint, booking)
       .pipe(map(response => response));
   }

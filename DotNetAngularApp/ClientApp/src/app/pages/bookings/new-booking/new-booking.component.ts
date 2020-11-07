@@ -5,8 +5,10 @@ import { NgbDateAdapter, NgbDateParserFormatter, NgbDateStruct } from '@ng-boots
 import { CalendarEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBeforeRenderEvent } from 'angular-calendar';
 import { WeekViewHour, WeekViewHourColumn } from 'calendar-utils';
 import { ToastyService } from 'ng2-toasty';
-import { Observable } from 'rxjs';
+import { forkJoin, from, Observable } from 'rxjs';
+import { map, mergeMap, toArray } from 'rxjs/operators';
 import * as _ from 'underscore';
+import { zip } from 'underscore';
 import { SaveBooking } from '../../../models/booking';
 import { BookingService } from '../../../services/booking.service';
 import { BuildingService } from '../../../services/building.service';
@@ -14,54 +16,9 @@ import { ModuleService } from '../../../services/module.service';
 import { SemesterService } from '../../../services/semester.service';
 import { TimeSlotService } from '../../../services/timeSlot.service';
 
-// @Injectable()
-// export class CustomAdapter extends NgbDateAdapter<string> {
-
-//   readonly DELIMITER = '-';
-
-//   fromModel(value: string | null): NgbDateStruct | null {
-//     if (value) {
-//       let date = value.split(this.DELIMITER);
-//       return {
-//         day : parseInt(date[0], 10),
-//         month : parseInt(date[1], 10),
-//         year : parseInt(date[2], 10)
-//       };
-//     }
-//     return null;
-//   }
-
-//   toModel(date: NgbDateStruct | null): string | null {
-//     return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : null;
-//   }
-// }
-
-// @Injectable()
-// export class CustomDateParserFormatter extends NgbDateParserFormatter {
-
-//   readonly DELIMITER = '-'; // change in input form
-
-//   parse(value: string): NgbDateStruct | null {
-//     if (value) {
-//       let date = value.split(this.DELIMITER);
-//       return {
-//         day : parseInt(date[0], 10),
-//         month : parseInt(date[1], 10),
-//         year : parseInt(date[2], 10)
-//       };
-//     }
-//     return null;
-//   }
-
-//   format(date: NgbDateStruct | null): string {
-//     return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
-//   }
-// }
-
 @Component({
   selector: 'ngx-new-booking',
   templateUrl: './new-booking.component.html',
-  // changeDetection: ChangeDetectionStrategy.OnPush, // ! I think this caused me to click add button twice to trigger
   styles: [
     `
       .cal-day-selected,
@@ -94,8 +51,8 @@ export class NewBookingComponent implements OnInit {
     id: 0,
     roomId: 0,
     buildingId: 0,
-    bookDate: '', // []
-    timeSlots: [], // selectedTimeSlots
+    bookDate: '',
+    timeSlots: [],
     modules: [],
     semesterId: 0,
   };
@@ -123,7 +80,7 @@ export class NewBookingComponent implements OnInit {
       this.semesterService.getAllSemesters(),
     ];
 
-    // for editing Booking events
+    // * for editing Booking events
     if (this.booking.id)
       sources.push(this.bookingService.getBooking(this.booking.id));
 
@@ -144,6 +101,8 @@ export class NewBookingComponent implements OnInit {
     });
   }
 
+  // * angular-calendar ---------------------------------------------------------------------
+
   view: CalendarView = CalendarView.Month;
 
   viewDate: Date = new Date();
@@ -158,6 +117,8 @@ export class NewBookingComponent implements OnInit {
 
   selectedDays: any = [];
 
+  selectedDate: any = [];
+
   excludeDays: number[] = [0, 5];
 
   dayClicked(day: CalendarMonthViewDay): void {
@@ -167,16 +128,16 @@ export class NewBookingComponent implements OnInit {
       (selectedDay) => selectedDay.date.getTime() === selectedDateTime
     );
     if (dateIndex > -1) {
-      delete this.selectedMonthViewDay.cssClass; // remove the date timetable marking
-      this.selectedDays.splice(dateIndex, 1); // remove from array
-      // this.booking.bookDate.splice(dateIndex, 1);
+      delete this.selectedMonthViewDay.cssClass; // removes the date timetable marking
+      this.selectedDays.splice(dateIndex, 1); // removes from array
+      this.selectedDate.splice(dateIndex, 1);
     } else {
       this.selectedDays.push(this.selectedMonthViewDay);
       day.cssClass = 'cal-day-selected';
       this.selectedMonthViewDay = day;
 
-      // var dateFromClicked = formatDate(this.selectedMonthViewDay.date, 'yyyy-MM-dd', 'en-us', '+0800');
-      // this.booking.bookDate.push(dateFromClicked);
+      var dateFromClicked = formatDate(this.selectedMonthViewDay.date, 'yyyy-MM-dd', 'en-us', '+0800');
+      this.selectedDate.push(dateFromClicked);
     }
   }
 
@@ -218,23 +179,23 @@ export class NewBookingComponent implements OnInit {
     });
   }
 
-  // ! Booking form ---------------------------------------------------------------------
+  // * Booking form ---------------------------------------------------------------------
 
-  onClickReset() {
-    this.resetBookingField();
-  }
+  // onClickReset() {
+  //   this.resetBookingField();
+  // }
 
   resetBookingField() {
     this.booking.id = 0;
     this.booking.roomId = 0;
     this.booking.buildingId = 0;
-    this.booking.bookDate = ''; // []
+    this.booking.bookDate = '';
     this.booking.timeSlots = [];
     this.booking.modules = [];
     this.booking.semesterId = 0;
   }
 
-  // editing
+  // * for editing
   private setBooking(b) {
     this.booking.id = b.id;
     this.booking.buildingId = b.building.id;
@@ -257,21 +218,53 @@ export class NewBookingComponent implements OnInit {
   }
 
   submit() {
-    // Rearrange date
-    // var date = this.booking.bookDate.split(this.DELIMITER);
-    // this.year = parseInt(date[2], 10);
-    // this.month = parseInt(date[1], 10);
-    // this.day = parseInt(date[0], 10);
-    // this.booking.bookDate = this.month + this.DELIMITER + this.day + this.DELIMITER + this.year;
+    // * Convert JSON values into string
+    // var date: any = this.booking.bookDate; // date has to be of 'any' type
+    // this.year = date.year;
+    // this.month = date.month;
+    // this.day = date.day;
+    // this.booking.bookDate = this.year + this.DELIMITER + this.month + this.DELIMITER + this.day;
 
-    // Convert JSON values into string
-    var date: any = this.booking.bookDate; // date has to be of 'any' type
-    this.year = date.year;
-    this.month = date.month;
-    this.day = date.day;
-    this.booking.bookDate = this.year + this.DELIMITER + this.month + this.DELIMITER + this.day;
+    // todo: iterate over selectedDate => get each value => store value in this.booking.bookDate => create
+    
+    var result$;
+    var observables = [];
 
-    var result$ = (this.booking.id) ? this.bookingService.update(this.booking) : this.bookingService.create(this.booking); 
+    if (!this.booking.id) {
+      // for (let date of this.selectedDate) {
+      //   this.booking.bookDate = date;
+      //   observables.push(this.bookingService.create(this.booking));
+      // }
+
+      from(this.selectedDate)
+        .pipe(
+          mergeMap((date: string) => {
+            this.booking = {...this.booking, bookDate: date};
+            return this.bookingService.create(this.booking);
+          }),
+          toArray()
+        ).subscribe(() => {
+          this.toastyService.success({
+            title: 'Success', 
+            msg: 'Booking was sucessfully saved.',
+            theme: 'bootstrap',
+            showClose: true,
+            timeout: 3000
+          });
+          this.resetBookingField();
+          this.redirectTo('/pages/bookings/');
+        },
+        err => {
+          if (err.status == 409) {
+            this.existAlert = true;
+          } else if (err.status == 400) {
+            this.requiredAlert = true;
+          }
+        });
+    }
+    else
+      result$ = this.bookingService.update(this.booking);
+
     result$.subscribe(() => {
       this.toastyService.success({
         title: 'Success', 
@@ -281,7 +274,6 @@ export class NewBookingComponent implements OnInit {
         timeout: 3000
       });
       this.resetBookingField();
-      // this.router.navigate(['/pages/bookings/', this.booking.id]);
       this.redirectTo('/pages/bookings/');
     },
     err => {

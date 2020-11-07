@@ -40,7 +40,7 @@
               </mwl-calendar-day-view> -->
               </div>
               
-              <pre>{{ selectedDays | json }}</pre>
+              <pre>{{ selectedDate | json }}</pre>
           </nb-card-body>
       </nb-card>
   </div>
@@ -167,14 +167,8 @@
               </div>
             
               <!-- * ng-bootstrap Datepicker -->
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="bookDate">Date *</label>
-                <!-- <br>
-                <input nbInput placeholder="Choose Date" [nbDatepicker]="ngmodel" [(ngModel)]="ngModelDate">
-                <nb-datepicker #ngmodel></nb-datepicker> 
-              
-                dateChange -->
-            
                 <div class="input-group">
                   <input 
                   id="bookDate" 
@@ -190,14 +184,14 @@
                   </div>
                 </div>
                 <div class="alert alert-danger" *ngIf="bookDate.touched && !bookDate.valid">Please specify the date.</div>
-              </div>
+              </div> -->
             
               <div *ngIf="!booking.id">
-                <button style="margin-bottom: 10px;" nbButton fullWidth status="default" outline (click)="onClickReset()">Reset</button> <!-- ? why it outputs a 401 error? -->
+                <!-- <button style="margin-bottom: 10px;" nbButton fullWidth status="default" outline (click)="onClickReset()">Reset</button> -->
                 <button nbButton fullWidth status="success" [disabled]="!f.valid">Add</button>
               </div>
               <div *ngIf="booking.id">
-                <button style="margin-bottom: 10px;" nbButton fullWidth status="default" (click)="onClickReset()">Reset</button>
+                <!-- <button style="margin-bottom: 10px;" nbButton fullWidth status="default" (click)="onClickReset()">Reset</button> -->
                 <button nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>
               </div>
             

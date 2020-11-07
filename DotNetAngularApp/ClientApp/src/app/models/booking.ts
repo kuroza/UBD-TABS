@@ -3,11 +3,11 @@ export interface KeyValuePair {
     name: string;
 }
 
-export interface Booking { // from resource
+export interface Booking {
     id: number;
-    room: { id: number; name: string; capacity: number; }; // {}[]
-    building: { id: number; name: string; }; // {}[]
-    bookDate: string; // string[]
+    room: { id: number; name: string; capacity: number; };
+    building: { id: number; name: string; };
+    bookDate: string;
     timeSlots: { id: number; startTime: string; endTime: string; }[];
     modules: { 
         id: number; 
@@ -22,11 +22,10 @@ export interface Booking { // from resource
     semesters: { id: number; session: string; startDate: string; endDate: string; }[];
 }
 
-export interface SaveBooking { // save to database
+export interface SaveBooking {
     id: number;
-    roomId: number; // number[]
-    buildingId: number; // number[]
-    // bookDate: string[];
+    roomId: number;
+    buildingId: number;
     bookDate: string;
     timeSlots: number[];
     modules: number[];
