@@ -69,7 +69,8 @@
                   required
                   placeholder="Select Semester"
                   [(selected)]="filter.semesterId"
-                > <!-- (selectedChange)="onSemesterChange()" -->
+                  (selectedChange)="onFilterChange()"
+                >
                   <nb-option *ngFor="let s of semesters" value="{{ s.id }}">{{ s.session }}</nb-option>
                 </nb-select>
               </div>
@@ -96,10 +97,12 @@
                   required
                   placeholder="Select Room"
                   [(selected)]="filter.roomId"
+                  (selectedChange)="onFilterChange()"
                 >
                   <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
                 </nb-select>
                 
+              <!-- <pre>{{ filter | json }}</pre> -->
               </div>
               <button nbButton size="small" status="basic" hero (click)="resetFilter()" style="margin-top: 20px; float: right;">Reset</button>
             </div>

@@ -25,7 +25,7 @@ namespace DotNetAngularApp.Persistence
                 return await context.Bookings.FindAsync(id);
 
             return await context.Bookings
-            // include semester
+                .Include(b => b.Semester)
                 .Include(b => b.TimeSlots)
                     .ThenInclude(bt => bt.TimeSlot)
                 .Include(b => b.Room)
@@ -40,7 +40,7 @@ namespace DotNetAngularApp.Persistence
         public async Task<IEnumerable<Booking>> GetAllBookings()
         {
             return await context.Bookings
-            // include semester
+                .Include(b => b.Semester)
                 .Include(b => b.Room)
                     .ThenInclude(r => r.Building)
                 .Include(b => b.TimeSlots)

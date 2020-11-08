@@ -8,6 +8,8 @@ namespace DotNetAngularApp.Controllers.Resources
     {
         public int Id { get; set; }
 
+        public int SemesterId { get; set; }
+
         public RoomResource Room { get; set; }
 
         public KeyValuePairResource Building { get; set; }

@@ -19,7 +19,8 @@ export interface Booking {
             title: string; 
         }[]; 
     }[];
-    semesters: { id: number; session: string; startDate: string; endDate: string; }[];
+    semesterId: number;
+    // semester: { id: number; session: string; startDate: string; endDate: string; };
 }
 
 export interface SaveBooking {

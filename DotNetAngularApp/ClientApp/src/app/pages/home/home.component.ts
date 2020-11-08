@@ -89,13 +89,8 @@ export class HomeComponent {
     this.events = []; // reset events after every filter change
     var bookings = this.allBookings; // show all Bookings
 
-    /*
-      todo: show bookings from the selected Semester
-      ! initially a Semester is already selected?
-      else, no Bookings are displayed
-    */
     if (this.filter.semesterId)
-      bookings = bookings.filter(b => b.semester.id == this.filter.semesterId);
+      bookings = bookings.filter(b => b.semesterId == this.filter.semesterId);
 
     if (this.filter.buildingId) // [(selected)]="filter.buildingId"
       // show bookings from the selected Building
@@ -108,14 +103,6 @@ export class HomeComponent {
     this.bookings = bookings;
     this.populateCalendar();
   }
-
-  // onSemesterChange() {
-  //   this.events = [];
-  //   var bookings = this.allBookings;
-  //   this.bookings = bookings.filter(b => b.semester.id == this.filter.semesterId);
-  //   this.populateCalendar();
-  //   this.refresh.next();
-  // }
 
   onBuildingChange() { // for cascading
     var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);

@@ -42,6 +42,7 @@ namespace DotNetAngularApp.Mapping
                 .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => bt.ModuleId)));
 
             CreateMap<Booking, BookingResource>()
+                .ForMember(br => br.SemesterId, opt => opt.MapFrom(b => b.Semester.Id)) // !
                 .ForMember(br => br.Building, opt => opt.MapFrom(b => b.Room.Building))
                 .ForMember(br => br.TimeSlots, opt => 
                     opt.MapFrom(b => b.TimeSlots.Select(bt => 

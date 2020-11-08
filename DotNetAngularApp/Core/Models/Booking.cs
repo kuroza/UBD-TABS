@@ -12,7 +12,7 @@ namespace DotNetAngularApp.Core.Models
         public int Id { get; set; }
 
         [Required]
-        public DateTime BookDate { get; set; } // ! change to collection of BookDate
+        public DateTime BookDate { get; set; }
 
         [Required]
         public int RoomId { get; set; } // ! change to collection of Rooms
