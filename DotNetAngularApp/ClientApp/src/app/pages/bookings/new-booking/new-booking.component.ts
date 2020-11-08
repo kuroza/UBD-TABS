@@ -232,13 +232,15 @@ export class NewBookingComponent implements OnInit {
   }
 
   submit() {
+    this.nbSpinner = true;
+
     if (this.validSubmitForm() == false) {
       this.requiredAlert = true;
+      this.nbSpinner = false;
       return false;
     }
 
     if (!this.booking.id) {
-      this.nbSpinner = true;
       from(this.selectedDate).pipe(
         mergeMap((date: string) => {
           this.booking = {...this.booking, bookDate: date};
@@ -260,8 +262,10 @@ export class NewBookingComponent implements OnInit {
       err => {
         if (err.status == 409) {
           this.existAlert = true;
+          this.nbSpinner = false;
         } else if (err.status == 400) {
           this.requiredAlert = true;
+          this.nbSpinner = false;
         }
       });
     }
@@ -287,7 +291,7 @@ export class NewBookingComponent implements OnInit {
         });
     }
 
-    this.onClose();
+    this.onClose(); // ? redundant?
   }
 
   onClose() {

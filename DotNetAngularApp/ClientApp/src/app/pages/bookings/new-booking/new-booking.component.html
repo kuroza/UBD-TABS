@@ -33,7 +33,7 @@
   </div>
 
   <div class="col-md-4">
-      <nb-card [nbSpinner]="false" nbSpinnerStatus="success">
+      <nb-card [nbSpinner]="nbSpinner ? true : false" nbSpinnerStatus="success">
           <nb-card-header *ngIf="!booking.id"><h4>Add Booking</h4></nb-card-header>
           <nb-card-header *ngIf="booking.id"><h4>Edit Booking</h4></nb-card-header>
           <nb-card-body>

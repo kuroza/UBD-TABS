@@ -1,3 +1,4 @@
+import { SemesterService } from './../../services/semester.service';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { BookingService } from '../../services/booking.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -30,10 +31,17 @@ import { UserService } from '../../services/user.service';
   ],
 })
 export class HomeComponent {
-  booking: any;
-  buildings: any;
   hasAccess = true;
   detailsAlert: boolean = true;
+  nbSpinner: boolean = false;
+
+  semesters: any;
+  buildings: any;
+  rooms: any;
+  filter: any = {};
+  allBookings: any;
+  booking: any; // a single booking event
+  bookings: any; // events to be populated on calendar
 
   excludeDays: number[] = [0, 5];
   weekStartsOn = DAYS_OF_WEEK.MONDAY;
@@ -44,15 +52,11 @@ export class HomeComponent {
   date: string;
   refresh: Subject<any> = new Subject();
   events: CalendarEvent[] = [];
-  bookings: any;
   startDateTime: any;
   endDateTime: any;
   bookDate: any;
   startTime: any;
   endTime: any;
-  rooms: any;
-  filter: any = {};
-  allBookings: any;
 
   constructor(
     private route: ActivatedRoute, 
@@ -60,7 +64,8 @@ export class HomeComponent {
     private toasty: ToastyService,
     private bookingService: BookingService,
     private buildingService: BuildingService,
-    private userService: UserService
+    private userService: UserService,
+    private semesterService: SemesterService
     ) {}
 
   async ngOnInit() {
@@ -68,6 +73,9 @@ export class HomeComponent {
       this.hasAccess = this.userService.hasAccess();
     }
     
+    this.semesterService.getAllSemesters()
+      .subscribe(semesters => this.semesters = semesters);
+
     this.buildingService.getAllBuildings() // get the buildings from service for filter drop down
       .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
 
@@ -76,8 +84,6 @@ export class HomeComponent {
     this.refresh.next(); // refresh calendar after loading
   }
 
-  // * this will need to be considered when changing the filter/search
-  // * reset the current calendar if changing to other searching type (eg. by modules)
   onFilterChange() { // anytime the filters are changed
     this.activeDayIsOpen = false;
     this.events = []; // reset events after every filter change
@@ -85,11 +91,13 @@ export class HomeComponent {
 
     /*
       todo: show bookings from the selected Semester
-      initially a Semester is already selected?
+      ! initially a Semester is already selected?
       else, no Bookings are displayed
     */
+    if (this.filter.semesterId)
+      bookings = bookings.filter(b => b.semester.id == this.filter.semesterId);
 
-    if (this.filter.buildingId)
+    if (this.filter.buildingId) // [(selected)]="filter.buildingId"
       // show bookings from the selected Building
       bookings = bookings.filter(b => b.building.id == this.filter.buildingId);
 
@@ -101,28 +109,29 @@ export class HomeComponent {
     this.populateCalendar();
   }
 
-  resetFilter() {
-    this.filter = {}; // empty filter drop down
-    this.rooms = []; // clear room drop down filter
-    this.emptyRoomFilter();
-    this.showAllBookings(); // show all if reset
-  }
+  // onSemesterChange() {
+  //   this.events = [];
+  //   var bookings = this.allBookings;
+  //   this.bookings = bookings.filter(b => b.semester.id == this.filter.semesterId);
+  //   this.populateCalendar();
+  //   this.refresh.next();
+  // }
 
   onBuildingChange() { // for cascading
     var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
     this.rooms = selectedBuilding ? selectedBuilding.rooms : []; // cascade rooms drop down
     this.emptyRoomFilter();
     
-    var bookings = this.allBookings;;
+    var bookings = this.allBookings;
     this.bookings = bookings.filter(b => b.building.id == this.filter.buildingId); // filter events by building
-    this.populateCalendar();
+    this.populateCalendar(); // ! am I repeating this with onFilterChange()? Maybe not..
   }
 
   emptyRoomFilter() {
     this.activeDayIsOpen = false;
     this.events = []; // clear events
     delete this.filter.roomId; // clear selected roomId
-    this.refresh.next();// refresh calendar after loading
+    this.refresh.next(); // refresh calendar after loading
   }
 
   showAllBookings() {
@@ -130,7 +139,16 @@ export class HomeComponent {
     this.populateCalendar();
   }
 
+  resetFilter() {
+    this.filter = {}; // empty filter drop down
+    this.rooms = []; // clear room dropdown
+    this.emptyRoomFilter();
+    this.showAllBookings(); // show all if reset
+  }
+
   private populateCalendar() {
+    this.nbSpinner = true;
+
     for (let b of this.bookings) {
       var dateFormat = require('dateformat');
       this.bookDate = dateFormat(b.bookDate, 'yyyy-mm-dd'); // * format date
@@ -163,6 +181,7 @@ export class HomeComponent {
         ];
       }
     }
+    this.nbSpinner = false;
     this.refresh.next();
   }
 
@@ -209,6 +228,10 @@ export class HomeComponent {
           this.redirectTo('/pages/bookings');
         });
     }
+  }
+
+  onCloseDetails() {
+    this.detailsAlert = false;
   }
 
   redirectTo(uri:string){

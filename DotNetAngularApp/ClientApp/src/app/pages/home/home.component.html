@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-8">
-    <nb-card [nbSpinner]="true" nbSpinnerStatus="success">
+    <nb-card [nbSpinner]="nbSpinner ? true : false" nbSpinnerStatus="success">
       <nb-card-header fullWidth>
         <h4>Calendar</h4>
       </nb-card-header>
@@ -62,6 +62,19 @@
           <nb-tab tabTitle="Filter By Room">
             <div class="form-group">
               <div class="mr-2" style="margin-top: 10px">
+                <label>Filter Semester</label>
+                <nb-select
+                  filled
+                  fullWidth
+                  required
+                  placeholder="Select Semester"
+                  [(selected)]="filter.semesterId"
+                > <!-- (selectedChange)="onSemesterChange()" -->
+                  <nb-option *ngFor="let s of semesters" value="{{ s.id }}">{{ s.session }}</nb-option>
+                </nb-select>
+              </div>
+
+              <div class="mr-2" style="margin-top: 20px">
                 <label>Filter Building</label>
                 <nb-select
                   filled
@@ -73,12 +86,8 @@
                 >
                   <nb-option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</nb-option>
                 </nb-select>
-
-                <!-- <select style="width: 24rem;" name="buildingId" id="building" class="form-control" [(ngModel)]="filter.buildingId" (change)="onBuildingChange()">
-                  <option value="" placeholder="Select a building"></option>
-                  <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
-                </select> -->
               </div>
+
               <div class="mr-2" style="margin-top: 20px">
                 <label>Filter Room</label>
                 <nb-select
@@ -90,11 +99,7 @@
                 >
                   <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
                 </nb-select>
-
-                <!-- <select style="width: 24rem;" name="roomId" id="room" class="form-control" [(ngModel)]="filter.roomId" (change)="onFilterChange()">
-                  <option value="" placeholder="Select a room"></option>
-                  <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
-                </select> -->
+                
               </div>
               <button nbButton size="small" status="basic" hero (click)="resetFilter()" style="margin-top: 20px; float: right;">Reset</button>
             </div>
