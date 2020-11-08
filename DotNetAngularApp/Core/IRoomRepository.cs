@@ -9,6 +9,7 @@ namespace DotNetAngularApp.Core
         void Add(Room room);
         void Remove(Room room);
         Task<Room> RoomNameExist(Room room);
+        Task<Room> EditRoomExist(Room room);
         Task<IEnumerable<Room>> GetAllRooms();
         Task<Room> GetRoom(int id, bool includeRelated = true);
     }

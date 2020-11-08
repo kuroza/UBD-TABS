@@ -10,6 +10,7 @@ namespace DotNetAngularApp.Core
         void Remove(Module module);
         Task<Module> ModuleNameExist(Module module);
         Task<Module> ModuleCodeExist(Module module);
+        Task<Module> EditModuleExist(Module module);
         Task<IEnumerable<Module>> GetAllModules();
         Task<Module> GetModule(int id, bool includeRelated = true);
     }

@@ -14,16 +14,7 @@ export const MENU_ITEMS_ADMIN: NbMenuItem[] = [
   {
     title: 'Account',
     icon: 'lock-outline',
-    children: [
-      {
-        title: 'Profile',
-        link: '/pages/account/profile',
-      },
-      {
-        title: 'Reset Password',
-        link: '/pages/account/reset-password',
-      },
-    ],
+    link: '/pages/account/profile'
   },
   {
     title: 'Admin',
@@ -89,16 +80,7 @@ export const MENU_ITEMS_USER: NbMenuItem[] = [
   {
     title: 'Account',
     icon: 'lock-outline',
-    children: [
-      {
-        title: 'Profile',
-        link: '/pages/account/profile',
-      },
-      {
-        title: 'Reset Password',
-        link: '/pages/account/reset-password',
-      },
-    ],
+    link: '/pages/account/profile',
   },
   {
     title: 'Menu',

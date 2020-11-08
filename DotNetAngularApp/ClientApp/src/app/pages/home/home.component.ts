@@ -81,12 +81,20 @@ export class HomeComponent {
   onFilterChange() { // anytime the filters are changed
     this.activeDayIsOpen = false;
     this.events = []; // reset events after every filter change
-    var bookings = this.allBookings;
+    var bookings = this.allBookings; // show all Bookings
+
+    /*
+      todo: show bookings from the selected Semester
+      initially a Semester is already selected?
+      else, no Bookings are displayed
+    */
 
     if (this.filter.buildingId)
+      // show bookings from the selected Building
       bookings = bookings.filter(b => b.building.id == this.filter.buildingId);
 
     if (this.filter.roomId)
+      // show bookings from the selected Room
       bookings = bookings.filter(b => b.room.id == this.filter.roomId);
 
     this.bookings = bookings;
@@ -175,22 +183,11 @@ export class HomeComponent {
   onClick() {
     this.detailsAlert = false;
   }
-
-  // ! need to click the event twice to show details. Why?
   
-  // @Output() sendBookingId = new EventEmitter<number>();
-  
-  // send Id to home component for booking-details to use
   eventClicked({ event }: { event: CalendarEvent }): void {
-    // this.sendBookingId.emit(event.meta.id); // * gets the bookingId when event is clicked
     this.bookingService.getBooking(event.meta.id)
       .subscribe(b => this.booking = b);
   }
-
-  // receiveBookingId($event) {
-  //   this.bookingService.getBooking($event)
-  //     .subscribe(b => this.booking = b);
-  // }
 
   setView(view: CalendarView) {
     this.view = view;
@@ -209,7 +206,6 @@ export class HomeComponent {
     if (confirm("Are you sure?")) {
       this.bookingService.delete(this.booking.id)
         .subscribe(x => {
-          // this.router.navigate(['/pages/bookings']);
           this.redirectTo('/pages/bookings');
         });
     }

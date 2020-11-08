@@ -87,5 +87,10 @@ namespace DotNetAngularApp.Persistence
         {
             return await context.Modules.FirstOrDefaultAsync(m => m.Code == module.Code);
         }
+
+        public async Task<Module> EditModuleExist(Module module)
+        {
+            return await context.Modules.FirstOrDefaultAsync(m => m.Name == module.Name && m.Code == module.Code && m.Id != module.Id);
+        }
     }
 }

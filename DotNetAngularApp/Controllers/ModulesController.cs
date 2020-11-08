@@ -113,15 +113,9 @@ namespace DotNetAngularApp.Controllers
 
             module = mapper.Map<SaveModuleResource, Module>(moduleResource, module);
             
-            // var existName = await repository.ModuleNameExist(module);
-            // var existCode = await repository.ModuleCodeExist(module);
-
-            // if (existName != null && existCode != null)
-            //     return Conflict("Model name and code already exist.");
-            // else if (existName != null)
-            //     return Conflict("Model name already exists.");
-            // else if (existCode != null)
-            //     return Conflict("Model code already exists.");
+            var exist = await repository.EditModuleExist(module);
+            if (exist != null)
+                return Conflict("Model details already exist.");
 
             await unitOfWork.CompleteAsync();
             

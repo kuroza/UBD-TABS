@@ -23,8 +23,8 @@
               >
               </mwl-calendar-month-view>
               </div>
-              
-              <pre>{{ selectedDate | json }}</pre>
+              <!-- <br>
+              <pre>{{ selectedDate | json }}</pre> -->
           </nb-card-body>
       </nb-card>
   </div>
@@ -172,15 +172,15 @@
             
               <div *ngIf="!booking.id">
                 <!-- <button style="margin-bottom: 10px;" nbButton fullWidth status="default" outline (click)="onClickReset()">Reset</button> -->
-                <button nbButton fullWidth status="success" [disabled]="!f.valid">Add</button>
+                <button nbButton fullWidth status="primary" [disabled]="!f.valid">Submit</button>
               </div>
               <div *ngIf="booking.id">
                 <!-- <button style="margin-bottom: 10px;" nbButton fullWidth status="default" (click)="onClickReset()">Reset</button> -->
                 <button nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>
               </div>
             
-              <br>
-              <pre>{{ booking | json }}</pre>
+              <!-- <br>
+              <pre>{{ booking | json }}</pre> -->
             </form>
           </nb-card-body>
       </nb-card>

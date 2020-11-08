@@ -119,5 +119,20 @@ namespace DotNetAngularApp.Persistence
             else
                 return false;
         }
+
+        public bool EditBookingExist(Booking booking)
+        {
+            var resultContext = context.Bookings
+                .Where(b => b.Room.Id == booking.RoomId && b.BookDate == booking.BookDate && b.Id != booking.Id)
+                .SelectMany(b => b.TimeSlots.Select(bt => bt.TimeSlotId))
+                .AsEnumerable();
+
+            var resultInput = booking.TimeSlots.Select(bt => bt.TimeSlotId);
+
+            if (resultContext.Intersect(resultInput).Count() > 0)
+                return true;
+            else
+                return false;
+        }
     }
 }

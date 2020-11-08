@@ -55,7 +55,6 @@ namespace DotNetAngularApp.Controllers
             var lecturer = mapper.Map<SaveLecturerResource, Lecturer>(lecturerResource);
 
             var existName = await repository.LecturerNameExist(lecturer);
-
             if (existName != null)
                 return Conflict("Lecturer name already exists.");
 
@@ -97,6 +96,10 @@ namespace DotNetAngularApp.Controllers
                 return NotFound();
 
             mapper.Map<SaveLecturerResource, Lecturer>(lecturerResource, lecturer);
+
+            var exist = await repository.EditLecturerExist(lecturer);
+            if (exist != null)
+                return Conflict("Lecturer name already exists.");
 
             await unitOfWork.CompleteAsync();
 
