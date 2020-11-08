@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NbCalendarRange } from '@nebular/theme';
 
 @Component({
   selector: 'semesters',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./semesters.component.scss']
 })
 export class SemestersComponent implements OnInit {
+
+  range: NbCalendarRange<Date>;
 
   constructor() { }
 

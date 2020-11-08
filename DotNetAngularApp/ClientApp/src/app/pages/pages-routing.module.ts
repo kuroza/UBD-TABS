@@ -15,6 +15,7 @@ import { TimeSlotListComponent } from './time-slots/time-slot-list/time-slot-lis
 import { NewTimeSlotComponent } from './time-slots/new-time-slot/new-time-slot.component';
 import { ViewTimeSlotComponent } from './time-slots/view-time-slot/view-time-slot';
 import { LecturerListComponent } from './lecturers/lecturer-list/lecturer-list.component';
+import { SemestersComponent } from './semesters/semesters.component';
 
 const routes: Routes = [{
   path: '',
@@ -32,6 +33,7 @@ const routes: Routes = [{
     { path: 'lecturers', component: LecturerListComponent },
     { path: 'modules', component: ModuleListComponent },
     { path: 'rooms', component: RoomListComponent },
+    { path: 'semesters', component: SemestersComponent },
     { path: 'timeslots', component: TimeSlotListComponent },
     { path: 'timeslots/new', component: NewTimeSlotComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
     { path: 'timeslots/:id', component: ViewTimeSlotComponent },

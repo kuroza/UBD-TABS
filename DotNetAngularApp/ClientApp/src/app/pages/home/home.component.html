@@ -55,13 +55,12 @@
   </div>
 
   <div class="col-md-4">
-
     <nb-card>
       <nb-card-body>
         <nb-tabset fullWidth>
           <nb-tab tabTitle="Filter By Room">
             <div class="form-group">
-              <div class="mr-2" style="margin-top: 20px">
+              <div class="mr-2" style="margin-top: 10px">
                 <label>Filter Building</label>
                 <nb-select
                   filled
@@ -95,7 +94,66 @@
           </nb-tab>
 
           <nb-tab tabTitle="Filter By Module">
-            
+            <div class="form-group">
+              <div class="mr-2" style="margin-top: 10px">
+                <label>Filter Faculty</label>
+                <nb-select
+                  filled
+                  fullWidth
+                  required
+                  placeholder="Select Faculty"
+                  [(selected)]="filter.facultyId"
+                  (selectedChange)="onFilterModuleChange()"
+                >
+                  <nb-option *ngFor="let f of faculties" value="{{ f.id }}">{{ f.name }}</nb-option>
+                </nb-select>
+              </div>
+
+              <div class="mr-2" style="margin-top: 20px">
+                <label>Filter Program</label>
+                <nb-select
+                  filled
+                  fullWidth
+                  required
+                  placeholder="Select Program"
+                  [(selected)]="filter.programId"
+                  (selectedChange)="onFilterModuleChange()"
+                >
+                  <nb-option *ngFor="let p of programs" value="{{ p.id }}">{{ p.name }}</nb-option>
+                </nb-select>
+              </div>
+
+              <div class="mr-2" style="margin-top: 20px">
+                <label>Filter Major</label>
+                <nb-select
+                  filled
+                  fullWidth
+                  required
+                  placeholder="Select Major"
+                  [(selected)]="filter.majorId"
+                  (selectedChange)="onFilterModuleChange()"
+                >
+                  <nb-option *ngFor="let m of majors" value="{{ m.id }}">{{ m.name }}</nb-option>
+                </nb-select>
+              </div>
+              
+              <div class="mr-2" style="margin-top: 20px">
+                <label>Filter Module</label>
+                <nb-select
+                  filled
+                  fullWidth
+                  required
+                  placeholder="Select Module"
+                  [(selected)]="filter.moduleId"
+                  (selectedChange)="onFilterModuleChange()"
+                >
+                  <nb-option *ngFor="let m of modules" value="{{ m.id }}">{{ m.name }}</nb-option>
+                </nb-select>
+              </div>
+
+              <!-- <pre>{{ filter | json }}</pre> -->
+              <button nbButton size="small" status="basic" hero (click)="resetModuleFilter()" style="margin-top: 20px; float: right;">Reset</button>
+            </div>
           </nb-tab>
          </nb-tabset>
       </nb-card-body>

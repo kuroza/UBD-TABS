@@ -19,8 +19,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userDetails;
 
   userMenu = [ 
-    { title: 'Account', link: '/pages/account/profile' }, 
-    { title: 'Log out' },
+    { title: 'Account', link: '/pages/account/profile', icon: 'lock-outline' }, 
+    { title: 'Log out', icon: 'log-out-outline' },
   ];
 
   constructor(
@@ -84,10 +84,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onLogin() {
-    this.router.navigate(['/account/login']);
+    this.redirectTo('/account/login');
   }
 
   onRegister() {
-    this.router.navigate(['/account/register']);
+    this.redirectTo('/account/register');
   }
+
+  onClickCalendar() {
+    this.redirectTo('/pages/calendar');
+  }
+
+  onClickAdd() {
+    this.redirectTo('/pages/bookings/new');
+  }
+
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
 }
