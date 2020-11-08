@@ -61,20 +61,6 @@
         <nb-tabset fullWidth>
           <nb-tab tabTitle="Filter By Room">
             <div class="form-group">
-              <div class="mr-2" style="margin-top: 10px">
-                <label>Filter Semester</label>
-                <nb-select
-                  filled
-                  fullWidth
-                  required
-                  placeholder="Select Semester"
-                  [(selected)]="filter.semesterId"
-                  (selectedChange)="onFilterChange()"
-                >
-                  <nb-option *ngFor="let s of semesters" value="{{ s.id }}">{{ s.session }}</nb-option>
-                </nb-select>
-              </div>
-
               <div class="mr-2" style="margin-top: 20px">
                 <label>Filter Building</label>
                 <nb-select

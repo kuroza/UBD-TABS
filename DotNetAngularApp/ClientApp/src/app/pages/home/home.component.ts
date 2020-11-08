@@ -72,9 +72,6 @@ export class HomeComponent {
     if (localStorage.getItem('token') != null) {
       this.hasAccess = this.userService.hasAccess();
     }
-    
-    this.semesterService.getAllSemesters()
-      .subscribe(semesters => this.semesters = semesters);
 
     this.buildingService.getAllBuildings() // get the buildings from service for filter drop down
       .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
@@ -88,9 +85,6 @@ export class HomeComponent {
     this.activeDayIsOpen = false;
     this.events = []; // reset events after every filter change
     var bookings = this.allBookings; // show all Bookings
-
-    if (this.filter.semesterId)
-      bookings = bookings.filter(b => b.semesterId == this.filter.semesterId);
 
     if (this.filter.buildingId) // [(selected)]="filter.buildingId"
       // show bookings from the selected Building
