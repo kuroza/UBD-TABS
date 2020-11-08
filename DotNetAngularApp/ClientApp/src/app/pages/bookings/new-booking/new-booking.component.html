@@ -8,9 +8,12 @@
               <booking-calendar-header [(view)]="view" [(viewDate)]="viewDate">
               </booking-calendar-header>
 
-              <div class="alert alert-danger">
-              <b>Click on any date to select it</b>
+              <div class="alert alert-danger" *ngIf="selectedDate.length == 0">
+                <b>Click on any date to select it</b>
               </div>
+              <!-- <nb-alert status="danger" closable (close)="onClose()" *ngIf="selectedDate.length == 0">
+                <b>Click on any date to select it</b>
+              </nb-alert> -->
 
               <div [ngSwitch]="view">
               <mwl-calendar-month-view
@@ -30,7 +33,7 @@
   </div>
 
   <div class="col-md-4">
-      <nb-card>
+      <nb-card [nbSpinner]="false" nbSpinnerStatus="success">
           <nb-card-header *ngIf="!booking.id"><h4>Add Booking</h4></nb-card-header>
           <nb-card-header *ngIf="booking.id"><h4>Edit Booking</h4></nb-card-header>
           <nb-card-body>
@@ -87,7 +90,9 @@
                   [(selected)]="booking.timeSlots"
                   fullWidth="true"
                 >  
-                  <nb-option *ngFor="let t of timeSlots" value="{{ t.id }}">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</nb-option>
+                  <nb-option *ngFor="let t of timeSlots" value="{{ t.id }}">
+                    {{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}
+                  </nb-option>
                 </nb-select>
                 <br>
               </div>
@@ -106,20 +111,6 @@
                 >
                   <nb-option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</nb-option>
                 </nb-select>
-                
-                <!-- <select
-                  id="building"
-                  class="form-control"
-                  (change)="onBuildingChange()"
-                  [(ngModel)]="booking.buildingId"
-                  name="buildingId"
-                  required
-                  #building="ngModel"
-                >
-                  <option value=""></option>
-                  <option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</option>
-                </select>
-                <div class="alert alert-danger" *ngIf="building.touched && !building.valid">Please specify the building.</div> -->
               </div>
             
               <!-- * Room drop down list -->
@@ -135,40 +126,7 @@
                 >
                   <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
                 </nb-select>
-            
-                <!-- <select
-                  id="room"
-                  class="form-control"
-                  [(ngModel)]="booking.roomId"
-                  name="roomId"
-                  required
-                  #room="ngModel"
-                >
-                  <option value=""></option>
-                  <option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</option>
-                </select>
-                <div class="alert alert-danger" *ngIf="room.touched && !room.valid">Please specify the room.</div> -->
               </div>
-            
-              <!-- * ng-bootstrap Datepicker -->
-              <!-- <div class="form-group">
-                <label for="bookDate">Date *</label>
-                <div class="input-group">
-                  <input 
-                  id="bookDate" 
-                  class="form-control" 
-                  required 
-                  ngbDatepicker 
-                  name="bookDate" 
-                  placeholder="yyyy-mm-dd" 
-                  [(ngModel)]="booking.bookDate"
-                  #bookDate="ngbDatepicker">
-                  <div class="input-group-append">
-                    <button class="fa fa-calendar" (click)="bookDate.toggle()" type="button"></button>
-                  </div>
-                </div>
-                <div class="alert alert-danger" *ngIf="bookDate.touched && !bookDate.valid">Please specify the date.</div>
-              </div> -->
             
               <div *ngIf="!booking.id">
                 <!-- <button style="margin-bottom: 10px;" nbButton fullWidth status="default" outline (click)="onClickReset()">Reset</button> -->

@@ -8,12 +8,14 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>
+              <th style="width: 45%" scope="col">
                 Start Time
               </th>
-              <th>
+              <th style="width: 45%" scope="col">
                 End Time
               </th>
+              <th style="width: 5%" scope="col"></th>
+              <th style="width: 5%" scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -24,6 +26,8 @@
               <td>
                 {{ timeSlot.endTime | date:'shortTime' }}
               </td>
+              <td><a href="javascript:void(0);" (click)="edit(timeSlot.id)" *ngIf="hasAccess"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
+              <td><a href="javascript:void(0);" (click)="delete(timeSlot.id)" *ngIf="hasAccess"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
             </tr>
           </tbody>
         </table>
@@ -32,7 +36,13 @@
   </div>
 
   <div class="col-md-4">
+    <nb-card>
+      <nb-card-header>
+        <h4>Add Time Slot</h4>
+      </nb-card-header>
+      <nb-card-body>
 
-    
+      </nb-card-body>
+    </nb-card>
   </div>
 </div>

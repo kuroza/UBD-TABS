@@ -19,8 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userDetails;
 
   userMenu = [ 
-    { title: 'Profile', link: '/pages/account/profile' }, 
-    { title: 'Reset password', link: '/pages/account/reset-password' },
+    { title: 'Account', link: '/pages/account/profile' }, 
     { title: 'Log out' },
   ];
 

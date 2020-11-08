@@ -31,6 +31,7 @@ import { TimeSlotService } from '../../../services/timeSlot.service';
 export class NewBookingComponent implements OnInit {
 
   readonly DELIMITER = '-';
+  nbSpinner;
   existAlert: boolean = false;
   requiredAlert: boolean = false;
 
@@ -237,6 +238,7 @@ export class NewBookingComponent implements OnInit {
     }
 
     if (!this.booking.id) {
+      this.nbSpinner = true;
       from(this.selectedDate).pipe(
         mergeMap((date: string) => {
           this.booking = {...this.booking, bookDate: date};

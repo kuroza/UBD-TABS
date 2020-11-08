@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-8">
-    <nb-card>
+    <nb-card [nbSpinner]="true" nbSpinnerStatus="success">
       <nb-card-header fullWidth>
         <h4>Calendar</h4>
       </nb-card-header>
@@ -130,18 +130,6 @@
             Room: {{ booking.room.name }}<br>
             Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
           </p>
-        
-          <!-- Modules -->
-          <!-- <div class="card" style="width: 18rem;">
-            <div class="card-header">
-              Modules
-            </div>
-            <ul class="list-group list-group-flush">
-              <li *ngFor="let module of booking.modules" class="list-group-item">
-                {{ module.code }}: {{ module.name }}
-              </li>
-            </ul>
-          </div> -->
           <h6>Modules</h6>
           <nb-accordion multi>
             <nb-accordion-item *ngFor="let module of booking.modules">
@@ -167,7 +155,7 @@
         
           <br />
         
-          <!-- TimeSlots -->
+          <!-- * TimeSlots -->
           <div class="card" style="width: 18rem;">
             <div class="card-header">
               <h6>Time slots</h6>
@@ -178,15 +166,11 @@
           </div>
         
           <br />
-          <!-- <div class="row"> -->
-            <!-- <div class="col"></div> -->
-            <div class="inline">
-              <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="warning" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
-              <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="danger" (click)="delete()">Delete</button>
-              <button style="margin-left: 10px; margin-top: 10px;" nbButton status="primary" [routerLink]="['/pages/bookings']">View All Bookings</button>
-            </div>
-            <!-- <div class="col"></div> -->
-          <!-- </div> -->
+          <div class="inline">
+            <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="warning" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+            <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="danger" (click)="delete()">Delete</button>
+            <button style="margin-left: 10px; margin-top: 10px;" nbButton status="primary" [routerLink]="['/pages/bookings']">View All Bookings</button>
+          </div>
         </div>
       </nb-card-body>
     </nb-card>

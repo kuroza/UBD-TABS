@@ -1,7 +1,7 @@
 
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { NbCardModule, NbTabsetModule, NbButtonModule, NbAccordionModule, NbSelectModule, NbAlertModule } from '@nebular/theme';
+import { NbCardModule, NbTabsetModule, NbButtonModule, NbAccordionModule, NbSelectModule, NbAlertModule, NbSpinnerModule } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
 import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
@@ -13,6 +13,7 @@ import { CalendarHeaderModule } from '../../@theme/components/calendar-header/ca
 
 @NgModule({
   imports: [
+    NbSpinnerModule,
     NbAlertModule,
     NbCardModule,
     ThemeModule,

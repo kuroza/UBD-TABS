@@ -1,7 +1,7 @@
 import { PaginationComponent } from './../../@theme/components/shared/pagination.component';
 import { RouterModule } from '@angular/router';
 import { NewBookingComponent } from './new-booking/new-booking.component';
-import { NbCardModule, NbTabsetModule, NbIconModule, NbButtonModule, NbTreeGridModule, NbInputModule, NbDatepickerModule, NbSelectModule, NbCheckboxModule, NbAlertModule, NbAccordionModule } from '@nebular/theme';
+import { NbCardModule, NbTabsetModule, NbIconModule, NbButtonModule, NbTreeGridModule, NbInputModule, NbDatepickerModule, NbSelectModule, NbCheckboxModule, NbAlertModule, NbAccordionModule, NbSpinnerModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { BookingCalendarHeaderModule } from './new-booking/booking-calendar-head
 
 @NgModule({
   imports: [
+    NbSpinnerModule,
     NbCardModule,
     NbButtonModule,
     NbTabsetModule,
