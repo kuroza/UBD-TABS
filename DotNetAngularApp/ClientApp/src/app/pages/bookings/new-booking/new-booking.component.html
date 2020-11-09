@@ -8,8 +8,11 @@
               <booking-calendar-header [(view)]="view" [(viewDate)]="viewDate">
               </booking-calendar-header>
 
-              <div class="alert alert-danger" *ngIf="selectedDate.length == 0">
+              <div class="alert alert-danger" *ngIf="selectedDate.length == 0" style="text-align: center;">
                 <b>Click on any date to select it</b>
+              </div>
+              <div class="alert alert-success" *ngIf="selectedDate.length > 0" style="text-align: center;">
+                <b>Good!</b>
               </div>
               <!-- <nb-alert status="danger" closable (close)="onClose()" *ngIf="selectedDate.length == 0">
                 <b>Click on any date to select it</b>

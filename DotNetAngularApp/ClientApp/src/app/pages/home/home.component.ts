@@ -45,7 +45,7 @@ export class HomeComponent {
 
   excludeDays: number[] = [0, 5];
   weekStartsOn = DAYS_OF_WEEK.MONDAY;
-  view: CalendarView = CalendarView.Month;
+  view: CalendarView = CalendarView.Week;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
   activeDayIsOpen: boolean = false;
@@ -152,7 +152,7 @@ export class HomeComponent {
           {
             start: new Date(this.startDateTime),
             end: new Date(this.endDateTime),
-            title: ` <b>Module:</b> ${ modules } | <b>Room:</b> ${ b.building.name } - ${ b.room.name }`,
+            title: `<b>${ modules }</b><br>${ b.room.name }`,
             color: colors.teal,
             meta: {
               id: b.id, // * just the id for component call

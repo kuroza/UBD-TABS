@@ -9,38 +9,38 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
   }
 
   month(event: CalendarEvent): string {
-    return `<b>Time:</b> ${new DatePipe(this.locale).transform(
+    return `${new DatePipe(this.locale).transform(
       event.start,
-      'HH:mm',
+      'hh:mm a',
       this.locale,
     )} - ${new DatePipe(this.locale).transform(
       event.end,
-      'HH:mm',
+      'hh:mm a',
       this.locale,
-    )} ${event.title}`;
+    )}<br> ${event.title}<hr>`;
   }
 
-  // week(event: CalendarEvent): string {
-  //   return `<b>${new DatePipe(this.locale).transform(
-  //     event.start,
-  //     'hh:mm a',
-  //     this.locale,
-  //   )}-${new DatePipe(this.locale).transform(
-  //     event.end,
-  //     'hh:mm a',
-  //     this.locale,
-  //   )}</b> ${event.title}`;
-  // }
+  week(event: CalendarEvent): string {
+    return `<i>${new DatePipe(this.locale).transform(
+      event.start,
+      'HH:mm',
+      this.locale,
+    )}-${new DatePipe(this.locale).transform(
+      event.end,
+      'HH:mm',
+      this.locale,
+    )}</i><br> ${event.title}`;
+  }
 
-  // day(event: CalendarEvent): string {
-  //   return `<b>${new DatePipe(this.locale).transform(
-  //     event.start,
-  //     'hh:mm a',
-  //     this.locale,
-  //   )}-${new DatePipe(this.locale).transform(
-  //     event.end,
-  //     'hh:mm a',
-  //     this.locale,
-  //   )}</b> ${event.title}`;
-  // }
+  day(event: CalendarEvent): string {
+    return `<i>${new DatePipe(this.locale).transform(
+      event.start,
+      'hh:mm a',
+      this.locale,
+    )} - ${new DatePipe(this.locale).transform(
+      event.end,
+      'hh:mm a',
+      this.locale,
+    )}</i><br> ${event.title}`;
+  }
 }
