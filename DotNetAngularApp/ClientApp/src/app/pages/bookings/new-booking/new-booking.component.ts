@@ -22,10 +22,10 @@ import { TimeSlotService } from '../../../services/timeSlot.service';
     `
       .cal-day-selected,
       .cal-day-selected:hover {
-        background-color: #FFCCCB !important;
+        background-color: lightblue !important;
       }
     `,
-  ], // lightblue
+  ], // #FFCCCB
   encapsulation: ViewEncapsulation.None,
 })
 export class NewBookingComponent implements OnInit {

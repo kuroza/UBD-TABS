@@ -1,6 +1,6 @@
 <div class="row text-center">
     <div class="col-md-4">
-      <div class="btn-group">
+      <!-- <div class="btn-group">
         <div
           class="btn btn-info"
           mwlCalendarPreviousView
@@ -29,17 +29,37 @@
         >
           Next
         </div>
-      </div>
+      </div> -->
+
+      <button nbButton status="basic" ghost
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="viewDateChange.next(viewDate)"
+        [excludeDays]="excludeDays">
+        <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+      </button>
+
+      <button nbButton status="basic" style="margin-left: 10px; margin-right: 10px;" ghost
+        mwlCalendarToday
+        [(viewDate)]="viewDate"
+        (viewDateChange)="viewDateChange.next(viewDate)">Today</button>
+
+      <button nbButton status="basic" ghost
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="viewDateChange.next(viewDate)"
+        [excludeDays]="excludeDays">
+        <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+      </button>
+
     </div>
     <div class="col-md-4">
       <h4>{{ viewDate | calendarDate: view + 'ViewTitle':locale }}</h4>
-      <!-- <h4>
-        {{ viewDate | calendarDate:(view +
-        'ViewTitle'):'en':weekStartsOn:excludeDays }}
-      </h4> -->
     </div>
     <div class="col-md-4">
-      <div class="btn-group">
+      <!-- <div class="btn-group">
         <div
           class="btn btn-info"
           (click)="viewChange.emit('month')"
@@ -61,7 +81,24 @@
         >
           Day
         </div>
-      </div>
+      </div> -->
+
+      <button nbButton status="basic" ghost
+      (click)="viewChange.emit('month')"
+      [class.active]="view === 'month'">
+        Month
+      </button>
+
+      <button nbButton status="basic" style="margin-left: 10px; margin-right: 10px;" ghost
+      (click)="viewChange.emit('week')"
+      [class.active]="view === 'week'">Week</button>
+
+      <button nbButton status="basic" ghost
+      (click)="viewChange.emit('day')"
+      [class.active]="view === 'day'">
+        Day
+      </button>
+
     </div>
   </div>
   <br />

@@ -1,6 +1,6 @@
 <div class="row text-center">
     <div class="col-md-4">
-      <div class="btn-group">
+      <!-- <div class="btn-group">
         <div
           class="btn btn-danger"
           mwlCalendarPreviousView
@@ -29,7 +29,31 @@
         >
           Next
         </div>
-      </div>
+      </div> -->
+
+      <button nbButton status="basic" ghost
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="viewDateChange.next(viewDate)"
+        [excludeDays]="excludeDays">
+        <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+      </button>
+
+      <button nbButton status="basic" style="margin-left: 10px; margin-right: 10px;" ghost
+        mwlCalendarToday
+        [(viewDate)]="viewDate"
+        (viewDateChange)="viewDateChange.next(viewDate)">Today</button>
+
+      <button nbButton status="basic" ghost
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="viewDateChange.next(viewDate)"
+        [excludeDays]="excludeDays">
+        <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+      </button>
+
     </div>
     <div class="col-md-4">
       <h4>{{ viewDate | calendarDate: view + 'ViewTitle':locale }}</h4>
