@@ -147,6 +147,11 @@ export class HomeComponent {
         this.endTime = timeFormat(timeSlot.endTime, 'HH:MM:ss');
         this.endDateTime = this.bookDate + "T" + this.endTime;
 
+        // todo: need to fetch its current view
+        // var eventTitle: string;
+        // if (this.view == CalendarView.Month) { eventTitle = `<b>${ modules }</b> | ${ b.room.name }` }
+        // else if (this.view == CalendarView.Week) { eventTitle = `<b>${ modules }</b><br>${ b.room.name }` }
+
         this.events = [ // push object into events[]
           ...this.events,
           {

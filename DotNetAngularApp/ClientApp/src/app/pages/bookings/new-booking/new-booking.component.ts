@@ -260,10 +260,10 @@ export class NewBookingComponent implements OnInit {
         console.log(res);
       },
       err => {
-        if (err.status == 409) {
+        if (err.status === 409) {
           this.existAlert = true;
           this.nbSpinner = false;
-        } else if (err.status == 400) {
+        } else if (err.status === 400) {
           this.requiredAlert = true;
           this.nbSpinner = false;
         }
