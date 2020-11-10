@@ -1,3 +1,4 @@
+import { FacultyService } from './../../services/faculty.service';
 import { ProgrammeService } from './../../services/programme.service';
 import { SemesterService } from './../../services/semester.service';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
@@ -36,6 +37,7 @@ export class HomeComponent {
   detailsAlert: boolean = true;
   nbSpinner: boolean = false;
 
+  faculties: any;
   programmes: any;
   semesters: any;
   buildings: any;
@@ -68,13 +70,17 @@ export class HomeComponent {
     private buildingService: BuildingService,
     private userService: UserService,
     private semesterService: SemesterService,
-    private programmeService: ProgrammeService
+    private programmeService: ProgrammeService,
+    private facultyService: FacultyService
     ) {}
 
   async ngOnInit() {
     if (localStorage.getItem('token') != null) {
       this.hasAccess = this.userService.hasAccess();
     }
+
+    this.facultyService.getAllFaculties()
+      .subscribe(faculties => this.faculties = faculties);
 
     this.programmeService.getAllProgrammes()
       .subscribe(programmes => this.programmes = programmes);
@@ -143,7 +149,7 @@ export class HomeComponent {
       var modules: string = b.modules[0].code + ": " + b.modules[0].name;
       if (b.modules.length > 1) {
         for (var i=1; i<b.modules.length; i++)
-          modules += ", " + b.modules[i].code + ": " + b.modules[i].name;
+          modules += "<br>" + b.modules[i].code + ": " + b.modules[i].name;
       }
 
       // if (b.modules.length > 1) {

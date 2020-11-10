@@ -14,12 +14,12 @@ export class FacultyFormComponent implements OnInit {
   constructor(private facultyService: FacultyService) { }
 
   ngOnInit(): void {
-    this.facultyService.getFaculties().subscribe(faculties =>
-      this.faculties = faculties);
+    // this.facultyService.getFaculties().subscribe(faculties =>
+    //   this.faculties = faculties);
   }
 
-  onFacultyChange() {
-    var selectedFaculty = this.faculties.find(f => f.id == this.program.faculty);
-    this.courses = selectedFaculty ? selectedFaculty.courses : [];
-  }
+  // onFacultyChange() {
+  //   var selectedFaculty = this.faculties.find(f => f.id == this.program.faculty);
+  //   this.courses = selectedFaculty ? selectedFaculty.courses : [];
+  // }
 }

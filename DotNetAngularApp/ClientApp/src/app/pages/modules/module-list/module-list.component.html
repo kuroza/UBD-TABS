@@ -66,6 +66,9 @@
                 <button *ngIf="!module.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="module.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
               </div>
+              <!-- <div style="margin-top: 10px;">
+                <button *ngIf="module.id" nbButton fullWidth status="basic">Back to add module</button>
+              </div> -->
               <!-- <br><pre>{{ module | json }}</pre> -->
             </form>
           </nb-tab>

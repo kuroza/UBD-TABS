@@ -2,10 +2,9 @@
   <div class="col-md-8">
     <nb-card [nbSpinner]="nbSpinner ? true : false" nbSpinnerStatus="success">
       <nb-card-header fullWidth>
-        <h4>Calendar</h4>
+        <h4>Calendar Timetable</h4>
       </nb-card-header>
       <nb-card-body>
-        <br>
         <ngx-calendar-header 
           [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()"
         >
@@ -114,7 +113,7 @@
                 >
                   <nb-option *ngFor="let m of majors" value="{{ m.id }}">{{ m.name }}</nb-option>
                 </nb-select> -->
-                <nb-radio-group [(ngModel)]="selectedOption">
+                <nb-radio-group [(ngModel)]="selectedOption" status="primary">
                   <nb-radio value="1">All</nb-radio>
                   <nb-radio value="2">Bachelor's degree</nb-radio>
                   <nb-radio value="3">Master's degree</nb-radio>
@@ -181,13 +180,7 @@
           </div>
         </div>
         <div *ngIf="booking">
-          <!-- Venue -->
-          <h6>Venue</h6>
-          <p>
-            Building: {{ booking.building.name }}<br>
-            Room: {{ booking.room.name }}<br>
-            Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
-          </p>
+          <!-- * Modules -->
           <h6>Modules</h6>
           <nb-accordion multi>
             <nb-accordion-item *ngFor="let module of booking.modules">
@@ -198,7 +191,7 @@
                 <table class="table table-hover">
                   <thead class="thead-dark text-center">
                     <tr>
-                      <th style="width: 100%" scope="col">Lecturer</th>
+                      <th style="width: 100%" scope="col">Lecturers</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -210,7 +203,15 @@
               </nb-accordion-item-body>
             </nb-accordion-item>
           </nb-accordion>
-        
+          <br />
+
+          <!-- * Venue -->
+          <h6>Venue</h6>
+          <p>
+            Building: {{ booking.building.name }}<br>
+            Room: {{ booking.room.name }}<br>
+            Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
+          </p>
           <br />
         
           <!-- * TimeSlots -->
@@ -222,8 +223,8 @@
               <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>
             </ul>
           </div>
-        
           <br />
+
           <div class="inline">
             <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="warning" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
             <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="danger" (click)="delete()">Delete</button>
