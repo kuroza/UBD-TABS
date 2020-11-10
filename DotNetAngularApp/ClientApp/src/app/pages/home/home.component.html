@@ -30,7 +30,7 @@
             [events]="events"
             [refresh]="refresh"
             [weekStartsOn]="weekStartsOn"
-            [hourSegments]="3"
+            [hourSegments]="4"
             [dayStartHour]="7"
             [dayEndHour]="18"
             (dayHeaderClicked)="changeDay($event.day.date)"
@@ -42,7 +42,7 @@
             *ngSwitchCase="CalendarView.Day"
             [viewDate]="viewDate"
             [events]="events"
-            [hourSegments]="3"
+            [hourSegments]="4"
             [dayStartHour]="7"
             [dayEndHour]="18"
             [refresh]="refresh"
@@ -89,20 +89,6 @@
               </div>
 
               <div class="mr-2" style="margin-top: 20px">
-                <label>Filter Major</label>
-                <nb-select
-                  filled
-                  fullWidth
-                  required
-                  placeholder="Select Major"
-                  [(selected)]="filter.majorId"
-                  (selectedChange)="onFilterModuleChange()"
-                >
-                  <nb-option *ngFor="let m of majors" value="{{ m.id }}">{{ m.name }}</nb-option>
-                </nb-select>
-              </div>
-              
-              <div class="mr-2" style="margin-top: 20px">
                 <label>Filter Module</label>
                 <nb-select
                   filled
@@ -114,6 +100,26 @@
                 >
                   <nb-option *ngFor="let m of modules" value="{{ m.id }}">{{ m.name }}</nb-option>
                 </nb-select>
+              </div>
+
+              <div class="mr-2" style="margin-top: 20px">
+                <label>Filter Major</label>
+                <!-- <nb-select
+                  filled
+                  fullWidth
+                  required
+                  placeholder="Select Major"
+                  [(selected)]="filter.majorId"
+                  (selectedChange)="onFilterModuleChange()"
+                >
+                  <nb-option *ngFor="let m of majors" value="{{ m.id }}">{{ m.name }}</nb-option>
+                </nb-select> -->
+                <nb-radio-group [(ngModel)]="selectedOption">
+                  <nb-radio value="1">All</nb-radio>
+                  <nb-radio value="2">Bachelor's degree</nb-radio>
+                  <nb-radio value="3">Master's degree</nb-radio>
+                  <nb-radio value="4">PhD</nb-radio>
+                </nb-radio-group>
               </div>
 
               <!-- <pre>{{ filter | json }}</pre> -->

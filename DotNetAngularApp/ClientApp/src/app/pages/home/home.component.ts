@@ -134,11 +134,23 @@ export class HomeComponent {
       var dateFormat = require('dateformat');
       this.bookDate = dateFormat(b.bookDate, 'yyyy-mm-dd'); // * format date
 
-      var modulesLength = b.modules.length;
-      var modules: string = b.modules[0].code;
-      for (var i=1; i<modulesLength; i++) {
-        modules += ", " + b.modules[i].code;
+      var modules: string = b.modules[0].code + ": " + b.modules[0].name;
+      if (b.modules.length > 1) {
+        for (var i=1; i<b.modules.length; i++)
+          modules += ", " + b.modules[i].code + ": " + b.modules[i].name;
       }
+
+      // if (b.modules.length > 1) {
+      //   for (var i=1; i<b.modules.length; i++) {
+      //     modules += ", " + b.modules[i].code + ": " + b.modules[i].name;
+
+      //     for (var j=1; j<b.modules[i].lecturers.length; j++) {
+      //       lecturers.push(b.modules[i].lecturers[j].name);
+      //     }
+      //   }
+      // }
+
+      // ! if include lecturer names, must iterate from each modules first
 
       for (let timeSlot of b.timeSlots) { // * nested loop for each time slots under each booking
         var timeFormat = require('dateformat');
@@ -146,11 +158,6 @@ export class HomeComponent {
         this.startDateTime = this.bookDate + "T" + this.startTime; // * concat date and time into string
         this.endTime = timeFormat(timeSlot.endTime, 'HH:MM:ss');
         this.endDateTime = this.bookDate + "T" + this.endTime;
-
-        // todo: need to fetch its current view
-        // var eventTitle: string;
-        // if (this.view == CalendarView.Month) { eventTitle = `<b>${ modules }</b> | ${ b.room.name }` }
-        // else if (this.view == CalendarView.Week) { eventTitle = `<b>${ modules }</b><br>${ b.room.name }` }
 
         this.events = [ // push object into events[]
           ...this.events,

@@ -41,16 +41,22 @@
             <h4 *ngIf="!module.id" style="margin-top: 10px;">Add Module</h4>
             <form #f="ngForm" (ngSubmit)="submit()" novalidate>
               <div class="form-group" style="margin-top: 10px;">
+                <label>Programme *</label>
+                <nb-select filled fullWidth placeholder="Select programme" [(selected)]="module.programme">
+                  <nb-option *ngFor="let p of programmes" value="{{ p.id }}">{{ p.name }}</nb-option>
+                </nb-select><br>
+              </div>
+              <div style="margin-top: 10px;">
                 <label>Module code *</label>
                 <input id="code" type="text" class="form-control" [(ngModel)]="module.code" name="code"
                   placeholder="Module code">
               </div>
-              <div class="form-group" style="margin-top: 10px;">
+              <div style="margin-top: 10px;">
                 <label>Module name *</label>
                 <input id="name" type="text" class="form-control" [(ngModel)]="module.name" name="name"
                   placeholder="Module name">
               </div>
-              <div class="form-group" style="margin-top: 10px;">
+              <div style="margin-top: 10px;">
                 <label>Lecturers</label>
                 <nb-select filled multiple fullWidth placeholder="Select lecturers" [(selected)]="module.lecturers">
                   <nb-option *ngFor="let l of lecturers" value="{{ l.id }}">{{ l.title }} {{ l.name }}</nb-option>
