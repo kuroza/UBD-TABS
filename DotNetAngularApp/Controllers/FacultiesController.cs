@@ -22,7 +22,7 @@ namespace DotNetAngularApp.Controllers
         [HttpGet("/api/faculties")]
         public async Task<IEnumerable<FacultyResource>> GetFaculties()
         {
-            var faculties = await context.Faculties.Include(f => f.Courses).ToListAsync();
+            var faculties = await context.Faculties.Include(f => f.Programmes).ToListAsync();
             // map to api resources instead of returning domain classes
             return mapper.Map<List<Faculty>, List<FacultyResource>>(faculties); // <source type, target type>(faculties object)
         }

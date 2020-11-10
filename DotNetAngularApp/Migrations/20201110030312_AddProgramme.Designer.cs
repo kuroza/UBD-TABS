@@ -4,14 +4,16 @@ using DotNetAngularApp.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DotNetAngularApp.Migrations
 {
     [DbContext(typeof(TabsDbContext))]
-    partial class TabsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201110030312_AddProgramme")]
+    partial class AddProgramme
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,12 +155,7 @@ namespace DotNetAngularApp.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
-                    b.Property<int>("ProgrammeId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ProgrammeId");
 
                     b.ToTable("Modules");
                 });
@@ -314,15 +311,6 @@ namespace DotNetAngularApp.Migrations
                     b.HasOne("DotNetAngularApp.Core.Models.TimeSlot", "TimeSlot")
                         .WithMany()
                         .HasForeignKey("TimeSlotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DotNetAngularApp.Core.Models.Module", b =>
-                {
-                    b.HasOne("DotNetAngularApp.Core.Models.Programme", "Programme")
-                        .WithMany("Modules")
-                        .HasForeignKey("ProgrammeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

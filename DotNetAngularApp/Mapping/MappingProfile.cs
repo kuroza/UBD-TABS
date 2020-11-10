@@ -13,7 +13,7 @@ namespace DotNetAngularApp.Mapping
             // <Source, target>
             CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
             CreateMap<Faculty, FacultyResource>();
-            CreateMap<Course, CourseResource>();
+            CreateMap<Programme, ProgrammeResource>();
             
             CreateMap<TimeSlot, TimeSlotResource>();
             CreateMap<TimeSlot, SaveTimeSlotResource>();

@@ -14,13 +14,13 @@ namespace DotNetAngularApp.Core.Models
         [StringLength(255)]
         public string Name { get; set; }
         
-        // public string ShortName { get; set; }
+        public string ShortName { get; set; }
 
-        public ICollection<Course> Courses { get; set; }
+        public ICollection<Programme> Programmes { get; set; }
 
         public Faculty()
         {
-            Courses = new Collection<Course>(); // to only create a new Course object once here than other places
+            Programmes = new Collection<Programme>(); // to only create a new Course object once here than other places
         }
     }
 }

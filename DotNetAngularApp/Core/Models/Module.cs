@@ -20,9 +20,9 @@ namespace DotNetAngularApp.Core.Models
 
         public ICollection<ModuleLecturer> Lecturers { get; set; }
 
-        // public int CourseId { get; set; }
-        
-        // public Course Course { get; set; }
+        public Programme Programme { get; set; }
+
+        public int ProgrammeId { get; set; }
         
         public Module()
         {
