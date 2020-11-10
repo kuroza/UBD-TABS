@@ -68,11 +68,11 @@ namespace DotNetAngularApp.Controllers
             var existName = await repository.ModuleNameExist(module);
             var existCode = await repository.ModuleCodeExist(module);
             if (existName != null && existCode != null)
-                return Conflict("Model name and code already exist.");
+                return Conflict("Module name and code already exist.");
             else if (existName != null)
-                return Conflict("Model name already exists.");
+                return Conflict("Module name already exists.");
             else if (existCode != null)
-                return Conflict("Model code already exists.");
+                return Conflict("Module code already exists.");
 
             repository.Add(module);
             await unitOfWork.CompleteAsync();
@@ -115,7 +115,7 @@ namespace DotNetAngularApp.Controllers
             
             var exist = await repository.EditModuleExist(module);
             if (exist != null)
-                return Conflict("Model details already exist.");
+                return Conflict("Module details already exist.");
 
             await unitOfWork.CompleteAsync();
             

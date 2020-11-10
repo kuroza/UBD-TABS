@@ -75,16 +75,16 @@
               </div>
 
               <div class="mr-2" style="margin-top: 20px">
-                <label>Filter Program</label>
+                <label>Filter Programme</label>
                 <nb-select
                   filled
                   fullWidth
                   required
-                  placeholder="Select Program"
-                  [(selected)]="filter.programId"
-                  (selectedChange)="onFilterModuleChange()"
+                  placeholder="Select Programme"
+                  [(selected)]="filter.programmeId"
+                  (selectedChange)="onFilterProgrammeChange()"
                 >
-                  <nb-option *ngFor="let p of programs" value="{{ p.id }}">{{ p.name }}</nb-option>
+                  <nb-option *ngFor="let p of programmes" value="{{ p.id }}">{{ p.name }}</nb-option>
                 </nb-select>
               </div>
 

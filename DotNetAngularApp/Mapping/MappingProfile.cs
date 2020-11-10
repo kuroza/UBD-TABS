@@ -59,7 +59,8 @@ namespace DotNetAngularApp.Mapping
             CreateMap<Module, ModuleResource>()
                 .ForMember(mr => mr.Lecturers, opt => 
                     opt.MapFrom(m => m.Lecturers.Select(ml => 
-                    new LecturerResource { Id = ml.Lecturer.Id, Name = ml.Lecturer.Name, Title = ml.Lecturer.Title })));
+                    new LecturerResource { Id = ml.Lecturer.Id, Name = ml.Lecturer.Name, Title = ml.Lecturer.Title })))
+                .ForMember(mr => mr.Programme, opt => opt.MapFrom(m => m.Programme));
 
             // API Resource to Domain, saving to database
             CreateMap<BookingQueryResource, BookingQuery>();

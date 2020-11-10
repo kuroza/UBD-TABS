@@ -1,3 +1,4 @@
+import { ProgrammeService } from './../../services/programme.service';
 import { SemesterService } from './../../services/semester.service';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { BookingService } from '../../services/booking.service';
@@ -35,6 +36,7 @@ export class HomeComponent {
   detailsAlert: boolean = true;
   nbSpinner: boolean = false;
 
+  programmes: any;
   semesters: any;
   buildings: any;
   rooms: any;
@@ -65,13 +67,17 @@ export class HomeComponent {
     private bookingService: BookingService,
     private buildingService: BuildingService,
     private userService: UserService,
-    private semesterService: SemesterService
+    private semesterService: SemesterService,
+    private programmeService: ProgrammeService
     ) {}
 
   async ngOnInit() {
     if (localStorage.getItem('token') != null) {
       this.hasAccess = this.userService.hasAccess();
     }
+
+    this.programmeService.getAllProgrammes()
+      .subscribe(programmes => this.programmes = programmes);
 
     this.buildingService.getAllBuildings() // get the buildings from service for filter drop down
       .subscribe(buildings => this.buildings = buildings); // and store in this.buildings

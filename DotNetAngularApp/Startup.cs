@@ -37,6 +37,8 @@ namespace DotNetAngularApp
 
             services.AddScoped<IModuleRepository, ModuleRepository>();
 
+            services.AddScoped<IProgrammeRepository, ProgrammeRepository>();
+
             services.AddScoped<IRoomRepository, RoomRepository>();
             
             services.AddScoped<ITimeSlotRepository, TimeSlotRepository>();

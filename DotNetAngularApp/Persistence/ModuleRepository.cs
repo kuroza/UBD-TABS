@@ -19,6 +19,8 @@ namespace DotNetAngularApp.Persistence
             return await context.Modules
                 .Include(m => m.Lecturers)
                     .ThenInclude(ml => ml.Lecturer)
+                .Include(m => m.Programme)
+                    .ThenInclude(p => p.Faculty)
                 .ToListAsync();
         }
 
@@ -30,6 +32,7 @@ namespace DotNetAngularApp.Persistence
             return await context.Modules
                 .Include(m => m.Lecturers)
                     .ThenInclude(ml => ml.Lecturer)
+                .Include(m => m.Programme)
                 .SingleOrDefaultAsync(m => m.Id == id);
         }
 

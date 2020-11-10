@@ -42,7 +42,7 @@
             <form #f="ngForm" (ngSubmit)="submit()" novalidate>
               <div class="form-group" style="margin-top: 10px;">
                 <label>Programme *</label>
-                <nb-select filled fullWidth placeholder="Select programme" [(selected)]="module.programme">
+                <nb-select filled fullWidth placeholder="Select programme" [(selected)]="module.programmeId">
                   <nb-option *ngFor="let p of programmes" value="{{ p.id }}">{{ p.name }}</nb-option>
                 </nb-select><br>
               </div>
@@ -75,6 +75,7 @@
               <p>
                 <b>Module code:</b> {{ moduleDetails.code }}<br>
                 <b>Module name:</b> {{ moduleDetails.name }}<br>
+                <b>Programme:</b> {{ moduleDetails.programme.name }}<br>
               </p>
 
               <div class="card" style="width: 18rem;">

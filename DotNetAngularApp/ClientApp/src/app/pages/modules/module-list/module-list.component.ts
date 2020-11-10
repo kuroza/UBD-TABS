@@ -1,3 +1,4 @@
+import { ProgrammeService } from './../../../services/programme.service';
 import { ModuleService } from './../../../services/module.service';
 import { Component, OnInit } from '@angular/core';
 import { SaveModule } from '../../../models/module';
@@ -28,11 +29,13 @@ export class ModuleListComponent implements OnInit {
 
   moduleDetails: any;
   modules: any;
+  programmes: any;
   lecturers: any;
   module: SaveModule = {
     id: 0,
     name: '',
     code: '',
+    programmeId: 0,
     lecturers: [],
   };
 
@@ -42,7 +45,8 @@ export class ModuleListComponent implements OnInit {
     private toastyService: ToastyService,
     private router: Router,
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private programmeService: ProgrammeService
   ) { }
 
   async ngOnInit() {
@@ -50,7 +54,10 @@ export class ModuleListComponent implements OnInit {
       this.hasAccess = this.userService.hasAccess();
     }
 
-    this.modules = await this.moduleService.getAllModules();
+    this.modules = await this.moduleService.getAllModules(); // promise
+
+    this.programmeService.getAllProgrammes() // observable
+      .subscribe(programmes => this.programmes = programmes);
 
     this.lecturerService.getAllLecturers()
       .subscribe(lecturers => this.lecturers = lecturers);

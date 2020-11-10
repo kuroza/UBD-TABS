@@ -13,6 +13,8 @@ namespace DotNetAngularApp.Controllers.Resources
 
         [Required]
         public string Code { get; set; }
+
+        public int ProgrammeId { get; set; }
         
         public ICollection<int> Lecturers { get; set; }
 
