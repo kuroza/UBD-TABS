@@ -10,11 +10,11 @@ namespace DotNetAngularApp.Controllers.Resources
         public string ShortName { get; set; }
         public int FacultyId { get; set; }
         // public FacultyResource Faculty { get; set; }
-        // public ICollection<ModuleResource> Modules { get; set; }
+        public ICollection<ModuleResource> Modules { get; set; }
 
         public ProgrammeResource()
         {
-            // Modules = new Collection<ModuleResource>();
+            Modules = new Collection<ModuleResource>();
         }
     }
 }

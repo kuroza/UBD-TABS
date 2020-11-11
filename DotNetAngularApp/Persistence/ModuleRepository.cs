@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace DotNetAngularApp.Persistence
                 .Include(m => m.Lecturers)
                     .ThenInclude(ml => ml.Lecturer)
                 .Include(m => m.Programme)
+                .OrderBy(m => m.Code)
                 .ToListAsync();
         }
 

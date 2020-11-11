@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DotNetAngularApp.Persistence
 {
@@ -18,6 +19,8 @@ namespace DotNetAngularApp.Persistence
         {
             return await context.Programmes
                 .Include(p => p.Faculty)
+                .Include(p => p.Modules)
+                .OrderBy(p => p.Name)
                 .ToListAsync();
         }
 
@@ -28,6 +31,7 @@ namespace DotNetAngularApp.Persistence
 
             return await context.Programmes
                 .Include(p => p.Faculty)
+                .Include(p => p.Modules)
                 .SingleOrDefaultAsync(p => p.Id == id);
         }
 

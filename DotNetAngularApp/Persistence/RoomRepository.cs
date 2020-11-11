@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DotNetAngularApp.Persistence
 {
@@ -18,6 +19,7 @@ namespace DotNetAngularApp.Persistence
         {
             return await context.Rooms
                 .Include(r => r.Building)
+                .OrderBy(r => r.Name)
                 .ToListAsync();
         }
 

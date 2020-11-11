@@ -81,7 +81,7 @@
                   required
                   placeholder="Select Programme"
                   [(selected)]="filter.programmeId"
-                  (selectedChange)="onModuleFilterChange()"
+                  (selectedChange)="onProgrammeChange()"
                 >
                   <nb-option *ngFor="let p of programmes" value="{{ p.id }}">{{ p.name }}</nb-option>
                 </nb-select>
@@ -95,15 +95,15 @@
                   required
                   placeholder="Select Module"
                   [(selected)]="filter.moduleId"
-                  (selectedChange)="onFilterModuleChange()"
+                  (selectedChange)="onModuleFilterChange()"
                 >
                   <nb-option *ngFor="let m of modules" value="{{ m.id }}">{{ m.code }} {{ m.name }}</nb-option>
                 </nb-select>
               </div>
 
-              <div class="mr-2" style="margin-top: 20px">
+              <!-- <div class="mr-2" style="margin-top: 20px">
                 <label>Filter Major</label>
-                <!-- <nb-select
+                <nb-select
                   filled
                   fullWidth
                   required
@@ -112,14 +112,14 @@
                   (selectedChange)="onFilterModuleChange()"
                 >
                   <nb-option *ngFor="let m of majors" value="{{ m.id }}">{{ m.name }}</nb-option>
-                </nb-select> -->
+                </nb-select>
                 <nb-radio-group [(ngModel)]="selectedOption" status="primary">
                   <nb-radio value="1">All</nb-radio>
                   <nb-radio value="2">Bachelor's degree</nb-radio>
                   <nb-radio value="3">Master's degree</nb-radio>
                   <nb-radio value="4">PhD</nb-radio>
                 </nb-radio-group>
-              </div>
+              </div> -->
 
               <!-- <pre>{{ filter | json }}</pre> -->
               <button nbButton size="small" status="basic" hero (click)="resetModuleFilter()" style="margin-top: 20px; float: right;">Reset</button>

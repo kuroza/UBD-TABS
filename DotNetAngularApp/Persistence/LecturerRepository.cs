@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DotNetAngularApp.Persistence
 {
@@ -16,7 +17,9 @@ namespace DotNetAngularApp.Persistence
 
         public async Task<IEnumerable<Lecturer>> GetAllLecturers()
         {
-            return await context.Lecturers.ToListAsync();
+            return await context.Lecturers
+                .OrderBy(l => l.Name)
+                .ToListAsync();
         }
 
         public async Task<Lecturer> GetLecturer(int id, bool includeRelated = true)

@@ -85,10 +85,15 @@ export class HomeComponent {
     this.facultyService.getAllFaculties()
       .subscribe(faculties => this.faculties = faculties);
 
-    this.programmeService.getAllProgrammes()
-      .subscribe(programmes => this.programmes = programmes);
+    // ! these filters can be populated early but there's a bug where the dropdown is emptied,
+    // ! just fill the dowpdown back by these
+    // this.programmeService.getAllProgrammes()
+    //   .subscribe(programmes => this.programmes = programmes);
 
-    this.modules = await this.moduleService.getAllModules();
+    // this.moduleService.getAllModules()
+    //   .subscribe(modules => this.modules = modules);
+
+    // // this.modules = await this.moduleService.getAllModules();
 
     this.buildingService.getAllBuildings() // get the buildings from service for filter drop down
       .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
@@ -96,6 +101,82 @@ export class HomeComponent {
     this.bookings = this.allBookings = await this.bookingService.getAllBookings() // using Promise instead
     this.populateCalendar(); // show all events on init
     this.refresh.next(); // refresh calendar after loading
+  }
+
+  // * Filter by modules ---------------------------------------------------------------
+
+  onModuleFilterChange() {
+    this.activeDayIsOpen = false;
+    this.events = [];
+    var bookings = this.allBookings;
+
+    // if (this.filter.facultyId) // [(selected)]="filter.facultyId"
+    //   bookings = bookings.filter(b => b.modules.find(module => module.programme.facultyId == this.filter.facultyId));
+
+    // if (this.filter.programmeId)
+    //   bookings = bookings.filter(b => b.modules.find(module => module.programme.id == this.filter.programmeId));
+
+    if (this.filter.moduleId)
+      bookings = bookings.filter(b => b.modules.find(module => module.id == this.filter.moduleId));
+
+    this.bookings = bookings;
+    this.populateCalendar();
+  }
+
+  onFacultyChange() {
+    var selectedFaculty = this.faculties.find(faculty => faculty.id == this.filter.facultyId);
+    this.programmes = selectedFaculty ? selectedFaculty.programmes : [];
+    this.emptyProgrammeFilter();
+
+    var bookings = this.allBookings;
+    this.bookings = bookings.filter(b => b.modules.find(module => module.programme.facultyId == this.filter.facultyId));
+    this.populateCalendar();
+  }
+
+  onProgrammeChange() {
+    var selectedProgramme = this.programmes.find(programme => programme.id == this.filter.programmeId);
+    this.modules = selectedProgramme ? selectedProgramme.modules : [];
+    this.emptyModuleFilter();
+    console.log(selectedProgramme); // undefined
+    var bookings = this.allBookings;
+    this.bookings = bookings.filter(b => b.modules.find(module => module.programme.id == this.filter.programmeId));
+    this.populateCalendar();
+  }
+
+  emptyProgrammeFilter() {
+    this.activeDayIsOpen = false;
+    this.events = [];
+    delete this.filter.programmeId;
+    this.refresh.next();
+  }
+
+  emptyModuleFilter() {
+    this.activeDayIsOpen = false;
+    this.events = [];
+    delete this.filter.moduleId;
+    this.refresh.next();
+  }
+
+  resetModuleFilter() {
+    this.filter = {};
+    this.programmes = []; // ! i guess repopulate the dowpdown here
+    this.modules = [];
+    this.emptyProgrammeFilter();
+    this.showAllBookings();
+  }
+
+  // * Filter by rooms ---------------------------------------------------------------
+
+  onBuildingChange() {
+    // cascade rooms drop down
+    var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
+    this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
+    this.emptyRoomFilter();
+    
+    // filter events by building
+    var bookings = this.allBookings;
+    this.bookings = bookings.filter(b => b.building.id == this.filter.buildingId);
+    this.populateCalendar();
   }
 
   onFilterChange() {
@@ -115,65 +196,11 @@ export class HomeComponent {
     this.populateCalendar();
   }
 
-  onModuleFilterChange() {
-    this.activeDayIsOpen = false;
-    this.events = [];
-    var bookings = this.allBookings;
-
-    if (this.filter.facultyId) // [(selected)]="filter.facultyId"
-      bookings = bookings.filter(b => b.faculty.id == this.filter.facultyId);
-
-    if (this.filter.programmeId)
-      bookings = bookings.filter(b => b.programme.id == this.filter.programmeId);
-
-    this.bookings = bookings;
-    this.populateCalendar();
-  }
-
-  onBuildingChange() {
-    // cascade rooms drop down
-    var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
-    this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
-    this.emptyRoomFilter();
-    
-    // filter events by building
-    var bookings = this.allBookings;
-    this.bookings = bookings.filter(b => b.building.id == this.filter.buildingId);
-    this.populateCalendar();
-  }
-
-  onFacultyChange() {
-    var selectedFaculty = this.faculties.find(f => f.id == this.filter.facultyId);
-    this.programmes = selectedFaculty ? selectedFaculty.programmes : [];
-    this.emptyProgrammeFilter();
-
-    var bookings = this.allBookings;
-    this.bookings = bookings.filter(b => b.modules.programme.facultyId == this.filter.facultyId);
-    // this.bookings = bookings.filter(b => {
-    //   for (let module of b.modules) {
-    //     module.programme.facultyId == this.filter.facultyId;
-    //   }
-    // });
-    this.populateCalendar();
-  }
-
-  emptyProgrammeFilter() {
-    this.activeDayIsOpen = false;
-    this.events = [];
-    delete this.filter.programmeId;
-    this.refresh.next();
-  }
-
   emptyRoomFilter() {
     this.activeDayIsOpen = false;
     this.events = []; // clear events
     delete this.filter.roomId; // clear selected roomId
     this.refresh.next(); // refresh calendar after loading
-  }
-
-  showAllBookings() {
-    this.bookings = this.allBookings;
-    this.populateCalendar();
   }
 
   resetFilter() {
@@ -183,12 +210,9 @@ export class HomeComponent {
     this.showAllBookings(); // show all if reset
   }
 
-  resetModuleFilter() {
-    this.filter = {};
-    this.programmes = [];
-    // this.modules = [];
-    this.emptyProgrammeFilter();
-    this.showAllBookings();
+  showAllBookings() {
+    this.bookings = this.allBookings;
+    this.populateCalendar();
   }
 
   private populateCalendar() {

@@ -56,6 +56,9 @@ export class ModuleListComponent implements OnInit {
 
     this.modules = await this.moduleService.getAllModules(); // promise
 
+    // this.moduleService.getAllModules() // observable
+    //   .subscribe(modules => this.modules = modules);
+
     this.programmeService.getAllProgrammes() // observable
       .subscribe(programmes => this.programmes = programmes);
 

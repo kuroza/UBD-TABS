@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DotNetAngularApp.Persistence
 {
@@ -16,7 +17,9 @@ namespace DotNetAngularApp.Persistence
 
         public async Task<IEnumerable<TimeSlot>> GetAllTimeSlots()
         {
-            return await context.TimeSlots.ToListAsync();
+            return await context.TimeSlots
+                .OrderBy(ts => ts.StartTime)
+                .ToListAsync();
         }
 
         public async Task<TimeSlot> GetTimeSlot(int id, bool includeRelated = true)

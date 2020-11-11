@@ -54,7 +54,8 @@ namespace DotNetAngularApp.Persistence
                             .ThenInclude(l => l.Lecturer)
                 .Include(b => b.Modules)
                     .ThenInclude(bm => bm.Module)
-                        .ThenInclude(m => m.Programme) // ? why Programme in Bookings is null?
+                        .ThenInclude(m => m.Programme)
+                .OrderBy(b => b.Id)
                 .ToListAsync();
         }
 
@@ -72,6 +73,9 @@ namespace DotNetAngularApp.Persistence
                     .ThenInclude(bm => bm.Module)
                         .ThenInclude(m => m.Lecturers)
                             .ThenInclude(l => l.Lecturer)
+                .Include(b => b.Modules)
+                    .ThenInclude(bm => bm.Module)
+                        .ThenInclude(m => m.Programme)
                 .AsQueryable();
 
             if (queryObj.BuildingId.HasValue)

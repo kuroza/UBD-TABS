@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DotNetAngularApp.Core;
 using DotNetAngularApp.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DotNetAngularApp.Persistence
 {
@@ -30,6 +31,7 @@ namespace DotNetAngularApp.Persistence
                         .ThenInclude(bm => bm.Module)
                             .ThenInclude(m => m.Lecturers)
                                 .ThenInclude(ml => ml.Lecturer)
+                .OrderBy(s => s.Session)
                 .ToListAsync();
         }
 
