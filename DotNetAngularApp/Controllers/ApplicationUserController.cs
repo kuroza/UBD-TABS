@@ -126,7 +126,7 @@ namespace DotNetAngularApp.Controllers
         //GET : /api//ApplicationUser/AllUsers
         public IEnumerable<ApplicationUser> GetAllUsers()
         {
-            var users = _userManager.Users;
+            var users = _userManager.Users.OrderBy(users => users.FullName);
 
             return users;
         }
