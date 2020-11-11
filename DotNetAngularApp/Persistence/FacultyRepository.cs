@@ -17,6 +17,7 @@ namespace DotNetAngularApp.Persistence
         public async Task<IEnumerable<Faculty>> GetAllFaculties()
         {
             return await context.Faculties
+                .Include(f => f.Programmes)
                 .ToListAsync();
         }
 
@@ -26,6 +27,7 @@ namespace DotNetAngularApp.Persistence
                 return await context.Faculties.FindAsync(id);
 
             return await context.Faculties
+                .Include(f => f.Programmes)
                 .SingleOrDefaultAsync(p => p.Id == id);
         }
 

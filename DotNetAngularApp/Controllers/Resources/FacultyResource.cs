@@ -7,11 +7,11 @@ namespace DotNetAngularApp.Controllers.Resources
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        // public ICollection<ProgrammeResource> Programmes { get; set; }
+        public ICollection<ProgrammeResource> Programmes { get; set; }
 
         public FacultyResource()
         {
-            // Programmes = new Collection<ProgrammeResource>();
+            Programmes = new Collection<ProgrammeResource>();
         }
     }
 }

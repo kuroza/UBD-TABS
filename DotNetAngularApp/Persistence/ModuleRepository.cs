@@ -20,7 +20,6 @@ namespace DotNetAngularApp.Persistence
                 .Include(m => m.Lecturers)
                     .ThenInclude(ml => ml.Lecturer)
                 .Include(m => m.Programme)
-                    .ThenInclude(p => p.Faculty)
                 .ToListAsync();
         }
 

@@ -34,6 +34,9 @@ namespace DotNetAngularApp.Persistence
                     .ThenInclude(bm => bm.Module)
                         .ThenInclude(m => m.Lecturers)
                             .ThenInclude(l => l.Lecturer)
+                .Include(b => b.Modules)
+                    .ThenInclude(bm => bm.Module)
+                        .ThenInclude(m => m.Programme)
                 .SingleOrDefaultAsync(b => b.Id == id);
         }
 
@@ -49,6 +52,9 @@ namespace DotNetAngularApp.Persistence
                     .ThenInclude(bm => bm.Module)
                         .ThenInclude(m => m.Lecturers)
                             .ThenInclude(l => l.Lecturer)
+                .Include(b => b.Modules)
+                    .ThenInclude(bm => bm.Module)
+                        .ThenInclude(m => m.Programme) // ? why Programme in Bookings is null?
                 .ToListAsync();
         }
 
@@ -58,7 +64,6 @@ namespace DotNetAngularApp.Persistence
             var result = new QueryResult<Booking>();
 
             var query = context.Bookings
-            // include semester
                 .Include(b => b.Room)
                     .ThenInclude(r => r.Building)
                 .Include(b => b.TimeSlots)

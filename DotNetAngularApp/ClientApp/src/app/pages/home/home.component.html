@@ -67,7 +67,7 @@
                   required
                   placeholder="Select Faculty"
                   [(selected)]="filter.facultyId"
-                  (selectedChange)="onFilterModuleChange()"
+                  (selectedChange)="onFacultyChange()"
                 >
                   <nb-option *ngFor="let f of faculties" value="{{ f.id }}">{{ f.name }}</nb-option>
                 </nb-select>
@@ -81,7 +81,7 @@
                   required
                   placeholder="Select Programme"
                   [(selected)]="filter.programmeId"
-                  (selectedChange)="onFilterProgrammeChange()"
+                  (selectedChange)="onModuleFilterChange()"
                 >
                   <nb-option *ngFor="let p of programmes" value="{{ p.id }}">{{ p.name }}</nb-option>
                 </nb-select>
@@ -97,7 +97,7 @@
                   [(selected)]="filter.moduleId"
                   (selectedChange)="onFilterModuleChange()"
                 >
-                  <nb-option *ngFor="let m of modules" value="{{ m.id }}">{{ m.name }}</nb-option>
+                  <nb-option *ngFor="let m of modules" value="{{ m.id }}">{{ m.code }} {{ m.name }}</nb-option>
                 </nb-select>
               </div>
 

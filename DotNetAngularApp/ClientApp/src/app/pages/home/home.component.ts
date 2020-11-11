@@ -1,3 +1,4 @@
+import { ModuleService } from './../../services/module.service';
 import { FacultyService } from './../../services/faculty.service';
 import { ProgrammeService } from './../../services/programme.service';
 import { SemesterService } from './../../services/semester.service';
@@ -39,6 +40,7 @@ export class HomeComponent {
 
   faculties: any;
   programmes: any;
+  modules: any;
   semesters: any;
   buildings: any;
   rooms: any;
@@ -71,7 +73,8 @@ export class HomeComponent {
     private userService: UserService,
     private semesterService: SemesterService,
     private programmeService: ProgrammeService,
-    private facultyService: FacultyService
+    private facultyService: FacultyService,
+    private moduleService: ModuleService
     ) {}
 
   async ngOnInit() {
@@ -85,6 +88,8 @@ export class HomeComponent {
     this.programmeService.getAllProgrammes()
       .subscribe(programmes => this.programmes = programmes);
 
+    this.modules = await this.moduleService.getAllModules();
+
     this.buildingService.getAllBuildings() // get the buildings from service for filter drop down
       .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
 
@@ -93,7 +98,7 @@ export class HomeComponent {
     this.refresh.next(); // refresh calendar after loading
   }
 
-  onFilterChange() { // anytime the filters are changed
+  onFilterChange() {
     this.activeDayIsOpen = false;
     this.events = []; // reset events after every filter change
     var bookings = this.allBookings; // show all Bookings
@@ -110,14 +115,53 @@ export class HomeComponent {
     this.populateCalendar();
   }
 
-  onBuildingChange() { // for cascading
+  onModuleFilterChange() {
+    this.activeDayIsOpen = false;
+    this.events = [];
+    var bookings = this.allBookings;
+
+    if (this.filter.facultyId) // [(selected)]="filter.facultyId"
+      bookings = bookings.filter(b => b.faculty.id == this.filter.facultyId);
+
+    if (this.filter.programmeId)
+      bookings = bookings.filter(b => b.programme.id == this.filter.programmeId);
+
+    this.bookings = bookings;
+    this.populateCalendar();
+  }
+
+  onBuildingChange() {
+    // cascade rooms drop down
     var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
-    this.rooms = selectedBuilding ? selectedBuilding.rooms : []; // cascade rooms drop down
+    this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
     this.emptyRoomFilter();
     
+    // filter events by building
     var bookings = this.allBookings;
-    this.bookings = bookings.filter(b => b.building.id == this.filter.buildingId); // filter events by building
-    this.populateCalendar(); // ! am I repeating this with onFilterChange()? Maybe not..
+    this.bookings = bookings.filter(b => b.building.id == this.filter.buildingId);
+    this.populateCalendar();
+  }
+
+  onFacultyChange() {
+    var selectedFaculty = this.faculties.find(f => f.id == this.filter.facultyId);
+    this.programmes = selectedFaculty ? selectedFaculty.programmes : [];
+    this.emptyProgrammeFilter();
+
+    var bookings = this.allBookings;
+    this.bookings = bookings.filter(b => b.modules.programme.facultyId == this.filter.facultyId);
+    // this.bookings = bookings.filter(b => {
+    //   for (let module of b.modules) {
+    //     module.programme.facultyId == this.filter.facultyId;
+    //   }
+    // });
+    this.populateCalendar();
+  }
+
+  emptyProgrammeFilter() {
+    this.activeDayIsOpen = false;
+    this.events = [];
+    delete this.filter.programmeId;
+    this.refresh.next();
   }
 
   emptyRoomFilter() {
@@ -137,6 +181,14 @@ export class HomeComponent {
     this.rooms = []; // clear room dropdown
     this.emptyRoomFilter();
     this.showAllBookings(); // show all if reset
+  }
+
+  resetModuleFilter() {
+    this.filter = {};
+    this.programmes = [];
+    // this.modules = [];
+    this.emptyProgrammeFilter();
+    this.showAllBookings();
   }
 
   private populateCalendar() {
