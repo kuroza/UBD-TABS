@@ -121,13 +121,14 @@
             
               <!-- * Room drop down list -->
               <div class="form-group">
-                <label for="room">Room *</label>
+                <label>Rooms *</label>
                 <br>
                 <nb-select
                   filled
                   required
-                  placeholder="Select Room"
-                  [(selected)]="booking.roomId"
+                  multiple
+                  placeholder="Select Rooms"
+                  [(selected)]="booking.rooms"
                   fullWidth="true"
                 >
                   <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
@@ -143,8 +144,8 @@
                 <button nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>
               </div>
             
-              <!-- <br>
-              <pre>{{ booking | json }}</pre> -->
+              <br>
+              <pre>{{ booking | json }}</pre>
             </form>
           </nb-card-body>
       </nb-card>

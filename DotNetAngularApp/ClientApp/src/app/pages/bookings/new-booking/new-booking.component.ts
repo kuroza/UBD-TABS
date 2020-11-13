@@ -49,12 +49,12 @@ export class NewBookingComponent implements OnInit {
 
   booking: SaveBooking = {
     id: 0,
-    roomId: 0,
-    buildingId: 0,
+    semesterId: 0,
     bookDate: '',
+    buildingId: 0,
+    rooms: [],
     timeSlots: [],
     modules: [],
-    semesterId: 0,
   };
 
   constructor(
@@ -187,21 +187,21 @@ export class NewBookingComponent implements OnInit {
 
   resetBookingField() {
     this.booking.id = 0;
-    this.booking.roomId = 0;
-    this.booking.buildingId = 0;
+    this.booking.semesterId = 0;
     this.booking.bookDate = '';
+    this.booking.buildingId = 0;
+    this.booking.rooms = [];
     this.booking.timeSlots = [];
     this.booking.modules = [];
-    this.booking.semesterId = 0;
   }
 
   // * for editing
   private setBooking(b) {
     this.booking.id = b.id;
-    this.booking.buildingId = b.building.id;
-    this.booking.roomId = b.room.id;
     this.booking.semesterId = b.semester.id;
     this.booking.bookDate = b.bookDate;
+    this.booking.buildingId = b.building.id;
+    this.booking.rooms = _.pluck(b.rooms, 'id');
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
     this.booking.modules = _.pluck(b.modules, 'id');
   }
@@ -209,12 +209,13 @@ export class NewBookingComponent implements OnInit {
   onBuildingChange() {
     this.populateRooms();
 
-    delete this.booking.roomId;
+    // delete this.booking.rooms; // ?
   }
 
   private populateRooms() {
     var selectedBuilding = this.buildings.find(b => b.id == this.booking.buildingId);
     this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
+    console.log(selectedBuilding);
   }
 
   validSubmitForm(): boolean {
@@ -222,7 +223,7 @@ export class NewBookingComponent implements OnInit {
       this.booking.semesterId > 0 && 
       this.booking.modules.length != 0 &&
       this.booking.timeSlots.length != 0 &&
-      this.booking.roomId > 0 &&
+      this.booking.rooms.length != 0 &&
       this.selectedDate.length != 0
       ) {
       return true;

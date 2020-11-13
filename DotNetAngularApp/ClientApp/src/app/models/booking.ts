@@ -1,34 +1,38 @@
 export interface KeyValuePair {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
 }
 
 export interface Booking {
+  id: number;
+  semesterId: number;
+  bookDate: string;
+  rooms: {
+    id: number;name: string;code: string;capacity: number;building: {
+      id: number;name: string;
+    };
+  } [];
+  timeSlots: {
+    id: number;startTime: string;endTime: string;
+  } [];
+  modules: {
     id: number;
-    room: { id: number; name: string; capacity: number; };
-    building: { id: number; name: string; };
-    bookDate: string;
-    timeSlots: { id: number; startTime: string; endTime: string; }[];
-    modules: { 
-        id: number; 
-        name: string; 
-        code: string; 
-        lecturers: { 
-            id: number; 
-            name: string; 
-            title: string; 
-        }[]; 
-    }[];
-    semesterId: number;
-    // semester: { id: number; session: string; startDate: string; endDate: string; };
+    name: string;
+    code: string;
+    lecturers: {
+      id: number;
+      name: string;
+      title: string;
+    } [];
+  } [];
 }
 
 export interface SaveBooking {
-    id: number;
-    roomId: number;
-    buildingId: number;
-    bookDate: string;
-    timeSlots: number[];
-    modules: number[];
-    semesterId: number;
+  id: number;
+  semesterId: number;
+  bookDate: string;
+  buildingId: number;
+  rooms: number[];
+  timeSlots: number[];
+  modules: number[];
 }
