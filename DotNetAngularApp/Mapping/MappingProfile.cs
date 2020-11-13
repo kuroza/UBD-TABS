@@ -38,7 +38,7 @@ namespace DotNetAngularApp.Mapping
 
             CreateMap<Booking, BookingResource>()
                 .ForMember(br => br.SemesterId, opt => opt.MapFrom(b => b.Semester.Id)) // !
-                .ForMember(br => br.Building, opt => opt.MapFrom(b => b.Room.Building))
+                .ForMember(br => br.Building, opt => opt.MapFrom(b => b.Rooms.Select(br => br.Room.Building)))
                 .ForMember(br => br.TimeSlots, opt => 
                     opt.MapFrom(b => b.TimeSlots.Select(bt => 
                     new TimeSlotResource { Id = bt.TimeSlot.Id, StartTime = bt.TimeSlot.StartTime, EndTime = bt.TimeSlot.EndTime }))) //load the association class

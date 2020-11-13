@@ -21,8 +21,9 @@ namespace DotNetAngularApp.Persistence
             // ? Only get BookingId instead of the whole Booking?
             return await context.Semesters
                 .Include(s => s.Bookings)
-                    .ThenInclude(b => b.Room)
-                        .ThenInclude(r => r.Building)
+                    .ThenInclude(b => b.Rooms)
+                        .ThenInclude(br => br.Room)
+                            .ThenInclude(r => r.Building)
                 .Include(s => s.Bookings)
                     .ThenInclude(b => b.TimeSlots)
                         .ThenInclude(bt => bt.TimeSlot)

@@ -10,11 +10,11 @@ namespace DotNetAngularApp.Controllers.Resources
 
         public int SemesterId { get; set; }
 
-        public RoomResource Room { get; set; }
-
         public KeyValuePairResource Building { get; set; }
 
         public DateTime BookDate { get; set; }
+
+        public ICollection<RoomResource> Rooms { get; set; }
 
         public ICollection<TimeSlotResource> TimeSlots { get; set; }
 
@@ -22,6 +22,7 @@ namespace DotNetAngularApp.Controllers.Resources
 
         public BookingResource()
         {
+            Rooms = new Collection<RoomResource>();
             TimeSlots = new Collection<TimeSlotResource>();
             Modules = new Collection<ModuleResource>();
         }

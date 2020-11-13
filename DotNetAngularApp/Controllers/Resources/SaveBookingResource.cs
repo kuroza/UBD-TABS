@@ -9,13 +9,13 @@ namespace DotNetAngularApp.Controllers.Resources
     {
         public int Id { get; set; }
 
-        [Required]
-        public int RoomId { get; set; }
-
         public int SemesterId { get; set; }
 
         [Required]
         public DateTime BookDate { get; set; }
+
+        [Required]
+        public ICollection<int> Rooms { get; set; }
 
         public ICollection<int> TimeSlots { get; set; }
 
@@ -24,6 +24,7 @@ namespace DotNetAngularApp.Controllers.Resources
 
         public SaveBookingResource()
         {
+            Rooms = new Collection<int>();
             TimeSlots = new Collection<int>();
             Modules = new Collection<int>();
         }
