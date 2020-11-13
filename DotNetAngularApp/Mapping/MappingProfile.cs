@@ -38,10 +38,13 @@ namespace DotNetAngularApp.Mapping
 
             CreateMap<Booking, BookingResource>()
                 .ForMember(br => br.SemesterId, opt => opt.MapFrom(b => b.Semester.Id)) // !
-                .ForMember(br => br.Building, opt => opt.MapFrom(b => b.Rooms.Select(br => br.Room.Building)))
+                // .ForMember(br => br.Building, opt => opt.MapFrom(b => b.Rooms.Select(br => br.Room.Building)))
+                .ForMember(br => br.Rooms, opt => 
+                    opt.MapFrom(b => b.Rooms.Select(bm => 
+                    new Room { Id = bm.Room.Id, Name = bm.Room.Name, Code = bm.Room.Code, Capacity = bm.Room.Capacity, Building = bm.Room.Building })))
                 .ForMember(br => br.TimeSlots, opt => 
                     opt.MapFrom(b => b.TimeSlots.Select(bt => 
-                    new TimeSlotResource { Id = bt.TimeSlot.Id, StartTime = bt.TimeSlot.StartTime, EndTime = bt.TimeSlot.EndTime }))) //load the association class
+                    new TimeSlotResource { Id = bt.TimeSlot.Id, StartTime = bt.TimeSlot.StartTime, EndTime = bt.TimeSlot.EndTime })))
                 .ForMember(br => br.Modules, opt => 
                     opt.MapFrom(b => b.Modules.Select(bm => 
                     new ModuleResource { Id = bm.Module.Id, Name = bm.Module.Name, Code = bm.Module.Code, 
@@ -123,6 +126,18 @@ namespace DotNetAngularApp.Mapping
                         .Select(id => new BookingModule { ModuleId = id });
                     foreach (var m in addedModules)
                         b.Modules.Add(m);
+                })
+                .ForMember(b => b.Rooms, opt => opt.Ignore())
+                .AfterMap((br, b) => {
+                    var removedRooms = b.Rooms.Where(r => !br.Rooms.Contains(r.RoomId)).ToList();
+                    foreach (var r in removedRooms)
+                        b.Rooms.Remove(r);
+
+                    var addedRooms = br.Rooms
+                        .Where(id => !b.Rooms.Any(r => r.RoomId == id))
+                        .Select(id => new BookingRoom { RoomId = id });
+                    foreach (var r in addedRooms)
+                        b.Rooms.Add(r);
                 });
         }
     }

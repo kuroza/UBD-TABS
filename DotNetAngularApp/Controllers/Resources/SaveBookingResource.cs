@@ -17,6 +17,7 @@ namespace DotNetAngularApp.Controllers.Resources
         [Required]
         public ICollection<int> Rooms { get; set; }
 
+        [Required]
         public ICollection<int> TimeSlots { get; set; }
 
         [Required]

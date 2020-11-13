@@ -10,7 +10,7 @@ namespace DotNetAngularApp.Controllers.Resources
 
         public int SemesterId { get; set; }
 
-        public KeyValuePairResource Building { get; set; }
+        // public KeyValuePairResource Building { get; set; }
 
         public DateTime BookDate { get; set; }
 

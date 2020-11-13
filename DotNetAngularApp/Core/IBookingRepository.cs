@@ -9,8 +9,8 @@ namespace DotNetAngularApp.Core
     {
         void Add(Booking booking);
         void Remove(Booking booking);
-        bool BookingExist(Booking booking);
-        bool EditBookingExist(Booking booking);
+        // bool BookingExist(Booking booking);
+        // bool EditBookingExist(Booking booking);
         Task<IEnumerable<Booking>> GetAllBookings();
         Task<Booking> GetBooking(int id, bool includeRelated = true);
         Task<QueryResult<Booking>> GetBookings(BookingQuery filter);

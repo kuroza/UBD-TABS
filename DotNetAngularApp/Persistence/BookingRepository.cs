@@ -117,34 +117,34 @@ namespace DotNetAngularApp.Persistence
             context.Remove(booking);
         }
 
-        public bool BookingExist(Booking booking)
-        {
-            var resultContext = context.Bookings
-                .Where(b => b.Rooms.Select(br => br.Room.Id) == booking.Rooms.Select(br => br.Room.Id) && b.BookDate == booking.BookDate)
-                .SelectMany(b => b.TimeSlots.Select(bt => bt.TimeSlotId))
-                .AsEnumerable();
+        // public bool BookingExist(Booking booking)
+        // {
+        //     var resultContext = context.Bookings
+        //         .Where(b => b.Rooms.Select(br => br.Room.Id) == booking.Rooms.Select(br => br.Room.Id) && b.BookDate == booking.BookDate)
+        //         .SelectMany(b => b.TimeSlots.Select(bt => bt.TimeSlotId))
+        //         .AsEnumerable();
 
-            var resultInput = booking.TimeSlots.Select(bt => bt.TimeSlotId);
+        //     var resultInput = booking.TimeSlots.Select(bt => bt.TimeSlotId);
 
-            if (resultContext.Intersect(resultInput).Count() > 0)
-                return true;
-            else
-                return false;
-        }
+        //     if (resultContext.Intersect(resultInput).Count() > 0)
+        //         return true;
+        //     else
+        //         return false;
+        // }
 
-        public bool EditBookingExist(Booking booking)
-        {
-            var resultContext = context.Bookings
-                .Where(b => b.Rooms.Select(br => br.Room.Id) == booking.Rooms.Select(br => br.Room.Id) && b.BookDate == booking.BookDate && b.Id != booking.Id)
-                .SelectMany(b => b.TimeSlots.Select(bt => bt.TimeSlotId))
-                .AsEnumerable();
+        // public bool EditBookingExist(Booking booking)
+        // {
+        //     var resultContext = context.Bookings
+        //         .Where(b => b.Rooms.Select(br => br.Room.Id) == booking.Rooms.Select(br => br.Room.Id) && b.BookDate == booking.BookDate && b.Id != booking.Id)
+        //         .SelectMany(b => b.TimeSlots.Select(bt => bt.TimeSlotId))
+        //         .AsEnumerable();
 
-            var resultInput = booking.TimeSlots.Select(bt => bt.TimeSlotId);
+        //     var resultInput = booking.TimeSlots.Select(bt => bt.TimeSlotId);
 
-            if (resultContext.Intersect(resultInput).Count() > 0)
-                return true;
-            else
-                return false;
-        }
+        //     if (resultContext.Intersect(resultInput).Count() > 0)
+        //         return true;
+        //     else
+        //         return false;
+        // }
     }
 }
