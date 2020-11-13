@@ -149,16 +149,18 @@
                   fullWidth
                   required
                   placeholder="Select Room"
-                  [(selected)]="filter.roomId"
-                  (selectedChange)="onFilterChange()"
+                  [(selected)]="filter.rooms"
+                  (selectedChange)="onRoomChange()"
                 >
                   <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
                 </nb-select>
-                
-              <!-- <pre>{{ filter | json }}</pre> -->
               </div>
-              <button nbButton size="small" status="basic" hero (click)="resetFilter()" style="margin-top: 20px; float: right;">Reset</button>
+              <button nbButton size="small" status="basic" hero (click)="resetRoomFilter()" style="margin-top: 20px; float: right;">Reset</button>
             </div>
+              
+            <!-- <br>
+            <pre>{{ filter | json }}</pre>
+            <pre>{{ rooms | json }}</pre> -->
           </nb-tab>
          </nb-tabset>
       </nb-card-body>
@@ -207,11 +209,13 @@
 
           <!-- * Venue -->
           <h6>Venue</h6>
-          <p>
-            Building: {{ booking.building.name }}<br>
-            Room: {{ booking.room.name }}<br>
-            Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
-          </p>
+          <ul class="list-inline">
+            Building: <li class="list-inline-item" *ngFor="let r of booking.rooms">{{ r.building.name }}</li>
+          </ul>
+          <ul class="list-inline">
+            Room: <li class="list-inline-item" *ngFor="let r of booking.rooms">{{ r.name }}</li>
+          </ul>
+          <p>Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}</p>
           <br />
         
           <!-- * TimeSlots -->

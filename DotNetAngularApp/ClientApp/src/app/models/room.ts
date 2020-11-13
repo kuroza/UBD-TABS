@@ -2,7 +2,7 @@ export interface Room { // from resource
     id: number;
     name: string;
     capacity: number;
-    building: { id: number; name: string; }; // []
+    building: { id: number; name: string; };
 }
 
 export interface SaveRoom {

@@ -43,7 +43,7 @@ export class HomeComponent {
   modules: any;
   semesters: any;
   buildings: any;
-  rooms: any;
+  rooms: any = [];
   filter: any = {};
   allBookings: any;
   booking: any; // a single booking event
@@ -143,46 +143,36 @@ export class HomeComponent {
 
   // * Filter by rooms ---------------------------------------------------------------
 
-  onFilterChange() {
-    this.activeDayIsOpen = false;
-    this.events = []; // reset events after every filter change
-    var bookings = this.allBookings; // show all Bookings
+  onBuildingChange() {
+    // cascade rooms drop down
+    var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
+    this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
+    this.emptyFilter();
+    delete this.filter.rooms;
+    
+    // filter events by building
+    var bookings = this.allBookings;
+    this.bookings = bookings.filter(b => b.rooms.find(r => r.building.id == this.filter.buildingId));
+    this.populateCalendar();
+  }
 
-    if (this.filter.buildingId) // [(selected)]="filter.buildingId"
-      // show bookings from the selected Building // ! might be redundant
-      bookings = bookings.filter(b => b.building.id == this.filter.buildingId);
+  onRoomChange() {
+    this.emptyFilter();
+    var bookings = this.allBookings;
 
-    if (this.filter.roomId)
+    if (this.filter.rooms)
       // show bookings from the selected Room
-      bookings = bookings.filter(b => b.room.id == this.filter.roomId);
+      bookings = bookings.filter(b => b.rooms.find(r => r.id == this.filter.rooms));
 
     this.bookings = bookings;
     this.populateCalendar();
   }
 
-  onBuildingChange() {
-    // cascade rooms drop down
-    var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
-    this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
-    this.emptyRoomFilter();
-    
-    // filter events by building
-    var bookings = this.allBookings;
-    this.bookings = bookings.filter(b => b.building.id == this.filter.buildingId);
-    this.populateCalendar();
-  }
-
-  emptyRoomFilter() {
-    this.activeDayIsOpen = false;
-    this.events = []; // clear events
-    delete this.filter.roomId; // clear selected roomId
-    this.refresh.next(); // refresh calendar after loading
-  }
-
-  resetFilter() {
+  resetRoomFilter() {
     this.filter = {}; // empty filter drop down
     this.rooms = []; // clear room dropdown
-    this.emptyRoomFilter();
+    delete this.filter.rooms; // ? clear selected rooms
+    this.emptyFilter();
     this.showAllBookings(); // show all if reset
   }
 
@@ -202,6 +192,12 @@ export class HomeComponent {
       if (b.modules.length > 1) {
         for (var i=1; i<b.modules.length; i++)
           modules += "<br>" + b.modules[i].code + ": " + b.modules[i].name;
+      }
+      
+      var rooms: string = b.rooms[0].name;
+      if (b.rooms.length > 1) {
+        for (var i=1; i<b.rooms.length; i++)
+          rooms += "<br>" + b.rooms[i].name;
       }
 
       // if (b.modules.length > 1) {
@@ -228,7 +224,7 @@ export class HomeComponent {
           {
             start: new Date(this.startDateTime),
             end: new Date(this.endDateTime),
-            title: `<b>${ modules }</b><br>${ b.room.name }`,
+            title: `<b>${ modules }</b><br>${ rooms }`,
             color: colors.teal,
             meta: {
               id: b.id, // * just the id for component call

@@ -8,13 +8,20 @@ export interface Booking {
   semesterId: number;
   bookDate: string;
   rooms: {
-    id: number;name: string;code: string;capacity: number;building: {
-      id: number;name: string;
+    id: number;
+    name: string;
+    code: string;
+    capacity: number;
+    building: {
+      id: number;
+      name: string;
     };
-  } [];
+  }[];
   timeSlots: {
-    id: number;startTime: string;endTime: string;
-  } [];
+    id: number;
+    startTime: string;
+    endTime: string;
+  }[];
   modules: {
     id: number;
     name: string;
@@ -23,8 +30,8 @@ export interface Booking {
       id: number;
       name: string;
       title: string;
-    } [];
-  } [];
+    }[];
+  }[];
 }
 
 export interface SaveBooking {

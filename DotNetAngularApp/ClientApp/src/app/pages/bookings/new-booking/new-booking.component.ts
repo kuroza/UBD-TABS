@@ -209,7 +209,7 @@ export class NewBookingComponent implements OnInit {
   onBuildingChange() {
     this.populateRooms();
 
-    // delete this.booking.rooms; // ?
+    // delete this.booking.rooms; // ? with this, Rooms not showing
   }
 
   private populateRooms() {
