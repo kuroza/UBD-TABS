@@ -1,6 +1,6 @@
 import { ModuleService } from './../../services/module.service';
 import { FacultyService } from './../../services/faculty.service';
-import { ProgrammeService } from './../../services/programme.service';
+import { MajorService } from '../../services/major.service';
 import { SemesterService } from './../../services/semester.service';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { BookingService } from '../../services/booking.service';
@@ -39,7 +39,7 @@ export class HomeComponent {
   nbSpinner: boolean = false;
 
   faculties: any;
-  programmes: any;
+  majors: any;
   modules: any;
   semesters: any;
   buildings: any;
@@ -72,7 +72,7 @@ export class HomeComponent {
     private buildingService: BuildingService,
     private userService: UserService,
     private semesterService: SemesterService,
-    private programmeService: ProgrammeService,
+    private majorService: MajorService,
     private facultyService: FacultyService,
     private moduleService: ModuleService
     ) {}
@@ -97,23 +97,23 @@ export class HomeComponent {
 
   onFacultyChange() {
     var selectedFaculty = this.faculties.find(faculty => faculty.id == this.filter.facultyId);
-    this.programmes = selectedFaculty ? selectedFaculty.programmes : [];
+    this.majors = selectedFaculty ? selectedFaculty.majors : [];
     this.emptyFilter();
-    delete this.filter.programmeId;
+    delete this.filter.majorId;
 
     var bookings = this.allBookings;
-    this.bookings = bookings.filter(b => b.modules.find(module => module.programme.facultyId == this.filter.facultyId));
+    this.bookings = bookings.filter(b => b.modules.find(module => module.major.facultyId == this.filter.facultyId));
     this.populateCalendar();
   }
 
-  onProgrammeChange() {
-    var selectedProgramme = this.programmes.find(programme => programme.id == this.filter.programmeId);
-    this.modules = selectedProgramme ? selectedProgramme.modules : [];
+  onMajorChange() {
+    var selectedMajor = this.majors.find(major => major.id == this.filter.majorId);
+    this.modules = selectedMajor ? selectedMajor.modules : [];
     this.emptyFilter();
     delete this.filter.moduleId;
 
     var bookings = this.allBookings;
-    this.bookings = bookings.filter(b => b.modules.find(module => module.programme.id == this.filter.programmeId));
+    this.bookings = bookings.filter(b => b.modules.find(module => module.major.id == this.filter.majorId));
     this.populateCalendar();
   }
 
@@ -135,7 +135,7 @@ export class HomeComponent {
 
   resetModuleFilter() {
     this.filter = {};
-    this.programmes = [];
+    this.majors = [];
     this.modules = [];
     this.emptyFilter();
     this.showAllBookings();

@@ -1,4 +1,4 @@
-import { ProgrammeService } from './../../../services/programme.service';
+import { MajorService } from '../../../services/major.service';
 import { ModuleService } from './../../../services/module.service';
 import { Component, OnInit } from '@angular/core';
 import { SaveModule } from '../../../models/module';
@@ -29,13 +29,13 @@ export class ModuleListComponent implements OnInit {
 
   moduleDetails: any;
   modules: any;
-  programmes: any;
+  majors: any;
   lecturers: any;
   module: SaveModule = {
     id: 0,
     name: '',
     code: '',
-    programmeId: 0,
+    majorId: 0,
     lecturers: [],
   };
 
@@ -46,7 +46,7 @@ export class ModuleListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
-    private programmeService: ProgrammeService
+    private majorService: MajorService
   ) { }
 
   async ngOnInit() {
@@ -59,8 +59,8 @@ export class ModuleListComponent implements OnInit {
     // this.moduleService.getAllModules() // observable
     //   .subscribe(modules => this.modules = modules);
 
-    this.programmeService.getAllProgrammes() // observable
-      .subscribe(programmes => this.programmes = programmes);
+    this.majorService.getAllMajors() // observable
+      .subscribe(majors => this.majors = majors);
 
     this.lecturerService.getAllLecturers()
       .subscribe(lecturers => this.lecturers = lecturers);

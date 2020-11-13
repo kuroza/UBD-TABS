@@ -13,7 +13,7 @@ namespace DotNetAngularApp.Mapping
             // <Source, target>
             CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
             CreateMap<Faculty, FacultyResource>();
-            CreateMap<Programme, ProgrammeResource>();
+            CreateMap<Major, MajorResource>();
             
             CreateMap<TimeSlot, TimeSlotResource>();
             CreateMap<TimeSlot, SaveTimeSlotResource>();
@@ -45,8 +45,8 @@ namespace DotNetAngularApp.Mapping
                 .ForMember(br => br.Modules, opt => 
                     opt.MapFrom(b => b.Modules.Select(bm => 
                     new ModuleResource { Id = bm.Module.Id, Name = bm.Module.Name, Code = bm.Module.Code, 
-                        Programme = new ProgrammeResource { Id = bm.Module.Programme.Id, Name = bm.Module.Programme.Name, 
-                        ShortName = bm.Module.Programme.ShortName, FacultyId = bm.Module.Programme.FacultyId },
+                        Major = new MajorResource { Id = bm.Module.Major.Id, Name = bm.Module.Major.Name, 
+                        ShortName = bm.Module.Major.ShortName, FacultyId = bm.Module.Major.FacultyId },
                         Lecturers = bm.Module.Lecturers.Select(ml => 
                         new LecturerResource { Id = ml.Lecturer.Id, Name = ml.Lecturer.Name, Title = ml.Lecturer.Title }).ToList() })));
 
@@ -57,7 +57,7 @@ namespace DotNetAngularApp.Mapping
                 .ForMember(mr => mr.Lecturers, opt => 
                     opt.MapFrom(m => m.Lecturers.Select(ml => 
                     new LecturerResource { Id = ml.Lecturer.Id, Name = ml.Lecturer.Name, Title = ml.Lecturer.Title })))
-                .ForMember(mr => mr.Programme, opt => opt.MapFrom(m => m.Programme));
+                .ForMember(mr => mr.Major, opt => opt.MapFrom(m => m.Major));
 
             // API Resource to Domain, saving to database
             CreateMap<BookingQueryResource, BookingQuery>();
@@ -65,7 +65,7 @@ namespace DotNetAngularApp.Mapping
             CreateMap<SaveFacultyResource, Faculty>()
                 .ForMember(f => f.Id, opt => opt.Ignore());
 
-            CreateMap<SaveProgrammeResource, Programme>()
+            CreateMap<SaveMajorResource, Major>()
                 .ForMember(p => p.Id, opt => opt.Ignore());
 
             CreateMap<SaveRoomResource, Room>()

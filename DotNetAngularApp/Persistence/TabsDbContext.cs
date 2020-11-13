@@ -11,7 +11,7 @@ namespace DotNetAngularApp.Persistence
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Faculty> Faculties { get; set; }
-        public DbSet<Programme> Programmes { get; set; }
+        public DbSet<Major> Majors { get; set; }
         public DbSet<Module> Modules { get; set; }
         public DbSet<Lecturer> Lecturers { get; set; }
 

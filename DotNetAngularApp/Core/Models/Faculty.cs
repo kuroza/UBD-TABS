@@ -16,11 +16,11 @@ namespace DotNetAngularApp.Core.Models
         
         public string ShortName { get; set; }
 
-        public ICollection<Programme> Programmes { get; set; }
+        public ICollection<Major> Majors { get; set; }
 
         public Faculty()
         {
-            Programmes = new Collection<Programme>(); // to only create a new Course object once here than other places
+            Majors = new Collection<Major>(); // to only create a new Course object once here than other places
         }
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DotNetAngularApp.Controllers.Resources
 {
-    public class SaveProgrammeResource
+    public class SaveMajorResource
     {
         public int Id { get; set; }
 

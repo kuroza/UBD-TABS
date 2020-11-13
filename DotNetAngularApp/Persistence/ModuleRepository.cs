@@ -20,7 +20,7 @@ namespace DotNetAngularApp.Persistence
             return await context.Modules
                 .Include(m => m.Lecturers)
                     .ThenInclude(ml => ml.Lecturer)
-                .Include(m => m.Programme)
+                .Include(m => m.Major)
                 .OrderBy(m => m.Code)
                 .ToListAsync();
         }
@@ -33,7 +33,7 @@ namespace DotNetAngularApp.Persistence
             return await context.Modules
                 .Include(m => m.Lecturers)
                     .ThenInclude(ml => ml.Lecturer)
-                .Include(m => m.Programme)
+                .Include(m => m.Major)
                 .SingleOrDefaultAsync(m => m.Id == id);
         }
 

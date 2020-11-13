@@ -80,10 +80,10 @@
                   fullWidth
                   required
                   placeholder="Select Major"
-                  [(selected)]="filter.programmeId"
-                  (selectedChange)="onProgrammeChange()"
+                  [(selected)]="filter.majorId"
+                  (selectedChange)="onMajorChange()"
                 >
-                  <nb-option *ngFor="let p of programmes" value="{{ p.id }}">{{ p.name }}</nb-option>
+                  <nb-option *ngFor="let m of majors" value="{{ m.id }}">{{ m.name }}</nb-option>
                 </nb-select>
               </div>
 

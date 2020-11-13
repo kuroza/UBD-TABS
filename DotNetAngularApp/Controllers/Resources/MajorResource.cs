@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace DotNetAngularApp.Controllers.Resources
 {
-    public class ProgrammeResource
+    public class MajorResource
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -12,7 +12,7 @@ namespace DotNetAngularApp.Controllers.Resources
         // public FacultyResource Faculty { get; set; }
         public ICollection<ModuleResource> Modules { get; set; }
 
-        public ProgrammeResource()
+        public MajorResource()
         {
             Modules = new Collection<ModuleResource>();
         }

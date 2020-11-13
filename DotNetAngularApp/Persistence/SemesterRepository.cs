@@ -34,7 +34,7 @@ namespace DotNetAngularApp.Persistence
                 .Include(s => s.Bookings)
                     .ThenInclude(b => b.Modules)
                         .ThenInclude(bm => bm.Module)
-                            .ThenInclude(m => m.Programme)
+                            .ThenInclude(m => m.Major)
                 .OrderBy(s => s.Session)
                 .ToListAsync();
         }

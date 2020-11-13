@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DotNetAngularApp.Core.Models
 {
-    [Table("Programmes")]
-    public class Programme
+    [Table("Majors")]
+    public class Major
     {
         public int Id { get; set; }
 
@@ -22,7 +22,7 @@ namespace DotNetAngularApp.Core.Models
 
         public ICollection<Module> Modules { get; set; }
 
-        public Programme()
+        public Major()
         {
             Modules = new Collection<Module>();
         }

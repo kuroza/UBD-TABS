@@ -18,7 +18,7 @@ namespace DotNetAngularApp.Persistence
         public async Task<IEnumerable<Faculty>> GetAllFaculties()
         {
             return await context.Faculties
-                .Include(f => f.Programmes)
+                .Include(f => f.Majors)
                     .ThenInclude(p => p.Modules)
                 .OrderBy(f => f.Name)
                 .ToListAsync();
@@ -30,7 +30,7 @@ namespace DotNetAngularApp.Persistence
                 return await context.Faculties.FindAsync(id);
 
             return await context.Faculties
-                .Include(f => f.Programmes)
+                .Include(f => f.Majors)
                     .ThenInclude(p => p.Modules)
                 .SingleOrDefaultAsync(p => p.Id == id);
         }

@@ -36,7 +36,7 @@ namespace DotNetAngularApp.Persistence
                             .ThenInclude(l => l.Lecturer)
                 .Include(b => b.Modules)
                     .ThenInclude(bm => bm.Module)
-                        .ThenInclude(m => m.Programme)
+                        .ThenInclude(m => m.Major)
                 .SingleOrDefaultAsync(b => b.Id == id);
         }
 
@@ -54,7 +54,7 @@ namespace DotNetAngularApp.Persistence
                             .ThenInclude(l => l.Lecturer)
                 .Include(b => b.Modules)
                     .ThenInclude(bm => bm.Module)
-                        .ThenInclude(m => m.Programme)
+                        .ThenInclude(m => m.Major)
                 .OrderBy(b => b.Id)
                 .ToListAsync();
         }
@@ -75,7 +75,7 @@ namespace DotNetAngularApp.Persistence
                             .ThenInclude(l => l.Lecturer)
                 .Include(b => b.Modules)
                     .ThenInclude(bm => bm.Module)
-                        .ThenInclude(m => m.Programme)
+                        .ThenInclude(m => m.Major)
                 .AsQueryable();
 
             if (queryObj.BuildingId.HasValue)
