@@ -32,6 +32,7 @@
       </div> -->
 
       <button nbButton status="basic" ghost
+        size="small"
         mwlCalendarPreviousView
         [view]="view"
         [(viewDate)]="viewDate"
@@ -41,11 +42,13 @@
       </button>
 
       <button nbButton status="basic" style="margin-left: 10px; margin-right: 10px;" ghost
+        size="small"
         mwlCalendarToday
         [(viewDate)]="viewDate"
         (viewDateChange)="viewDateChange.next(viewDate)">Today</button>
 
       <button nbButton status="basic" ghost
+      size="small"
         mwlCalendarNextView
         [view]="view"
         [(viewDate)]="viewDate"
@@ -84,16 +87,19 @@
       </div> -->
 
       <button nbButton status="basic" ghost
+      size="small"
       (click)="viewChange.emit('month')"
       [class.active]="view === 'month'">
         Month
       </button>
 
       <button nbButton status="basic" style="margin-left: 10px; margin-right: 10px;" ghost
+      size="small"
       (click)="viewChange.emit('week')"
       [class.active]="view === 'week'">Week</button>
 
       <button nbButton status="basic" ghost
+      size="small"
       (click)="viewChange.emit('day')"
       [class.active]="view === 'day'">
         Day
