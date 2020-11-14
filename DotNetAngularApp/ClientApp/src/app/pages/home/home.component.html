@@ -186,8 +186,8 @@
         </div>
         <div *ngIf="booking">
           <!-- * Modules -->
-          <h6>Modules</h6>
-          <nb-accordion multi>
+          <h6 style="margin-left: 20px">Modules</h6>
+          <nb-accordion multi style="width: 70%">
             <nb-accordion-item *ngFor="let module of booking.modules">
               <nb-accordion-item-header>
                 {{ module.code }}: {{ module.name }}
@@ -209,24 +209,26 @@
             </nb-accordion-item>
           </nb-accordion>
           <br />
-
-          <!-- * Venue -->
-          <h6>Venue</h6>
-          <p>
-            Building: {{ booking.building.name }}<br>
-            Room: {{ booking.room.name }}<br>
-            Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
-          </p>
-          <br />
         
           <!-- * TimeSlots -->
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="width: 70%;">
             <div class="card-header">
               <h6>Time slots</h6>
             </div>
             <ul class="list-group list-group-flush">
               <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>
             </ul>
+          </div>
+          <br />
+
+          <!-- * Venue -->
+          <div style="margin-left: 20px">
+            <h6>Venue</h6>
+            <p>
+              Building: {{ booking.building.name }}<br>
+              Room: {{ booking.room.name }}<br>
+              Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
+            </p>
           </div>
           <br />
 
