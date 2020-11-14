@@ -209,11 +209,11 @@
 
           <!-- * Venue -->
           <h6>Venue</h6>
-          <ul class="list-inline">
+          <!-- <ul class="list-inline">
             Building: <li class="list-inline-item" *ngFor="let r of booking.rooms">{{ r.building.name }}</li>
-          </ul>
+          </ul> -->
           <ul class="list-inline">
-            Room: <li class="list-inline-item" *ngFor="let r of booking.rooms">{{ r.name }}</li>
+            Room: <li class="list-inline-item" *ngFor="let r of booking.rooms">{{ r.name }}, </li>
           </ul>
           <p>Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}</p>
           <br />
