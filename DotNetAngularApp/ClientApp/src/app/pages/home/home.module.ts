@@ -1,7 +1,7 @@
 
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { NbCardModule, NbTabsetModule, NbButtonModule, NbAccordionModule, NbSelectModule, NbAlertModule, NbSpinnerModule, NbRadioModule } from '@nebular/theme';
+import { NbCardModule, NbTabsetModule, NbButtonModule, NbAccordionModule, NbSelectModule, NbAlertModule, NbSpinnerModule, NbRadioModule, NbIconModule } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
 import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
@@ -10,9 +10,12 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { CommonModule } from '@angular/common';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarHeaderModule } from '../../@theme/components/calendar-header/calendar-header.module';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   imports: [
+    NgxPrintModule,
+    NbIconModule,
     NbRadioModule,
     NbSpinnerModule,
     NbAlertModule,

@@ -45,6 +45,7 @@ import { UserService } from './services/user.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import {NgxPrintModule} from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     LoginComponent,
   ],
   imports: [
+    NgxPrintModule,
     NbLayoutModule,
     NbIconModule,
     NbCardModule,

@@ -23,11 +23,11 @@ export class CustomEventTitleFormatter extends CalendarEventTitleFormatter {
   week(event: CalendarEvent): string {
     return `<i>${new DatePipe(this.locale).transform(
       event.start,
-      'HH:mm',
+      'HH:mm a',
       this.locale,
-    )}-${new DatePipe(this.locale).transform(
+    )} - ${new DatePipe(this.locale).transform(
       event.end,
-      'HH:mm',
+      'HH:mm a',
       this.locale,
     )}</i><br> ${event.title}`;
   }
