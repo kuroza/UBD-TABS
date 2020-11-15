@@ -224,11 +224,9 @@
           <!-- * Venue -->
           <div style="margin-left: 20px">
             <h6>Venue</h6>
-            <p>
-              Building: {{ booking.building.name }}<br>
-              Room: {{ booking.room.name }}<br>
-              Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}<br>
-            </p>
+              <span>Building: {{ booking.building.name }}</span><br>
+              <span>Room: {{ booking.room.name }}</span><br>
+              <span>Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}</span><br>
           </div>
           <br />
 

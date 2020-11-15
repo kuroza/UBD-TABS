@@ -1,3 +1,14 @@
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>Deleting module</nb-card-header>
+    <nb-card-body>{{ data }}</nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="danger" (click)="delete(moduleDetails.id)" style="margin-right: 10px">Confirm</button>
+      <button nbButton status="basic" (click)="ref.close()">Close</button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
 <div class="row">
   <div class="col-md-8">
     <nb-card>
@@ -95,7 +106,7 @@
                 <button nbButton status="warning" style="margin-left: 10px; margin-top: 10px;"
                   (click)="edit(moduleDetails.id)">Edit</button>
                 <button nbButton status="danger" style="margin-left: 10px; margin-top: 10px;"
-                  (click)="delete(moduleDetails.id)">Delete</button>
+                  (click)="open(dialog)">Delete</button>
               </div>
             </div>
             <div *ngIf="!moduleDetails" style="margin-top: 10px;">

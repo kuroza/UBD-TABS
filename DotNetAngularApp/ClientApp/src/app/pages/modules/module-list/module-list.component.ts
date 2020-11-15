@@ -1,6 +1,6 @@
 import { MajorService } from '../../../services/major.service';
 import { ModuleService } from './../../../services/module.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { SaveModule } from '../../../models/module';
 import { BookingService } from '../../../services/booking.service';
 import { LecturerService } from '../../../services/lecturer.service';
@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as _ from 'underscore';
 import { UserService } from '../../../services/user.service';
+import { NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'module-list',
@@ -46,7 +47,8 @@ export class ModuleListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
-    private majorService: MajorService
+    private majorService: MajorService,
+    private dialogService: NbDialogService
   ) { }
 
   async ngOnInit() {
@@ -116,19 +118,17 @@ export class ModuleListComponent implements OnInit {
   }
 
   delete(id) {
-    if (confirm("Are you sure?")) {
-      this.moduleService.delete(id)
-        .subscribe(x => {
-          this.toastyService.success({
-            title: 'Success', 
-            msg: 'Module was sucessfully deleted.',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 3000
-          });
-          this.redirectTo('/pages/modules');
+    this.moduleService.delete(id)
+      .subscribe(x => {
+        this.toastyService.warning({
+          title: 'Success', 
+          msg: 'Module was sucessfully deleted.',
+          theme: 'bootstrap',
+          showClose: true,
+          timeout: 3000
         });
-    }
+        this.redirectTo('/pages/modules');
+      });
   }
 
   selectModule(id) {
@@ -145,6 +145,10 @@ export class ModuleListComponent implements OnInit {
           return; 
         }
       });
+  }
+
+  open(dialog: TemplateRef<any>) {
+    this.dialogService.open(dialog, { context: 'Are you sure?' });
   }
 
   redirectTo(uri:string){
