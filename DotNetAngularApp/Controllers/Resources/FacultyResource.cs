@@ -7,6 +7,7 @@ namespace DotNetAngularApp.Controllers.Resources
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string ShortName { get; set; }
         public ICollection<MajorResource> Majors { get; set; }
 
         public FacultyResource()

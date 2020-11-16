@@ -34,36 +34,30 @@
     <nb-card>
       <nb-card-header><h4>Edit User Role</h4></nb-card-header>
       <nb-card-body>
-        <div class="row">
-          <div class="col"></div>
-          <div class="col-md-10">
-            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
-              Select a user and role!
-            </nb-alert>
-            <form #f="ngForm" (ngSubmit)="submit()" novalidate>
-              <div class="form-group">
-                <label>User *</label>
-                <nb-select filled fullWidth placeholder="Select user" [(selected)]="userRole.id">
-                  <nb-option *ngFor="let user of users" value="{{ user.id }}">{{ user.fullName }}</nb-option>
-                </nb-select><br>
-              </div>
-              <div class="form-group" style="margin-top: 20px;">
-                <label>Select role *</label>
-                <nb-radio-group [(value)]="userRole.role" status="primary">
-                  <nb-radio value="SuperAdmin">Super admin</nb-radio>
-                  <nb-radio value="Admin">Admin</nb-radio>
-                  <nb-radio value="NormalUser">Normal user</nb-radio>
-                </nb-radio-group>
-              </div>
-              <div>
-                <button nbButton fullWidth [disabled]="!f.valid">Save</button>
-              </div>
-            </form>
-            <!-- <br>
-            <pre>{{ userRole | json }}</pre> -->
+        <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
+          Select a user and role!
+        </nb-alert>
+        <form #f="ngForm" (ngSubmit)="submit()" novalidate>
+          <div class="form-group">
+            <label>User *</label>
+            <nb-select filled fullWidth placeholder="Select user" [(selected)]="userRole.id">
+              <nb-option *ngFor="let user of users" value="{{ user.id }}">{{ user.fullName }}</nb-option>
+            </nb-select><br>
           </div>
-          <div class="col"></div>
-        </div>
+          <div class="form-group" style="margin-top: 20px;">
+            <label>Select role *</label>
+            <nb-radio-group [(value)]="userRole.role" status="primary">
+              <nb-radio value="SuperAdmin">Super admin</nb-radio>
+              <nb-radio value="Admin">Admin</nb-radio>
+              <nb-radio value="NormalUser">Normal user</nb-radio>
+            </nb-radio-group>
+          </div>
+          <div>
+            <button nbButton fullWidth [disabled]="!f.valid">Save</button>
+          </div>
+        </form>
+        <!-- <br>
+        <pre>{{ userRole | json }}</pre> -->
       </nb-card-body>
     </nb-card>
   </div>

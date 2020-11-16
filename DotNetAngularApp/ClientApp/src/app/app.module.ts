@@ -1,3 +1,4 @@
+import { NgxPrintModule } from 'ngx-print';
 /**
  * @license
  * Copyright Akveo. All Rights Reserved.
@@ -54,6 +55,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     LoginComponent,
   ],
   imports: [
+    NgxPrintModule,
     NbLayoutModule,
     NbIconModule,
     NbCardModule,

@@ -1,8 +1,10 @@
 <div class="row">
   <div class="col-md-8">
     <nb-card [nbSpinner]="nbSpinner ? true : false" nbSpinnerStatus="success">
-      <nb-card-header fullWidth>
-        <h4>Calendar Timetable</h4>
+      <nb-card-header>
+        <h4 style="float: left;">Calendar Timetable</h4>
+        <button [useExistingCss]="true" printSectionId="print-section" ngxPrint style="float: right;"
+        nbButton size="tiny" status="basic" outline><nb-icon icon="printer-outline"></nb-icon></button>
       </nb-card-header>
       <nb-card-body>
         <ngx-calendar-header 
@@ -24,6 +26,7 @@
           >
           </mwl-calendar-month-view>
           <mwl-calendar-week-view
+            id="print-section"
             *ngSwitchCase="CalendarView.Week"
             [viewDate]="viewDate"
             [events]="events"
@@ -122,6 +125,8 @@
               </div> -->
 
               <!-- <pre>{{ filter | json }}</pre> -->
+              <!-- <button [useExistingCss]="true" printSectionId="print-section" ngxPrint style="margin-top: 20px; float: left;"
+              nbButton size="small" status="primary"><nb-icon icon="printer-outline"></nb-icon>Print</button> -->
               <button nbButton size="small" status="basic" hero (click)="resetModuleFilter()" style="margin-top: 20px; float: right;">Reset</button>
             </div>
           </nb-tab>
@@ -183,8 +188,8 @@
         </div>
         <div *ngIf="booking">
           <!-- * Modules -->
-          <h6>Modules</h6>
-          <nb-accordion multi>
+          <h6 style="margin-left: 20px">Modules</h6>
+          <nb-accordion multi style="width: 70%">
             <nb-accordion-item *ngFor="let module of booking.modules">
               <nb-accordion-item-header>
                 {{ module.code }}: {{ module.name }}
@@ -206,6 +211,17 @@
             </nb-accordion-item>
           </nb-accordion>
           <br />
+        
+          <!-- * TimeSlots -->
+          <div class="card" style="width: 70%;">
+            <div class="card-header">
+              <h6>Time slots</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>
+            </ul>
+          </div>
+          <br />
 
           <!-- * Venue -->
           <h6>Venue</h6>
@@ -216,17 +232,9 @@
             Room: <li class="list-inline-item" *ngFor="let r of booking.rooms">{{ r.name }}, </li>
           </ul>
           <p>Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}</p>
-          <br />
-        
-          <!-- * TimeSlots -->
-          <div class="card" style="width: 18rem;">
-            <div class="card-header">
-              <h6>Time slots</h6>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>
-            </ul>
-          </div>
+          <!-- <span>Building: {{ booking.building.name }}</span><br>
+          <span>Room: {{ booking.room.name }}</span><br>
+          <span>Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}</span> -->
           <br />
 
           <div class="inline">

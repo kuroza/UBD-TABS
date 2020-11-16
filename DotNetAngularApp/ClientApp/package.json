@@ -70,6 +70,7 @@
     "ng2-smart-table": "^1.6.0",
     "ng2-toasty": "^4.0.3",
     "ngx-bootstrap": "^5.6.1",
+    "ngx-print": "^1.2.0-beta.5",
     "ngx-show-hide-password": "^2.1.0",
     "ngx-spinner": "^8.1.0",
     "node-sass": "^4.13.1",

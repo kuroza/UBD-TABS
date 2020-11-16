@@ -18,25 +18,14 @@
         <h4>My Information</h4>
       </nb-card-header>
       <nb-card-body>
-        <ng-container *ngIf="userDetails" style="margin-top: 10px;">
-            <div class="row">
-                <div class="col-md-3">
-                    Username :<br>
-                    Full name :<br>
-                    Email :<br>
-                    User role :<br>
-                    Phone no. :<br>
-                </div>
-                <div class="col-md-4">
-                    <b>{{userDetails.userName}}</b><br>
-                    <b>{{userDetails.fullName}}</b><br>
-                    <b>{{userDetails.email}}</b><br>
-                    <br>
-                    <br>
-                </div>
-                <div class="col-md-5"></div>
-            </div>
-        </ng-container>
+        <div *ngIf="userDetails" style="margin-top: 10px;">
+          <span>Username: <b>{{userDetails.userName}}</b></span><br>
+          <span>Full name: <b>{{userDetails.fullName}}</b></span><br>
+          <span>Email: <b>{{userDetails.email}}</b></span><br>
+          <span>User role: </span><br>
+          <span>Phone no.: </span><br>
+        </div>
+
         <div class="inline">
           <button nbButton size="small" status="warning" style="margin-right: 10px; margin-top: 10px;">Edit
             profile</button>
