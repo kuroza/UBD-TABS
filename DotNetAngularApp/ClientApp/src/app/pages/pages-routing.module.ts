@@ -27,7 +27,7 @@ const routes: Routes = [{
     { path: 'account/profile', component: UserProfileComponent, canActivate: [AuthGuard] },
     { path: 'bookings/new', component: NewBookingComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
     { path: 'bookings/edit/:id', component: NewBookingComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
-    { path: 'bookings', component: BookingListComponent },
+    // { path: 'bookings', component: BookingListComponent },
     { path: 'calendar', component: HomeComponent },
     { path: 'faculties/new', component: NewFacultyComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
     { path: 'lecturers', component: LecturerListComponent },

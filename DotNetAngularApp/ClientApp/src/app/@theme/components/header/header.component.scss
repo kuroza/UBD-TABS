@@ -34,7 +34,6 @@
 
     .sidebar-toggle {
       @include nb-ltr(padding-right, 1.25rem);
-      @include nb-rtl(padding-left, 1.25rem);
       text-decoration: none;
       color: nb-theme(text-hint-color);
       nb-icon {
@@ -45,17 +44,15 @@
     .logo {
       padding: 0 1.25rem;
       font-size: 1.75rem;
-      @include nb-ltr(border-left, 1px solid nb-theme(divider-color));
-      @include nb-rtl(border-right, 1px solid nb-theme(divider-color));
       white-space: nowrap;
       text-decoration: none;
       font-family: 'Varela Round', sans-serif;
     }
-  }
 
-  .direction-switcher {
-    @include nb-ltr(margin-left, 2rem);
-    @include nb-rtl(margin-right, 2rem);
+    .login-container {
+      float: right;
+      display: inline;
+    }
   }
 
   @include media-breakpoint-down(sm) {
@@ -66,12 +63,9 @@
       border: none;
       padding: 0;
     }
-  }
-
-  @include media-breakpoint-down(is) {
-    nb-select,
-    .direction-switcher {
-      display: none;
+    .login-container {
+      float: none;
+      display: block;
     }
   }
 }

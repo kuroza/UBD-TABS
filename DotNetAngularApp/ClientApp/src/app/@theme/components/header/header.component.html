@@ -4,7 +4,8 @@
       <nb-icon icon="menu-2-outline"></nb-icon>
     </a>
     <img src="assets/images/ubdlogo.png" width="38">
-    <a class="logo d-none d-lg-block" href="/pages/home" (click)="navigateHome()"><b>Timetabling and Booking System</b></a>
+    <a class="logo d-none d-lg-block" href="/pages/home" (click)="navigateHome()"><b>TaBS: Timetabling and Booking
+        System</b></a>
   </div>
 </div>
 
@@ -22,16 +23,10 @@
   </nb-actions>
 
   <!-- * Login/logout button -->
-  <div *ngIf="!isAuthenticated">
-    <button class="mr-2" nbButton status="basic" appearance="ghost" (click)="onLogin()" size="small">Log in</button>
-    <button class="mr-4" nbButton status="primary" (click)="onRegister()" size="small">Sign
+  <div class="login-container" *ngIf="!isAuthenticated">
+    <!-- margin-left: 120px; margin-top: 10px; -->
+    <button nbButton status="basic" appearance="ghost" (click)="onLogin()" size="small">Log in</button>
+    <button nbButton status="primary" (click)="onRegister()" size="small">Sign
       up</button>
   </div>
-
-  <!-- <div *ngIf="userDetails">
-    <button *ngIf="isAuthenticated" class="mr-4" nbButton appearance="ghost" status="basic" nbContextMenuTrigger="hover"
-      [nbContextMenu]="userMenu" shape="round">
-      Hello {{ userDetails.userName }}!
-    </button>
-  </div> -->
 </div>

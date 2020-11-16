@@ -188,47 +188,43 @@ export class HomeComponent {
       var dateFormat = require('dateformat');
       this.bookDate = dateFormat(b.bookDate, 'yyyy-mm-dd'); // * format date
 
+      // * Iterate Modules and Lecturers
       var modules: string = b.modules[0].code + ": " + b.modules[0].name;
+      var lecturers: string = `${b.modules[0].lecturers[0].name} (${b.modules[0].lecturers[0].title})`;
+      if (b.modules[0].lecturers.length > 1) {
+        for (var i=1; i<b.modules[0].lecturers.length; i++)
+          lecturers += `, ${b.modules[0].lecturers[i].name} (${b.modules[0].lecturers[i].title})`;
+      }
       if (b.modules.length > 1) {
         for (var i=1; i<b.modules.length; i++)
-          modules += "<br>" + b.modules[i].code + ": " + b.modules[i].name;
+          modules += `, ${b.modules[i].code}: ${b.modules[i].name}`;
       }
       
+      // * Iterate Rooms
       var rooms: string = b.rooms[0].name;
       if (b.rooms.length > 1) {
         for (var i=1; i<b.rooms.length; i++)
           rooms += "<br>" + b.rooms[i].name;
       }
 
-      // if (b.modules.length > 1) {
-      //   for (var i=1; i<b.modules.length; i++) {
-      //     modules += ", " + b.modules[i].code + ": " + b.modules[i].name;
-
-      //     for (var j=1; j<b.modules[i].lecturers.length; j++) {
-      //       lecturers.push(b.modules[i].lecturers[j].name);
-      //     }
-      //   }
-      // }
-
-      // ! if include lecturer names, must iterate from each modules first
-
-      for (let timeSlot of b.timeSlots) { // * nested loop for each time slots under each booking
+      // * nested loop for each time slots under each booking
+      for (let timeSlot of b.timeSlots) {
         var timeFormat = require('dateformat');
         this.startTime = timeFormat(timeSlot.startTime, 'HH:MM:ss');
-        this.startDateTime = this.bookDate + "T" + this.startTime; // * concat date and time into string
+        this.startDateTime = this.bookDate + "T" + this.startTime;
         this.endTime = timeFormat(timeSlot.endTime, 'HH:MM:ss');
         this.endDateTime = this.bookDate + "T" + this.endTime;
 
-        this.events = [ // push object into events[]
+        // * push object into events[]
+        this.events = [
           ...this.events,
           {
             start: new Date(this.startDateTime),
             end: new Date(this.endDateTime),
-            title: `<b>${ modules }</b><br>${ rooms }`,
+            title: `<b>${ modules }</b><br>${ rooms }<br>${ lecturers }`,
             color: colors.teal,
             meta: {
-              id: b.id, // * just the id for component call
-              // b, // * the whole booking object
+              id: b.id,
             },
           },
         ];

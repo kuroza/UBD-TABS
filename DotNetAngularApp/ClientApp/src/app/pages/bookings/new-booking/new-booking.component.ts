@@ -257,7 +257,7 @@ export class NewBookingComponent implements OnInit {
           timeout: 5000
         });
         this.resetBookingField();
-        this.redirectTo('/pages/bookings/new');
+        this.redirectTo('/pages/calendar');
         console.log(res);
       },
       err => {
