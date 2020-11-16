@@ -189,22 +189,25 @@ export class HomeComponent {
       this.bookDate = dateFormat(b.bookDate, 'yyyy-mm-dd'); // * format date
 
       // * Iterate Modules and Lecturers
-      var modules: string = b.modules[0].code + ": " + b.modules[0].name;
+      var modules: string = `${b.modules[0].code}: ${b.modules[0].name}`;
       var lecturers: string = `${b.modules[0].lecturers[0].name} (${b.modules[0].lecturers[0].title})`;
       if (b.modules[0].lecturers.length > 1) {
         for (var i=1; i<b.modules[0].lecturers.length; i++)
           lecturers += `, ${b.modules[0].lecturers[i].name} (${b.modules[0].lecturers[i].title})`;
       }
       if (b.modules.length > 1) {
-        for (var i=1; i<b.modules.length; i++)
+        for (var i=1; i<b.modules.length; i++) {
           modules += `, ${b.modules[i].code}: ${b.modules[i].name}`;
+          for (var j=0; j<b.modules[i].lecturers.length; j++)
+            lecturers += `, ${b.modules[i].lecturers[j].name} (${b.modules[i].lecturers[j].title})`;
+        }
       }
       
       // * Iterate Rooms
-      var rooms: string = b.rooms[0].name;
+      var rooms: string = `${b.rooms[0].name}`;
       if (b.rooms.length > 1) {
         for (var i=1; i<b.rooms.length; i++)
-          rooms += "<br>" + b.rooms[i].name;
+          rooms += `, ${b.rooms[i].name}`;
       }
 
       // * nested loop for each time slots under each booking
