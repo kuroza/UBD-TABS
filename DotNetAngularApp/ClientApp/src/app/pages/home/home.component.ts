@@ -36,6 +36,7 @@ import { UserService } from '../../services/user.service';
 export class HomeComponent {
   hasAccess = true;
   detailsAlert: boolean = true;
+  successAlert: boolean = false;
   nbSpinner: boolean = false;
 
   faculties: any;
@@ -284,6 +285,15 @@ export class HomeComponent {
 
   onCloseDetails() {
     this.detailsAlert = false;
+  }
+
+  // onSuccessBooking() {
+  //   this.successAlert = true;
+  //   // setTimeout()
+  // }
+
+  onCloseSuccess() {
+    this.successAlert = false;
   }
 
   redirectTo(uri:string){
