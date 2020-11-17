@@ -46,6 +46,25 @@ namespace DotNetAngularApp.Controllers
             return Ok(result);
         }
 
+        [HttpPost("/api/bookings/confirm")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
+        public async Task<IActionResult> ConfirmCreateBooking([FromBody] SaveBookingResource bookingResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var booking = mapper.Map<SaveBookingResource, Booking>(bookingResource);
+
+            repository.Add(booking);
+            await unitOfWork.CompleteAsync();
+
+            booking = await repository.GetBooking(booking.Id);
+
+            var result = mapper.Map<Booking, BookingResource>(booking);
+
+            return Ok(result);
+        }
+
         [HttpPut("{id}")]
         [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> UpdateBooking(int id, [FromBody] SaveBookingResource bookingResource)

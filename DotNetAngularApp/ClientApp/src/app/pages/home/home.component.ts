@@ -282,7 +282,7 @@ export class HomeComponent {
     if (confirm("Are you sure?")) {
       this.bookingService.delete(this.booking.id)
         .subscribe(x => {
-          this.redirectTo('/pages/bookings');
+          this.redirectTo('/pages/calendar');
         });
     }
   }

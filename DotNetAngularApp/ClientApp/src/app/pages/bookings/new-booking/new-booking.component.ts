@@ -233,7 +233,6 @@ export class NewBookingComponent implements OnInit {
 
   submit() {
     this.nbSpinner = true;
-
     if (this.validSubmitForm() == false) {
       this.requiredAlert = true;
       this.nbSpinner = false;
@@ -255,14 +254,26 @@ export class NewBookingComponent implements OnInit {
           showClose: true,
           timeout: 5000
         });
-        this.resetBookingField();
-        this.redirectTo('/pages/bookings/new');
-        console.log(res);
+        // this.resetBookingField();
+        this.redirectTo('/pages/calendar');
       },
       err => {
         if (err.status === 409) {
-          this.existAlert = true;
+          // this.existAlert = true;
           this.nbSpinner = false;
+          if (confirm("The room is already taken. Are you sure you want to add another event to this room?")) {
+            this.bookingService.confirmCreate(this.booking)
+              .subscribe(() => {
+                this.toastyService.success({
+                  title: 'Success', 
+                  msg: 'All bookings were sucessfully saved.',
+                  theme: 'bootstrap',
+                  showClose: true,
+                  timeout: 3000
+                });
+                this.redirectTo('/pages/calendar');
+              });
+          }
         } else if (err.status === 400) {
           this.requiredAlert = true;
           this.nbSpinner = false;
