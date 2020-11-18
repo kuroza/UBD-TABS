@@ -1,3 +1,4 @@
+import { LecturerService } from './../../services/lecturer.service';
 import { ModuleService } from './../../services/module.service';
 import { FacultyService } from './../../services/faculty.service';
 import { MajorService } from '../../services/major.service';
@@ -44,6 +45,7 @@ export class HomeComponent {
   modules: any;
   semesters: any;
   buildings: any;
+  lecturers: any;
   rooms: any = [];
   filter: any = {};
   allBookings: any;
@@ -75,7 +77,8 @@ export class HomeComponent {
     private semesterService: SemesterService,
     private majorService: MajorService,
     private facultyService: FacultyService,
-    private moduleService: ModuleService
+    private moduleService: ModuleService,
+    private lecturerService: LecturerService
     ) {}
 
   async ngOnInit() {
@@ -85,9 +88,12 @@ export class HomeComponent {
 
     this.facultyService.getAllFaculties()
       .subscribe(faculties => this.faculties = faculties);
-
+      
     this.buildingService.getAllBuildings() // get the buildings from service for filter drop down
       .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
+
+    this.lecturerService.getAllLecturers()
+      .subscribe(lecturers => this.lecturers = lecturers);
 
     this.bookings = this.allBookings = await this.bookingService.getAllBookings() // using Promise instead
     this.populateCalendar(); // show all events on init
@@ -99,7 +105,7 @@ export class HomeComponent {
   onFacultyChange() {
     var selectedFaculty = this.faculties.find(faculty => faculty.id == this.filter.facultyId);
     this.majors = selectedFaculty ? selectedFaculty.majors : [];
-    this.emptyFilter();
+    this.resetCalendar();
     delete this.filter.majorId;
 
     var bookings = this.allBookings;
@@ -110,7 +116,7 @@ export class HomeComponent {
   onMajorChange() {
     var selectedMajor = this.majors.find(major => major.id == this.filter.majorId);
     this.modules = selectedMajor ? selectedMajor.modules : [];
-    this.emptyFilter();
+    this.resetCalendar();
     delete this.filter.moduleId;
 
     var bookings = this.allBookings;
@@ -119,7 +125,7 @@ export class HomeComponent {
   }
 
   onModuleFilterChange() {
-    this.emptyFilter();
+    this.resetCalendar();
     var bookings = this.allBookings;
 
     if (this.filter.moduleId)
@@ -128,7 +134,7 @@ export class HomeComponent {
     this.populateCalendar();
   }
 
-  emptyFilter() {
+  resetCalendar() {
     this.activeDayIsOpen = false;
     this.events = [];
     this.refresh.next();
@@ -138,7 +144,7 @@ export class HomeComponent {
     this.filter = {};
     this.majors = [];
     this.modules = [];
-    this.emptyFilter();
+    this.resetCalendar();
     this.showAllBookings();
   }
 
@@ -148,7 +154,7 @@ export class HomeComponent {
     // cascade rooms drop down
     var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
     this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
-    this.emptyFilter();
+    this.resetCalendar();
     delete this.filter.rooms;
     
     // filter events by building
@@ -158,7 +164,7 @@ export class HomeComponent {
   }
 
   onRoomChange() {
-    this.emptyFilter();
+    this.resetCalendar();
     var bookings = this.allBookings;
 
     if (this.filter.rooms)
@@ -173,8 +179,29 @@ export class HomeComponent {
     this.filter = {}; // empty filter drop down
     this.rooms = []; // clear room dropdown
     delete this.filter.rooms; // ? clear selected rooms
-    this.emptyFilter();
+    this.resetCalendar();
     this.showAllBookings(); // show all if reset
+  }
+
+  // * Filter by lecturers ---------------------------------------------------------------
+
+  onLecturerChange() {
+    this.resetCalendar();
+    var bookings = this.allBookings;
+
+    if (this.filter.lecturerId)
+      bookings = bookings.filter(b => b.modules.find(module => module.lecturers.find(lecturer => lecturer.id == this.filter.lecturerId)));
+
+    this.bookings = bookings;
+    this.populateCalendar();
+  }
+
+  resetLecturerFilter() {
+    this.filter = {};
+    this.lecturers = [];
+    delete this.filter.lecturers;
+    this.resetCalendar();
+    this.showAllBookings();
   }
 
   showAllBookings() {
@@ -236,6 +263,13 @@ export class HomeComponent {
     }
     this.nbSpinner = false;
     this.refresh.next();
+  }
+
+  refreshCalendar() {
+    this.resetCalendar();
+    this.resetLecturerFilter();
+    this.resetModuleFilter();
+    this.resetRoomFilter();
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {

@@ -6,8 +6,10 @@
     <nb-card [nbSpinner]="nbSpinner ? true : false" nbSpinnerStatus="success">
       <nb-card-header>
         <h4 style="float: left;">Calendar Timetable</h4>
-        <button [useExistingCss]="true" printSectionId="print-section" ngxPrint style="float: right;"
-        nbButton size="tiny" status="basic" outline><nb-icon icon="printer-outline"></nb-icon></button>
+        <button style="float: right;" nbButton size="tiny" status="basic" (click)="refreshCalendar()"
+        outline nbTooltip="Refresh Calendar Timetable"><nb-icon icon="refresh-outline"></nb-icon></button>
+        <button [useExistingCss]="true" printSectionId="print-section" ngxPrint style="float: right; margin-right: 5px;"
+        nbButton size="tiny" status="basic" outline nbTooltip="Print Timetable"><nb-icon icon="printer-outline"></nb-icon></button>
       </nb-card-header>
       <nb-card-body>
         <ngx-calendar-header 
@@ -63,7 +65,7 @@
     <nb-card>
       <nb-card-body>
         <nb-tabset fullWidth>
-          <nb-tab tabTitle="Filter By Module">
+          <nb-tab tabTitle="Filter Module">
             <div class="form-group">
               <div class="mr-2" style="margin-top: 10px">
                 <label>Filter Faculty</label>
@@ -134,7 +136,7 @@
             </div>
           </nb-tab>
 
-          <nb-tab tabTitle="Filter By Room">
+          <nb-tab tabTitle="Filter Room">
             <div class="form-group">
               <div class="mr-2" style="margin-top: 10px">
                 <label>Filter Building</label>
@@ -154,6 +156,7 @@
                 <label>Filter Room</label>
                 <nb-select
                   filled
+                  multiple
                   fullWidth
                   required
                   placeholder="Select Room"
@@ -169,6 +172,28 @@
             <!-- <br>
             <pre>{{ filter | json }}</pre>
             <pre>{{ rooms | json }}</pre> -->
+          </nb-tab>
+
+          <nb-tab tabTitle="Filter Lecturer">
+            <div class="form-group">
+              <div class="mr-2" style="margin-top: 10px">
+                <label>Filter Lecturer</label>
+                <nb-select
+                  filled
+                  fullWidth
+                  required
+                  placeholder="Select Lecturer"
+                  [(selected)]="filter.lecturerId"
+                  (selectedChange)="onLecturerChange()"
+                >
+                  <nb-option *ngFor="let l of lecturers" value="{{ l.id }}">{{ l.name }} ({{ l.title }})</nb-option>
+                </nb-select>
+              </div>
+              <button nbButton size="small" status="basic" hero (click)="resetLecturerFilter()" style="margin-top: 20px; float: right;">Reset</button>
+            </div>
+
+            <!-- <br>
+            <pre>{{ filter | json }}</pre> -->
           </nb-tab>
          </nb-tabset>
       </nb-card-body>
