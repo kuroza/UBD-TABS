@@ -1,4 +1,4 @@
-import { NbCardModule, NbTabsetModule, NbAccordionModule, NbButtonModule, NbInputModule, NbSelectModule, NbAlertModule, NbIconModule } from '@nebular/theme';
+import { NbCardModule, NbTabsetModule, NbAccordionModule, NbButtonModule, NbInputModule, NbSelectModule, NbAlertModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +7,7 @@ import { ModuleListComponent } from './module-list/module-list.component';
 
 @NgModule({
     imports: [
+      NbTooltipModule,
       NbIconModule,
       NbAlertModule,
       NbCardModule,

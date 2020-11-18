@@ -28,6 +28,8 @@ namespace DotNetAngularApp.Core.Models
 
         public Semester Semester { get; set; }
 
+        // public string Purpose { get; set; }
+
         public Booking()
         {
             Rooms = new Collection<BookingRoom>();

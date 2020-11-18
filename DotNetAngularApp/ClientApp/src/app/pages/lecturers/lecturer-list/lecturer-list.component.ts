@@ -129,6 +129,12 @@ export class LecturerListComponent implements OnInit {
       });
   }
 
+  onClickBack() {
+    this.lecturer.id = 0;
+    this.lecturer.name = '';
+    this.lecturer.title = '';
+  }
+
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));

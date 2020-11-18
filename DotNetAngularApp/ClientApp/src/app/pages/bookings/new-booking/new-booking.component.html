@@ -41,7 +41,12 @@
   <div class="col-md-4">
       <nb-card [nbSpinner]="nbSpinner ? true : false" nbSpinnerStatus="success">
           <nb-card-header *ngIf="!booking.id"><h4>Add Booking</h4></nb-card-header>
-          <nb-card-header *ngIf="booking.id"><h4>Edit Booking</h4></nb-card-header>
+          <nb-card-header *ngIf="booking.id"><h4>Edit Booking
+            <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
+            nbTooltip="Return to Add" style="float: right;">
+              <nb-icon icon="arrow-back-outline"></nb-icon>Back
+            </button>
+          </h4></nb-card-header>
           <nb-card-body>
             <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert" style="text-align: center;">
               This room is already taken!

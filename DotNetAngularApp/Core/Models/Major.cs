@@ -18,6 +18,7 @@ namespace DotNetAngularApp.Core.Models
 
         public Faculty Faculty { get; set; }
         
+        // [Required]
         public int FacultyId { get; set; } // foreign key property, simplify for creating/updating objects
 
         public ICollection<Module> Modules { get; set; }

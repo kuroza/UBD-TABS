@@ -215,6 +215,16 @@ export class RoomListComponent implements OnInit {
     this.onClose();
   }
 
+  onClickBack() {
+    this.room.id = 0;
+    this.room.name = '';
+    this.room.capacity = null;
+    this.room.buildingId = 0;
+
+    this.building.id = 0;
+    this.building.name = '';
+  }
+
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));

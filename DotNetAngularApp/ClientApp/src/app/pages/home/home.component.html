@@ -6,10 +6,12 @@
     <nb-card [nbSpinner]="nbSpinner ? true : false" nbSpinnerStatus="success">
       <nb-card-header>
         <h4 style="float: left;">Calendar Timetable</h4>
-        <button style="float: right;" nbButton size="tiny" status="basic" (click)="refreshCalendar()"
-        ghost nbTooltip="Refresh Calendar Timetable"><nb-icon icon="refresh-outline"></nb-icon></button>
-        <button [useExistingCss]="true" printSectionId="print-section" ngxPrint style="float: right; margin-right: 5px;"
-        nbButton size="tiny" status="basic" ghost nbTooltip="Print Timetable"><nb-icon icon="printer-outline"></nb-icon></button>
+        <div class="calendar-timetable-buttons" >
+          <button nbButton size="tiny" status="basic" (click)="refreshCalendar()"
+          ghost nbTooltip="Refresh Calendar Timetable"><nb-icon icon="refresh-outline"></nb-icon></button>
+          <button [useExistingCss]="true" printSectionId="print-section" ngxPrint
+          nbButton size="tiny" status="basic" ghost nbTooltip="Print Timetable"><nb-icon icon="printer-outline"></nb-icon></button>
+        </div>
       </nb-card-header>
       <nb-card-body>
         <ngx-calendar-header 
@@ -201,10 +203,12 @@
 
     <nb-card>
       <nb-card-header>
-        <h4>Details<button nbButton size="small" status="basic" ghost (click)="onClickClose()" 
+        <h4>Details
+          <button nbButton size="small" status="basic" ghost (click)="onClickClose()" 
           nbTooltip="Clear Details" style="float: right;">
-          <nb-icon icon="close-outline"></nb-icon>
-        </button></h4>
+            <nb-icon icon="close-outline"></nb-icon>
+          </button>
+        </h4>
       </nb-card-header>
       <nb-card-body>
         <div *ngIf="!booking">

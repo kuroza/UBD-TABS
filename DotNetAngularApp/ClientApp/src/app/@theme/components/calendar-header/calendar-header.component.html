@@ -38,7 +38,7 @@
         [(viewDate)]="viewDate"
         (viewDateChange)="viewDateChange.next(viewDate)"
         [excludeDays]="excludeDays">
-        <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+        <nb-icon icon="arrow-ios-back-outline" nbTooltip="Previous"></nb-icon>
       </button>
 
       <button nbButton status="basic" style="margin-left: 10px; margin-right: 10px;" ghost
@@ -54,7 +54,7 @@
         [(viewDate)]="viewDate"
         (viewDateChange)="viewDateChange.next(viewDate)"
         [excludeDays]="excludeDays">
-        <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+        <nb-icon icon="arrow-ios-forward-outline" nbTooltip="Next"></nb-icon>
       </button>
 
     </div>

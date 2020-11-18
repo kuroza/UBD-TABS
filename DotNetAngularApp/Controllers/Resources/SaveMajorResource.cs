@@ -8,10 +8,12 @@ namespace DotNetAngularApp.Controllers.Resources
     {
         public int Id { get; set; }
 
+        // [Required]
         public string Name { get; set; }
 
         public string ShortName { get; set; }
         
+        // [Required]
         public int FacultyId { get; set; }
     }
 }

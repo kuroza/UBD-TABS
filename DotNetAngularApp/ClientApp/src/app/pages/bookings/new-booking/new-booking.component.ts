@@ -300,6 +300,16 @@ export class NewBookingComponent implements OnInit {
     this.requiredAlert = false;
   }
 
+  onClickBack() {
+    this.booking.id = 0;
+    this.booking.semesterId = 0;
+    this.booking.bookDate = '';
+    this.booking.buildingId = 0;
+    this.booking.rooms = [];
+    this.booking.timeSlots = [];
+    this.booking.modules = [];
+  }
+
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));

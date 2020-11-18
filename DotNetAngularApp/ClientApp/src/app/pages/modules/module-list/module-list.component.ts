@@ -147,6 +147,14 @@ export class ModuleListComponent implements OnInit {
       });
   }
 
+  onClickBack() {
+    this.module.id = 0;
+    this.module.name = '';
+    this.module.code = '';
+    this.module.majorId = 0;
+    this.module.lecturers = [];
+  }
+
   redirectTo(uri:string){
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));

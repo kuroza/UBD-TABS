@@ -40,7 +40,12 @@
             <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
               Please enter the required fields!
             </nb-alert>
-            <h4 *ngIf="lecturer.id" style="margin-top: 10px;">Edit Lecturer</h4>
+            <h4 *ngIf="lecturer.id" style="margin-top: 10px;">Edit Lecturer
+              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
+              nbTooltip="Return to Add" style="float: right;">
+                <nb-icon icon="arrow-back-outline"></nb-icon>Back
+              </button>
+            </h4>
             <h4 *ngIf="!lecturer.id" style="margin-top: 10px;">Add Lecturer</h4>
             <form #f="ngForm" (ngSubmit)="submit()" novalidate>
               <div class="form-group" style="margin-top: 10px;">

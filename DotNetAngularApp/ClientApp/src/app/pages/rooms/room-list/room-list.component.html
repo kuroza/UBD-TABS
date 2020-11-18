@@ -57,7 +57,12 @@
             <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
               Please enter the required fields!
             </nb-alert>
-            <h5 *ngIf="room.id" style="margin-top: 10px;">Edit Room</h5>
+            <h5 *ngIf="room.id" style="margin-top: 10px;">Edit Room
+              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
+              nbTooltip="Return to Add" style="float: right;">
+                <nb-icon icon="arrow-back-outline"></nb-icon>Back
+              </button>
+            </h5>
             <h5 *ngIf="!room.id" style="margin-top: 10px;">Add Room</h5>
             <form #f="ngForm" (ngSubmit)="submitRoom()" novalidate>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
@@ -91,7 +96,12 @@
             <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
               Please enter the required fields!
             </nb-alert>
-            <h5 *ngIf="building.id" style="margin-top: 10px;">Edit Building</h5>
+            <h5 *ngIf="building.id" style="margin-top: 10px;">Edit Building
+              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
+              nbTooltip="Return to Add" style="float: right;">
+                <nb-icon icon="arrow-back-outline"></nb-icon>Back
+              </button>
+            </h5>
             <h5 *ngIf="!building.id" style="margin-top: 10px;">Add Building</h5>
             <form #f="ngForm" (ngSubmit)="submitBuilding()" novalidate>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">

@@ -37,7 +37,12 @@
             <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
               Please enter the required fields!
             </nb-alert>
-            <h4 *ngIf="module.id" style="margin-top: 10px;">Edit Module</h4>
+            <h4 *ngIf="module.id" style="margin-top: 10px;">Edit Module
+              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
+              nbTooltip="Return to Add" style="float: right;">
+                <nb-icon icon="arrow-back-outline"></nb-icon>Back
+              </button>
+            </h4>
             <h4 *ngIf="!module.id" style="margin-top: 10px;">Add Module</h4>
             <form #f="ngForm" (ngSubmit)="submit()" novalidate>
               <div class="form-group" style="margin-top: 10px;">
@@ -57,7 +62,7 @@
                   placeholder="Module name">
               </div>
               <div style="margin-top: 10px;">
-                <label>Lecturers</label>
+                <label>Lecturers *</label>
                 <nb-select filled multiple fullWidth placeholder="Select lecturers" [(selected)]="module.lecturers">
                   <nb-option *ngFor="let l of lecturers" value="{{ l.id }}">{{ l.title }} {{ l.name }}</nb-option>
                 </nb-select><br>
