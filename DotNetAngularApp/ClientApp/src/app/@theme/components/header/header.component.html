@@ -1,8 +1,8 @@
 <div class="header-container">
+  <a *ngIf="isAuthenticated" (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+    <nb-icon icon="menu-2-outline"></nb-icon>
+  </a>
   <div class="logo-container">
-    <a *ngIf="isAuthenticated" (click)="toggleSidebar()" href="#" class="sidebar-toggle">
-      <nb-icon icon="menu-2-outline"></nb-icon>
-    </a>
     <img src="assets/images/ubdlogo.png" width="38">
     <a class="logo" href="/pages/home" (click)="navigateHome()">
       <b>TaBS: Timetabling and Booking System</b>
@@ -10,13 +10,13 @@
   </div>
 </div>
 
-<div class="header-container"> <!-- prev: header-container -->
+<div class="user-container"> <!-- prev: header-container -->
   <nb-actions *ngIf="isAuthenticated">
     <nb-action class="control-item" icon="plus-circle-outline" (click)="onClickAdd()" nbTooltip="Add new booking"
       nbTooltipPlacement="bottom"></nb-action>
     <nb-action class="control-item" icon="calendar-outline" (click)="onClickCalendar()" nbTooltip="Calendar"
       nbTooltipPlacement="bottom"></nb-action>
-    <nb-action class="user-action mr-4">
+    <nb-action class="user-action">
       <nb-user [nbContextMenu]="userMenu" nbContextMenuTrigger="hover" [onlyPicture]="userPictureOnly"
         [name]="userDetails?.fullName" size="large">
       </nb-user>

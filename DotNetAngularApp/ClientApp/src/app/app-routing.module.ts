@@ -26,16 +26,6 @@ const routes: Routes = [
       { path: 'login', component: LoginComponent },
     ]
   },
-  {
-    path: 'auth',
-    component: NbAuthComponent,
-    children: [
-      {
-        path: 'reset-password',
-        component: NbResetPasswordComponent,
-      },
-    ],
-  },
   { path: '', redirectTo: 'pages', pathMatch: 'full' },
   { path: '**', redirectTo: 'pages' },
 ];

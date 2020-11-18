@@ -1,4 +1,7 @@
-import { NbMenuItem } from '@nebular/theme';
+import { OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NbMenuItem, NbMenuService } from '@nebular/theme';
+import { ToastyService } from 'ng2-toasty';
 
 export const MENU_ITEMS_ADMIN: NbMenuItem[] = [
   {
@@ -14,7 +17,17 @@ export const MENU_ITEMS_ADMIN: NbMenuItem[] = [
   {
     title: 'Account',
     icon: 'lock-outline',
-    link: '/pages/account/profile'
+    children: [
+      {
+        title: 'Manage Profile',
+        link: '/pages/account/profile',
+        icon: 'person-outline',
+      },
+      {
+        title: 'Log out',
+        icon: 'log-out-outline'
+      },
+    ],
   },
   {
     title: 'Admin',
@@ -80,7 +93,17 @@ export const MENU_ITEMS_USER: NbMenuItem[] = [
   {
     title: 'Account',
     icon: 'lock-outline',
-    link: '/pages/account/profile',
+    children: [
+      {
+        title: 'Manage Profile',
+        link: '/pages/account/profile',
+        icon: 'person-outline',
+      },
+      {
+        title: 'Log out',
+        icon: 'log-out-outline'
+      },
+    ],
   },
   {
     title: 'Menu',
@@ -117,3 +140,39 @@ export const MENU_ITEMS_USER: NbMenuItem[] = [
     link: '/pages/timeslots',
   },
 ];
+
+class Pages implements OnInit {
+
+  isAuthenticated = false;
+
+  constructor(
+    private menuService: NbMenuService,
+    private toasty: ToastyService,
+    private router: Router,
+    ) {}
+
+    ngOnInit() {
+      if (localStorage.getItem('token') != null) {
+        this.isAuthenticated = true;
+      }
+
+      this.menuService.onItemClick()
+        .subscribe((event) => {
+          if (event.item.title === 'Log out')
+            this.onLogout();
+        });
+    }
+
+    onLogout() {
+      localStorage.removeItem('token');
+      this.isAuthenticated = false;
+      this.router.navigate(['/account/login']);
+      this.toasty.info({
+        title: 'Logout successful', 
+        msg: 'User successfully logged out!',
+        theme: 'bootstrap',
+        showClose: true,
+        timeout: 3000
+      });
+    }
+}

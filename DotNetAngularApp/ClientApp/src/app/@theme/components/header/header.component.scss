@@ -6,12 +6,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-
-  .logo-container {
-    display: flex;
-    align-items: center;
-    width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
-  }
+  // header-height: 9rem;
 
   nb-action {
     height: auto;
@@ -23,14 +18,16 @@
     cursor: pointer;
   }
 
-  ::ng-deep nb-search button {
-    padding: 0!important;
-  }
-
   .header-container {
     display: flex;
     align-items: center;
     width: auto;
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      width: calc(#{nb-theme(sidebar-width)} - #{nb-theme(header-padding)});
+    }
 
     .sidebar-toggle {
       @include nb-ltr(padding-right, 1.25rem);
@@ -48,24 +45,72 @@
       text-decoration: none;
       font-family: 'Varela Round', sans-serif;
     }
+  }
 
+  .user-container {
+    .user-action-sm {
+      display: none;
+    }
     .login-container {
       float: right;
       display: inline;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    .header-container {
+      .logo-container {
+        display: flex;
+        align-content: center;
+      }
+
+      .logo {
+        font-size: 1.2rem;
+      }
+    }
+    
+    .control-item {
+      display: none;
     }
   }
 
   @include media-breakpoint-down(sm) {
-    .control-item {
-      display: none;
+    // display: block;
+    // justify-content: none;
+
+    .header-container {
+      // width: 100%;
+      float: left;
+      .logo-container {
+        display: flex;
+        align-content: center;
+        text-align: center;
+      }
+
+      .logo {
+        font-size: 1rem;
+        white-space: normal;
+      }
     }
-    .user-action {
-      border: none;
-      padding: 0;
-    }
-    .login-container {
-      float: none;
-      display: block;
+
+    .user-container {
+      float: right;
+      .control-item {
+        display: none;
+      }
+      .user-action {
+        display: none;
+        border: none;
+        padding: 0;
+      }
+      .login-container {
+        float: right;
+        display: block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
     }
   }
 }
