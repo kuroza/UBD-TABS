@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
                     // this.router.navigate(['/pages/forbidden']);
                     this.toasty.error({
                         title: 'User not authorized', 
-                        msg: 'Please login as admin',
+                        msg: 'User does not have the privileges to access this page',
                         theme: 'bootstrap',
                         showClose: true,
                         timeout: 4000
