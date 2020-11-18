@@ -12,9 +12,11 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BookingCalendarHeaderModule } from './new-booking/booking-calendar-header/booking-calendar-header.module';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
 
 @NgModule({
   imports: [
+    Ng2TableModule,
     NbSpinnerModule,
     NbCardModule,
     NbButtonModule,

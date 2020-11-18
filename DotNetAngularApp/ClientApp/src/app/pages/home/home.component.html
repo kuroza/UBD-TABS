@@ -7,9 +7,9 @@
       <nb-card-header>
         <h4 style="float: left;">Calendar Timetable</h4>
         <button style="float: right;" nbButton size="tiny" status="basic" (click)="refreshCalendar()"
-        outline nbTooltip="Refresh Calendar Timetable"><nb-icon icon="refresh-outline"></nb-icon></button>
+        ghost nbTooltip="Refresh Calendar Timetable"><nb-icon icon="refresh-outline"></nb-icon></button>
         <button [useExistingCss]="true" printSectionId="print-section" ngxPrint style="float: right; margin-right: 5px;"
-        nbButton size="tiny" status="basic" outline nbTooltip="Print Timetable"><nb-icon icon="printer-outline"></nb-icon></button>
+        nbButton size="tiny" status="basic" ghost nbTooltip="Print Timetable"><nb-icon icon="printer-outline"></nb-icon></button>
       </nb-card-header>
       <nb-card-body>
         <ngx-calendar-header 
@@ -200,7 +200,12 @@
     </nb-card>
 
     <nb-card>
-      <nb-card-header><h4>Details</h4></nb-card-header>
+      <nb-card-header>
+        <h4>Details<button nbButton size="small" status="basic" ghost (click)="onClickClose()" 
+          nbTooltip="Clear Details" style="float: right;">
+          <nb-icon icon="close-outline"></nb-icon>
+        </button></h4>
+      </nb-card-header>
       <nb-card-body>
         <div *ngIf="!booking">
           <nb-alert status="basic" closable (close)="onCloseDetails()" *ngIf="detailsAlert">
@@ -209,11 +214,12 @@
           <div class="row">
             <div class="col"></div>
             <div class="col-md-8">
-              <button nbButton status="warning" fullWidth [routerLink]="['/pages/bookings']">View All Bookings</button>
+              <button nbButton status="primary" fullWidth [routerLink]="['/pages/bookings']">View All Bookings</button>
             </div>
             <div class="col"></div>
           </div>
         </div>
+
         <div *ngIf="booking" style="margin-left: 40px;">
           <!-- * Modules -->
           <h6 style="margin-left: 20px">Modules</h6>
@@ -267,11 +273,13 @@
           </div>
 
           <div class="inline">
-            <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="warning" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
-            <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="danger" (click)="delete()">Delete</button>
-            <button style="margin-left: 10px; margin-top: 10px;" nbButton status="primary" [routerLink]="['/pages/bookings']">View All Bookings</button>
+            <button *ngIf="hasAccess" style="margin-left: 5px; margin-top: 10px;" nbButton status="warning" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+            <button *ngIf="hasAccess" style="margin-left: 5px; margin-top: 10px;" nbButton status="danger" (click)="delete()">Delete</button>
+            <button style="margin-left: 5px; margin-top: 10px;" nbButton status="primary" [routerLink]="['/pages/bookings']">View All Bookings</button>
           </div>
+          
           <br />
+
         </div>
       </nb-card-body>
     </nb-card>

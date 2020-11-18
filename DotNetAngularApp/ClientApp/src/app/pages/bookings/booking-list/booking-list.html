@@ -37,18 +37,44 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let b of queryResult.items" (click)="selectBooking(b.id)"> <!-- let b of bookings -->
-              <!-- <td>{{ b.id }}</td> -->
+            <tr *ngFor="let b of queryResult.items" (click)="selectBooking(b.id)">
               <td>{{ b.building.name }}</td>
               <td>{{ b.room.name }}</td>
-              <td>{{ b.bookDate | date:'dd MMMM yyyy' }}</td> <!-- change next time for Collection -->
-              <!-- <td>
+              <td>{{ b.bookDate | date:'dd MMMM yyyy' }}</td>
+              <td>
                 <button size="small" nbButton status="primary" (click)="selectBooking(b.id)">View</button>
-              </td> -->
+              </td>
             </tr>
           </tbody>
         </table>
         <pagination [total-items]="queryResult.totalItems" [page-size]="query.pageSize" (page-changed)="onPageChange($event)"></pagination>
+
+        <!-- <div class="row">
+          <div class="col-md-4">
+            <input *ngIf="config.filtering" placeholder="Filter all columns"
+                   [ngTableFiltering]="config.filtering"
+                   class="form-control"
+                   (tableChanged)="onChangeTable(config)"/>
+          </div>
+        </div>
+        <br>
+        <ng-table [config]="config"
+                  (tableChanged)="onChangeTable(config)"
+                  (cellClicked)="onCellClick($event)"
+                  [rows]="rows" [columns]="columns">
+        </ng-table>
+        <pagination *ngIf="config.paging"
+                    class="pagination-sm"
+                    [(ngModel)]="page"
+                    [totalItems]="length"
+                    [itemsPerPage]="itemsPerPage"
+                    [maxSize]="maxSize"
+                    [boundaryLinks]="true"
+                    [rotate]="false"
+                    (pageChanged)="onChangeTable(config, $event)"
+                    (numPages)="numPages = $event">
+        </pagination>
+        <pre *ngIf="config.paging" class="card card-block card-header">Page: {{page}} / {{numPages}}</pre> -->
       </nb-card-body>
     </nb-card>
   </div>

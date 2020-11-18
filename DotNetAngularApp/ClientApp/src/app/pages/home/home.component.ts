@@ -326,6 +326,10 @@ export class HomeComponent {
   //   // setTimeout()
   // }
 
+  onClickClose() {
+    this.booking = null;
+  }
+
   onCloseSuccess() {
     this.successAlert = false;
   }
