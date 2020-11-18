@@ -20,6 +20,8 @@ namespace DotNetAngularApp.Controllers.Resources
 
         public ICollection<ModuleResource> Modules { get; set; }
 
+        public string Purpose { get; set; }
+
         public BookingResource()
         {
             Rooms = new Collection<RoomResource>();

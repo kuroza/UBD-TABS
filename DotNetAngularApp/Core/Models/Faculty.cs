@@ -14,6 +14,7 @@ namespace DotNetAngularApp.Core.Models
         [StringLength(255)]
         public string Name { get; set; }
         
+        [StringLength(255)]
         public string ShortName { get; set; }
 
         public ICollection<Major> Majors { get; set; }

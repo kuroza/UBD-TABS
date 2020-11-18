@@ -32,6 +32,7 @@ export interface Booking {
       title: string;
     }[];
   }[];
+  purpose: string;
 }
 
 export interface SaveBooking {
@@ -42,4 +43,5 @@ export interface SaveBooking {
   rooms: number[];
   timeSlots: number[];
   modules: number[];
+  // purpose: string;
 }

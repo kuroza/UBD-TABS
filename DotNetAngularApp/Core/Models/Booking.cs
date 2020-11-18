@@ -28,7 +28,8 @@ namespace DotNetAngularApp.Core.Models
 
         public Semester Semester { get; set; }
 
-        // public string Purpose { get; set; }
+        [StringLength(255)]
+        public string Purpose { get; set; }
 
         public Booking()
         {

@@ -6,6 +6,6 @@ namespace DotNetAngularApp.Controllers.Resources
 
         public string Code { get; set; }
 
-        public KeyValuePairResource Building { get; set; } // change to BuildingResource
+        public KeyValuePairResource Building { get; set; }
     }
 }

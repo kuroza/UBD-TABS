@@ -238,6 +238,12 @@ export class HomeComponent {
           rooms += `, ${b.rooms[i].name}`;
       }
 
+      var purpose: string;
+      if (b.purpose != null)
+        purpose = `(${b.purpose})`;
+      else
+        purpose = '';
+
       // * nested loop for each time slots under each booking
       for (let timeSlot of b.timeSlots) {
         var timeFormat = require('dateformat');
@@ -252,7 +258,7 @@ export class HomeComponent {
           {
             start: new Date(this.startDateTime),
             end: new Date(this.endDateTime),
-            title: `<b>${ modules }</b><br>${ rooms }<br>${ lecturers }`,
+            title: `<b>${ modules }</b><br>${ rooms } ${ purpose }<br>${ lecturers }`,
             color: colors.teal,
             meta: {
               id: b.id,

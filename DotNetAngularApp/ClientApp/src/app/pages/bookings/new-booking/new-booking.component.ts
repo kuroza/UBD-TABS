@@ -55,6 +55,7 @@ export class NewBookingComponent implements OnInit {
     rooms: [],
     timeSlots: [],
     modules: [],
+    // purpose: '',
   };
 
   constructor(

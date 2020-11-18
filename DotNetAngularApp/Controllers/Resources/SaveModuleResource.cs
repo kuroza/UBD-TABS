@@ -14,9 +14,10 @@ namespace DotNetAngularApp.Controllers.Resources
         [Required]
         public string Code { get; set; }
 
+        [Required]
         public int MajorId { get; set; }
         
-        // [Required]
+        [Required]
         public ICollection<int> Lecturers { get; set; }
 
         public SaveModuleResource()

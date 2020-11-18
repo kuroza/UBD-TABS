@@ -14,14 +14,17 @@ namespace DotNetAngularApp.Core.Models
         [StringLength(255)]
         public string Name { get; set; }
 
+        [StringLength(255)]
         public string ShortName { get; set; }
 
         public Faculty Faculty { get; set; }
         
-        // [Required]
+        [Required]
         public int FacultyId { get; set; } // foreign key property, simplify for creating/updating objects
 
         public ICollection<Module> Modules { get; set; }
+
+        // public string Programme { get; set; }
 
         public Major()
         {

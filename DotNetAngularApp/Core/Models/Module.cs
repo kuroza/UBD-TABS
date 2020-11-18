@@ -12,19 +12,23 @@ namespace DotNetAngularApp.Core.Models
 
         [Required]
         [StringLength(255)]
-        public string Name { get; set; }
+        public string Name { get; set; } // Title
 
         [Required]
         [StringLength(255)]
         public string Code { get; set; }
 
-        // [Required]
+        [Required]
         public ICollection<ModuleLecturer> Lecturers { get; set; }
 
         public Major Major { get; set; }
 
-        // [Required]
+        [Required]
         public int MajorId { get; set; }
+
+        // public int Level { get; set; }
+
+        // public string Type { get; set; } // Major Core, Breadth
         
         public Module()
         {

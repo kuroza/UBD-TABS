@@ -15,6 +15,7 @@ namespace DotNetAngularApp.Controllers.Resources
 
         public string Code { get; set; }
 
+        [Required]
         public int BuildingId { get; set; }
     }
 }
