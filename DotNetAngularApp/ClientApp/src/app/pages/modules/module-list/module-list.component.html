@@ -81,9 +81,12 @@
           <nb-tab tabTitle="Details" active="{{ setActiveDetails }}">
             <div *ngIf="moduleDetails">
               <p>
-                <b>Module code:</b> {{ moduleDetails.code }}<br>
-                <b>Module name:</b> {{ moduleDetails.name }}<br>
-                <b>Major:</b> {{ moduleDetails.major.name }}<br>
+                <span><b>Major:</b> {{ moduleDetails.major.name }}</span>
+                <br>
+                <span><b>Module code:</b> {{ moduleDetails.code }}</span>
+                <br>
+                <span><b>Module name:</b> {{ moduleDetails.name }}</span>
+                <br>
               </p>
 
               <div class="card" style="width: 18rem;">
@@ -95,11 +98,10 @@
                 </ul>
               </div>
 
-              <br>
               <div class="inline" *ngIf="hasAccess">
-                <button nbButton status="warning" style="margin-left: 10px; margin-top: 10px;"
+                <button nbButton status="warning" style="margin-top: 10px;"
                   (click)="edit(moduleDetails.id)">Edit</button>
-                <button nbButton status="danger" style="margin-left: 10px; margin-top: 10px;"
+                <button nbButton status="danger" style="margin-left: 5px; margin-top: 10px;"
                   (click)="delete(moduleDetails.id)">Delete</button>
               </div>
             </div>
