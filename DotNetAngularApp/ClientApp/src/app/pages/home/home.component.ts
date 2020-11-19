@@ -239,7 +239,7 @@ export class HomeComponent {
       }
 
       var purpose: string;
-      if (b.purpose != null)
+      if (b.purpose != '')
         purpose = `(${b.purpose})`;
       else
         purpose = '';
@@ -272,10 +272,11 @@ export class HomeComponent {
   }
 
   refreshCalendar() {
-    this.resetCalendar();
-    this.resetLecturerFilter();
-    this.resetModuleFilter();
-    this.resetRoomFilter();
+    // this.resetCalendar();
+    // this.resetLecturerFilter();
+    // this.resetModuleFilter();
+    // this.resetRoomFilter();
+    window.location.reload();
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {

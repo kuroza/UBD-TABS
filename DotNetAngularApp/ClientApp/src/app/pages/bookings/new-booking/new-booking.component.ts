@@ -55,7 +55,7 @@ export class NewBookingComponent implements OnInit {
     rooms: [],
     timeSlots: [],
     modules: [],
-    // purpose: '',
+    purpose: '',
   };
 
   constructor(
@@ -182,10 +182,6 @@ export class NewBookingComponent implements OnInit {
 
   // * Booking form ---------------------------------------------------------------------
 
-  // onClickReset() {
-  //   this.resetBookingField();
-  // }
-
   resetBookingField() {
     this.booking.id = 0;
     this.booking.semesterId = 0;
@@ -194,6 +190,7 @@ export class NewBookingComponent implements OnInit {
     this.booking.rooms = [];
     this.booking.timeSlots = [];
     this.booking.modules = [];
+    this.booking.purpose = '';
   }
 
   // * for editing
@@ -205,6 +202,7 @@ export class NewBookingComponent implements OnInit {
     this.booking.rooms = _.pluck(b.rooms, 'id');
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
     this.booking.modules = _.pluck(b.modules, 'id');
+    this.booking.purpose = b.purpose;
   }
 
   onBuildingChange() {
@@ -299,16 +297,6 @@ export class NewBookingComponent implements OnInit {
   onClose() {
     this.existAlert = false;
     this.requiredAlert = false;
-  }
-
-  onClickBack() {
-    this.booking.id = 0;
-    this.booking.semesterId = 0;
-    this.booking.bookDate = '';
-    this.booking.buildingId = 0;
-    this.booking.rooms = [];
-    this.booking.timeSlots = [];
-    this.booking.modules = [];
   }
 
   redirectTo(uri:string){

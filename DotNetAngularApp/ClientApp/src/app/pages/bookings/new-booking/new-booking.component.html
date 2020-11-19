@@ -42,9 +42,9 @@
       <nb-card [nbSpinner]="nbSpinner ? true : false" nbSpinnerStatus="success">
           <nb-card-header *ngIf="!booking.id"><h4>Add Booking</h4></nb-card-header>
           <nb-card-header *ngIf="booking.id"><h4>Edit Booking
-            <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
+            <button nbButton size="small" status="basic" ghost (click)="resetBookingField()" 
             nbTooltip="Return to Add" style="float: right;">
-              <nb-icon icon="arrow-back-outline"></nb-icon>Back
+              <nb-icon icon="arrow-back-outline"></nb-icon>
             </button>
           </h4></nb-card-header>
           <nb-card-body>
@@ -129,23 +129,29 @@
                 <label>Rooms *</label>
                 <br>
                 <nb-select
-                  filled
-                  required
-                  multiple
-                  placeholder="Select Rooms"
-                  [(selected)]="booking.rooms"
-                  fullWidth="true"
+                filled
+                required
+                multiple
+                placeholder="Select Rooms"
+                [(selected)]="booking.rooms"
+                fullWidth="true"
                 >
                   <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
                 </nb-select>
               </div>
             
+              <div class="form-group">
+                <label>Purpose</label>
+                <input nbInput fullWidth id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose"
+                  placeholder="i.e. Tutorial">
+              </div>
+              
               <div *ngIf="!booking.id">
-                <!-- <button style="margin-bottom: 10px;" nbButton fullWidth status="default" outline (click)="onClickReset()">Reset</button> -->
+                <!-- <button style="margin-bottom: 10px;" nbButton fullWidth status="default" outline (click)="resetBookingField()">Reset</button> -->
                 <button nbButton fullWidth status="primary" [disabled]="!f.valid">Submit</button>
               </div>
               <div *ngIf="booking.id">
-                <!-- <button style="margin-bottom: 10px;" nbButton fullWidth status="default" (click)="onClickReset()">Reset</button> -->
+                <!-- <button style="margin-bottom: 10px;" nbButton fullWidth status="default" (click)="resetBookingField()">Reset</button> -->
                 <button nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>
               </div>
             

@@ -43,5 +43,5 @@ export interface SaveBooking {
   rooms: number[];
   timeSlots: number[];
   modules: number[];
-  // purpose: string;
+  purpose: string;
 }
