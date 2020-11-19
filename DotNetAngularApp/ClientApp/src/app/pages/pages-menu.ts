@@ -58,6 +58,11 @@ export const MENU_ITEMS_ADMIN: NbMenuItem[] = [
     link: '/pages/calendar',
   },
   {
+    title: 'Faculties and Majors',
+    icon: 'grid',
+    link: '/pages/faculties',
+  },
+  {
     title: 'Lecturers',
     icon: 'people-outline',
     link: '/pages/lecturers',
@@ -123,6 +128,11 @@ export const MENU_ITEMS_USER: NbMenuItem[] = [
     title: 'Calendar',
     icon: 'calendar-outline',
     link: '/pages/calendar',
+  },
+  {
+    title: 'Faculties and Majors',
+    icon: 'grid',
+    link: '/pages/faculties',
   },
   {
     title: 'Lecturers',

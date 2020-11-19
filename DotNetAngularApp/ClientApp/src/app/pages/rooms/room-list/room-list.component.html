@@ -130,11 +130,10 @@
                 <b>Capacity:</b> {{ roomDetails.capacity }}<br>
               </p>
 
-              <br>
               <div class="inline" *ngIf="hasAccess">
-                <button style="margin-left: 10px; margin-top: 10px;" nbButton status="warning"
+                <button style="margin-top: 10px;" nbButton status="warning"
                   (click)="editRoom(roomDetails.id)">Edit</button>
-                <button style="margin-left: 10px; margin-top: 10px;" nbButton status="danger"
+                <button style="margin-left: 5px; margin-top: 10px;" nbButton status="danger"
                   (click)="deleteRoom(roomDetails.id)">Delete</button>
               </div>
             </div>
