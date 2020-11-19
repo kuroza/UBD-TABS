@@ -9,13 +9,13 @@ import { BookingListComponent } from './bookings/booking-list/booking-list';
 import { NewBookingComponent } from './bookings/new-booking/new-booking.component';
 import { RoomListComponent } from './rooms/room-list/room-list.component';
 import { UserProfileComponent } from './users/user-profile/user-profile';
-import { NewFacultyComponent } from './faculties/new-faculty/new-faculty.component';
 import { ModuleListComponent } from './modules/module-list/module-list.component';
 import { TimeSlotListComponent } from './time-slots/time-slot-list/time-slot-list.component';
 import { NewTimeSlotComponent } from './time-slots/new-time-slot/new-time-slot.component';
 import { ViewTimeSlotComponent } from './time-slots/view-time-slot/view-time-slot';
 import { LecturerListComponent } from './lecturers/lecturer-list/lecturer-list.component';
 import { SemestersComponent } from './semesters/semesters.component';
+import { FacultyListComponent } from './faculties/faculty-list/faculty-list.component';
 
 const routes: Routes = [{
   path: '',
@@ -29,7 +29,7 @@ const routes: Routes = [{
     { path: 'bookings/edit/:id', component: NewBookingComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
     // { path: 'bookings', component: BookingListComponent },
     { path: 'calendar', component: HomeComponent },
-    { path: 'faculties/new', component: NewFacultyComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
+    { path: 'faculties', component: FacultyListComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
     { path: 'lecturers', component: LecturerListComponent },
     { path: 'modules', component: ModuleListComponent },
     { path: 'rooms', component: RoomListComponent },

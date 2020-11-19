@@ -13,7 +13,7 @@ export class FacultyService {
   constructor(
     private http: HttpClient) { }
   
-  getModule(id) {
+  getFaculty(id) {
     return this.http.get(this.facultiesEndpoint + '/' + id)
       .pipe(map(response => response));
   }

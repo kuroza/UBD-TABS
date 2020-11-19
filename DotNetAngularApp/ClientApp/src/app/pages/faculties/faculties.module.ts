@@ -1,10 +1,9 @@
-import { FacultyFormModule } from './../../@theme/components/faculty-form/faculty-form.module';
-import { NewFacultyComponent } from './new-faculty/new-faculty.component';
-import { NbCardModule, NbTabsetModule, NbAccordionModule, NbButtonModule } from '@nebular/theme';
+import { NbCardModule, NbTabsetModule, NbAccordionModule, NbButtonModule, NbSelectModule, NbInputModule, NbAlertModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { FacultyListComponent } from './faculty-list/faculty-list.component';
 
 @NgModule({
     imports: [
@@ -15,10 +14,14 @@ import { RouterModule } from '@angular/router';
       ThemeModule,
       FormsModule,
       RouterModule,
-      FacultyFormModule,
+      NbTooltipModule,
+      NbIconModule,
+      NbAlertModule,
+      NbInputModule,
+      NbSelectModule,
     ],
     declarations: [
-      NewFacultyComponent,
+      FacultyListComponent,
     ],
   })
   export class FacultiesModule { }

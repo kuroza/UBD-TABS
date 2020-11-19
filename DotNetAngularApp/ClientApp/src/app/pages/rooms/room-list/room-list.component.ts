@@ -1,13 +1,12 @@
 import { ToastyService } from 'ng2-toasty';
 import { BookingService } from '../../../services/booking.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BuildingService } from '../../../services/building.service';
 import { UserService } from '../../../services/user.service';
 import { RoomService } from '../../../services/room.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SaveRoom } from '../../../models/room';
 import { SaveBuilding } from '../../../models/building';
-// import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'ngx-view-rooms',
@@ -72,8 +71,8 @@ export class RoomListComponent implements OnInit {
           this.redirectTo('/pages/rooms');
         });
     }
-  
   }
+
   deleteBuilding(id) {
     if (confirm("Are you sure?")) {
       this.buildingService.delete(id)

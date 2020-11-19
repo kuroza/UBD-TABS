@@ -1,0 +1,153 @@
+<nb-card>
+  <nb-card-body>
+    <h3>Faculties and Majors List</h3>
+  </nb-card-body>
+</nb-card>
+
+<div class="row">
+  <div class="col-md-8">
+    <nb-accordion>
+      <nb-accordion-item *ngFor="let f of faculties">
+        <nb-accordion-item-header>
+          {{ f.name }}
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div *ngIf="hasAccess">
+            <button href="javascript:void(0);" (click)="editFaculty(f.id)" size="small" class="mr-2 mb-2" nbButton status="warning">Edit faculty
+              details</button>
+            <button href="javascript:void(0);" (click)="deleteFaculty(f.id)" size="small" class="mb-2" nbButton status="danger">Delete
+              faculty</button>
+          </div>
+
+          <table class="table table-hover text-center">
+            <thead>
+              <tr>
+                <!-- <th style="width: 10%" scope="col">Id</th> -->
+                <th style="width: 90%" scope="col">Major</th>
+                <th style="width: 5%" scope="col"></th>
+                <th style="width: 5%" scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let major of f.majors">
+                <!-- <th scope="row">{{ major.id }}</th> -->
+                <th scope="row" (click)="selectMajor(major.id)">{{ major.name }}</th>
+                <td><a href="javascript:void(0);" (click)="editMajor(major.id)" *ngIf="hasAccess"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
+                <td><a href="javascript:void(0);" (click)="deleteMajor(major.id)" *ngIf="hasAccess"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+  </div>
+
+  <div class="col-md-4">
+    <nb-card>
+      <nb-card-body>
+        <nb-tabset fullWidth>
+          <nb-tab *ngIf="hasAccess" tabTitle="Major" active="{{ setActiveAddMajor }}">
+            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existMajorAlert">
+              Major name already exists!
+            </nb-alert>
+            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
+              Please enter the required fields!
+            </nb-alert>
+            <h5 *ngIf="major.id" style="margin-top: 10px;">Edit Major
+              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
+              nbTooltip="Return to Add" style="float: right;">
+                <nb-icon icon="arrow-back-outline"></nb-icon>Back
+              </button>
+            </h5>
+            <h5 *ngIf="!major.id" style="margin-top: 10px;">Add Major</h5>
+            <form #f="ngForm" (ngSubmit)="submitMajor()" novalidate>
+              <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
+                <label>Faculty *</label>
+                <nb-select filled fullWidth placeholder="Select faculty" [(selected)]="major.facultyId">
+                  <nb-option *ngFor="let f of faculties" value="{{ f.id }}">{{ f.name }}</nb-option>
+                </nb-select><br>
+              </div>
+              <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
+                <label>Major name *</label>
+                <input id="name" type="text" class="form-control" [(ngModel)]="major.name" name="name"
+                  placeholder="Major name">
+              </div>
+              <!-- <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
+                <label>Programme *</label>
+                <input id="programme" type="text" class="form-control" [(ngModel)]="" name="programme"
+                  placeholder="Programme">
+              </div> -->
+              <div style="margin-left: 10px; margin-top: 10px;">
+                <button *ngIf="!major.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
+                <button *ngIf="major.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
+              </div>
+              <!-- <br><pre>{{ major | json }}</pre> -->
+            </form>
+          </nb-tab>
+
+          <nb-tab *ngIf="hasAccess" tabTitle="Faculty" active="{{ setActiveAddFaculty }}">
+            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existFacultyAlert">
+              Faculty name already exists!
+            </nb-alert>
+            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
+              Please enter the required fields!
+            </nb-alert>
+            <h5 *ngIf="faculty.id" style="margin-top: 10px;">Edit Faculty
+              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
+              nbTooltip="Return to Add" style="float: right;">
+                <nb-icon icon="arrow-back-outline"></nb-icon>Back
+              </button>
+            </h5>
+            <h5 *ngIf="!faculty.id" style="margin-top: 10px;">Add Faculty</h5>
+            <form #f="ngForm" (ngSubmit)="submitFaculty()" novalidate>
+              <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
+                <label>Faculty *</label>
+                <input id="name" type="text" class="form-control" [(ngModel)]="faculty.name" name="name"
+                  placeholder="Faculty name">
+              </div>
+              <div style="margin-left: 10px; margin-top: 10px;">
+                <button *ngIf="!faculty.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
+                <button *ngIf="faculty.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
+              </div>
+              <!-- <br><pre>{{ faculty | json }}</pre> -->
+            </form>
+          </nb-tab>
+
+          <nb-tab tabTitle="Details" active="{{ setActiveDetails }}">
+            <div *ngIf="!majorDetails" style="margin-top: 10px;">
+              <nb-alert status="basic" closable (close)="onClose()" *ngIf="detailsAlert">
+                Click on a major from the table to show its details
+              </nb-alert>
+            </div>
+            <div *ngIf="majorDetails">
+              <p>
+                <b>Faculty Id:</b> {{ majorDetails.facultyId }}<br>
+                <b>Major name:</b> {{ majorDetails.name }}<br>
+                <!-- <b>Programme:</b> {{ majorDetails.programme }}<br> -->
+              </p>
+
+              <br><pre>{{ majorDetails | json }}</pre>
+
+              <!-- <div class="card" style="width: 85%;">
+                <div class="card-header">
+                  <h6>Modules</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li *ngFor="let module of majorDetails.modules" class="list-group-item">{{ module.code }}: {{ m.name }}</li>
+                </ul>
+              </div> -->
+
+              <br>
+              <div class="inline" *ngIf="hasAccess">
+                <button style="margin-top: 10px;" nbButton status="warning"
+                  (click)="editMajor(majorDetails.id)">Edit</button>
+                <button style="margin-left: 5px; margin-top: 10px;" nbButton status="danger"
+                  (click)="deleteMajor(majorDetails.id)">Delete</button>
+              </div>
+            </div>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

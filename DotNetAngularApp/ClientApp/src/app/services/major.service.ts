@@ -8,12 +8,12 @@ import { SaveMajor } from '../models/major';
 })
 export class MajorService {
 
-  private readonly majorsEndpoint = '/api/major';
+  private readonly majorsEndpoint = '/api/majors';
 
   constructor(
     private http: HttpClient) { }
   
-  getModule(id) {
+  getMajor(id) {
     return this.http.get(this.majorsEndpoint + '/' + id)
       .pipe(map(response => response));
   }
