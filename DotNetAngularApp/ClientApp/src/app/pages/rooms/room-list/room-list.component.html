@@ -15,9 +15,11 @@
         </nb-accordion-item-header>
         <nb-accordion-item-body>
           <div *ngIf="hasAccess">
-            <button href="javascript:void(0);" (click)="editBuilding(b.id)" size="small" class="mr-2 mb-2" nbButton status="warning">Edit building
+            <button href="javascript:void(0);" (click)="editBuilding(b.id)" size="small" class="mr-2 mb-2" nbButton
+              status="warning">Edit building
               details</button>
-            <button href="javascript:void(0);" (click)="deleteBuilding(b.id)" size="small" class="mb-2" nbButton status="danger">Delete
+            <button href="javascript:void(0);" (click)="deleteBuilding(b.id)" size="small" class="mb-2" nbButton
+              status="danger">Delete
               building</button>
           </div>
 
@@ -36,8 +38,12 @@
                 <!-- <th scope="row">{{ room.id }}</th> -->
                 <th scope="row" (click)="selectRoom(room.id)">{{ room.name }}</th>
                 <td (click)="selectRoom(room.id)">{{ room.capacity }}</td>
-                <td><a href="javascript:void(0);" (click)="editRoom(room.id)" *ngIf="hasAccess"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
-                <td><a href="javascript:void(0);" (click)="deleteRoom(room.id)" *ngIf="hasAccess"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
+                <td><a href="javascript:void(0);" (click)="editRoom(room.id)" *ngIf="hasAccess">
+                    <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
+                  </a></td>
+                <td><a href="javascript:void(0);" (click)="deleteRoom(room.id)" *ngIf="hasAccess">
+                    <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
+                  </a></td>
               </tr>
             </tbody>
           </table>
@@ -58,8 +64,8 @@
               Please enter the required fields!
             </nb-alert>
             <h5 *ngIf="room.id" style="margin-top: 10px;">Edit Room
-              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
-              nbTooltip="Return to Add" style="float: right;">
+              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" nbTooltip="Return to Add"
+                style="float: right;">
                 <nb-icon icon="arrow-back-outline"></nb-icon>Back
               </button>
             </h5>
@@ -97,8 +103,8 @@
               Please enter the required fields!
             </nb-alert>
             <h5 *ngIf="building.id" style="margin-top: 10px;">Edit Building
-              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
-              nbTooltip="Return to Add" style="float: right;">
+              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" nbTooltip="Return to Add"
+                style="float: right;">
                 <nb-icon icon="arrow-back-outline"></nb-icon>Back
               </button>
             </h5>

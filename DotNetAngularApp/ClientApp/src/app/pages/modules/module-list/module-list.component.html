@@ -18,8 +18,12 @@
             <tr *ngFor="let module of modules">
               <td (click)="selectModule(module.id)">{{ module.code }}</td>
               <td (click)="selectModule(module.id)">{{ module.name }}</td>
-              <td><a href="javascript:void(0);" (click)="edit(module.id)" *ngIf="hasAccess"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
-              <td><a href="javascript:void(0);" (click)="delete(module.id)" *ngIf="hasAccess"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
+              <td><a href="javascript:void(0);" (click)="edit(module.id)" *ngIf="hasAccess">
+                  <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
+                </a></td>
+              <td><a href="javascript:void(0);" (click)="delete(module.id)" *ngIf="hasAccess">
+                  <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
+                </a></td>
             </tr>
           </tbody>
         </table>
@@ -38,8 +42,8 @@
               Please enter the required fields!
             </nb-alert>
             <h4 *ngIf="module.id" style="margin-top: 10px;">Edit Module
-              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
-              nbTooltip="Return to Add" style="float: right;">
+              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" nbTooltip="Return to Add"
+                style="float: right;">
                 <nb-icon icon="arrow-back-outline"></nb-icon>Back
               </button>
             </h4>

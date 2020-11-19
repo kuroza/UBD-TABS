@@ -205,7 +205,7 @@
       <nb-card-header>
         <h4>Details
           <button nbButton size="small" status="basic" ghost (click)="onClickClose()" 
-          nbTooltip="Clear Details" style="float: right;">
+          nbTooltip="Clear Details" style="float: right;" *ngIf="booking">
             <nb-icon icon="close-outline"></nb-icon>
           </button>
         </h4>
@@ -218,7 +218,7 @@
           <div class="row">
             <div class="col"></div>
             <div class="col-md-8">
-              <button nbButton status="primary" fullWidth [routerLink]="['/pages/bookings']">View All Bookings</button>
+              <!-- <button nbButton status="primary" fullWidth [routerLink]="['/pages/bookings']">View All Bookings</button> -->
             </div>
             <div class="col"></div>
           </div>

@@ -22,8 +22,12 @@
               <td>{{ user.fullName }}</td>
               <td>{{ user.email }}</td>
               <td></td>
-              <td><a href="javascript:void(0);" (click)="edit(user.id)"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
-              <td><a href="javascript:void(0);" (click)="delete(user.id)"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
+              <td><a href="javascript:void(0);" (click)="edit(user.id)">
+                  <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
+                </a></td>
+              <td><a href="javascript:void(0);" (click)="delete(user.id)">
+                  <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
+                </a></td>
             </tr>
           </tbody>
         </table>
@@ -32,7 +36,9 @@
   </div>
   <div class="col-md-4">
     <nb-card>
-      <nb-card-header><h4>Edit User Role</h4></nb-card-header>
+      <nb-card-header>
+        <h4>Edit User Role</h4>
+      </nb-card-header>
       <nb-card-body>
         <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
           Select a user and role!

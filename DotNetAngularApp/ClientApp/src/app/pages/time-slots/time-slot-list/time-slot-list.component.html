@@ -29,10 +29,10 @@
               </td>
               <td></td>
               <td><a href="javascript:void(0);" (click)="edit(timeSlot.id)" *ngIf="hasAccess">
-                  <nb-icon icon="edit-outline" status="warning"></nb-icon>
+                  <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
                 </a></td>
               <td><a href="javascript:void(0);" (click)="delete(timeSlot.id)" *ngIf="hasAccess">
-                  <nb-icon icon="trash-2-outline" status="danger"></nb-icon>
+                  <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
                 </a></td>
             </tr>
           </tbody>

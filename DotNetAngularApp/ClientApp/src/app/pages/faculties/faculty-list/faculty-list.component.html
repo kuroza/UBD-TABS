@@ -13,9 +13,11 @@
         </nb-accordion-item-header>
         <nb-accordion-item-body>
           <div *ngIf="hasAccess">
-            <button href="javascript:void(0);" (click)="editFaculty(f.id)" size="small" class="mr-2 mb-2" nbButton status="warning">Edit faculty
+            <button href="javascript:void(0);" (click)="editFaculty(f.id)" size="small" class="mr-2 mb-2" nbButton
+              status="warning">Edit faculty
               details</button>
-            <button href="javascript:void(0);" (click)="deleteFaculty(f.id)" size="small" class="mb-2" nbButton status="danger">Delete
+            <button href="javascript:void(0);" (click)="deleteFaculty(f.id)" size="small" class="mb-2" nbButton
+              status="danger">Delete
               faculty</button>
           </div>
 
@@ -32,8 +34,12 @@
               <tr *ngFor="let major of f.majors">
                 <!-- <th scope="row">{{ major.id }}</th> -->
                 <th scope="row" (click)="selectMajor(major.id)">{{ major.name }}</th>
-                <td><a href="javascript:void(0);" (click)="editMajor(major.id)" *ngIf="hasAccess"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
-                <td><a href="javascript:void(0);" (click)="deleteMajor(major.id)" *ngIf="hasAccess"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
+                <td><a href="javascript:void(0);" (click)="editMajor(major.id)" *ngIf="hasAccess">
+                    <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
+                  </a></td>
+                <td><a href="javascript:void(0);" (click)="deleteMajor(major.id)" *ngIf="hasAccess">
+                    <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
+                  </a></td>
               </tr>
             </tbody>
           </table>
@@ -54,8 +60,8 @@
               Please enter the required fields!
             </nb-alert>
             <h5 *ngIf="major.id" style="margin-top: 10px;">Edit Major
-              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
-              nbTooltip="Return to Add" style="float: right;">
+              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" nbTooltip="Return to Add"
+                style="float: right;">
                 <nb-icon icon="arrow-back-outline"></nb-icon>Back
               </button>
             </h5>
@@ -93,8 +99,8 @@
               Please enter the required fields!
             </nb-alert>
             <h5 *ngIf="faculty.id" style="margin-top: 10px;">Edit Faculty
-              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
-              nbTooltip="Return to Add" style="float: right;">
+              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" nbTooltip="Return to Add"
+                style="float: right;">
                 <nb-icon icon="arrow-back-outline"></nb-icon>Back
               </button>
             </h5>
@@ -126,7 +132,8 @@
                 <!-- <b>Programme:</b> {{ majorDetails.programme }}<br> -->
               </p>
 
-              <br><pre>{{ majorDetails | json }}</pre>
+              <br>
+              <pre>{{ majorDetails | json }}</pre>
 
               <!-- <div class="card" style="width: 85%;">
                 <div class="card-header">

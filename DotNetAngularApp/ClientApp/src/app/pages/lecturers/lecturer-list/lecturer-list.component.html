@@ -20,8 +20,12 @@
               <td (click)="selectLecturer(lecturer.id)">{{ lecturer.title }}</td>
               <td (click)="selectLecturer(lecturer.id)">{{ lecturer.name }}</td>
               <td (click)="selectLecturer(lecturer.id)"></td>
-              <td><a href="javascript:void(0);" (click)="edit(lecturer.id)" *ngIf="hasAccess"><nb-icon icon="edit-outline" status="warning"></nb-icon></a></td>
-              <td><a href="javascript:void(0);" (click)="delete(lecturer.id)" *ngIf="hasAccess"><nb-icon icon="trash-2-outline" status="danger"></nb-icon></a></td>
+              <td><a href="javascript:void(0);" (click)="edit(lecturer.id)" *ngIf="hasAccess">
+                  <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
+                </a></td>
+              <td><a href="javascript:void(0);" (click)="delete(lecturer.id)" *ngIf="hasAccess">
+                  <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
+                </a></td>
             </tr>
           </tbody>
         </table>
@@ -41,8 +45,8 @@
               Please enter the required fields!
             </nb-alert>
             <h4 *ngIf="lecturer.id" style="margin-top: 10px;">Edit Lecturer
-              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" 
-              nbTooltip="Return to Add" style="float: right;">
+              <button nbButton size="small" status="basic" ghost (click)="onClickBack()" nbTooltip="Return to Add"
+                style="float: right;">
                 <nb-icon icon="arrow-back-outline"></nb-icon>Back
               </button>
             </h4>

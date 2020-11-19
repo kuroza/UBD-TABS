@@ -1,4 +1,4 @@
-import { NbAlertModule, NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbRadioModule, NbSelectModule, NbUserModule } from '@nebular/theme';
+import { NbAlertModule, NbButtonModule, NbCardModule, NbIconModule, NbInputModule, NbRadioModule, NbSelectModule, NbTooltipModule, NbUserModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { UserProfileComponent } from './user-profile/user-profile';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +7,7 @@ import { ManageUserComponent } from './manage-user/manage-user.component';
 
 @NgModule({
   imports: [
+    NbTooltipModule,
     NbIconModule,
     NbAlertModule,
     NbUserModule,
