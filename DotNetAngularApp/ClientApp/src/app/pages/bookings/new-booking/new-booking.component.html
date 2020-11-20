@@ -44,7 +44,7 @@
           <nb-card-header *ngIf="booking.id"><h4>Edit Booking
             <button nbButton size="small" status="basic" ghost (click)="resetBookingField()" 
             nbTooltip="Return to Add" style="float: right;">
-              <nb-icon icon="arrow-back-outline"></nb-icon>
+              <nb-icon icon="arrow-back-outline"></nb-icon>Back
             </button>
           </h4></nb-card-header>
           <nb-card-body>
@@ -143,7 +143,7 @@
               <div class="form-group">
                 <label>Purpose</label>
                 <input nbInput fullWidth id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose"
-                  placeholder="Purpose">
+                  placeholder="Purpose" filled>
               </div>
               
               <div *ngIf="!booking.id">
