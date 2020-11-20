@@ -44,6 +44,11 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
+  confirmCreate(booking: SaveBooking) {
+    return this.http.post(this.bookingsEndpoint + "/confirm", booking)
+      .pipe(map(response => response));
+  }
+
   update(booking: SaveBooking) {
     return this.http.put(this.bookingsEndpoint + '/' + booking.id, booking)
       .pipe(map(response => response));
