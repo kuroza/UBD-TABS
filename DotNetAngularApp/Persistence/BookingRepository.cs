@@ -119,20 +119,19 @@ namespace DotNetAngularApp.Persistence
             context.Remove(booking);
         }
 
-        // public bool BookingExist(Booking booking)
-        // {
-        //     var resultContext = context.Bookings
-        //         .Where(b => b.Rooms.Select(br => br.Room.Id) == booking.Rooms.Select(br => br.Room.Id) && b.BookDate == booking.BookDate)
-        //         .SelectMany(b => b.TimeSlots.Select(bt => bt.TimeSlotId))
-        //         .AsEnumerable();
+        public bool BookingRoomExist(Booking booking)
+        {
+            var result = context.Bookings
+                .Where(b => b.BookDates.Select(bd => bd.Date).Any(x => booking.BookDates.Select(bd => bd.Date).Contains(x)))
+                .Where(b => b.Rooms.Select(br => br.Room.Id).Any(x => booking.Rooms.Select(br => br.RoomId).Contains(x)))
+                .Where(b => b.TimeSlots.Select(bt => bt.TimeSlot.Id).Any(x => booking.TimeSlots.Select(bt => bt.TimeSlotId).Contains(x)))
+                .Count();
 
-        //     var resultInput = booking.TimeSlots.Select(bt => bt.TimeSlotId);
-
-        //     if (resultContext.Intersect(resultInput).Count() > 0)
-        //         return true;
-        //     else
-        //         return false;
-        // }
+            if (result > 0)
+                return true;
+            else
+                return false;
+        }
 
         // public bool EditBookingExist(Booking booking)
         // {
