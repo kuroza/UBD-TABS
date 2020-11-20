@@ -8,5 +8,6 @@ namespace DotNetAngularApp.Core.Models
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
+        public int BookingId { get; set; }
     }
 }
