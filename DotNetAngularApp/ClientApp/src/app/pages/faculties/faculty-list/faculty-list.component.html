@@ -126,29 +126,30 @@
               </nb-alert>
             </div>
             <div *ngIf="majorDetails">
-              <p>
+              <!-- <p>
                 <b>Faculty Id:</b> {{ majorDetails.facultyId }}<br>
                 <b>Major name:</b> {{ majorDetails.name }}<br>
-                <!-- <b>Programme:</b> {{ majorDetails.programme }}<br> -->
-              </p>
+              </p> -->
 
-              <br>
-              <pre>{{ majorDetails | json }}</pre>
+              <h4 style="margin-top: 10px;">{{ majorDetails.name }}</h4>
 
-              <!-- <div class="card" style="width: 85%;">
+              <div class="card" style="width: 85%; margin-top: 10px;">
                 <div class="card-header">
                   <h6>Modules</h6>
                 </div>
                 <ul class="list-group list-group-flush">
-                  <li *ngFor="let module of majorDetails.modules" class="list-group-item">{{ module.code }}: {{ m.name }}</li>
+                  <li *ngFor="let module of majorDetails.modules" class="list-group-item">{{ module.code }}: {{ module.name }}</li>
                 </ul>
-              </div> -->
+              </div>
+
+              <!-- <br>
+              <pre>{{ majorDetails | json }}</pre> -->
 
               <br>
               <div class="inline" *ngIf="hasAccess">
-                <button style="margin-top: 10px;" nbButton status="warning"
+                <button style="margin-top: 5px;" nbButton status="warning"
                   (click)="editMajor(majorDetails.id)">Edit</button>
-                <button style="margin-left: 5px; margin-top: 10px;" nbButton status="danger"
+                <button style="margin-left: 5px; margin-top: 5px;" nbButton status="danger"
                   (click)="deleteMajor(majorDetails.id)">Delete</button>
               </div>
             </div>
