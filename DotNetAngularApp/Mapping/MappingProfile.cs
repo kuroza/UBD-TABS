@@ -23,6 +23,7 @@ namespace DotNetAngularApp.Mapping
             CreateMap<Room, SaveRoomResource>();
 
             CreateMap<Lecturer, LecturerResource>();
+            // CreateMap<Lecturer, LecturerDetailsResource>();
             CreateMap<Lecturer, SaveLecturerResource>();
 
             CreateMap<Building, KeyValuePairResource>();
