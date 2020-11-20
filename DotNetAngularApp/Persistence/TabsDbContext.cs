@@ -38,6 +38,10 @@ namespace DotNetAngularApp.Persistence
             // BookingRoom
             modelBuilder.Entity<BookingRoom>()
                 .HasKey(br => new { br.BookingId, br.RoomId });
+                
+            // // BookDate
+            // modelBuilder.Entity<BookDate>()
+            //     .HasKey(bd => new { bd.Id, bd.BookDate });
         }
     }
 }

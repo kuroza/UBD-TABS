@@ -12,7 +12,7 @@ namespace DotNetAngularApp.Core.Models
         public int Id { get; set; }
 
         [Required]
-        public DateTime BookDate { get; set; }
+        public ICollection<BookDate> BookDates { get; set; }
 
         [Required]
         public ICollection<BookingRoom> Rooms { get; set; }
@@ -33,6 +33,7 @@ namespace DotNetAngularApp.Core.Models
 
         public Booking()
         {
+            BookDates = new Collection<BookDate>();
             Rooms = new Collection<BookingRoom>();
             TimeSlots = new Collection<BookingTimeSlot>();
             Modules = new Collection<BookingModule>();

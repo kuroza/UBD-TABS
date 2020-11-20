@@ -26,6 +26,7 @@ namespace DotNetAngularApp.Persistence
 
             return await context.Bookings
                 .Include(b => b.Semester)
+                .Include(b => b.BookDates)
                 .Include(b => b.TimeSlots)
                     .ThenInclude(bt => bt.TimeSlot)
                 .Include(b => b.Rooms)
@@ -45,6 +46,7 @@ namespace DotNetAngularApp.Persistence
         {
             return await context.Bookings
                 .Include(b => b.Semester)
+                .Include(b => b.BookDates)
                 .Include(b => b.Rooms)
                     .ThenInclude(br => br.Room)
                         .ThenInclude(r => r.Building)

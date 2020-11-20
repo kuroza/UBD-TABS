@@ -12,7 +12,7 @@ namespace DotNetAngularApp.Controllers.Resources
 
         // public KeyValuePairResource Building { get; set; }
 
-        public DateTime BookDate { get; set; }
+        public ICollection<BookDateResource> BookDates { get; set; }
 
         public ICollection<RoomResource> Rooms { get; set; }
 
@@ -24,6 +24,7 @@ namespace DotNetAngularApp.Controllers.Resources
 
         public BookingResource()
         {
+            BookDates = new Collection<BookDateResource>();
             Rooms = new Collection<RoomResource>();
             TimeSlots = new Collection<TimeSlotResource>();
             Modules = new Collection<ModuleResource>();

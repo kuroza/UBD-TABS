@@ -15,6 +15,8 @@ namespace DotNetAngularApp.Mapping
             CreateMap<Faculty, FacultyResource>();
             CreateMap<Major, MajorResource>();
             
+            CreateMap<BookDate, BookDateResource>();
+
             CreateMap<TimeSlot, TimeSlotResource>();
             CreateMap<TimeSlot, SaveTimeSlotResource>();
             
@@ -103,6 +105,18 @@ namespace DotNetAngularApp.Mapping
 
             CreateMap<SaveBookingResource, Booking>()
                 .ForMember(b => b.Id, opt => opt.Ignore())
+                .ForMember(b => b.BookDates, opt => opt.Ignore()) // how?
+                .AfterMap((br, b) => {
+                    var removedBookDates = b.BookDates.Where(bd => !br.BookDates.Contains(bd.Date)).ToList();
+                    foreach (var d in removedBookDates)
+                        b.BookDates.Remove(d);
+
+                    var addedBookDates = br.BookDates
+                        .Where(date => !b.BookDates.Any(bd => bd.Date == date))
+                        .Select(date => new BookDate { Date = date });
+                    foreach (var d in addedBookDates)
+                        b.BookDates.Add(d);
+                })
                 .ForMember(b => b.TimeSlots, opt => opt.Ignore())
                 .AfterMap((br, b) => {
                     var removedTimeSlots = b.TimeSlots.Where(t => !br.TimeSlots.Contains(t.TimeSlotId)).ToList();
