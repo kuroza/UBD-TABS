@@ -258,7 +258,7 @@ export class HomeComponent {
             {
               start: new Date(this.startDateTime),
               end: new Date(this.endDateTime),
-              title: `<b>${ modules }</b><br>${ rooms } ${ purpose }<br>${ lecturers }`,
+              title: `<b>${ modules } ${ purpose }</b><br>${ rooms }<br>${ lecturers }`,
               color: colors.teal,
               meta: {
                 id: b.id,

@@ -6,57 +6,34 @@
     <nb-card [nbSpinner]="nbSpinner ? true : false" nbSpinnerStatus="success">
       <nb-card-header>
         <h4 class="calendar-timetable-title">Calendar Timetable</h4>
-        <div class="calendar-timetable-buttons" >
-          <button nbButton size="tiny" status="basic" (click)="refreshCalendar()"
-          ghost nbTooltip="Refresh Calendar Timetable"><nb-icon icon="refresh-outline"></nb-icon></button>
-          <button [useExistingCss]="true" printSectionId="print-section" ngxPrint
-          nbButton size="tiny" status="basic" ghost nbTooltip="Print Timetable"><nb-icon icon="printer-outline"></nb-icon></button>
+        <div class="calendar-timetable-buttons">
+          <button nbButton size="tiny" status="basic" (click)="refreshCalendar()" ghost
+            nbTooltip="Refresh Calendar Timetable">
+            <nb-icon icon="refresh-outline"></nb-icon>
+          </button>
+          <button [useExistingCss]="true" printSectionId="print-section" ngxPrint nbButton size="tiny" status="basic"
+            ghost nbTooltip="Print Timetable">
+            <nb-icon icon="printer-outline"></nb-icon>
+          </button>
         </div>
       </nb-card-header>
       <nb-card-body>
-        <ngx-calendar-header 
-          [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()"
-        >
+        <ngx-calendar-header [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
         </ngx-calendar-header>
 
         <div [ngSwitch]="view">
-          <mwl-calendar-month-view
-            *ngSwitchCase="CalendarView.Month"
-            [viewDate]="viewDate"
-            [events]="events"
-            [refresh]="refresh"
-            [activeDayIsOpen]="activeDayIsOpen"
-            (dayClicked)="dayClicked($event.day)"
-            [weekStartsOn]="weekStartsOn"
-            [excludeDays]="excludeDays"
-            (eventClicked)="eventClicked($event)"
-          >
+          <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+            [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+            [weekStartsOn]="weekStartsOn" [excludeDays]="excludeDays" (eventClicked)="eventClicked($event)">
           </mwl-calendar-month-view>
-          <mwl-calendar-week-view
-            id="print-section"
-            *ngSwitchCase="CalendarView.Week"
-            [viewDate]="viewDate"
-            [events]="events"
-            [refresh]="refresh"
-            [weekStartsOn]="weekStartsOn"
-            [hourSegments]="4"
-            [dayStartHour]="7"
-            [dayEndHour]="18"
-            (dayHeaderClicked)="changeDay($event.day.date)"
-            [excludeDays]="excludeDays"
-            (eventClicked)="eventClicked($event)"
-          >
+          <mwl-calendar-week-view id="print-section" *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate"
+            [events]="events" [refresh]="refresh" [weekStartsOn]="weekStartsOn" [hourSegments]="4" [dayStartHour]="7"
+            [dayEndHour]="18" (dayHeaderClicked)="changeDay($event.day.date)" [excludeDays]="excludeDays"
+            (eventClicked)="eventClicked($event)">
           </mwl-calendar-week-view>
-          <mwl-calendar-day-view
-            *ngSwitchCase="CalendarView.Day"
-            [viewDate]="viewDate"
-            [events]="events"
-            [hourSegments]="4"
-            [dayStartHour]="7"
-            [dayEndHour]="18"
-            [refresh]="refresh"
-            (eventClicked)="eventClicked($event)"
-          >
+          <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+            [hourSegments]="4" [dayStartHour]="7" [dayEndHour]="18" [refresh]="refresh"
+            (eventClicked)="eventClicked($event)">
           </mwl-calendar-day-view>
         </div>
       </nb-card-body>
@@ -71,42 +48,24 @@
             <div class="form-group">
               <div class="mr-2" style="margin-top: 10px">
                 <label>Filter Faculty</label>
-                <nb-select
-                  filled
-                  fullWidth
-                  required
-                  placeholder="Select Faculty"
-                  [(selected)]="filter.facultyId"
-                  (selectedChange)="onFacultyChange()"
-                >
+                <nb-select filled fullWidth required placeholder="Select Faculty" [(selected)]="filter.facultyId"
+                  (selectedChange)="onFacultyChange()">
                   <nb-option *ngFor="let f of faculties" value="{{ f.id }}">{{ f.name }}</nb-option>
                 </nb-select>
               </div>
 
               <div class="mr-2" style="margin-top: 20px">
                 <label>Filter Major</label>
-                <nb-select
-                  filled
-                  fullWidth
-                  required
-                  placeholder="Select Major"
-                  [(selected)]="filter.majorId"
-                  (selectedChange)="onMajorChange()"
-                >
+                <nb-select filled fullWidth required placeholder="Select Major" [(selected)]="filter.majorId"
+                  (selectedChange)="onMajorChange()">
                   <nb-option *ngFor="let m of majors" value="{{ m.id }}">{{ m.name }}</nb-option>
                 </nb-select>
               </div>
 
               <div class="mr-2" style="margin-top: 20px">
                 <label>Filter Module</label>
-                <nb-select
-                  filled
-                  fullWidth
-                  required
-                  placeholder="Select Module"
-                  [(selected)]="filter.moduleId"
-                  (selectedChange)="onModuleFilterChange()"
-                >
+                <nb-select filled fullWidth required placeholder="Select Module" [(selected)]="filter.moduleId"
+                  (selectedChange)="onModuleFilterChange()">
                   <nb-option *ngFor="let m of modules" value="{{ m.id }}">{{ m.code }} {{ m.name }}</nb-option>
                 </nb-select>
               </div>
@@ -134,7 +93,8 @@
               <!-- <pre>{{ filter | json }}</pre> -->
               <!-- <button [useExistingCss]="true" printSectionId="print-section" ngxPrint style="margin-top: 20px; float: left;"
               nbButton size="small" status="primary"><nb-icon icon="printer-outline"></nb-icon>Print</button> -->
-              <button nbButton size="small" status="basic" hero (click)="resetModuleFilter()" style="margin-top: 20px; float: right;">Reset</button>
+              <button nbButton size="small" status="basic" hero (click)="resetModuleFilter()"
+                style="margin-top: 20px; float: right;">Reset</button>
             </div>
           </nb-tab>
 
@@ -142,35 +102,23 @@
             <div class="form-group">
               <div class="mr-2" style="margin-top: 10px">
                 <label>Filter Building</label>
-                <nb-select
-                  filled
-                  fullWidth
-                  required
-                  placeholder="Select Building"
-                  [(selected)]="filter.buildingId"
-                  (selectedChange)="onBuildingChange()"
-                >
+                <nb-select filled fullWidth required placeholder="Select Building" [(selected)]="filter.buildingId"
+                  (selectedChange)="onBuildingChange()">
                   <nb-option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</nb-option>
                 </nb-select>
               </div>
 
               <div class="mr-2" style="margin-top: 20px">
                 <label>Filter Room</label>
-                <nb-select
-                  filled
-                  multiple
-                  fullWidth
-                  required
-                  placeholder="Select Room"
-                  [(selected)]="filter.rooms"
-                  (selectedChange)="onRoomChange()"
-                >
+                <nb-select filled multiple fullWidth required placeholder="Select Room" [(selected)]="filter.rooms"
+                  (selectedChange)="onRoomChange()">
                   <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
                 </nb-select>
               </div>
-              <button nbButton size="small" status="basic" hero (click)="resetRoomFilter()" style="margin-top: 20px; float: right;">Reset</button>
+              <button nbButton size="small" status="basic" hero (click)="resetRoomFilter()"
+                style="margin-top: 20px; float: right;">Reset</button>
             </div>
-              
+
             <!-- <br>
             <pre>{{ filter | json }}</pre>
             <pre>{{ rooms | json }}</pre> -->
@@ -180,39 +128,34 @@
             <div class="form-group">
               <div class="mr-2" style="margin-top: 10px">
                 <label>Filter Lecturer</label>
-                <nb-select
-                  filled
-                  fullWidth
-                  required
-                  placeholder="Select Lecturer"
-                  [(selected)]="filter.lecturerId"
-                  (selectedChange)="onLecturerChange()"
-                >
+                <nb-select filled fullWidth required placeholder="Select Lecturer" [(selected)]="filter.lecturerId"
+                  (selectedChange)="onLecturerChange()">
                   <nb-option *ngFor="let l of lecturers" value="{{ l.id }}">{{ l.name }} ({{ l.title }})</nb-option>
                 </nb-select>
               </div>
-              <button nbButton size="small" status="basic" hero (click)="resetLecturerFilter()" style="margin-top: 20px; float: right;">Reset</button>
+              <button nbButton size="small" status="basic" hero (click)="resetLecturerFilter()"
+                style="margin-top: 20px; float: right;">Reset</button>
             </div>
 
             <!-- <br>
             <pre>{{ filter | json }}</pre> -->
           </nb-tab>
-         </nb-tabset>
+        </nb-tabset>
       </nb-card-body>
     </nb-card>
 
     <nb-card>
       <nb-card-header>
         <h4>Details
-          <button nbButton size="small" status="basic" ghost (click)="onClickClose()" 
-          nbTooltip="Clear Details" style="float: right;" *ngIf="booking">
+          <button nbButton size="small" status="basic" ghost (click)="onClickClose()" nbTooltip="Clear Details"
+            style="float: right;" *ngIf="booking">
             <nb-icon icon="close-outline"></nb-icon>
           </button>
         </h4>
       </nb-card-header>
       <nb-card-body>
         <div *ngIf="!booking">
-          <nb-alert status="basic" closable (close)="onCloseDetails()" *ngIf="detailsAlert">
+          <nb-alert status="basic" closable (close)="onCloseDetails()" *ngIf="detailsAlert" style="text-align: center;">
             Click on a booking event from the calendar to show its details
           </nb-alert>
           <div class="row">
@@ -226,7 +169,7 @@
 
         <div *ngIf="booking" style="margin-left: 40px;">
           <!-- * Modules -->
-          <h6 style="margin-left: 20px">Modules</h6>
+          <h5 style="margin-left: 20px">Modules</h5>
           <nb-accordion multi style="width: 85%">
             <nb-accordion-item *ngFor="let module of booking.modules">
               <nb-accordion-item-header>
@@ -249,40 +192,49 @@
             </nb-accordion-item>
           </nb-accordion>
           <br />
-        
+
           <!-- * TimeSlots -->
           <div class="card" style="width: 85%;">
             <div class="card-header">
-              <h6>Time slots</h6>
+              <h5>Time slots</h5>
             </div>
             <ul class="list-group list-group-flush">
-              <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}</li>
+              <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} -
+                {{ t.endTime | date:'shortTime' }}</li>
             </ul>
           </div>
           <br />
 
           <!-- * Venue -->
           <div style="margin-left: 20px">
-            <h6>Venue</h6>
-            <!-- <ul class="list-inline">
-              Building: <li class="list-inline-item" *ngFor="let r of booking.rooms">{{ r.building.name }}</li>
-            </ul> -->
+            <h5>Venue</h5>
             <ul class="list-inline">
-              Room: <li class="list-inline-item" *ngFor="let r of booking.rooms">{{ r.name }}, </li>
+              <div *ngIf="booking.rooms.length == 1"><b>Room: </b>
+                <li class="list-inline-item" *ngFor="let r of booking.rooms">{{ r.name }}</li>
+              </div>
+              <div *ngIf="booking.rooms.length > 1"><b>Rooms: </b>
+                <li class="list-inline-item" *ngFor="let r of booking.rooms">{{ r.name }},</li>
+              </div>
             </ul>
-            <p>Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}</p>
-            <!-- <span>Building: {{ booking.building.name }}</span><br>
-            <span>Room: {{ booking.room.name }}</span><br>
-            <span>Date: {{ booking.bookDate | date:'dd MMMM yyyy' }}</span> -->
+
+            <ul class="list-inline">
+              <div *ngIf="booking.bookDates.length == 1"><b>Date: </b>
+                <li class="list-inline-item" *ngFor="let bd of booking.bookDates">{{ bd.date | date:'dd/MM/yyyy' }}</li>
+              </div>
+              <div *ngIf="booking.bookDates.length > 1"><b>Dates: </b>
+                <li class="list-inline-item" *ngFor="let bd of booking.bookDates">{{ bd.date | date:'dd/MM/yyyy' }},</li>
+              </div>
+            </ul>
           </div>
 
-          <div class="inline">
-            <button *ngIf="hasAccess" style="margin-left: 5px; margin-top: 10px;" nbButton status="warning" [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
-            <button *ngIf="hasAccess" style="margin-left: 5px; margin-top: 10px;" nbButton status="danger" (click)="delete()">Delete</button>
-            <button style="margin-left: 5px; margin-top: 10px;" nbButton status="primary" [routerLink]="['/pages/bookings']">View All Bookings</button>
+          <div class="inline" style="margin-left: 20px;">
+            <button *ngIf="hasAccess" style="margin-left: 5px; margin-top: 10px;" nbButton status="warning"
+              [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+            <button *ngIf="hasAccess" style="margin-left: 5px; margin-top: 10px;" nbButton status="danger"
+              (click)="delete()">Delete</button>
+            <button style="margin-left: 5px; margin-top: 10px;" nbButton status="primary"
+              [routerLink]="['/pages/bookings']">View All Bookings</button>
           </div>
-          
-          <br />
 
         </div>
       </nb-card-body>
