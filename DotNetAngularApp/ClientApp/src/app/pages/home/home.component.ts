@@ -63,7 +63,6 @@ export class HomeComponent {
   events: CalendarEvent[] = [];
   startDateTime: any;
   endDateTime: any;
-  bookDate: any;
   startTime: any;
   endTime: any;
 
@@ -213,58 +212,60 @@ export class HomeComponent {
     this.nbSpinner = true;
 
     for (let b of this.bookings) {
-      var dateFormat = require('dateformat');
-      this.bookDate = dateFormat(b.bookDate, 'yyyy-mm-dd'); // * format date
+      for (let bd of b.bookDates) {
+        var dateFormat = require('dateformat');
+        var bookDate = dateFormat(bd.date, 'yyyy-mm-dd'); // * format date
 
-      // * Iterate Modules and Lecturers
-      var modules: string = `${b.modules[0].code}: ${b.modules[0].name}`;
-      var lecturers: string = `${b.modules[0].lecturers[0].name} (${b.modules[0].lecturers[0].title})`;
-      if (b.modules[0].lecturers.length > 1) {
-        for (var i=1; i<b.modules[0].lecturers.length; i++)
-          lecturers += `, ${b.modules[0].lecturers[i].name} (${b.modules[0].lecturers[i].title})`;
-      }
-      if (b.modules.length > 1) {
-        for (var i=1; i<b.modules.length; i++) {
-          modules += `, ${b.modules[i].code}: ${b.modules[i].name}`;
-          for (var j=0; j<b.modules[i].lecturers.length; j++)
-            lecturers += `, ${b.modules[i].lecturers[j].name} (${b.modules[i].lecturers[j].title})`;
+        // * Iterate Modules and Lecturers
+        var modules: string = `${b.modules[0].code}: ${b.modules[0].name}`;
+        var lecturers: string = `${b.modules[0].lecturers[0].name} (${b.modules[0].lecturers[0].title})`;
+        if (b.modules[0].lecturers.length > 1) {
+          for (var i=1; i<b.modules[0].lecturers.length; i++)
+            lecturers += `, ${b.modules[0].lecturers[i].name} (${b.modules[0].lecturers[i].title})`;
         }
-      }
-      
-      // * Iterate Rooms
-      var rooms: string = `${b.rooms[0].name}`;
-      if (b.rooms.length > 1) {
-        for (var i=1; i<b.rooms.length; i++)
-          rooms += `, ${b.rooms[i].name}`;
-      }
+        if (b.modules.length > 1) {
+          for (var i=1; i<b.modules.length; i++) {
+            modules += `, ${b.modules[i].code}: ${b.modules[i].name}`;
+            for (var j=0; j<b.modules[i].lecturers.length; j++)
+              lecturers += `, ${b.modules[i].lecturers[j].name} (${b.modules[i].lecturers[j].title})`;
+          }
+        }
+        
+        // * Iterate Rooms
+        var rooms: string = `${b.rooms[0].name}`;
+        if (b.rooms.length > 1) {
+          for (var i=1; i<b.rooms.length; i++)
+            rooms += `, ${b.rooms[i].name}`;
+        }
 
-      var purpose: string;
-      if (b.purpose != '')
-        purpose = `(${b.purpose})`;
-      else
-        purpose = '';
+        var purpose: string;
+        if (b.purpose != '')
+          purpose = `(${b.purpose})`;
+        else
+          purpose = '';
 
-      // * nested loop for each time slots under each booking
-      for (let timeSlot of b.timeSlots) {
-        var timeFormat = require('dateformat');
-        this.startTime = timeFormat(timeSlot.startTime, 'HH:MM:ss');
-        this.startDateTime = this.bookDate + "T" + this.startTime;
-        this.endTime = timeFormat(timeSlot.endTime, 'HH:MM:ss');
-        this.endDateTime = this.bookDate + "T" + this.endTime;
+        // * nested loop for each time slots under each booking
+        for (let timeSlot of b.timeSlots) {
+          var timeFormat = require('dateformat');
+          this.startTime = timeFormat(timeSlot.startTime, 'HH:MM:ss');
+          this.startDateTime = bookDate + "T" + this.startTime;
+          this.endTime = timeFormat(timeSlot.endTime, 'HH:MM:ss');
+          this.endDateTime = bookDate + "T" + this.endTime;
 
-        // * push object into events[]
-        this.events = [
-          ...this.events,
-          {
-            start: new Date(this.startDateTime),
-            end: new Date(this.endDateTime),
-            title: `<b>${ modules }</b><br>${ rooms } ${ purpose }<br>${ lecturers }`,
-            color: colors.teal,
-            meta: {
-              id: b.id,
+          // * push object into events[]
+          this.events = [
+            ...this.events,
+            {
+              start: new Date(this.startDateTime),
+              end: new Date(this.endDateTime),
+              title: `<b>${ modules }</b><br>${ rooms } ${ purpose }<br>${ lecturers }`,
+              color: colors.teal,
+              meta: {
+                id: b.id,
+              },
             },
-          },
-        ];
+          ];
+        }
       }
     }
     this.nbSpinner = false;
