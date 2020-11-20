@@ -85,17 +85,17 @@ namespace DotNetAngularApp.Mapping
             CreateMap<SaveModuleResource, Module>()
                 .ForMember(m => m.Id, opt => opt.Ignore())
                 .ForMember(m => m.Lecturers, opt => opt.Ignore())
-                .AfterMap((mr, m) => {
-                    var removedLecturers = m.Lecturers.Where(l => !mr.Lecturers.Contains(l.LecturerId)).ToList();
-                    foreach (var l in removedLecturers)
-                        m.Lecturers.Remove(l);
+                    .AfterMap((mr, m) => {
+                        var removedLecturers = m.Lecturers.Where(l => !mr.Lecturers.Contains(l.LecturerId)).ToList();
+                        foreach (var l in removedLecturers)
+                            m.Lecturers.Remove(l);
 
-                    var addedLecturers = mr.Lecturers
-                        .Where(id => !m.Lecturers.Any(l => l.LecturerId == id))
-                        .Select(id => new ModuleLecturer { LecturerId = id });
-                    foreach (var l in addedLecturers)
-                        m.Lecturers.Add(l);
-                });
+                        var addedLecturers = mr.Lecturers
+                            .Where(id => !m.Lecturers.Any(l => l.LecturerId == id))
+                            .Select(id => new ModuleLecturer { LecturerId = id });
+                        foreach (var l in addedLecturers)
+                            m.Lecturers.Add(l);
+                    });
 
             CreateMap<SaveBuildingResource, Building>()
                 .ForMember(b => b.Id, opt => opt.Ignore());
@@ -105,54 +105,54 @@ namespace DotNetAngularApp.Mapping
 
             CreateMap<SaveBookingResource, Booking>()
                 .ForMember(b => b.Id, opt => opt.Ignore())
-                .ForMember(b => b.BookDates, opt => opt.Ignore()) // how?
-                .AfterMap((br, b) => {
-                    var removedBookDates = b.BookDates.Where(bd => !br.BookDates.Contains(bd.Date)).ToList();
-                    foreach (var d in removedBookDates)
-                        b.BookDates.Remove(d);
+                .ForMember(b => b.BookDates, opt => opt.Ignore())
+                    .AfterMap((br, b) => {
+                        var removedBookDates = b.BookDates.Where(bd => !br.BookDates.Contains(bd.Date)).ToList();
+                        foreach (var d in removedBookDates)
+                            b.BookDates.Remove(d);
 
-                    var addedBookDates = br.BookDates
-                        .Where(date => !b.BookDates.Any(bd => bd.Date == date))
-                        .Select(date => new BookDate { Date = date });
-                    foreach (var d in addedBookDates)
-                        b.BookDates.Add(d);
-                })
+                        var addedBookDates = br.BookDates
+                            .Where(date => !b.BookDates.Any(bd => bd.Date == date))
+                            .Select(date => new BookDate { Date = date });
+                        foreach (var d in addedBookDates)
+                            b.BookDates.Add(d);
+                    })
                 .ForMember(b => b.TimeSlots, opt => opt.Ignore())
-                .AfterMap((br, b) => {
-                    var removedTimeSlots = b.TimeSlots.Where(t => !br.TimeSlots.Contains(t.TimeSlotId)).ToList();
-                    foreach (var t in removedTimeSlots)
-                        b.TimeSlots.Remove(t);
+                    .AfterMap((br, b) => {
+                        var removedTimeSlots = b.TimeSlots.Where(t => !br.TimeSlots.Contains(t.TimeSlotId)).ToList();
+                        foreach (var t in removedTimeSlots)
+                            b.TimeSlots.Remove(t);
 
-                    var addedTimeSlots = br.TimeSlots
-                        .Where(id => !b.TimeSlots.Any(t => t.TimeSlotId == id))
-                        .Select(id => new BookingTimeSlot { TimeSlotId = id });
-                    foreach (var t in addedTimeSlots)
-                        b.TimeSlots.Add(t);
-                })
+                        var addedTimeSlots = br.TimeSlots
+                            .Where(id => !b.TimeSlots.Any(t => t.TimeSlotId == id))
+                            .Select(id => new BookingTimeSlot { TimeSlotId = id });
+                        foreach (var t in addedTimeSlots)
+                            b.TimeSlots.Add(t);
+                    })
                 .ForMember(b => b.Modules, opt => opt.Ignore())
-                .AfterMap((br, b) => {
-                    var removedModules = b.Modules.Where(m => !br.Modules.Contains(m.ModuleId)).ToList();
-                    foreach (var m in removedModules)
-                        b.Modules.Remove(m);
+                    .AfterMap((br, b) => {
+                        var removedModules = b.Modules.Where(m => !br.Modules.Contains(m.ModuleId)).ToList();
+                        foreach (var m in removedModules)
+                            b.Modules.Remove(m);
 
-                    var addedModules = br.Modules
-                        .Where(id => !b.Modules.Any(m => m.ModuleId == id))
-                        .Select(id => new BookingModule { ModuleId = id });
-                    foreach (var m in addedModules)
-                        b.Modules.Add(m);
-                })
+                        var addedModules = br.Modules
+                            .Where(id => !b.Modules.Any(m => m.ModuleId == id))
+                            .Select(id => new BookingModule { ModuleId = id });
+                        foreach (var m in addedModules)
+                            b.Modules.Add(m);
+                    })
                 .ForMember(b => b.Rooms, opt => opt.Ignore())
-                .AfterMap((br, b) => {
-                    var removedRooms = b.Rooms.Where(r => !br.Rooms.Contains(r.RoomId)).ToList();
-                    foreach (var r in removedRooms)
-                        b.Rooms.Remove(r);
+                    .AfterMap((br, b) => {
+                        var removedRooms = b.Rooms.Where(r => !br.Rooms.Contains(r.RoomId)).ToList();
+                        foreach (var r in removedRooms)
+                            b.Rooms.Remove(r);
 
-                    var addedRooms = br.Rooms
-                        .Where(id => !b.Rooms.Any(r => r.RoomId == id))
-                        .Select(id => new BookingRoom { RoomId = id });
-                    foreach (var r in addedRooms)
-                        b.Rooms.Add(r);
-                });
+                        var addedRooms = br.Rooms
+                            .Where(id => !b.Rooms.Any(r => r.RoomId == id))
+                            .Select(id => new BookingRoom { RoomId = id });
+                        foreach (var r in addedRooms)
+                            b.Rooms.Add(r);
+                    });
         }
     }
 }

@@ -6,7 +6,9 @@ export interface KeyValuePair {
 export interface Booking {
   id: number;
   semesterId: number;
-  bookDate: string;
+  bookDates: {
+    date: string
+  }[];
   rooms: {
     id: number;
     name: string;
@@ -38,10 +40,10 @@ export interface Booking {
 export interface SaveBooking {
   id: number;
   semesterId: number;
-  bookDate: string;
   buildingId: number;
   rooms: number[];
   timeSlots: number[];
   modules: number[];
+  bookDates: string[];
   purpose: string;
 }

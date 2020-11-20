@@ -50,9 +50,9 @@ export class NewBookingComponent implements OnInit {
   booking: SaveBooking = {
     id: 0,
     semesterId: 0,
-    bookDate: '',
     buildingId: 0,
     rooms: [],
+    bookDates: [],
     timeSlots: [],
     modules: [],
     purpose: '',
@@ -118,7 +118,7 @@ export class NewBookingComponent implements OnInit {
 
   selectedDays: any = [];
 
-  selectedDate: any = [];
+  // selectedDate: any = [];
 
   excludeDays: number[] = [0, 5];
 
@@ -131,14 +131,14 @@ export class NewBookingComponent implements OnInit {
     if (dateIndex > -1) {
       delete this.selectedMonthViewDay.cssClass; // removes the date timetable marking
       this.selectedDays.splice(dateIndex, 1); // removes from array
-      this.selectedDate.splice(dateIndex, 1);
+      this.booking.bookDates.splice(dateIndex, 1);
     } else {
       this.selectedDays.push(this.selectedMonthViewDay);
       day.cssClass = 'cal-day-selected';
       this.selectedMonthViewDay = day;
 
       var dateFromClicked = formatDate(this.selectedMonthViewDay.date, 'yyyy-MM-dd', 'en-us', '+0800');
-      this.selectedDate.push(dateFromClicked);
+      this.booking.bookDates.push(dateFromClicked);
     }
   }
 
@@ -185,9 +185,9 @@ export class NewBookingComponent implements OnInit {
   resetBookingField() {
     this.booking.id = 0;
     this.booking.semesterId = 0;
-    this.booking.bookDate = '';
     this.booking.buildingId = 0;
     this.booking.rooms = [];
+    this.booking.bookDates = [];
     this.booking.timeSlots = [];
     this.booking.modules = [];
     this.booking.purpose = '';
@@ -197,7 +197,7 @@ export class NewBookingComponent implements OnInit {
   private setBooking(b) {
     this.booking.id = b.id;
     this.booking.semesterId = b.semester.id;
-    this.booking.bookDate = b.bookDate;
+    this.booking.bookDates = b.bookDates; // ! maybe it's different since using selectedDate[]
     this.booking.buildingId = b.building.id;
     this.booking.rooms = _.pluck(b.rooms, 'id');
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
@@ -223,7 +223,7 @@ export class NewBookingComponent implements OnInit {
       this.booking.modules.length != 0 &&
       this.booking.timeSlots.length != 0 &&
       this.booking.rooms.length != 0 &&
-      this.selectedDate.length != 0
+      this.booking.bookDates.length != 0
       ) {
       return true;
     } else {
@@ -240,34 +240,31 @@ export class NewBookingComponent implements OnInit {
       return false;
     }
 
+    // this.booking.bookDates = this.selectedDate;
+
     if (!this.booking.id) {
-      from(this.selectedDate).pipe(
-        mergeMap((date: string) => {
-          this.booking = {...this.booking, bookDate: date};
-          return this.bookingService.create(this.booking);
-        }),
-        toArray())
-      .subscribe(res => {
-        this.toastyService.success({
-          title: 'Success', 
-          msg: 'All bookings were sucessfully saved.',
-          theme: 'bootstrap',
-          showClose: true,
-          timeout: 5000
+      this.bookingService.create(this.booking)
+        .subscribe(res => {
+          this.toastyService.success({
+            title: 'Success', 
+            msg: 'All bookings were sucessfully saved.',
+            theme: 'bootstrap',
+            showClose: true,
+            timeout: 5000
+          });
+          this.resetBookingField();
+          this.redirectTo('/pages/calendar');
+          console.log(res);
+        },
+        err => {
+          if (err.status === 409) {
+            this.existAlert = true;
+            this.nbSpinner = false;
+          } else if (err.status === 400) {
+            this.requiredAlert = true;
+            this.nbSpinner = false;
+          }
         });
-        this.resetBookingField();
-        this.redirectTo('/pages/calendar');
-        console.log(res);
-      },
-      err => {
-        if (err.status === 409) {
-          this.existAlert = true;
-          this.nbSpinner = false;
-        } else if (err.status === 400) {
-          this.requiredAlert = true;
-          this.nbSpinner = false;
-        }
-      });
     }
     else if (this.booking.id) {
       this.bookingService.update(this.booking)
