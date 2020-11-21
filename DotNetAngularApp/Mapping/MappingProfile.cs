@@ -25,6 +25,8 @@ namespace DotNetAngularApp.Mapping
             CreateMap<Room, SaveRoomResource>();
 
             CreateMap<Lecturer, LecturerResource>();
+                // .ForMember(lr => lr.Modules, opt => opt.MapFrom(l => l.Modules.Select(m => 
+                // new ModuleResource { Id = m.Id, Name = m.Name, Code = m.Code })));
             // CreateMap<Lecturer, LecturerDetailsResource>();
             CreateMap<Lecturer, SaveLecturerResource>();
 
@@ -40,10 +42,10 @@ namespace DotNetAngularApp.Mapping
                 .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => bt.ModuleId)));
 
             CreateMap<Booking, BookingResource>()
-                .ForMember(br => br.SemesterId, opt => opt.MapFrom(b => b.Semester.Id))
+                .ForMember(br => br.Session, opt => opt.MapFrom(b => b.Semester.Session))
                 .ForMember(br => br.Rooms, opt => 
                     opt.MapFrom(b => b.Rooms.Select(bm => 
-                    new Room { Id = bm.Room.Id, Name = bm.Room.Name, Code = bm.Room.Code, Capacity = bm.Room.Capacity, Building = bm.Room.Building })))
+                    new Room { Id = bm.Room.Id, Name = bm.Room.Name, Code = bm.Room.Code, Capacity = bm.Room.Capacity, Building = bm.Room.Building }))) // !
                 .ForMember(br => br.TimeSlots, opt => 
                     opt.MapFrom(b => b.TimeSlots.Select(bt => 
                     new TimeSlotResource { Id = bt.TimeSlot.Id, StartTime = bt.TimeSlot.StartTime, EndTime = bt.TimeSlot.EndTime })))

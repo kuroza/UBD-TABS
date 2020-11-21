@@ -8,7 +8,7 @@ namespace DotNetAngularApp.Controllers.Resources
     {
         public int Id { get; set; }
 
-        public int SemesterId { get; set; }
+        public string Session { get; set; }
 
         // public KeyValuePairResource Building { get; set; }
 

@@ -321,7 +321,7 @@ export class HomeComponent {
       this.bookingService.delete(this.booking.id)
         .subscribe(x => {
           this.redirectTo('/pages/bookings');
-          window.location.reload();
+          window.location.reload(); // sometimes the page refreshes
         });
     }
   }

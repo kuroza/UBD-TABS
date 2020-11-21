@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -19,5 +21,12 @@ namespace DotNetAngularApp.Core.Models
         
         [EmailAddress]
         public string Email { get; set; }
+
+        // public ICollection<Module> Modules { get; set; }
+
+        // public Lecturer()
+        // {
+        //     Modules = new Collection<Module>();
+        // }
     }
 }

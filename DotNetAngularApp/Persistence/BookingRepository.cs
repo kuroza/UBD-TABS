@@ -25,7 +25,7 @@ namespace DotNetAngularApp.Persistence
                 return await context.Bookings.FindAsync(id);
 
             return await context.Bookings
-                .Include(b => b.Semester)
+                .Include(b => b.Semester.Session)
                 .Include(b => b.BookDates)
                 .Include(b => b.TimeSlots)
                     .ThenInclude(bt => bt.TimeSlot)
