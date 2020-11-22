@@ -57,10 +57,10 @@
       <nb-card-body>
         <nb-tabset fullWidth>
           <nb-tab *ngIf="hasAccess" tabTitle="Room" active="{{ setActiveAddRoom }}">
-            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existRoomAlert">
-              Room name already exists!
+            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existRoomAlert" style="text-align: center;">
+              {{error}}
             </nb-alert>
-            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
+            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
               Please enter the required fields!
             </nb-alert>
             <h5 *ngIf="room.id" style="margin-top: 10px;">Edit Room
@@ -96,10 +96,10 @@
           </nb-tab>
 
           <nb-tab *ngIf="hasAccess" tabTitle="Building" active="{{ setActiveAddBuilding }}">
-            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existBuildingAlert">
-              Building name already exists!
+            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existBuildingAlert" style="text-align: center;">
+              {{error}}
             </nb-alert>
-            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
+            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
               Please enter the required fields!
             </nb-alert>
             <h5 *ngIf="building.id" style="margin-top: 10px;">Edit Building

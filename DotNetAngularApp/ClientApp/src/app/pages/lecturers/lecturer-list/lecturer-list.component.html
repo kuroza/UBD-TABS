@@ -38,10 +38,10 @@
       <nb-card-body>
         <nb-tabset fullWidth>
           <nb-tab *ngIf="hasAccess" tabTitle="Lecturer" active="{{ setActiveAddLecturer }}">
-            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert">
-              Lecturer name already exists!
+            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert" style="text-align: center;">
+              {{error}}
             </nb-alert>
-            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
+            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
               Please enter the required fields!
             </nb-alert>
             <h4 *ngIf="lecturer.id" style="margin-top: 10px;">Edit Lecturer

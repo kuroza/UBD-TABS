@@ -5,7 +5,7 @@ export interface KeyValuePair {
 
 export interface Booking {
   id: number;
-  semesterId: number;
+  session: string;
   bookDates: {
     date: string
   }[];

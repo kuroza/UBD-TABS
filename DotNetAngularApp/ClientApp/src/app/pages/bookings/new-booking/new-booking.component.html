@@ -50,7 +50,7 @@
           </h4></nb-card-header>
           <nb-card-body>
             <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert" style="text-align: center;">
-              This room is already taken!
+              {{error}}
             </nb-alert>
             <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
               Please enter the required fields!

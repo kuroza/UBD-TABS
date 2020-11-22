@@ -168,63 +168,70 @@
         </div>
 
         <div *ngIf="booking" style="margin-left: 40px;">
+          <div style="margin-left: 20px;">
+            <h4>Semester</h4>
+            <span>{{booking.session}}</span>
+          </div>
+
           <!-- * Modules -->
-          <h5 style="margin-left: 20px">Modules</h5>
+          <h4 style="margin-left: 20px; margin-top: 20px;">Modules</h4>
           <nb-accordion multi style="width: 85%">
             <nb-accordion-item *ngFor="let module of booking.modules">
               <nb-accordion-item-header>
                 {{ module.code }}: {{ module.name }}
               </nb-accordion-item-header>
               <nb-accordion-item-body>
-                <table class="table table-hover">
-                  <thead class="thead-dark text-center">
-                    <tr>
-                      <th style="width: 100%" scope="col">Lecturers</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let lecturer of module.lecturers">
-                      <td>{{ lecturer.title }} {{ lecturer.name }}</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <nb-list style="width: 100%">
+                  <nb-list-item *ngFor="let lecturer of module.lecturers">
+                    {{ lecturer.title }} {{ lecturer.name }}
+                  </nb-list-item>
+                </nb-list>
               </nb-accordion-item-body>
             </nb-accordion-item>
           </nb-accordion>
           <br />
 
           <!-- * TimeSlots -->
-          <div class="card" style="width: 85%;">
-            <div class="card-header">
-              <h5>Time slots</h5>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li *ngFor="let t of booking.timeSlots" class="list-group-item">{{ t.startTime | date:'shortTime' }} -
-                {{ t.endTime | date:'shortTime' }}</li>
-            </ul>
+          <div style="margin-left: 20px; margin-top: 20px;">
+            <nb-card class="nb-card-list">
+              <nb-card-header>
+                <h4>Time slots</h4>
+              </nb-card-header>
+              <nb-list>
+                <nb-list-item *ngFor="let t of booking.timeSlots">
+                  {{ t.startTime | date:'shortTime' }} -
+                  {{ t.endTime | date:'shortTime' }}
+                </nb-list-item>
+              </nb-list>
+            </nb-card>
           </div>
-          <br />
 
           <!-- * Venue -->
-          <div style="margin-left: 20px">
-            <h5>Venue</h5>
-            <ul class="list-inline">
-              <div *ngIf="booking.rooms.length == 1"><b>Room: </b>
-                <li class="list-inline-item" *ngFor="let r of booking.rooms">{{ r.name }}</li>
-              </div>
-              <div *ngIf="booking.rooms.length > 1"><b>Rooms: </b>
-                <li class="list-inline-item" *ngFor="let r of booking.rooms">{{ r.name }},</li>
-              </div>
-            </ul>
+          <div style="margin-left: 20px; margin-top: 20px;">
+            <nb-card class="nb-card-list">
+              <nb-card-header>
+                <h4>Venue</h4>
+              </nb-card-header>
+              <nb-card-header>
+                <b>Room:</b>
+              </nb-card-header>
+              <nb-list>
+                <nb-list-item *ngFor="let r of booking.rooms">
+                  {{ r.name }}
+                </nb-list-item>
+              </nb-list>
+            </nb-card>
 
-            <ul class="list-inline">
-              <div *ngIf="booking.bookDates.length == 1"><b>Date: </b>
-                <li class="list-inline-item" *ngFor="let bd of booking.bookDates">{{ bd.date | date:'dd/MM/yyyy' }}</li>
-              </div>
-              <div *ngIf="booking.bookDates.length > 1"><b>Dates: </b>
-                <li class="list-inline-item" *ngFor="let bd of booking.bookDates">{{ bd.date | date:'dd/MM/yyyy' }},</li>
-              </div>
-            </ul>
+            <nb-card class="nb-card-list" style="margin-top: -30px">
+              <nb-card-header>
+                <b>Date:</b>
+              </nb-card-header>
+              <nb-list>
+                <nb-list-item *ngFor="let bd of booking.bookDates">
+                  {{ bd.date | date:'dd/MM/yyyy' }}
+                </nb-list-item>
+              </nb-list>
+            </nb-card>
           </div>
 
           <div class="inline" style="margin-left: 20px;">

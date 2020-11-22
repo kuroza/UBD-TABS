@@ -1,7 +1,7 @@
 
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { NbCardModule, NbTabsetModule, NbButtonModule, NbAccordionModule, NbSelectModule, NbAlertModule, NbSpinnerModule, NbRadioModule, NbIconModule, NbTooltipModule } from '@nebular/theme';
+import { NbCardModule, NbTabsetModule, NbButtonModule, NbAccordionModule, NbSelectModule, NbAlertModule, NbSpinnerModule, NbRadioModule, NbIconModule, NbTooltipModule, NbListModule } from '@nebular/theme';
 import { ThemeModule } from '../../@theme/theme.module';
 import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
@@ -14,6 +14,7 @@ import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   imports: [
+    NbListModule,
     NbTooltipModule,
     NgxPrintModule,
     NbIconModule,

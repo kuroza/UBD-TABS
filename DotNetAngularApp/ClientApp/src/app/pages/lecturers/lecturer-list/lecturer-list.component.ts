@@ -19,6 +19,7 @@ export class LecturerListComponent implements OnInit {
   hasAccess = false;
   setActiveAddLecturer: boolean;
   setActiveDetails: boolean;
+  error: string;
   existAlert: boolean = false;
   requiredAlert: boolean = false;
   detailsAlert: boolean = true;
@@ -83,9 +84,13 @@ export class LecturerListComponent implements OnInit {
     },
     err => {
       if (err.status == 409) {
+        this.requiredAlert = false;
+        console.log(err.error);
+        this.error = err.error;
         this.existAlert = true;
       }
       else if (err.status == 400) {
+        this.existAlert = false;
         this.requiredAlert = true;
       }
     });

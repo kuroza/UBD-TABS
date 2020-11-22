@@ -23,6 +23,25 @@ pre {
   }
 }
 
+.nb-card-list {
+  max-height: 15rem;;
+  width: 88%;
+  margin-left: -20px;
+}
+
+.venue-card {
+  width: 88%;
+  margin-left: -20px;
+}
+
+.venue-card-list {
+  // min-width: 10rem;
+  // max-width: 20rem;
+  max-height: 15rem;;
+  width: 100%;
+  // margin-left: -20px;
+}
+
 @include media-breakpoint-down(sm) {
   .calendar-timetable-title {
     float: none;

@@ -32,6 +32,7 @@ export class FacultyListComponent implements OnInit {
   setActiveAddMajor: boolean;
   setActiveAddFaculty: boolean;
   setActiveDetails: boolean;
+  error: string;
   existMajorAlert: boolean = false;
   existFacultyAlert: boolean = false;
   requiredAlert: boolean = false;
@@ -171,9 +172,13 @@ export class FacultyListComponent implements OnInit {
     },
     err => {
       if (err.status == 409) {
+        this.requiredAlert = false;
+        console.log(err.error);
+        this.error = err.error;
         this.existMajorAlert = true;
       }
       else if (err.status == 400) {
+        this.existMajorAlert = false;
         this.requiredAlert = true;
       }
     });
@@ -203,9 +208,13 @@ export class FacultyListComponent implements OnInit {
     },
     err => {
       if (err.status == 409) {
+        this.requiredAlert = false;
+        console.log(err.error);
+        this.error = err.error;
         this.existFacultyAlert = true;
       }
       else if (err.status == 400) {
+        this.existFacultyAlert = false;
         this.requiredAlert = true;
       }
     });

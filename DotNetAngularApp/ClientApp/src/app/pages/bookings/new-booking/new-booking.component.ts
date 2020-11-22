@@ -32,6 +32,7 @@ export class NewBookingComponent implements OnInit {
 
   readonly DELIMITER = '-';
   nbSpinner;
+  error: string;
   existAlert: boolean = false;
   requiredAlert: boolean = false;
 
@@ -251,12 +252,12 @@ export class NewBookingComponent implements OnInit {
           this.redirectTo('/pages/calendar');
         },
         err => {
-          // ! depends on error message, change the confirm message
-          // ! currently both BookingRoomExist and BookingModuleExist are treated the same
           if (err.status === 409) {
+            console.log(err.error);
+            this.error = err.error;
             this.existAlert = true;
             this.nbSpinner = false;
-            if (confirm("The room is already taken. Are you sure you want to add another event to this room?")) {
+            if (confirm(`${err.error} Are you sure you want to add another event to this room?`)) {
               this.bookingService.confirmCreate(this.booking)
                 .subscribe(() => {
                   this.toastyService.success({
@@ -270,6 +271,7 @@ export class NewBookingComponent implements OnInit {
                 });
             }
           } else if (err.status === 400) {
+            this.existAlert = false;
             this.requiredAlert = true;
             this.nbSpinner = false;
           }

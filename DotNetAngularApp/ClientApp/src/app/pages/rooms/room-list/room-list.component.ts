@@ -33,6 +33,7 @@ export class RoomListComponent implements OnInit {
   setActiveAddRoom: boolean;
   setActiveAddBuilding: boolean;
   setActiveDetails: boolean;
+  error: string;
   existRoomAlert: boolean = false;
   existBuildingAlert: boolean = false;
   requiredAlert: boolean = false;
@@ -172,9 +173,13 @@ export class RoomListComponent implements OnInit {
     },
     err => {
       if (err.status == 409) {
+        this.requiredAlert = false;
+        console.log(err.error);
+        this.error = err.error;
         this.existRoomAlert = true;
       }
       else if (err.status == 400) {
+        this.existRoomAlert = false;
         this.requiredAlert = true;
       }
     });
@@ -204,9 +209,13 @@ export class RoomListComponent implements OnInit {
     },
     err => {
       if (err.status == 409) {
+        this.requiredAlert = false;
+        console.log(err.error);
+        this.error = err.error;
         this.existBuildingAlert = true;
       }
       else if (err.status == 400) {
+        this.existBuildingAlert = false;
         this.requiredAlert = true;
       }
     });

@@ -53,10 +53,10 @@
       <nb-card-body>
         <nb-tabset fullWidth>
           <nb-tab *ngIf="hasAccess" tabTitle="Major" active="{{ setActiveAddMajor }}">
-            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existMajorAlert">
-              Major name already exists!
+            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existMajorAlert" style="text-align: center;">
+              {{error}}
             </nb-alert>
-            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
+            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
               Please enter the required fields!
             </nb-alert>
             <h5 *ngIf="major.id" style="margin-top: 10px;">Edit Major
@@ -92,10 +92,10 @@
           </nb-tab>
 
           <nb-tab *ngIf="hasAccess" tabTitle="Faculty" active="{{ setActiveAddFaculty }}">
-            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existFacultyAlert">
-              Faculty name already exists!
+            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existFacultyAlert" style="text-align: center;">
+              {{error}}
             </nb-alert>
-            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
+            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
               Please enter the required fields!
             </nb-alert>
             <h5 *ngIf="faculty.id" style="margin-top: 10px;">Edit Faculty
