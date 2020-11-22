@@ -2,12 +2,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DotNetAngularApp.Core.Models
 {
-    [Table("ModuleLecturers")]
-    public class ModuleLecturer
+    [Table("LecturerOfferings")]
+    public class LecturerOffering
     {
-        public int ModuleId { get; set; }
+        public int OfferingId { get; set; }
+        public Offering Offering { get; set; }
         public int LecturerId { get; set; }
-        public Module Module { get; set; }
         public Lecturer Lecturer { get; set; }
     }
 }

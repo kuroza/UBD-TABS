@@ -41,7 +41,6 @@ namespace DotNetAngularApp.Controllers
                 return NotFound();
 
             var lecturerResource = mapper.Map<Lecturer, LecturerResource>(lecturer);
-            // var lecturerResource = mapper.Map<Lecturer, LecturerDetailsResource>(lecturer);
 
             return Ok(lecturerResource);
         }

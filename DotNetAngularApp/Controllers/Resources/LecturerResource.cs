@@ -10,10 +10,5 @@ namespace DotNetAngularApp.Controllers.Resources
         public string Name { get; set; }
         public string Title { get; set; }
         public string Email { get; set; }
-        // public ICollection<ModuleResource> Modules { get; set; } // !
-        // public LecturerResource()
-        // {
-        //     Modules = new Collection<ModuleResource>();
-        // }
     }
 }

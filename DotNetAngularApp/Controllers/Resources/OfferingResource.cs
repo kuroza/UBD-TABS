@@ -1,19 +1,19 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace DotNetAngularApp.Controllers.Resources
 {
-    public class LecturerDetailsResource
+    public class OfferingResource
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Title { get; set; }
-        public string Email { get; set; }
+        public int SemesterId { get; set; }
         public ICollection<ModuleResource> Modules { get; set; }
-        public LecturerDetailsResource()
+        public ICollection<LecturerResource> Lecturers { get; set; }
+
+        public OfferingResource()
         {
             Modules = new Collection<ModuleResource>();
+            Lecturers = new Collection<LecturerResource>();
         }
     }
 }

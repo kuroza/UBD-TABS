@@ -4,14 +4,16 @@ using DotNetAngularApp.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DotNetAngularApp.Migrations
 {
     [DbContext(typeof(TabsDbContext))]
-    partial class TabsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201122123553_AddOffering")]
+    partial class AddOffering
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,6 +242,21 @@ namespace DotNetAngularApp.Migrations
                     b.ToTable("Modules");
                 });
 
+            modelBuilder.Entity("DotNetAngularApp.Core.Models.ModuleLecturer", b =>
+                {
+                    b.Property<int>("ModuleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LecturerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ModuleId", "LecturerId");
+
+                    b.HasIndex("LecturerId");
+
+                    b.ToTable("ModuleLecturers");
+                });
+
             modelBuilder.Entity("DotNetAngularApp.Core.Models.ModuleOffering", b =>
                 {
                     b.Property<int>("ModuleId")
@@ -408,7 +425,7 @@ namespace DotNetAngularApp.Migrations
             modelBuilder.Entity("DotNetAngularApp.Core.Models.LecturerOffering", b =>
                 {
                     b.HasOne("DotNetAngularApp.Core.Models.Lecturer", "Lecturer")
-                        .WithMany()
+                        .WithMany("Offerings")
                         .HasForeignKey("LecturerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -438,10 +455,25 @@ namespace DotNetAngularApp.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DotNetAngularApp.Core.Models.ModuleLecturer", b =>
+                {
+                    b.HasOne("DotNetAngularApp.Core.Models.Lecturer", "Lecturer")
+                        .WithMany()
+                        .HasForeignKey("LecturerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DotNetAngularApp.Core.Models.Module", "Module")
+                        .WithMany("Lecturers")
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DotNetAngularApp.Core.Models.ModuleOffering", b =>
                 {
                     b.HasOne("DotNetAngularApp.Core.Models.Module", "Module")
-                        .WithMany()
+                        .WithMany("Offerings")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

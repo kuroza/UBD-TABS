@@ -6,8 +6,8 @@ namespace DotNetAngularApp.Core.Models
     public class BookingModule
     {
         public int BookingId { get; set; }
-        public int ModuleId { get; set; }
         public Booking Booking { get; set; }
+        public int ModuleId { get; set; }
         public Module Module { get; set; }
     }
 }

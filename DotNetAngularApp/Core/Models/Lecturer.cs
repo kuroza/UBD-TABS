@@ -18,15 +18,16 @@ namespace DotNetAngularApp.Core.Models
         public string Title { get; set; }
 
         [StringLength(255)]
-        
         [EmailAddress]
         public string Email { get; set; }
 
-        // public ICollection<ModuleLecturer> Modules { get; set; }
+        // public Faculty FacultyId { get; set; }
 
-        // public Lecturer()
-        // {
-        //     Modules = new Collection<ModuleLecturer>();
-        // }
+        // public ICollection<LecturerOffering> Offerings { get; set; }
+
+        public Lecturer()
+        {
+            // Offerings = new Collection<LecturerOffering>();
+        }
     }
 }

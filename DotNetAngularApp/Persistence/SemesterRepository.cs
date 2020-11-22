@@ -30,8 +30,6 @@ namespace DotNetAngularApp.Persistence
                 .Include(s => s.Bookings)
                     .ThenInclude(b => b.Modules)
                         .ThenInclude(bm => bm.Module)
-                            .ThenInclude(m => m.Lecturers)
-                                .ThenInclude(ml => ml.Lecturer)
                 .Include(s => s.Bookings)
                     .ThenInclude(b => b.Modules)
                         .ThenInclude(bm => bm.Module)

@@ -18,8 +18,6 @@ namespace DotNetAngularApp.Persistence
         public async Task<IEnumerable<Module>> GetAllModules()
         {
             return await context.Modules
-                .Include(m => m.Lecturers)
-                    .ThenInclude(ml => ml.Lecturer)
                 .Include(m => m.Major)
                 .OrderBy(m => m.Code)
                 .ToListAsync();
@@ -31,46 +29,9 @@ namespace DotNetAngularApp.Persistence
                 return await context.Modules.FindAsync(id);
 
             return await context.Modules
-                .Include(m => m.Lecturers)
-                    .ThenInclude(ml => ml.Lecturer)
                 .Include(m => m.Major)
                 .SingleOrDefaultAsync(m => m.Id == id);
         }
-
-        // public async Task<QueryResult<Module>> GetModules(ModuleQuery queryObj)
-        // {
-        //     var result = new QueryResult<Module>();
-
-        //     var query = context.Modules
-        //         .Include(m => m.Lecturers)
-        //             .ThenInclude(ml => ml.Lecturer)
-        //         .AsQueryable();
-
-        //     if (queryObj.LecturerId.HasValue)
-        //         query = query.Where(m => m.Module.LecturerId == queryObj.BuildingId.Value);
-            
-        //     if (queryObj.RoomId.HasValue)
-        //         query = query.Where(b => b.RoomId == queryObj.RoomId.Value);
-
-        //     // Dictionary for storing keys (strings) and values (from context)
-        //     // Expression<> is a type of lambda expression
-        //     // Func, the input for lambda expression here is Booking  // i.e. booking.Room.Name
-        //     var columnsMap = new Dictionary<string, Expression<Func<Module, object>>>()
-        //     {
-        //         ["building"] = b => b.Room.Building.Name,
-        //         ["room"] = b => b.Room.Name,
-        //     };
-
-        //     query = query.ApplyOrdering(queryObj, columnsMap);
-
-        //     result.TotalItems = await query.CountAsync();
-
-        //     query = query.ApplyPaging(queryObj);
-
-        //     result.Items = await query.ToListAsync();
-
-        //     return result;
-        // }
 
         public void Add(Module module)
         {

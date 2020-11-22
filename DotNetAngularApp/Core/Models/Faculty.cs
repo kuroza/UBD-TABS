@@ -19,9 +19,12 @@ namespace DotNetAngularApp.Core.Models
 
         public ICollection<Major> Majors { get; set; }
 
+        // public ICollection<Lecturer> Lecturers { get; set; } // ! Add later
+
         public Faculty()
         {
             Majors = new Collection<Major>(); // to only create a new Course object once here than other places
+            // Lecturers = new Collection<Lecturer>();
         }
     }
 }

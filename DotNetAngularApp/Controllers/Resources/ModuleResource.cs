@@ -12,13 +12,6 @@ namespace DotNetAngularApp.Controllers.Resources
 
         public string Code { get; set; }
 
-        public ICollection<LecturerResource> Lecturers { get; set; }
-
         public MajorResource Major { get; set; }
-
-        public ModuleResource()
-        {
-            Lecturers = new Collection<LecturerResource>();
-        }
     }
 } 
