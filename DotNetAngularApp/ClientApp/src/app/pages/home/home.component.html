@@ -169,13 +169,26 @@
 
         <div *ngIf="booking" style="margin-left: 40px;">
           <div style="margin-left: 20px;">
-            <h4>Semester</h4>
-            <span>{{booking.session}}</span>
+            <nb-card class="nb-card-list">
+              <nb-card-header>
+                <h4>Semester</h4>
+              </nb-card-header>
+              <nb-card-body>
+                <span>{{booking.session}}</span>
+              </nb-card-body>
+            </nb-card>
           </div>
 
           <!-- * Modules -->
-          <h4 style="margin-left: 20px; margin-top: 20px;">Modules</h4>
-          <nb-accordion multi style="width: 85%">
+          <div style="margin-left: 20px; margin-top: 20px;">
+            <nb-card class="nb-card-list">
+              <nb-card-header>
+                <h4>Modules</h4>
+              </nb-card-header>
+            </nb-card>
+          </div>
+          
+          <nb-accordion multi style="width: 84%; margin-top: -30px;">
             <nb-accordion-item *ngFor="let module of booking.modules">
               <nb-accordion-item-header>
                 {{ module.code }}: {{ module.name }}
@@ -189,7 +202,6 @@
               </nb-accordion-item-body>
             </nb-accordion-item>
           </nb-accordion>
-          <br />
 
           <!-- * TimeSlots -->
           <div style="margin-left: 20px; margin-top: 20px;">
