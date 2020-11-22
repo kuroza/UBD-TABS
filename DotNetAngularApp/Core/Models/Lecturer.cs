@@ -22,11 +22,11 @@ namespace DotNetAngularApp.Core.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        // public ICollection<Module> Modules { get; set; }
+        // public ICollection<ModuleLecturer> Modules { get; set; }
 
         // public Lecturer()
         // {
-        //     Modules = new Collection<Module>();
+        //     Modules = new Collection<ModuleLecturer>();
         // }
     }
 }

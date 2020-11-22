@@ -23,9 +23,12 @@ namespace DotNetAngularApp.Core.Models
 
         public ICollection<Booking> Bookings { get; set; }
 
+        public ICollection<SemesterModule> Modules { get; set; }
+
         public Semester()
         {
             Bookings = new Collection<Booking>();
+            Modules = new Collection<SemesterModule>();
         }
     }
 }

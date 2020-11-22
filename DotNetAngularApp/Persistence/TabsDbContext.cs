@@ -23,25 +23,20 @@ namespace DotNetAngularApp.Persistence
         {
             base.OnModelCreating(modelBuilder);
             
-            // BookingTimeSlot
             modelBuilder.Entity<BookingTimeSlot>()
                 .HasKey(bt => new { bt.BookingId, bt.TimeSlotId });
 
-            // ModuleLecturer
             modelBuilder.Entity<ModuleLecturer>()
                 .HasKey(ml => new { ml.ModuleId, ml.LecturerId });
 
-            // BookingModule
             modelBuilder.Entity<BookingModule>()
                 .HasKey(bm => new { bm.BookingId, bm.ModuleId });
 
-            // BookingRoom
             modelBuilder.Entity<BookingRoom>()
                 .HasKey(br => new { br.BookingId, br.RoomId });
                 
-            // // BookDate
-            // modelBuilder.Entity<BookDate>()
-            //     .HasKey(bd => new { bd.Id, bd.BookDate });
+            modelBuilder.Entity<SemesterModule>()
+                .HasKey(sm => new { sm.SemesterId, sm.ModuleId });
         }
     }
 }
