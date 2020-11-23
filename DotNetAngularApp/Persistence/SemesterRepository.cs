@@ -17,23 +17,7 @@ namespace DotNetAngularApp.Persistence
 
         public async Task<IEnumerable<Semester>> GetAllSemesters()
         {
-            // ! Include TimeSlots, Modules, Room and Building
-            // ? Only get BookingId instead of the whole Booking?
             return await context.Semesters
-                .Include(s => s.Bookings)
-                    .ThenInclude(b => b.Rooms)
-                        .ThenInclude(br => br.Room)
-                            .ThenInclude(r => r.Building)
-                .Include(s => s.Bookings)
-                    .ThenInclude(b => b.TimeSlots)
-                        .ThenInclude(bt => bt.TimeSlot)
-                .Include(s => s.Bookings)
-                    .ThenInclude(b => b.Modules)
-                        .ThenInclude(bm => bm.Module)
-                .Include(s => s.Bookings)
-                    .ThenInclude(b => b.Modules)
-                        .ThenInclude(bm => bm.Module)
-                            .ThenInclude(m => m.Major)
                 .OrderBy(s => s.Session)
                 .ToListAsync();
         }
@@ -44,7 +28,6 @@ namespace DotNetAngularApp.Persistence
                 return await context.Semesters.FindAsync(id);
 
             return await context.Semesters
-                .Include(s => s.Bookings)
                 .SingleOrDefaultAsync(s => s.Id == id);
         }
 

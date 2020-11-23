@@ -15,7 +15,7 @@ namespace DotNetAngularApp.Core.Models
         public Semester Semester { get; set; }
 
         [Required]
-        public ICollection<ModuleOffering> Modules { get; set; }
+        public ICollection<ModuleOffering> Modules { get; set; } // ! change to 1 Module
 
         [Required]
         public ICollection<LecturerOffering> Lecturers { get; set; }

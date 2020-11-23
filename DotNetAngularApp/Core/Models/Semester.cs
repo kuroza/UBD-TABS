@@ -21,11 +21,8 @@ namespace DotNetAngularApp.Core.Models
         [Required]
         public DateTime EndDate { get; set; }
 
-        public ICollection<Booking> Bookings { get; set; } // ! rethink
-
         public Semester()
         {
-            Bookings = new Collection<Booking>();
         }
     }
 }

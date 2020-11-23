@@ -33,11 +33,11 @@ namespace DotNetAngularApp.Controllers
             var booking = mapper.Map<SaveBookingResource, Booking>(bookingResource);
 
             var roomTaken = repository.BookingRoomExist(booking);
-            var moduleTaken = repository.BookingModuleExist(booking);
+            // var moduleTaken = repository.BookingModuleExist(booking);
             if (roomTaken)
                 return Conflict("The room is already taken.");
-            else if (moduleTaken)
-                return Conflict("The module is already booked in the same time slot.");
+            // else if (moduleTaken)
+            //     return Conflict("The module is already booked in the same time slot.");
 
             repository.Add(booking);
             await unitOfWork.CompleteAsync();
@@ -123,14 +123,14 @@ namespace DotNetAngularApp.Controllers
             return Ok(bookingResource);
         }
 
-        [HttpGet]
-        public async Task<QueryResultResource<BookingResource>> GetBookings(BookingQueryResource filterResource)
-        {
-            var filter = mapper.Map<BookingQueryResource, BookingQuery>(filterResource);
-            var queryResult = await repository.GetBookings(filter);
+        // [HttpGet]
+        // public async Task<QueryResultResource<BookingResource>> GetBookings(BookingQueryResource filterResource)
+        // {
+        //     var filter = mapper.Map<BookingQueryResource, BookingQuery>(filterResource);
+        //     var queryResult = await repository.GetBookings(filter);
 
-            return mapper.Map<QueryResult<Booking>, QueryResultResource<BookingResource>>(queryResult);
-        }
+        //     return mapper.Map<QueryResult<Booking>, QueryResultResource<BookingResource>>(queryResult);
+        // }
 
         [HttpGet("/api/allbookings")]
         public async Task<IEnumerable<BookingResource>> GetAllBookings()

@@ -12,11 +12,7 @@ namespace DotNetAngularApp.Core.Models
         public int Id { get; set; }
 
         [Required]
-        public int SemesterId { get; set; } // ! change to Offering
-        public Semester Semester { get; set; }
-
-        [Required]
-        public ICollection<BookingModule> Modules { get; set; } // ! change to Offering
+        public ICollection<BookingOffering> Offerings { get; set; }
 
         [Required]
         public ICollection<BookDate> BookDates { get; set; }
@@ -32,10 +28,10 @@ namespace DotNetAngularApp.Core.Models
 
         public Booking()
         {
+            Offerings = new Collection<BookingOffering>();
             BookDates = new Collection<BookDate>();
             Rooms = new Collection<BookingRoom>();
             TimeSlots = new Collection<BookingTimeSlot>();
-            Modules = new Collection<BookingModule>();
         }
     }
 }

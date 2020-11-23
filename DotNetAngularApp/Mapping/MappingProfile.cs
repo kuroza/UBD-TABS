@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using AutoMapper;
 using DotNetAngularApp.Controllers.Resources;
@@ -34,7 +37,7 @@ namespace DotNetAngularApp.Mapping
             CreateMap<Semester, SemesterResource>();
             CreateMap<Semester, SaveSemesterResource>();
 
-            CreateMap<Offering, OfferingResource>() // ! Mapping error here
+            CreateMap<Offering, OfferingResource>()
                 .ForMember(br => br.SemesterId, opt => opt.MapFrom(b => b.Semester.Id))
                 .ForMember(or => or.Modules, opt => 
                     opt.MapFrom(o => o.Modules.Select(mo => 
@@ -48,23 +51,17 @@ namespace DotNetAngularApp.Mapping
             CreateMap<Offering, SaveOfferingResource>();
 
             CreateMap<Booking, BookingResource>()
-                .ForMember(br => br.Session, opt => opt.MapFrom(b => b.Semester.Session))
                 .ForMember(br => br.Rooms, opt => 
                     opt.MapFrom(b => b.Rooms.Select(bm => 
                     new Room { Id = bm.Room.Id, Name = bm.Room.Name, Code = bm.Room.Code, Capacity = bm.Room.Capacity, Building = bm.Room.Building }))) // ! Room?
                 .ForMember(br => br.TimeSlots, opt => 
                     opt.MapFrom(b => b.TimeSlots.Select(bt => 
                     new TimeSlotResource { Id = bt.TimeSlot.Id, StartTime = bt.TimeSlot.StartTime, EndTime = bt.TimeSlot.EndTime })))
-                .ForMember(br => br.Modules, opt => 
-                    opt.MapFrom(b => b.Modules.Select(bm => 
-                    new ModuleResource { Id = bm.Module.Id, Name = bm.Module.Name, Code = bm.Module.Code, 
-                        Major = new MajorResource { Id = bm.Module.Major.Id, Name = bm.Module.Major.Name, 
-                        ShortName = bm.Module.Major.ShortName, FacultyId = bm.Module.Major.FacultyId 
-                        }
-                    })));
+                .ForMember(br => br.Offerings, opt =>
+                    opt.MapFrom(b => b.Offerings.Select(bo => 
+                    new OfferingResource { Id = bo.OfferingId, SemesterId = bo.Offering.SemesterId }))); // ! How to map Modules and Lecturers here?
             CreateMap<Booking, SaveBookingResource>()
-                .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => bt.TimeSlotId)))
-                .ForMember(br => br.Modules, opt => opt.MapFrom(b => b.Modules.Select(bt => bt.ModuleId)));
+                .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => bt.TimeSlotId)));
 
             CreateMap<Module, ModuleResource>()
                 .ForMember(mr => mr.Major, opt => opt.MapFrom(m => m.Major));
@@ -126,6 +123,18 @@ namespace DotNetAngularApp.Mapping
 
             CreateMap<SaveBookingResource, Booking>()
                 .ForMember(b => b.Id, opt => opt.Ignore())
+                .ForMember(b => b.Offerings, opt => opt.Ignore())
+                    .AfterMap((br, b) => {
+                        var removedOfferings = b.Offerings.Where(bo => !br.Offerings.Contains(bo.OfferingId)).ToList();
+                        foreach (var o in removedOfferings)
+                            b.Offerings.Remove(o);
+
+                        var addedOfferings = br.Offerings
+                            .Where(id => !b.Offerings.Any(bo => bo.OfferingId == id))
+                            .Select(id => new BookingOffering { OfferingId = id });
+                        foreach (var o in addedOfferings)
+                            b.Offerings.Add(o);
+                    })
                 .ForMember(b => b.TimeSlots, opt => opt.Ignore())
                     .AfterMap((br, b) => {
                         var removedTimeSlots = b.TimeSlots.Where(t => !br.TimeSlots.Contains(t.TimeSlotId)).ToList();
@@ -137,18 +146,6 @@ namespace DotNetAngularApp.Mapping
                             .Select(id => new BookingTimeSlot { TimeSlotId = id });
                         foreach (var t in addedTimeSlots)
                             b.TimeSlots.Add(t);
-                    })
-                .ForMember(b => b.Modules, opt => opt.Ignore())
-                    .AfterMap((br, b) => {
-                        var removedModules = b.Modules.Where(m => !br.Modules.Contains(m.ModuleId)).ToList();
-                        foreach (var m in removedModules)
-                            b.Modules.Remove(m);
-
-                        var addedModules = br.Modules
-                            .Where(id => !b.Modules.Any(m => m.ModuleId == id))
-                            .Select(id => new BookingModule { ModuleId = id });
-                        foreach (var m in addedModules)
-                            b.Modules.Add(m);
                     })
                 .ForMember(b => b.BookDates, opt => opt.Ignore())
                     .AfterMap((br, b) => {

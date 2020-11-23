@@ -18,11 +18,11 @@ namespace DotNetAngularApp.Core.Models
         [StringLength(255)]
         public string Code { get; set; }
 
-        // public ICollection<ModuleOffering> Offerings { get; set; } // !
-
         [Required]
         public int MajorId { get; set; }
         public Major Major { get; set; }
+
+        // public ICollection<ModuleOffering> Offerings { get; set; } // !
 
         // public int Level { get; set; }
 

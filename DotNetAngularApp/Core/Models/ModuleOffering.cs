@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DotNetAngularApp.Core.Models
 {
     [Table("ModuleOfferings")]
-    public class ModuleOffering
+    public class ModuleOffering // ! Drop table
     {
         public int ModuleId { get; set; }
         public Module Module { get; set; }
