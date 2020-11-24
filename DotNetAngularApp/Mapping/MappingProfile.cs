@@ -38,13 +38,8 @@ namespace DotNetAngularApp.Mapping
             CreateMap<Semester, SaveSemesterResource>();
 
             CreateMap<Offering, OfferingResource>()
-                .ForMember(br => br.SemesterId, opt => opt.MapFrom(b => b.Semester.Id))
-                .ForMember(or => or.Modules, opt => 
-                    opt.MapFrom(o => o.Modules.Select(mo => 
-                    new ModuleResource { Id = mo.Module.Id, Name = mo.Module.Name, Code = mo.Module.Code, 
-                        Major = new MajorResource { Id = mo.Module.Major.Id, Name = mo.Module.Major.Name, 
-                        ShortName = mo.Module.Major.ShortName, FacultyId = mo.Module.Major.FacultyId }
-                    })))
+                .ForMember(or => or.SemesterId, opt => opt.MapFrom(o => o.Semester.Id))
+                .ForMember(or => or.Module, opt => opt.MapFrom(o => o.Module))
                 .ForMember(or => or.Lecturers, opt =>
                     opt.MapFrom(o => o.Lecturers.Select(lo =>
                     new LecturerResource { Id = lo.Lecturer.Id, Name = lo.Lecturer.Name, Title = lo.Lecturer.Title, Email = lo.Lecturer.Email })));
@@ -59,7 +54,10 @@ namespace DotNetAngularApp.Mapping
                     new TimeSlotResource { Id = bt.TimeSlot.Id, StartTime = bt.TimeSlot.StartTime, EndTime = bt.TimeSlot.EndTime })))
                 .ForMember(br => br.Offerings, opt =>
                     opt.MapFrom(b => b.Offerings.Select(bo => 
-                    new OfferingResource { Id = bo.OfferingId, SemesterId = bo.Offering.SemesterId }))); // ! How to map Modules and Lecturers here?
+                    new OfferingResource { Id = bo.OfferingId, SemesterId = bo.Offering.SemesterId, Module = 
+                    new ModuleResource { Id = bo.Offering.ModuleId, Name = bo.Offering.Module.Name, Code = bo.Offering.Module.Code, Major = 
+                    new MajorResource { Id = bo.Offering.Module.MajorId, Name = bo.Offering.Module.Major.Name, ShortName = bo.Offering.Module.Major.ShortName, 
+                    FacultyId = bo.Offering.Module.Major.FacultyId } } }))); // ! How to map Modules and Lecturers here? No need?
             CreateMap<Booking, SaveBookingResource>()
                 .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => bt.TimeSlotId)));
 
@@ -96,18 +94,6 @@ namespace DotNetAngularApp.Mapping
 
             CreateMap<SaveOfferingResource, Offering>()
                 .ForMember(o => o.Id, opt => opt.Ignore())
-                .ForMember(o => o.Modules, opt => opt.Ignore())
-                    .AfterMap((or, o) => {
-                        var removedModules = o.Modules.Where(mo => !or.Modules.Contains(mo.ModuleId)).ToList();
-                        foreach (var m in removedModules)
-                            o.Modules.Remove(m);
-
-                        var addedModules = or.Modules
-                            .Where(id => !o.Modules.Any(mo => mo.ModuleId == id))
-                            .Select(id => new ModuleOffering { ModuleId = id });
-                        foreach (var m in addedModules)
-                            o.Modules.Add(m);
-                    })
                 .ForMember(o => o.Lecturers, opt => opt.Ignore())
                     .AfterMap((or, o) => {
                         var removedLecturers = o.Lecturers.Where(lo => !or.Lecturers.Contains(lo.LecturerId)).ToList();

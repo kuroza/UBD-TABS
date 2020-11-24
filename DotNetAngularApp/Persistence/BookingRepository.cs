@@ -26,22 +26,15 @@ namespace DotNetAngularApp.Persistence
 
             return await context.Bookings
                 .Include(b => b.BookDates)
-                .Include(b => b.TimeSlots)
-                    .ThenInclude(bt => bt.TimeSlot)
                 .Include(b => b.Rooms)
                     .ThenInclude(br => br.Room)
                         .ThenInclude(r => r.Building)
+                .Include(b => b.TimeSlots)
+                    .ThenInclude(bt => bt.TimeSlot)
                 .Include(b => b.Offerings)
                     .ThenInclude(bo => bo.Offering)
-                //         .ThenInclude(o => o.SemesterId)
-                // .Include(b => b.Offerings)
-                    // .ThenInclude(bo => bo.Offering)
-                    //     .ThenInclude(o => o.Modules)
-                            // .ThenInclude(m => m.ModuleId)
-                // .Include(b => b.Offerings)
-                //     .ThenInclude(bo => bo.Offering)
-                //         .ThenInclude(o => o.Lecturers)
-                            // .ThenInclude(m => m.LecturerId)
+                        .ThenInclude(o => o.Module)
+                            .ThenInclude(m => m.Major)
                 .SingleOrDefaultAsync(b => b.Id == id);
         }
 
@@ -54,15 +47,10 @@ namespace DotNetAngularApp.Persistence
                         .ThenInclude(r => r.Building)
                 .Include(b => b.TimeSlots)
                     .ThenInclude(bt => bt.TimeSlot)
-                // .Include(b => b.Offerings)
-                //     .ThenInclude(bo => bo.Offering)
-                //         .ThenInclude(o => o.Modules)
-                            // .ThenInclude(m => m.ModuleId)
-                            //include major?
-                // .Include(b => b.Offerings)
-                //     .ThenInclude(bo => bo.Offering)
-                //         .ThenInclude(o => o.Lecturers)
-                            // .ThenInclude(m => m.LecturerId)
+                .Include(b => b.Offerings)
+                    .ThenInclude(bo => bo.Offering)
+                        .ThenInclude(o => o.Module)
+                            .ThenInclude(m => m.Major)
                 .OrderBy(b => b.Id)
                 .ToListAsync();
         }

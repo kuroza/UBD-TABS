@@ -26,9 +26,8 @@ namespace DotNetAngularApp.Persistence
 
             return await context.Offerings
                 .Include(o => o.Semester)
-                .Include(o => o.Modules)
-                    .ThenInclude(o => o.Module)
-                        .ThenInclude(o => o.Major)
+                .Include(o => o.Module)
+                    .ThenInclude(o => o.Major)
                 .Include(o => o.Lecturers)
                     .ThenInclude(o => o.Lecturer)
                 .SingleOrDefaultAsync(o => o.Id == id);
@@ -38,8 +37,8 @@ namespace DotNetAngularApp.Persistence
         {
             return await context.Offerings
                 .Include(o => o.Semester)
-                .Include(o => o.Modules)
-                    .ThenInclude(o => o.Module)
+                .Include(o => o.Module)
+                    .ThenInclude(o => o.Major)
                 .Include(o => o.Lecturers)
                     .ThenInclude(o => o.Lecturer)
                 // .OrderBy(o => o.Id)

@@ -35,9 +35,6 @@ namespace DotNetAngularApp.Persistence
                 
             modelBuilder.Entity<LecturerOffering>()
                 .HasKey(lo => new { lo.LecturerId, lo.OfferingId });
-
-            modelBuilder.Entity<ModuleOffering>()
-                .HasKey(mo => new { mo.ModuleId, mo.OfferingId });
         }
     }
 }

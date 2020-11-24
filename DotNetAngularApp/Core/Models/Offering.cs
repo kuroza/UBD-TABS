@@ -15,14 +15,14 @@ namespace DotNetAngularApp.Core.Models
         public Semester Semester { get; set; }
 
         [Required]
-        public ICollection<ModuleOffering> Modules { get; set; } // ! change to 1 Module
+        public int ModuleId { get; set; }
+        public Module Module { get; set; }
 
         [Required]
         public ICollection<LecturerOffering> Lecturers { get; set; }
 
         public Offering()
         {
-            Modules = new Collection<ModuleOffering>();
             Lecturers = new Collection<LecturerOffering>();
         }
     }

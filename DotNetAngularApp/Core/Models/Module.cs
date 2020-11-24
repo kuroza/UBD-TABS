@@ -22,7 +22,7 @@ namespace DotNetAngularApp.Core.Models
         public int MajorId { get; set; }
         public Major Major { get; set; }
 
-        // public ICollection<ModuleOffering> Offerings { get; set; } // !
+        public ICollection<Offering> Offerings { get; set; }
 
         // public int Level { get; set; }
 
@@ -30,7 +30,7 @@ namespace DotNetAngularApp.Core.Models
         
         public Module()
         {
-            // Offerings = new Collection<ModuleOffering>();
+            Offerings = new Collection<Offering>();
         }
     }
 }
