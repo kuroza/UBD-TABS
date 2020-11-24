@@ -97,8 +97,6 @@ export class HomeComponent {
     this.bookings = this.allBookings = await this.bookingService.getAllBookings(); // using Promise instead
     this.populateCalendar(); // show all events on init
     this.refresh.next(); // refresh calendar after loading
-
-    console.log(this.bookings);
   }
 
   // * Filter by modules ---------------------------------------------------------------
@@ -110,7 +108,7 @@ export class HomeComponent {
     delete this.filter.majorId;
 
     var bookings = this.allBookings;
-    this.bookings = bookings.filter(b => b.modules.find(module => module.major.facultyId == this.filter.facultyId));
+    this.bookings = bookings.filter(b => b.offerings.find(o => o.module.major.facultyId == this.filter.facultyId));
     this.populateCalendar();
   }
 
@@ -121,7 +119,7 @@ export class HomeComponent {
     delete this.filter.moduleId;
 
     var bookings = this.allBookings;
-    this.bookings = bookings.filter(b => b.modules.find(module => module.major.id == this.filter.majorId));
+    this.bookings = bookings.filter(b => b.offerings.find(o => o.module.major.id == this.filter.majorId));
     this.populateCalendar();
   }
 
@@ -130,7 +128,7 @@ export class HomeComponent {
     var bookings = this.allBookings;
 
     if (this.filter.moduleId)
-      this.bookings = bookings.filter(b => b.modules.find(module => module.id == this.filter.moduleId));
+      this.bookings = bookings.filter(b => b.offerings.find(o => o.module.id == this.filter.moduleId));
 
     this.populateCalendar();
   }
@@ -232,8 +230,6 @@ export class HomeComponent {
             //   lecturers += `, ${b.offerings[i].lecturers[j].name} (${b.offerings[i].lecturers[j].title})`;
           }
         }
-
-        console.log(modules);
         
         // * Iterate Rooms
         var rooms: string = `${b.rooms[0].name}`;
