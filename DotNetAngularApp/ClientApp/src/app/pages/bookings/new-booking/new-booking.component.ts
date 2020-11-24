@@ -11,7 +11,7 @@ import * as _ from 'underscore';
 import { SaveBooking } from '../../../models/booking';
 import { BookingService } from '../../../services/booking.service';
 import { BuildingService } from '../../../services/building.service';
-import { ModuleService } from '../../../services/module.service';
+import { OfferingService } from '../../../services/offering.service';
 import { SemesterService } from '../../../services/semester.service';
 import { TimeSlotService } from '../../../services/timeSlot.service';
 
@@ -45,8 +45,10 @@ export class NewBookingComponent implements OnInit {
   buildings: any;
   rooms: any;
   timeSlots: any;
-  modules: any;
   semesters: any;
+  semesterSelect: number = 0;
+  allOfferings: any;
+  offerings: any = [];
 
   booking: SaveBooking = {
     id: 0,
@@ -63,9 +65,9 @@ export class NewBookingComponent implements OnInit {
     private router: Router,
     private bookingService: BookingService,
     private buildingService: BuildingService,
-    private moduleService: ModuleService,
     private semesterService: SemesterService,
     private timeSlotService: TimeSlotService,
+    private offeringService: OfferingService,
     private toastyService: ToastyService
   ) {
     route.params.subscribe(p => {
@@ -77,8 +79,8 @@ export class NewBookingComponent implements OnInit {
     var sources = [
       this.buildingService.getAllBuildings(),
       this.timeSlotService.getAllTimeSlots(),
-      this.moduleService.getAllModules(),
       this.semesterService.getAllSemesters(),
+      this.offeringService.getAllOfferings(),
     ];
 
     // * for editing Booking events
@@ -89,8 +91,8 @@ export class NewBookingComponent implements OnInit {
     .subscribe(data => {
       this.buildings = data[0];
       this.timeSlots = data[1];
-      this.modules = data[2];
-      this.semesters = data[3];
+      this.semesters = data[2];
+      this.allOfferings = data[3];
 
       if (this.booking.id) {
         this.setBooking(data[4]);
@@ -201,16 +203,21 @@ export class NewBookingComponent implements OnInit {
     this.booking.buildingId = b.building.id;
   }
 
+  onSemesterChange() {
+    if (this.semesterSelect) 
+      this.offerings = this.allOfferings.filter(o => o.semesterId == this.semesterSelect);
+    else
+      this.offerings = [];
+  }
+
   onBuildingChange() {
     this.populateRooms();
-
     // delete this.booking.rooms; // ? with this, Rooms not showing
   }
 
   private populateRooms() {
     var selectedBuilding = this.buildings.find(b => b.id == this.booking.buildingId);
     this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
-    console.log(selectedBuilding);
   }
 
   validSubmitForm(): boolean {

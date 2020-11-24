@@ -168,16 +168,16 @@
         </div>
 
         <div *ngIf="booking" style="margin-left: 40px;">
-          <div style="margin-left: 20px;">
+          <!-- <div style="margin-left: 20px;">
             <nb-card class="nb-card-list">
               <nb-card-header>
                 <h4>Semester</h4>
               </nb-card-header>
               <nb-card-body>
-                <span>{{booking.session}}</span>
+                <span>{{booking.offerings.semesterId}}</span>
               </nb-card-body>
             </nb-card>
-          </div>
+          </div> -->
 
           <!-- * Modules -->
           <div style="margin-left: 20px; margin-top: 20px;">
@@ -189,16 +189,16 @@
           </div>
           
           <nb-accordion multi style="width: 84%; margin-top: -30px;">
-            <nb-accordion-item *ngFor="let module of booking.modules">
+            <nb-accordion-item *ngFor="let offering of booking.offerings">
               <nb-accordion-item-header>
-                {{ module.code }}: {{ module.name }}
+                {{ offering.module.code }}: {{ offering.module.name }}
               </nb-accordion-item-header>
               <nb-accordion-item-body>
-                <nb-list style="width: 100%">
+                <!-- <nb-list style="width: 100%">
                   <nb-list-item *ngFor="let lecturer of module.lecturers">
                     {{ lecturer.title }} {{ lecturer.name }}
                   </nb-list-item>
-                </nb-list>
+                </nb-list> -->
               </nb-accordion-item-body>
             </nb-accordion-item>
           </nb-accordion>

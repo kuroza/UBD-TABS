@@ -60,7 +60,7 @@ namespace DotNetAngularApp.Mapping
                                 ShortName = bo.Offering.Module.Major.ShortName, FacultyId = bo.Offering.Module.Major.FacultyId
                             }
                         }
-                    }))); // ! How to map Modules and Lecturers here? No need?
+                    })));
             CreateMap<Booking, SaveBookingResource>()
                 .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => bt.TimeSlotId)));
 

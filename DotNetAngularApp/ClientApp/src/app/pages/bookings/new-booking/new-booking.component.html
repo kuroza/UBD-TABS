@@ -65,14 +65,15 @@
                   filled
                   required
                   placeholder="Select Semester"
-                  [(selected)]="booking.semesterId"
+                  [(selected)]="semesterSelect"
+                  (selectedChange)="onSemesterChange()"
                   fullWidth="true"
                 >
                   <nb-option *ngFor="let s of semesters" value="{{ s.id }}">{{ s.session }}</nb-option>
                 </nb-select>
                 <br>
               </div>
-            
+
               <!-- * Module form -->
               <div class="form-group">
                 <label>Modules *</label>
@@ -82,10 +83,10 @@
                   multiple
                   required
                   placeholder="Select Modules"
-                  [(selected)]="booking.modules"
+                  [(selected)]="booking.offerings"
                   fullWidth="true"
                 >
-                  <nb-option *ngFor="let m of modules" value="{{ m.id }}">{{ m.code }}: {{ m.name }}</nb-option>
+                  <nb-option *ngFor="let offering of offerings" value="{{ offering.id }}">{{ offering.module.code }}: {{ offering.module.name }}</nb-option>
                 </nb-select>
                 <br>
               </div>
@@ -140,6 +141,8 @@
                   <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
                 </nb-select>
               </div>
+              <!-- <br>
+              <pre>{{ rooms | json }}</pre> -->
             
               <div class="form-group">
                 <label>Purpose</label>
