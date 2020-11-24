@@ -94,9 +94,11 @@ export class HomeComponent {
     this.lecturerService.getAllLecturers()
       .subscribe(lecturers => this.lecturers = lecturers);
 
-    this.bookings = this.allBookings = await this.bookingService.getAllBookings() // using Promise instead
+    this.bookings = this.allBookings = await this.bookingService.getAllBookings(); // using Promise instead
     this.populateCalendar(); // show all events on init
     this.refresh.next(); // refresh calendar after loading
+
+    console.log(this.bookings);
   }
 
   // * Filter by modules ---------------------------------------------------------------
@@ -184,24 +186,24 @@ export class HomeComponent {
 
   // * Filter by lecturers ---------------------------------------------------------------
 
-  onLecturerChange() {
-    this.resetCalendar();
-    var bookings = this.allBookings;
+  // onLecturerChange() {
+  //   this.resetCalendar();
+  //   var bookings = this.allBookings;
 
-    if (this.filter.lecturerId)
-      bookings = bookings.filter(b => b.modules.find(module => module.lecturers.find(lecturer => lecturer.id == this.filter.lecturerId)));
+  //   if (this.filter.lecturerId)
+  //     bookings = bookings.filter(b => b.modules.find(module => module.lecturers.find(lecturer => lecturer.id == this.filter.lecturerId)));
 
-    this.bookings = bookings;
-    this.populateCalendar();
-  }
+  //   this.bookings = bookings;
+  //   this.populateCalendar();
+  // }
 
-  resetLecturerFilter() {
-    this.filter = {};
-    this.lecturers = [];
-    delete this.filter.lecturers;
-    this.resetCalendar();
-    this.showAllBookings();
-  }
+  // resetLecturerFilter() {
+  //   this.filter = {};
+  //   this.lecturers = [];
+  //   delete this.filter.lecturers;
+  //   this.resetCalendar();
+  //   this.showAllBookings();
+  // }
 
   showAllBookings() {
     this.bookings = this.allBookings;
@@ -217,19 +219,21 @@ export class HomeComponent {
         var bookDate = dateFormat(bd.date, 'yyyy-mm-dd'); // * format date
 
         // * Iterate Modules and Lecturers
-        var modules: string = `${b.modules[0].code}: ${b.modules[0].name}`;
-        var lecturers: string = `${b.modules[0].lecturers[0].name} (${b.modules[0].lecturers[0].title})`;
-        if (b.modules[0].lecturers.length > 1) {
-          for (var i=1; i<b.modules[0].lecturers.length; i++)
-            lecturers += `, ${b.modules[0].lecturers[i].name} (${b.modules[0].lecturers[i].title})`;
-        }
-        if (b.modules.length > 1) {
-          for (var i=1; i<b.modules.length; i++) {
-            modules += `, ${b.modules[i].code}: ${b.modules[i].name}`;
-            for (var j=0; j<b.modules[i].lecturers.length; j++)
-              lecturers += `, ${b.modules[i].lecturers[j].name} (${b.modules[i].lecturers[j].title})`;
+        var modules: string = `${b.offerings[0].module.code}: ${b.offerings[0].module.name}`;
+        // var lecturers: string = `${b.offerings[0].lecturers[0].name} (${b.offerings[0].lecturers[0].title})`;
+        // if (b.offerings[0].lecturers.length > 1) {
+        //   for (var i=1; i<b.offerings[0].lecturers.length; i++)
+        //     lecturers += `, ${b.offerings[0].lecturers[i].name} (${b.offerings[0].lecturers[i].title})`;
+        // }
+        if (b.offerings.length > 1) {
+          for (var i=1; i<b.offerings.length; i++) {
+            modules += `, ${b.offerings[i].module.code}: ${b.offerings[i].module.name}`;
+            // for (var j=0; j<b.offerings[i].lecturers.length; j++)
+            //   lecturers += `, ${b.offerings[i].lecturers[j].name} (${b.offerings[i].lecturers[j].title})`;
           }
         }
+
+        console.log(modules);
         
         // * Iterate Rooms
         var rooms: string = `${b.rooms[0].name}`;
@@ -258,7 +262,7 @@ export class HomeComponent {
             {
               start: new Date(this.startDateTime),
               end: new Date(this.endDateTime),
-              title: `<b>${ modules } ${ purpose }</b><br>${ rooms }<br>${ lecturers }`,
+              title: `<b>${ modules } ${ purpose }</b><br>${ rooms }`, // <br>${ lecturers } 
               color: colors.teal,
               meta: {
                 id: b.id,

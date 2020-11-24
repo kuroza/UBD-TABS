@@ -8,6 +8,8 @@ using DotNetAngularApp.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using DotNetAngularApp.Extensions;
 using System.Collections;
+using AutoMapper.QueryableExtensions;
+using DotNetAngularApp.Controllers.Resources;
 
 namespace DotNetAngularApp.Persistence
 {

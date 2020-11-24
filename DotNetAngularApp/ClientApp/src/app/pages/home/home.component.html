@@ -110,7 +110,7 @@
 
               <div class="mr-2" style="margin-top: 20px">
                 <label>Filter Room</label>
-                <nb-select filled multiple fullWidth required placeholder="Select Room" [(selected)]="filter.rooms"
+                <nb-select filled fullWidth required placeholder="Select Room" [(selected)]="filter.rooms"
                   (selectedChange)="onRoomChange()">
                   <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
                 </nb-select>
@@ -124,7 +124,7 @@
             <pre>{{ rooms | json }}</pre> -->
           </nb-tab>
 
-          <nb-tab tabTitle="Filter Lecturer">
+          <!-- <nb-tab tabTitle="Filter Lecturer">
             <div class="form-group">
               <div class="mr-2" style="margin-top: 10px">
                 <label>Filter Lecturer</label>
@@ -137,9 +137,9 @@
                 style="margin-top: 20px; float: right;">Reset</button>
             </div>
 
-            <!-- <br>
-            <pre>{{ filter | json }}</pre> -->
-          </nb-tab>
+            <br>
+            <pre>{{ filter | json }}</pre>
+          </nb-tab> -->
         </nb-tabset>
       </nb-card-body>
     </nb-card>

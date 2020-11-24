@@ -5,7 +5,23 @@ export interface KeyValuePair {
 
 export interface Booking {
   id: number;
-  session: string;
+  offerings: {
+    id: number;
+    semesterId: number;
+    module: {
+      id: number;
+      name: string;
+      code: string;
+      major: {
+        id: number;
+        facultyId: number;
+        name: string;
+        shortName: string;
+        // modules: any[];
+      }
+    };
+    // lecturers: any[];
+  }[];
   bookDates: {
     date: string
   }[];
@@ -24,26 +40,15 @@ export interface Booking {
     startTime: string;
     endTime: string;
   }[];
-  modules: {
-    id: number;
-    name: string;
-    code: string;
-    lecturers: {
-      id: number;
-      name: string;
-      title: string;
-    }[];
-  }[];
   purpose: string;
 }
 
 export interface SaveBooking {
   id: number;
-  semesterId: number;
-  buildingId: number;
+  offerings: number[];
   rooms: number[];
   timeSlots: number[];
-  modules: number[];
   bookDates: string[];
   purpose: string;
+  buildingId: number; // redundant?
 }

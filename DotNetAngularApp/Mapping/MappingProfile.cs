@@ -55,9 +55,12 @@ namespace DotNetAngularApp.Mapping
                 .ForMember(br => br.Offerings, opt =>
                     opt.MapFrom(b => b.Offerings.Select(bo => 
                     new OfferingResource { Id = bo.OfferingId, SemesterId = bo.Offering.SemesterId, Module = 
-                    new ModuleResource { Id = bo.Offering.ModuleId, Name = bo.Offering.Module.Name, Code = bo.Offering.Module.Code, Major = 
-                    new MajorResource { Id = bo.Offering.Module.MajorId, Name = bo.Offering.Module.Major.Name, ShortName = bo.Offering.Module.Major.ShortName, 
-                    FacultyId = bo.Offering.Module.Major.FacultyId } } }))); // ! How to map Modules and Lecturers here? No need?
+                        new ModuleResource { Id = bo.Offering.ModuleId, Name = bo.Offering.Module.Name, Code = bo.Offering.Module.Code, Major = 
+                            new MajorResource { Id = bo.Offering.Module.MajorId, Name = bo.Offering.Module.Major.Name, 
+                                ShortName = bo.Offering.Module.Major.ShortName, FacultyId = bo.Offering.Module.Major.FacultyId
+                            }
+                        }
+                    }))); // ! How to map Modules and Lecturers here? No need?
             CreateMap<Booking, SaveBookingResource>()
                 .ForMember(br => br.TimeSlots, opt => opt.MapFrom(b => b.TimeSlots.Select(bt => bt.TimeSlotId)));
 

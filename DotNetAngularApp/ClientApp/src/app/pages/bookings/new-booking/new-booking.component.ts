@@ -50,13 +50,12 @@ export class NewBookingComponent implements OnInit {
 
   booking: SaveBooking = {
     id: 0,
-    semesterId: 0,
-    buildingId: 0,
+    offerings: [],
     rooms: [],
     bookDates: [],
     timeSlots: [],
-    modules: [],
     purpose: '',
+    buildingId: 0,
   };
 
   constructor(
@@ -183,25 +182,23 @@ export class NewBookingComponent implements OnInit {
 
   resetBookingField() {
     this.booking.id = 0;
-    this.booking.semesterId = 0;
-    this.booking.buildingId = 0;
+    this.booking.offerings = [];
     this.booking.rooms = [];
     this.booking.bookDates = [];
     this.booking.timeSlots = [];
-    this.booking.modules = [];
     this.booking.purpose = '';
+    this.booking.buildingId = 0;
   }
 
   // * for editing
   private setBooking(b) {
     this.booking.id = b.id;
-    this.booking.semesterId = b.semester.id;
+    this.booking.offerings = _.pluck(b.offerings, 'id');
     this.booking.bookDates = b.bookDates; // ! maybe it's different since using selectedDate[]
-    this.booking.buildingId = b.building.id;
     this.booking.rooms = _.pluck(b.rooms, 'id');
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
-    this.booking.modules = _.pluck(b.modules, 'id');
     this.booking.purpose = b.purpose;
+    this.booking.buildingId = b.building.id;
   }
 
   onBuildingChange() {
@@ -218,8 +215,7 @@ export class NewBookingComponent implements OnInit {
 
   validSubmitForm(): boolean {
     if (
-      this.booking.semesterId > 0 && 
-      this.booking.modules.length != 0 &&
+      this.booking.offerings.length != 0 &&
       this.booking.timeSlots.length != 0 &&
       this.booking.rooms.length != 0 &&
       this.booking.bookDates.length != 0
