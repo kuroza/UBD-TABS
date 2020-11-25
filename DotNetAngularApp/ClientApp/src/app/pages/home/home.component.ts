@@ -1,3 +1,4 @@
+import { OfferingService } from './../../services/offering.service';
 import {
   LecturerService
 } from './../../services/lecturer.service';
@@ -78,6 +79,7 @@ export class HomeComponent {
   lecturers: any;
   rooms: any = [];
   filter: any = {};
+  allOfferings: any;
   allBookings: any;
   booking: any; // a single booking event
   bookings: any; // events to be populated on calendar
@@ -107,7 +109,8 @@ export class HomeComponent {
     private majorService: MajorService,
     private facultyService: FacultyService,
     private moduleService: ModuleService,
-    private lecturerService: LecturerService
+    private lecturerService: LecturerService,
+    private offeringService: OfferingService
   ) {}
 
   async ngOnInit() {
@@ -123,6 +126,9 @@ export class HomeComponent {
 
     this.lecturerService.getAllLecturers()
       .subscribe(lecturers => this.lecturers = lecturers);
+
+    this.offeringService.getAllOfferings()
+      .subscribe(allOfferings => this.allOfferings = allOfferings);
 
     this.bookings = this.allBookings = await this.bookingService.getAllBookings(); // using Promise instead
     this.populateCalendar(); // show all events on init
@@ -246,37 +252,41 @@ export class HomeComponent {
     this.nbSpinner = true;
 
     for (let b of this.bookings) {
-      for (let bd of b.bookDates) {
+      //  * Get Offering Id
+      var offeringId = b.offerings[0].id; // ! assuming the lecturers for all the modules are the same
+      // * Filter allOfferings based on the offerings Id
+      var filteredOffering = this.allOfferings.find(o => o.id == offeringId);
+      var lecturers: string = `${filteredOffering.lecturers[0].name} (${filteredOffering.lecturers[0].title})`;
+      if (filteredOffering.lecturers.length > 1) {
+        for (var i=1; i<filteredOffering.lecturers.length; i++) {
+          lecturers += `, ${filteredOffering.lecturers[i].name} (${filteredOffering.lecturers[i].title})`;
+        }
+      }
+
+      // * Iterate Modules and Lecturers
+      var modules: string = `${b.offerings[0].module.code}: ${b.offerings[0].module.name}`;
+      if (b.offerings.length > 1) {
+        for (var i = 1; i < b.offerings.length; i++) {
+          modules += `, ${b.offerings[i].module.code}: ${b.offerings[i].module.name}`;
+        }
+      }
+
+      // * Iterate Rooms
+      var rooms: string = `${b.rooms[0].name}`;
+      if (b.rooms.length > 1) {
+        for (var i = 1; i < b.rooms.length; i++)
+          rooms += `, ${b.rooms[i].name}`;
+      }
+
+      var purpose: string;
+      if (b.purpose != '')
+        purpose = `(${b.purpose})`;
+      else
+        purpose = '';
+      
+      for (let bd of b.bookDates) { // * for multiple bookDates
         var dateFormat = require('dateformat');
         var bookDate = dateFormat(bd.date, 'yyyy-mm-dd'); // * format date
-
-        // * Iterate Modules and Lecturers
-        var modules: string = `${b.offerings[0].module.code}: ${b.offerings[0].module.name}`;
-        // var lecturers: string = `${b.offerings[0].lecturers[0].name} (${b.offerings[0].lecturers[0].title})`;
-        // if (b.offerings[0].lecturers.length > 1) {
-        //   for (var i=1; i<b.offerings[0].lecturers.length; i++)
-        //     lecturers += `, ${b.offerings[0].lecturers[i].name} (${b.offerings[0].lecturers[i].title})`;
-        // }
-        if (b.offerings.length > 1) {
-          for (var i = 1; i < b.offerings.length; i++) {
-            modules += `, ${b.offerings[i].module.code}: ${b.offerings[i].module.name}`;
-            // for (var j=0; j<b.offerings[i].lecturers.length; j++)
-            //   lecturers += `, ${b.offerings[i].lecturers[j].name} (${b.offerings[i].lecturers[j].title})`;
-          }
-        }
-
-        // * Iterate Rooms
-        var rooms: string = `${b.rooms[0].name}`;
-        if (b.rooms.length > 1) {
-          for (var i = 1; i < b.rooms.length; i++)
-            rooms += `, ${b.rooms[i].name}`;
-        }
-
-        var purpose: string;
-        if (b.purpose != '')
-          purpose = `(${b.purpose})`;
-        else
-          purpose = '';
 
         // * nested loop for each time slots under each booking
         for (let timeSlot of b.timeSlots) {
@@ -292,7 +302,7 @@ export class HomeComponent {
             {
               start: new Date(this.startDateTime),
               end: new Date(this.endDateTime),
-              title: `<b>${ modules } ${ purpose }</b><br>${ rooms }`, // <br>${ lecturers } 
+              title: `<b>${ modules } ${ purpose }</b><br>${ rooms }<br>${ lecturers }`,
               color: colors.teal,
               meta: {
                 id: b.id,
