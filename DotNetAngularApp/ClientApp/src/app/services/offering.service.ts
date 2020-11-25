@@ -23,10 +23,6 @@ export class OfferingService {
       .pipe(map(response => response));
   }
 
-//   async getAllOfferings() {
-//     return this.http.get('/api/allofferings').toPromise();
-//   }
-
   getAllOfferings() {
     return this.http.get('/api/allofferings')
       .pipe(map(response => response));

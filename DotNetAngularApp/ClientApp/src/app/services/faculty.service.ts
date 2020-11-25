@@ -23,10 +23,6 @@ export class FacultyService {
       .pipe(map(response => response));
   }
 
-  // async getAllFaculties() {
-  //   return this.http.get('/api/allfaculties').toPromise();
-  // }
-
   create(faculty) {
     return this.http.post(this.facultiesEndpoint, faculty)
       .pipe(map(response => response));

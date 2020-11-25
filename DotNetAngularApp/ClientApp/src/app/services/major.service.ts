@@ -23,10 +23,6 @@ export class MajorService {
       .pipe(map(response => response));
   }
 
-  // async getAllMajors() {
-  //   return this.http.get('/api/all-majors').toPromise();
-  // }
-
   create(major) {
     return this.http.post(this.majorsEndpoint, major)
       .pipe(map(response => response));

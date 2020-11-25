@@ -18,8 +18,9 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
-  async getAllBookings() {
-    return this.http.get('/api/allbookings').toPromise();
+  getAllBookings() {
+    return this.http.get('/api/allbookings')
+      .pipe(map(response => response));
   }
 
   getBookings(filter) {

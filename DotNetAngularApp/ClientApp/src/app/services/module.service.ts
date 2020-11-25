@@ -18,13 +18,9 @@ export class ModuleService {
       .pipe(map(response => response));
   }
   
-  // getAllModules() {
-  //   return this.http.get('/api/allmodules')
-  //     .pipe(map(response => response));
-  // }
-
-  async getAllModules() {
-    return this.http.get('/api/allmodules').toPromise();
+  getAllModules() {
+    return this.http.get('/api/allmodules')
+      .pipe(map(response => response));
   }
 
   create(module) {

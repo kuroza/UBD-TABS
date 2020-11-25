@@ -36,7 +36,6 @@ export class LecturerListComponent implements OnInit {
   constructor(
     private userService: UserService,
     private lecturerService: LecturerService,
-    private moduleService: ModuleService,
     private toastyService: ToastyService,
     private router: Router,
     private route: ActivatedRoute
@@ -49,8 +48,6 @@ export class LecturerListComponent implements OnInit {
     
     this.lecturerService.getAllLecturers()
       .subscribe(lecturers => this.lecturers = lecturers);
-
-    // this.lecturerModules = await this.moduleService.getAllModules()
   }
 
   private setLecturer(l) {

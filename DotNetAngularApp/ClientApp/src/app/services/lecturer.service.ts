@@ -18,10 +18,6 @@ export class LecturerService {
       .pipe(map(response => response));
   }
 
-//   async getAllBookings() {
-//     return this.http.get('/api/allbookings').toPromise();
-//   }
-
   getAllLecturers() {
     return this.http.get('/api/alllecturers')
       .pipe(map(response => response));

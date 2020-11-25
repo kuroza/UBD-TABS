@@ -18,10 +18,6 @@ export class BuildingService {
       .pipe(map(response => response));
   }
 
-//   async getAllBuildings() {
-//     return this.http.get('/api/allbuildings').toPromise();
-//   }
-
   getAllBuildings() {
     return this.http.get('/api/allbuildings')
       .pipe(map(response => response));

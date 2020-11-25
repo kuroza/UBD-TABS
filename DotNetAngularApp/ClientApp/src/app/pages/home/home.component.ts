@@ -1,3 +1,4 @@
+
 import { OfferingService } from './../../services/offering.service';
 import {
   LecturerService
@@ -43,6 +44,7 @@ import {
   CustomEventTitleFormatter
 } from './custom-event-title-formatter.provider';
 import {
+  Observable,
   Subject
 } from 'rxjs';
 import {
@@ -81,8 +83,8 @@ export class HomeComponent {
   filter: any = {};
   allOfferings: any;
   allBookings: any;
-  booking: any; // a single booking event
   bookings: any; // events to be populated on calendar
+  booking: any; // a single booking event
 
   excludeDays: number[] = [0, 5];
   weekStartsOn = DAYS_OF_WEEK.MONDAY;
@@ -113,26 +115,29 @@ export class HomeComponent {
     private offeringService: OfferingService
   ) {}
 
-  async ngOnInit() {
+  ngOnInit() {
     if (localStorage.getItem('token') != null) {
       this.hasAccess = this.userService.hasAccess();
     }
 
-    this.facultyService.getAllFaculties()
-      .subscribe(faculties => this.faculties = faculties);
+    Observable.forkJoin([
+      this.facultyService.getAllFaculties(),
+      this.buildingService.getAllBuildings(),
+      this.lecturerService.getAllLecturers(),
+      this.offeringService.getAllOfferings(),
+      this.bookingService.getAllBookings()
+    ]).subscribe(data => {
+      this.faculties = data[0];
+      this.buildings = data[1];
+      this.lecturers = data[2];
+      this.allOfferings = data[3];
+      this.bookings = this.allBookings = data[4];
 
-    this.buildingService.getAllBuildings() // get the buildings from service for filter drop down
-      .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
-
-    this.lecturerService.getAllLecturers()
-      .subscribe(lecturers => this.lecturers = lecturers);
-
-    this.offeringService.getAllOfferings()
-      .subscribe(allOfferings => this.allOfferings = allOfferings);
-
-    this.bookings = this.allBookings = await this.bookingService.getAllBookings(); // using Promise instead
-    this.populateCalendar(); // show all events on init
-    this.refresh.next(); // refresh calendar after loading
+      this.populateCalendar(); // show all events on init
+      this.refresh.next(); // refresh calendar after loading
+    }, error => {
+      console.log(error);
+    });
   }
 
   // * Filter by modules ---------------------------------------------------------------

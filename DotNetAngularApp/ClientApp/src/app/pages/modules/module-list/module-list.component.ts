@@ -56,15 +56,10 @@ export class ModuleListComponent implements OnInit {
     private semesterService: SemesterService
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     if (localStorage.getItem('token') != null) {
       this.hasAccess = this.userService.hasAccess();
     }
-
-    this.modules = await this.moduleService.getAllModules(); // redundant? or maybe used in editing
-
-    // this.moduleService.getAllModules() // observable
-    //   .subscribe(modules => this.modules = modules);
 
     this.semesterService.getAllSemesters()
       .subscribe(semesters => this.semesters = semesters);
@@ -72,7 +67,7 @@ export class ModuleListComponent implements OnInit {
     this.offeringService.getAllOfferings()
       .subscribe(allOfferings => this.allOfferings = allOfferings);
 
-    this.majorService.getAllMajors() // observable
+    this.majorService.getAllMajors()
       .subscribe(majors => this.majors = majors);
 
     this.lecturerService.getAllLecturers()

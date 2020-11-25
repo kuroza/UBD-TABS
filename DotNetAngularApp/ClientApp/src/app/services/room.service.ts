@@ -23,10 +23,6 @@ export class RoomService {
       .pipe(map(response => response));
   }
 
-  // async getAllRooms() {
-  //   return this.http.get('/api/allrooms').toPromise();
-  // }
-
   create(room) {
     return this.http.post(this.roomsEndpoint, room)
       .pipe(map(response => response));

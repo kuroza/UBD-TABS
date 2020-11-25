@@ -23,10 +23,6 @@ export class TimeSlotService {
       .pipe(map(response => response));
   }
 
-  // async getAllTimeSlots() { // use this?
-  //   return this.http.get('/api/alltimeslots').toPromise();
-  // }
-
   create(timeSlot) {
     return this.http.post(this.timeSlotsEndpoint, timeSlot)
       .pipe(map(response => response));

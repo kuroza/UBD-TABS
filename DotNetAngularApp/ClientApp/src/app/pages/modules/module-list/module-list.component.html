@@ -4,6 +4,9 @@
       <nb-card-body>
         <nb-tabset fullWidth>
           <nb-tab tabTitle="Modules Offered"> <!-- active="{{ setActiveModuleList }}" -->
+            <div class="alert alert-danger" *ngIf="offerings == 0" style="text-align: center;">
+              Please select a semester
+            </div>
             <div style="margin-top: 10px;">
               <nb-card-header style="border-bottom: none;">
                 <h4 style="float: left;" *ngIf="!filter.semesterId">Modules Offered</h4>
@@ -40,9 +43,9 @@
                 </tr>
               </tbody>
             </table>
-            <div class="alert alert-danger" *ngIf="offerings == 0" style="margin-top: 20px; text-align: center;">
+            <!-- <div class="alert alert-danger" *ngIf="offerings == 0" style="margin-top: 20px; text-align: center;">
               Please select a semester
-            </div>
+            </div> -->
           </nb-tab>
 
           <nb-tab tabTitle="Modules List">

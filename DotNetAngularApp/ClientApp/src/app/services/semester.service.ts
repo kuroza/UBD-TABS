@@ -23,10 +23,6 @@ export class SemesterService {
       .pipe(map(response => response));
   }
 
-  // async getAllSemesters() {
-  //   return this.http.get('/api/allsemesters').toPromise();
-  // }
-
   create(semester) {
     return this.http.post(this.semestersEndpoint, semester)
       .pipe(map(response => response));
