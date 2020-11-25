@@ -1,6 +1,6 @@
 export interface Offering {
   id: number;
-  semesterId: number;
+  semesterId: number; // change to a Semester? no need. I just need it for displaying on booking event
   module: {
     id: number;
     name: string;

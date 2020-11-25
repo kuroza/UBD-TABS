@@ -5,7 +5,14 @@
         <h4>Module List</h4>
       </nb-card-header>
       <nb-card-body>
-        <table class="table table-hover">
+        <div>
+          <label style="margin-right: 5px;">Filter semester:</label>
+          <nb-select filled placeholder="Select semester" [(selected)]="filter.semesterId"
+            (selectedChange)="onSemesterFilter()">
+            <nb-option *ngFor="let s of semesters" value="{{ s.id }}">{{ s.session }}</nb-option>
+          </nb-select>
+        </div>
+        <table class="table table-hover" style="margin-top: 20px;">
           <thead>
             <tr>
               <th style="width: 20%" scope="col">Module Code</th>
@@ -15,18 +22,21 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let module of modules">
-              <td (click)="selectModule(module.id)">{{ module.code }}</td>
-              <td (click)="selectModule(module.id)">{{ module.name }}</td>
-              <td><a href="javascript:void(0);" (click)="edit(module.id)" *ngIf="hasAccess">
+            <tr *ngFor="let offering of offerings">
+              <td (click)="selectModule(offering.module.id)">{{ offering.module.code }}</td>
+              <td (click)="selectModule(offering.module.id)">{{ offering.module.name }}</td>
+              <td><a href="javascript:void(0);" (click)="edit(offering.module.id)" *ngIf="hasAccess">
                   <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
                 </a></td>
-              <td><a href="javascript:void(0);" (click)="delete(module.id)" *ngIf="hasAccess">
+              <td><a href="javascript:void(0);" (click)="delete(offering.module.id)" *ngIf="hasAccess">
                   <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
                 </a></td>
             </tr>
           </tbody>
         </table>
+        <div class="alert alert-danger" *ngIf="offerings == 0" style="margin-top: 20px; text-align: center;">
+          Please select a semester
+        </div>
       </nb-card-body>
     </nb-card>
   </div>
@@ -53,7 +63,7 @@
                 <label>Major *</label>
                 <nb-select filled fullWidth placeholder="Select major" [(selected)]="module.majorId">
                   <nb-option *ngFor="let m of majors" value="{{ m.id }}">{{ m.name }}</nb-option>
-                </nb-select><br>
+                </nb-select>
               </div>
               <div style="margin-top: 10px;">
                 <label>Module code *</label>
@@ -65,12 +75,12 @@
                 <input id="name" type="text" class="form-control" [(ngModel)]="module.name" name="name"
                   placeholder="Module name">
               </div>
-              <div style="margin-top: 10px;">
+              <!-- <div style="margin-top: 10px;">
                 <label>Lecturers *</label>
                 <nb-select filled multiple fullWidth placeholder="Select lecturers" [(selected)]="module.lecturers">
                   <nb-option *ngFor="let l of lecturers" value="{{ l.id }}">{{ l.title }} {{ l.name }}</nb-option>
                 </nb-select><br>
-              </div>
+              </div> -->
               <div style="margin-top: 10px;">
                 <button *ngIf="!module.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="module.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
@@ -82,40 +92,53 @@
             </form>
           </nb-tab>
 
-          <nb-tab tabTitle="Details" active="{{ setActiveDetails }}">
-            <div *ngIf="moduleDetails">
-              <p>
-                <span><b>Major:</b> {{ moduleDetails.major.name }}</span>
-                <br>
-                <span><b>Module code:</b> {{ moduleDetails.code }}</span>
-                <br>
-                <span><b>Module name:</b> {{ moduleDetails.name }}</span>
-                <br>
-              </p>
+          <nb-tab *ngIf="hasAccess" tabTitle="Assign Modules" active="{{ setActiveAddAssignModules }}">
 
-              <div class="card" style="width: 85%;">
-                <div class="card-header">
-                  <h6>Lecturers</h6>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li *ngFor="let l of moduleDetails.lecturers" class="list-group-item">{{ l.title }} {{ l.name }}</li>
-                </ul>
-              </div>
+          </nb-tab>
 
-              <div class="inline" *ngIf="hasAccess">
-                <button nbButton status="warning" style="margin-top: 10px;"
-                  (click)="edit(moduleDetails.id)">Edit</button>
-                <button nbButton status="danger" style="margin-left: 5px; margin-top: 10px;"
-                  (click)="delete(moduleDetails.id)">Delete</button>
-              </div>
-            </div>
-            <div *ngIf="!moduleDetails" style="margin-top: 10px;">
-              <nb-alert status="basic" closable (close)="onCloseDetails()" *ngIf="detailsAlert">
-                Click on table row to show its details
-              </nb-alert>
-            </div>
+          <nb-tab tabTitle="Semester" active="{{ setActiveSemester }}">
+            
           </nb-tab>
         </nb-tabset>
+      </nb-card-body>
+    </nb-card>
+    
+    <nb-card>
+      <nb-card-header>
+        <h4>Details</h4>
+      </nb-card-header>
+      <nb-card-body>
+        <div *ngIf="moduleDetails">
+          <p>
+            <span><b>Major:</b> {{ moduleDetails.major.name }}</span>
+            <br>
+            <span><b>Module code:</b> {{ moduleDetails.code }}</span>
+            <br>
+            <span><b>Module name:</b> {{ moduleDetails.name }}</span>
+            <br>
+          </p>
+
+          <div class="card" style="width: 85%;">
+            <div class="card-header">
+              <h6>Lecturers</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let l of moduleDetails.lecturers" class="list-group-item">{{ l.title }} {{ l.name }}</li>
+            </ul>
+          </div>
+
+          <div class="inline" *ngIf="hasAccess">
+            <button nbButton status="warning" style="margin-top: 10px;"
+              (click)="edit(moduleDetails.id)">Edit</button>
+            <button nbButton status="danger" style="margin-left: 5px; margin-top: 10px;"
+              (click)="delete(moduleDetails.id)">Delete</button>
+          </div>
+        </div>
+        <div *ngIf="!moduleDetails" style="margin-top: 10px;">
+          <nb-alert status="basic" closable (close)="onCloseDetails()" *ngIf="detailsAlert">
+            Click on table row to show its details
+          </nb-alert>
+        </div>
       </nb-card-body>
     </nb-card>
   </div>

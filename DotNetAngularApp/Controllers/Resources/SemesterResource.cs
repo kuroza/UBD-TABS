@@ -14,11 +14,8 @@ namespace DotNetAngularApp.Controllers.Resources
 
         public DateTime EndDate { get; set; }
 
-        public ICollection<BookingResource> Bookings { get; set; }
-
         public SemesterResource()
         {
-            Bookings = new Collection<BookingResource>();
         }
     }
 }

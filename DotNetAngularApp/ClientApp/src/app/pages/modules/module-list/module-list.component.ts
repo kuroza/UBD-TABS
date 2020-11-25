@@ -1,3 +1,5 @@
+import { SemesterService } from './../../../services/semester.service';
+import { OfferingService } from './../../../services/offering.service';
 import { MajorService } from '../../../services/major.service';
 import { ModuleService } from './../../../services/module.service';
 import { Component, OnInit } from '@angular/core';
@@ -22,22 +24,27 @@ import { UserService } from '../../../services/user.service';
 export class ModuleListComponent implements OnInit {
   hasAccess = false;
   setActiveAddModule: boolean;
-  setActiveDetails: boolean;
+  setActiveSemester: boolean;
   error: string;
   existAlert: boolean = false;
   requiredAlert: boolean = false;
   detailsAlert: boolean = true;
 
+  filter: any = {};
   moduleDetails: any;
   modules: any;
+  semesters: any;
+  allOfferings: any;
+  offerings: any = [];
   majors: any;
   lecturers: any;
+  
   module: SaveModule = {
     id: 0,
     name: '',
     code: '',
     majorId: 0,
-    lecturers: [],
+    // lecturers: [],
   };
 
   constructor(
@@ -47,7 +54,9 @@ export class ModuleListComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
-    private majorService: MajorService
+    private majorService: MajorService,
+    private offeringService: OfferingService,
+    private semesterService: SemesterService
   ) { }
 
   async ngOnInit() {
@@ -55,10 +64,16 @@ export class ModuleListComponent implements OnInit {
       this.hasAccess = this.userService.hasAccess();
     }
 
-    this.modules = await this.moduleService.getAllModules(); // promise
+    this.modules = await this.moduleService.getAllModules(); // redundant? or maybe used in editing
 
     // this.moduleService.getAllModules() // observable
     //   .subscribe(modules => this.modules = modules);
+
+    this.semesterService.getAllSemesters()
+      .subscribe(semesters => this.semesters = semesters);
+
+    this.offeringService.getAllOfferings()
+      .subscribe(allOfferings => this.allOfferings = allOfferings);
 
     this.majorService.getAllMajors() // observable
       .subscribe(majors => this.majors = majors);
@@ -71,7 +86,11 @@ export class ModuleListComponent implements OnInit {
     this.module.id = m.id;
     this.module.name = m.name;
     this.module.code = m.code;
-    this.module.lecturers = _.pluck(m.lecturers, 'id');
+    // this.module.lecturers = _.pluck(m.lecturers, 'id');
+  }
+
+  onSemesterFilter() {
+    this.offerings = this.allOfferings.filter(o => o.semesterId == this.filter.semesterId);
   }
 
   submit() {
@@ -114,8 +133,6 @@ export class ModuleListComponent implements OnInit {
     this.moduleService.getModule(id)
     .subscribe(
       m => {
-        this.setActiveDetails = false;
-        this.setActiveAddModule = true;
         this.setModule(m);
       });
   }
@@ -140,8 +157,6 @@ export class ModuleListComponent implements OnInit {
     this.moduleService.getModule(id)
     .subscribe(
       m => {
-        this.setActiveAddModule = false;
-        this.setActiveDetails = true;
         this.moduleDetails = m;
       },
       err => {
@@ -157,7 +172,7 @@ export class ModuleListComponent implements OnInit {
     this.module.name = '';
     this.module.code = '';
     this.module.majorId = 0;
-    this.module.lecturers = [];
+    // this.module.lecturers = [];
   }
 
   redirectTo(uri:string){

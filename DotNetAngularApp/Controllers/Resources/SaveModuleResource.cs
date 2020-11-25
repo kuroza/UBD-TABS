@@ -9,16 +9,12 @@ namespace DotNetAngularApp.Controllers.Resources
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public int MajorId { get; set; }
 
         [Required]
         public string Code { get; set; }
 
         [Required]
-        public int MajorId { get; set; }
-
-        public SaveModuleResource()
-        {
-        }
+        public string Name { get; set; }
     }
 }
