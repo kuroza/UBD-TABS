@@ -3,10 +3,11 @@
     <nb-card>
       <nb-card-body>
         <nb-tabset fullWidth>
-          <nb-tab tabTitle="Module List"> <!-- active="{{ setActiveModuleList }}" -->
-            <div>
+          <nb-tab tabTitle="Modules Offered"> <!-- active="{{ setActiveModuleList }}" -->
+            <div style="margin-top: 10px;">
               <nb-card-header style="border-bottom: none;">
-                <h4 style="float: left;">Module List</h4>
+                <h4 style="float: left;" *ngIf="!filter.semesterId">Modules Offered</h4>
+                <h4 style="float: left;" *ngIf="filter.semesterId">Modules Offered in {{ selectedSemester.session }}</h4>
                 <div style="float: right;">
                   <label style="margin-right: 5px;">Filter semester:</label>
                   <nb-select filled placeholder="Select semester" [(selected)]="filter.semesterId"
@@ -44,9 +45,15 @@
             </div>
           </nb-tab>
 
+          <nb-tab tabTitle="Modules List">
+            <nb-card-header style="border-bottom: none;">
+              <h4>All Modules</h4>
+            </nb-card-header>
+          </nb-tab>
+
           <nb-tab tabTitle="Semester List">
             <nb-card-header style="border-bottom: none;">
-              <h4>Semester List</h4>
+              <h4>All Semesters</h4>
             </nb-card-header>
           </nb-tab>
 
@@ -58,6 +65,16 @@
     <nb-card *ngIf="hasAccess">
       <nb-card-body>
         <nb-tabset fullWidth>
+
+          <nb-tab *ngIf="hasAccess" tabTitle="Assign Modules" active="{{ setActiveAddAssignModules }}">
+            <h4 style="margin-top: 10px;">Assign Module to a Semester</h4>
+            <!-- 
+              select semester
+              select module code: name
+              select lecturers
+             -->
+          </nb-tab>
+
           <nb-tab *ngIf="hasAccess" tabTitle="Module" active="{{ setActiveAddModule }}">
             <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert" style="text-align: center;">
               {{error}}
@@ -106,15 +123,6 @@
             </form>
           </nb-tab>
 
-          <nb-tab *ngIf="hasAccess" tabTitle="Assign Modules" active="{{ setActiveAddAssignModules }}">
-            <h4 style="margin-top: 10px;">Assign Module to a Semester</h4>
-            <!-- 
-              select semester
-              select module code: name
-              select lecturers
-             -->
-          </nb-tab>
-
           <nb-tab *ngIf="hasAccess" tabTitle="Semester" active="{{ setActiveSemester }}">
             <h4 style="margin-top: 10px;">Add Semester</h4>
             <!-- 
@@ -128,7 +136,12 @@
 
     <nb-card>
       <nb-card-header>
-        <h4>Details</h4>
+        <h4>Details
+          <button nbButton size="small" status="basic" ghost (click)="onClickClose()" nbTooltip="Clear Details"
+            style="float: right;" *ngIf="moduleDetails">
+            <nb-icon icon="close-outline"></nb-icon>
+          </button>
+        </h4>
       </nb-card-header>
       <nb-card-body>
         <div *ngIf="moduleDetails">
@@ -141,14 +154,25 @@
             <br>
           </p>
 
-          <div class="card" style="width: 85%;">
+          <!-- <div class="card" style="width: 85%;">
             <div class="card-header">
               <h6>Lecturers</h6>
             </div>
             <ul class="list-group list-group-flush">
               <li *ngFor="let l of moduleDetails.lecturers" class="list-group-item">{{ l.title }} {{ l.name }}</li>
             </ul>
-          </div>
+          </div> -->
+
+          <nb-card class="nb-card-list" style="margin-top: 10px">
+            <nb-card-header>
+              <b>Lecturers</b>
+            </nb-card-header>
+            <nb-list>
+              <nb-list-item *ngFor="let l of moduleDetails.lecturers">
+                {{ l.title }} {{ l.name }}
+              </nb-list-item>
+            </nb-list>
+          </nb-card>
 
           <div class="inline" *ngIf="hasAccess">
             <button nbButton status="warning" style="margin-top: 10px;" (click)="edit(moduleDetails.id)">Edit</button>

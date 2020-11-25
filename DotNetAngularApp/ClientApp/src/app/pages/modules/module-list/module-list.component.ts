@@ -15,11 +15,7 @@ import { UserService } from '../../../services/user.service';
 @Component({
   selector: 'module-list',
   templateUrl: './module-list.component.html',
-  styles: [`
-  .table tr {
-    cursor: pointer;
-  }
-  `]
+  styleUrls: ['./module-list.component.scss']
 })
 export class ModuleListComponent implements OnInit {
   hasAccess = false;
@@ -34,6 +30,7 @@ export class ModuleListComponent implements OnInit {
   moduleDetails: any;
   modules: any;
   semesters: any;
+  selectedSemester: any;
   allOfferings: any;
   offerings: any = [];
   majors: any;
@@ -91,6 +88,8 @@ export class ModuleListComponent implements OnInit {
 
   onSemesterFilter() {
     this.offerings = this.allOfferings.filter(o => o.semesterId == this.filter.semesterId);
+
+    this.selectedSemester = this.semesters.find(s => s.id == this.filter.semesterId);
   }
 
   submit() {
@@ -173,6 +172,10 @@ export class ModuleListComponent implements OnInit {
     this.module.code = '';
     this.module.majorId = 0;
     // this.module.lecturers = [];
+  }
+
+  onClickClose() {
+    this.moduleDetails = null;
   }
 
   redirectTo(uri:string){

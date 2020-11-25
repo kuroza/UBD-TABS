@@ -34,18 +34,19 @@ export const MENU_ITEMS_ADMIN: NbMenuItem[] = [
     group: true,
   },
   {
-    title: 'Bookings',
+    title: 'Booking',
     icon: 'file-add-outline',
-    children: [
-      {
-        title: 'Add new booking',
-        link: '/pages/bookings/new',
-      },
-      {
-        title: 'View all bookings',
-        link: '/pages/bookings',
-      },
-    ],
+    link: '/pages/bookings/new',
+    // children: [
+    //   {
+    //     title: 'Add new booking',
+    //     link: '/pages/bookings/new',
+    //   },
+    //   {
+    //     title: 'View all bookings',
+    //     link: '/pages/bookings',
+    //   },
+    // ],
   },
   {
     title: 'Buildings and Rooms',

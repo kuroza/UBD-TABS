@@ -36,7 +36,7 @@
             <tbody>
               <tr *ngFor="let room of b.rooms">
                 <!-- <th scope="row">{{ room.id }}</th> -->
-                <th scope="row" (click)="selectRoom(room.id)">{{ room.name }}</th>
+                <td scope="row" (click)="selectRoom(room.id)">{{ room.name }}</td>
                 <td (click)="selectRoom(room.id)">{{ room.capacity }}</td>
                 <td><a href="javascript:void(0);" (click)="editRoom(room.id)" *ngIf="hasAccess">
                     <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>

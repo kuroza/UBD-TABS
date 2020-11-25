@@ -1,0 +1,12 @@
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+.nb-card-list {
+    max-height: 15rem;;
+    width: 88%;
+    // margin-left: -20px;
+}
+
+.table tr {
+    cursor: pointer;
+}
