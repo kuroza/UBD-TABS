@@ -1,38 +1,68 @@
-import { LecturerService } from './../../services/lecturer.service';
-import { ModuleService } from './../../services/module.service';
-import { FacultyService } from './../../services/faculty.service';
-import { MajorService } from '../../services/major.service';
-import { SemesterService } from './../../services/semester.service';
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { BookingService } from '../../services/booking.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ToastyService } from 'ng2-toasty';
-import { BuildingService } from '../../services/building.service';
+import {
+  LecturerService
+} from './../../services/lecturer.service';
+import {
+  ModuleService
+} from './../../services/module.service';
+import {
+  FacultyService
+} from './../../services/faculty.service';
+import {
+  MajorService
+} from '../../services/major.service';
+import {
+  SemesterService
+} from './../../services/semester.service';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit
+} from '@angular/core';
+import {
+  BookingService
+} from '../../services/booking.service';
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router';
+import {
+  ToastyService
+} from 'ng2-toasty';
+import {
+  BuildingService
+} from '../../services/building.service';
 import {
   CalendarEvent,
   CalendarEventTitleFormatter,
   CalendarView,
   DAYS_OF_WEEK
 } from 'angular-calendar';
-import { CustomEventTitleFormatter } from './custom-event-title-formatter.provider';
-import { Subject } from 'rxjs';
-import { 
+import {
+  CustomEventTitleFormatter
+} from './custom-event-title-formatter.provider';
+import {
+  Subject
+} from 'rxjs';
+import {
   isSameDay,
   isSameMonth,
 } from 'date-fns';
-import { colors } from '../../@theme/components/calendar-header/colors';
-import { UserService } from '../../services/user.service';
+import {
+  colors
+} from '../../@theme/components/calendar-header/colors';
+import {
+  UserService
+} from '../../services/user.service';
 
 @Component({
   selector: 'ngx-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  providers: [
-    {
-      provide: CalendarEventTitleFormatter,
-      useClass: CustomEventTitleFormatter,
-    },
-  ],
+  providers: [{
+    provide: CalendarEventTitleFormatter,
+    useClass: CustomEventTitleFormatter,
+  }, ],
 })
 export class HomeComponent {
   hasAccess = true;
@@ -59,7 +89,7 @@ export class HomeComponent {
   viewDate: Date = new Date();
   activeDayIsOpen: boolean = false;
   date: string;
-  refresh: Subject<any> = new Subject();
+  refresh: Subject < any > = new Subject();
   events: CalendarEvent[] = [];
   startDateTime: any;
   endDateTime: any;
@@ -67,7 +97,7 @@ export class HomeComponent {
   endTime: any;
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     private router: Router,
     private toasty: ToastyService,
     private bookingService: BookingService,
@@ -78,7 +108,7 @@ export class HomeComponent {
     private facultyService: FacultyService,
     private moduleService: ModuleService,
     private lecturerService: LecturerService
-    ) {}
+  ) {}
 
   async ngOnInit() {
     if (localStorage.getItem('token') != null) {
@@ -87,7 +117,7 @@ export class HomeComponent {
 
     this.facultyService.getAllFaculties()
       .subscribe(faculties => this.faculties = faculties);
-      
+
     this.buildingService.getAllBuildings() // get the buildings from service for filter drop down
       .subscribe(buildings => this.buildings = buildings); // and store in this.buildings
 
@@ -155,7 +185,7 @@ export class HomeComponent {
     this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
     this.resetCalendar();
     delete this.filter.rooms;
-    
+
     // filter events by building
     var bookings = this.allBookings;
     this.bookings = bookings.filter(b => b.rooms.find(r => r.building.id == this.filter.buildingId));
@@ -189,7 +219,11 @@ export class HomeComponent {
   //   var bookings = this.allBookings;
 
   //   if (this.filter.lecturerId)
-  //     bookings = bookings.filter(b => b.modules.find(module => module.lecturers.find(lecturer => lecturer.id == this.filter.lecturerId)));
+  //     bookings = bookings
+  //       .filter(booking => booking.offerings
+  //         .find(offering => offering.modules
+  //           .find(module => module.lecturers
+  //             .find(lecturer => lecturer.id == this.filter.lecturerId))));
 
   //   this.bookings = bookings;
   //   this.populateCalendar();
@@ -224,17 +258,17 @@ export class HomeComponent {
         //     lecturers += `, ${b.offerings[0].lecturers[i].name} (${b.offerings[0].lecturers[i].title})`;
         // }
         if (b.offerings.length > 1) {
-          for (var i=1; i<b.offerings.length; i++) {
+          for (var i = 1; i < b.offerings.length; i++) {
             modules += `, ${b.offerings[i].module.code}: ${b.offerings[i].module.name}`;
             // for (var j=0; j<b.offerings[i].lecturers.length; j++)
             //   lecturers += `, ${b.offerings[i].lecturers[j].name} (${b.offerings[i].lecturers[j].title})`;
           }
         }
-        
+
         // * Iterate Rooms
         var rooms: string = `${b.rooms[0].name}`;
         if (b.rooms.length > 1) {
-          for (var i=1; i<b.rooms.length; i++)
+          for (var i = 1; i < b.rooms.length; i++)
             rooms += `, ${b.rooms[i].name}`;
         }
 
@@ -280,7 +314,12 @@ export class HomeComponent {
     window.location.reload();
   }
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  dayClicked({
+    date,
+    events
+  }: {
+    date: Date;events: CalendarEvent[]
+  }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -297,8 +336,12 @@ export class HomeComponent {
   onClick() {
     this.detailsAlert = false;
   }
-  
-  eventClicked({ event }: { event: CalendarEvent }): void {
+
+  eventClicked({
+    event
+  }: {
+    event: CalendarEvent
+  }): void {
     this.bookingService.getBooking(event.meta.id)
       .subscribe(b => this.booking = b);
   }
@@ -343,8 +386,10 @@ export class HomeComponent {
     this.successAlert = false;
   }
 
-  redirectTo(uri:string){
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
-    this.router.navigate([uri]));
- }
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', {
+      skipLocationChange: true
+    }).then(() =>
+      this.router.navigate([uri]));
+  }
 }

@@ -12,5 +12,6 @@ namespace DotNetAngularApp.Core
         // bool EditOfferingExist(Offering offering);
         Task<IEnumerable<Offering>> GetAllOfferings();
         Task<Offering> GetOffering(int id, bool includeRelated = true);
+        Task<Offering> GetModuleOffering(int id, bool includeRelated = true);
     }
 }

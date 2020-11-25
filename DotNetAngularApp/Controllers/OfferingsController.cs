@@ -123,6 +123,19 @@ namespace DotNetAngularApp.Controllers
             return Ok(offeringResource);
         }
 
+        [HttpGet("/api/offerings/module/{id}")]
+        public async Task<IActionResult> GetModuleOffering(int id)
+        {
+            var moduleOffering = await repository.GetModuleOffering(id);
+
+            if (moduleOffering == null)
+                return NotFound();
+
+            var offeringResource = mapper.Map<Offering, OfferingResource>(moduleOffering);
+
+            return Ok(offeringResource);
+        }
+
         [HttpGet("/api/allofferings")]
         public async Task<IEnumerable<OfferingResource>> GetAllOfferings()
         {

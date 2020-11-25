@@ -33,6 +33,20 @@ namespace DotNetAngularApp.Persistence
                 .SingleOrDefaultAsync(o => o.Id == id);
         }
 
+        public async Task<Offering> GetModuleOffering(int id, bool includeRelated = true)
+        {
+            if (!includeRelated)
+                return await context.Offerings.FindAsync(id);
+
+            return await context.Offerings
+                .Include(o => o.Semester)
+                .Include(o => o.Module)
+                    .ThenInclude(o => o.Major)
+                .Include(o => o.Lecturers)
+                    .ThenInclude(o => o.Lecturer)
+                .SingleOrDefaultAsync(o => o.ModuleId == id);
+        }
+
         public async Task<IEnumerable<Offering>> GetAllOfferings()
         {
             return await context.Offerings

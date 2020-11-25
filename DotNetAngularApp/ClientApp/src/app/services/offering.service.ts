@@ -13,8 +13,13 @@ export class OfferingService {
   constructor(
     private http: HttpClient) { }
 
-  getBooking(id) {
+  getOffering(id) {
     return this.http.get(this.offeringsEndpoint + '/' + id)
+      .pipe(map(response => response));
+  }
+
+  getModuleOffering(id) {
+    return this.http.get(this.offeringsEndpoint + '/module/' + id)
       .pipe(map(response => response));
   }
 

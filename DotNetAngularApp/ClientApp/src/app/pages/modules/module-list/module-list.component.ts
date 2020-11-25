@@ -154,7 +154,7 @@ export class ModuleListComponent implements OnInit {
   }
 
   selectModule(id) {
-    this.moduleService.getModule(id)
+    this.offeringService.getModuleOffering(id)
     .subscribe(
       m => {
         this.moduleDetails = m;
