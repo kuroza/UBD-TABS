@@ -1,3 +1,4 @@
+import { SaveOffering } from './../../../models/offering';
 import { SemesterService } from './../../../services/semester.service';
 import { OfferingService } from './../../../services/offering.service';
 import { MajorService } from '../../../services/major.service';
@@ -19,6 +20,7 @@ import { UserService } from '../../../services/user.service';
 })
 export class ModuleListComponent implements OnInit {
   hasAccess = false;
+  setActiveAddAssignModules: boolean;
   setActiveAddModule: boolean;
   setActiveSemester: boolean;
   error: string;
@@ -27,6 +29,7 @@ export class ModuleListComponent implements OnInit {
   detailsAlert: boolean = true;
 
   filter: any = {};
+  moduleOfferingDetails: any;
   moduleDetails: any;
   modules: any;
   semesters: any;
@@ -40,9 +43,15 @@ export class ModuleListComponent implements OnInit {
     id: 0,
     name: '',
     code: '',
-    majorId: 0,
-    // lecturers: [],
+    majorId: 0
   };
+
+  // offering: SaveOffering = {
+  //   id: 0,
+  //   semesterId: 0,
+  //   moduleId: 0,
+  //   lecturers: []
+  // }
 
   constructor(
     private moduleService: ModuleService,
@@ -61,17 +70,28 @@ export class ModuleListComponent implements OnInit {
       this.hasAccess = this.userService.hasAccess();
     }
 
-    this.semesterService.getAllSemesters()
-      .subscribe(semesters => this.semesters = semesters);
+    var sources = [
+      this.semesterService.getAllSemesters(),
+      this.offeringService.getAllOfferings(),
+      this.majorService.getAllMajors(),
+      this.lecturerService.getAllLecturers(),
+      this.moduleService.getAllModules()
+    ]
 
-    this.offeringService.getAllOfferings()
-      .subscribe(allOfferings => this.allOfferings = allOfferings);
+    Observable.forkJoin(sources)
+      .subscribe(data => {
+        this.semesters = data[0];
+        this.allOfferings = data[1];
+        this.majors = data[2];
+        this.lecturers = data[3];
+        this.modules = data[4];
+      }, err => {
+        console.log(err);
+      });
+  }
 
-    this.majorService.getAllMajors()
-      .subscribe(majors => this.majors = majors);
+  private setModuleOffering(m) {
 
-    this.lecturerService.getAllLecturers()
-      .subscribe(lecturers => this.lecturers = lecturers);
   }
 
   private setModule(m) {
@@ -83,7 +103,6 @@ export class ModuleListComponent implements OnInit {
 
   onSemesterFilter() {
     this.offerings = this.allOfferings.filter(o => o.semesterId == this.filter.semesterId);
-
     this.selectedSemester = this.semesters.find(s => s.id == this.filter.semesterId);
   }
 
@@ -123,15 +142,45 @@ export class ModuleListComponent implements OnInit {
     this.detailsAlert = false;
   }
 
-  edit(id) {
+  editModuleOffering(id) {
+    this.offeringService.getModuleOffering(id)
+    .subscribe(
+      m => {
+        this.setActiveSemester = false;
+        this.setActiveAddModule = false;
+        this.setActiveAddAssignModules = true;
+        this.setModuleOffering(m);
+      });
+  }
+
+  editModule(id) {
     this.moduleService.getModule(id)
     .subscribe(
       m => {
+        this.setActiveAddAssignModules = false;
+        this.setActiveSemester = false;
+        this.setActiveAddModule = true;
         this.setModule(m);
       });
   }
 
-  delete(id) {
+  deleteModuleOffering(id) {
+    if (confirm("Are you sure?")) {
+      this.offeringService.delete(id)
+        .subscribe(x => {
+          this.toastyService.success({
+            title: 'Success', 
+            msg: 'Module was sucessfully deleted.',
+            theme: 'bootstrap',
+            showClose: true,
+            timeout: 3000
+          });
+          this.redirectTo('/pages/modules');
+        });
+    }
+  }
+
+  deleteModule(id) {
     if (confirm("Are you sure?")) {
       this.moduleService.delete(id)
         .subscribe(x => {
@@ -147,18 +196,35 @@ export class ModuleListComponent implements OnInit {
     }
   }
 
-  selectModule(id) {
+  selectModuleOffering(id) {
     this.offeringService.getModuleOffering(id)
-    .subscribe(
-      m => {
-        this.moduleDetails = m;
-      },
-      err => {
-        if (err.status == 404) {
-          this.redirectTo('/pages/modules');
-          return; 
-        }
-      });
+      .subscribe(
+        m => {
+          this.moduleDetails = null;
+          this.moduleOfferingDetails = m;
+        },
+        err => {
+          if (err.status == 404) {
+            this.redirectTo('/pages/modules');
+            return; 
+          }
+        });
+  }
+
+  selectModule(id) {
+    this.moduleService.getModule(id)
+      .subscribe(
+        m => {
+          this.detailsAlert = false;
+          this.moduleOfferingDetails = null;
+          this.moduleDetails = m;
+        },
+        err => {
+          if (err.status == 404) {
+            this.redirectTo('/pages/modules');
+            return; 
+          }
+        });
   }
 
   onClickBack() {
@@ -170,7 +236,9 @@ export class ModuleListComponent implements OnInit {
   }
 
   onClickClose() {
+    this.moduleOfferingDetails = null;
     this.moduleDetails = null;
+
   }
 
   redirectTo(uri:string){

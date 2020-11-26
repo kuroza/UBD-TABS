@@ -32,32 +32,79 @@
               </thead>
               <tbody>
                 <tr *ngFor="let offering of offerings">
-                  <td (click)="selectModule(offering.module.id)">{{ offering.module.code }}</td>
-                  <td (click)="selectModule(offering.module.id)">{{ offering.module.name }}</td>
-                  <td><a href="javascript:void(0);" (click)="edit(offering.module.id)" *ngIf="hasAccess">
+                  <td (click)="selectModuleOffering(offering.module.id)">{{ offering.module.code }}</td>
+                  <td (click)="selectModuleOffering(offering.module.id)">{{ offering.module.name }}</td>
+                  <td><a href="javascript:void(0);" (click)="editModuleOffering(offering.module.id)" *ngIf="hasAccess">
                       <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
                     </a></td>
-                  <td><a href="javascript:void(0);" (click)="delete(offering.module.id)" *ngIf="hasAccess">
+                  <td><a href="javascript:void(0);" (click)="deleteModuleOffering(offering.module.id)" *ngIf="hasAccess">
                       <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
                     </a></td>
                 </tr>
               </tbody>
             </table>
-            <!-- <div class="alert alert-danger" *ngIf="offerings == 0" style="margin-top: 20px; text-align: center;">
-              Please select a semester
-            </div> -->
           </nb-tab>
 
           <nb-tab tabTitle="Modules List">
-            <nb-card-header style="border-bottom: none;">
-              <h4>All Modules</h4>
-            </nb-card-header>
+            <div style="margin-top: -16px;">
+              <nb-card-header style="border-bottom: none;">
+                <h4>All Modules</h4>
+              </nb-card-header>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th style="width: 20%" scope="col">Module Code</th>
+                    <th style="width: 70%" scope="col">Module Name</th>
+                    <th style="width: 5%" scope="col"></th>
+                    <th style="width: 5%" scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let module of modules">
+                    <td (click)="selectModule(module.id)">{{ module.code }}</td>
+                    <td (click)="selectModule(module.id)">{{ module.name }}</td>
+                    <td><a href="javascript:void(0);" (click)="editModule(module.id)" *ngIf="hasAccess">
+                        <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
+                      </a></td>
+                    <td><a href="javascript:void(0);" (click)="deleteModule(module.id)" *ngIf="hasAccess">
+                        <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
+                      </a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </nb-tab>
 
           <nb-tab tabTitle="Semester List">
-            <nb-card-header style="border-bottom: none;">
-              <h4>All Semesters</h4>
-            </nb-card-header>
+            <div style="margin-top: -16px;">
+              <nb-card-header style="border-bottom: none;">
+                <h4>All Semesters</h4>
+              </nb-card-header>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th style="width: 30%" scope="col">Session</th>
+                    <th style="width: 30%" scope="col">Start date</th>
+                    <th style="width: 30%" scope="col">End date</th>
+                    <th style="width: 5%" scope="col"></th>
+                    <th style="width: 5%" scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let semester of semesters">
+                    <td>{{ semester.session }}</td> <!-- (click)="selectSemester(semester.id)" -->
+                    <td>{{ semester.startDate | date:'dd/MM/yyyy' }}</td>
+                    <td>{{ semester.endDate | date:'dd/MM/yyyy' }}</td>
+                    <td><a href="javascript:void(0);" (click)="editSemester(semester.id)" *ngIf="hasAccess">
+                        <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
+                      </a></td>
+                    <td><a href="javascript:void(0);" (click)="deleteSemester(semester.id)" *ngIf="hasAccess">
+                        <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
+                      </a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </nb-tab>
 
         </nb-tabset>
@@ -147,26 +194,50 @@
         </h4>
       </nb-card-header>
       <nb-card-body>
-        <div *ngIf="moduleDetails">
+        <div *ngIf="moduleOfferingDetails">
           <p>
-            <span><b>Major:</b> {{ moduleDetails.module.major.name }}</span>
+            <span><b>Major:</b> {{ moduleOfferingDetails.module.major.name }}</span>
             <br>
-            <span><b>Module code:</b> {{ moduleDetails.module.code }}</span>
+            <span><b>Module code:</b> {{ moduleOfferingDetails.module.code }}</span>
             <br>
-            <span><b>Module name:</b> {{ moduleDetails.module.name }}</span>
+            <span><b>Module name:</b> {{ moduleOfferingDetails.module.name }}</span>
             <br>
           </p>
 
-          <!-- <div class="card" style="width: 85%;">
-            <div class="card-header">
-              <h6>Lecturers</h6>
-            </div>
-            <ul class="list-group list-group-flush">
-              <li *ngFor="let l of moduleDetails.lecturers" class="list-group-item">{{ l.title }} {{ l.name }}</li>
-            </ul>
-          </div> -->
-
           <nb-card class="nb-card-list" style="margin-top: 10px">
+            <nb-card-header>
+              <b>Lecturers</b>
+            </nb-card-header>
+            <nb-list>
+              <nb-list-item *ngFor="let l of moduleOfferingDetails.lecturers">
+                {{ l.title }} {{ l.name }}
+              </nb-list-item>
+            </nb-list>
+          </nb-card>
+
+          <div class="inline" *ngIf="hasAccess">
+            <button nbButton status="warning" style="margin-top: 10px;" (click)="edit(moduleOfferingDetails.id)">Edit</button>
+            <button nbButton status="danger" style="margin-left: 5px; margin-top: 10px;"
+              (click)="delete(moduleOfferingDetails.id)">Delete</button>
+          </div>
+        </div>
+        <div *ngIf="!moduleOfferingDetails" style="margin-top: 10px;">
+          <nb-alert status="basic" closable (close)="onCloseDetails()" *ngIf="detailsAlert" style="text-align: center;">
+            Click on table row to show its details
+          </nb-alert>
+        </div>
+
+        <div *ngIf="moduleDetails">
+          <p>
+            <span><b>Major:</b> {{ moduleDetails.name }}</span>
+            <br>
+            <span><b>Module code:</b> {{ moduleDetails.code }}</span>
+            <br>
+            <span><b>Module name:</b> {{ moduleDetails.name }}</span>
+            <br>
+          </p>
+
+          <!-- <nb-card class="nb-card-list" style="margin-top: 10px">
             <nb-card-header>
               <b>Lecturers</b>
             </nb-card-header>
@@ -175,7 +246,7 @@
                 {{ l.title }} {{ l.name }}
               </nb-list-item>
             </nb-list>
-          </nb-card>
+          </nb-card> -->
 
           <div class="inline" *ngIf="hasAccess">
             <button nbButton status="warning" style="margin-top: 10px;" (click)="edit(moduleDetails.id)">Edit</button>
@@ -183,11 +254,11 @@
               (click)="delete(moduleDetails.id)">Delete</button>
           </div>
         </div>
-        <div *ngIf="!moduleDetails" style="margin-top: 10px;">
+        <!-- <div *ngIf="!moduleDetails" style="margin-top: 10px;">
           <nb-alert status="basic" closable (close)="onCloseDetails()" *ngIf="detailsAlert" style="text-align: center;">
             Click on table row to show its details
           </nb-alert>
-        </div>
+        </div> -->
       </nb-card-body>
     </nb-card>
   </div>
