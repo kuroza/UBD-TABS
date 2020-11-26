@@ -55,7 +55,7 @@ namespace DotNetAngularApp.Persistence
                     .ThenInclude(o => o.Major)
                 .Include(o => o.Lecturers)
                     .ThenInclude(o => o.Lecturer)
-                // .OrderBy(o => o.Id)
+                .OrderBy(o => o.Module.Code)
                 .ToListAsync();
         }
 

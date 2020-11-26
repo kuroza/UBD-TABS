@@ -18,7 +18,7 @@ namespace DotNetAngularApp.Persistence
         public async Task<IEnumerable<Semester>> GetAllSemesters()
         {
             return await context.Semesters
-                .OrderBy(s => s.Session)
+                .OrderByDescending(s => s.Session)
                 .ToListAsync();
         }
 
