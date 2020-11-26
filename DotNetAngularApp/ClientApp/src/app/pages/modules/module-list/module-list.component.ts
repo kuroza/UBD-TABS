@@ -46,12 +46,12 @@ export class ModuleListComponent implements OnInit {
     majorId: 0
   };
 
-  // offering: SaveOffering = {
-  //   id: 0,
-  //   semesterId: 0,
-  //   moduleId: 0,
-  //   lecturers: []
-  // }
+  offering: SaveOffering = {
+    id: 0,
+    semesterId: 0,
+    moduleId: 0,
+    lecturers: []
+  };
 
   constructor(
     private moduleService: ModuleService,
@@ -106,7 +106,7 @@ export class ModuleListComponent implements OnInit {
     this.selectedSemester = this.semesters.find(s => s.id == this.filter.semesterId);
   }
 
-  submit() {
+  submitModule() {
     var result$ = (this.module.id) ? this.moduleService.update(this.module) : this.moduleService.create(this.module);
 
     result$.subscribe(() => {
@@ -118,6 +118,7 @@ export class ModuleListComponent implements OnInit {
         timeout: 3000
       });
       this.redirectTo('/pages/modules');
+      // here, set the tab to Modules List
     },
     err => {
       if (err.status == 409) {
@@ -133,6 +134,35 @@ export class ModuleListComponent implements OnInit {
     });
   }
 
+  submitAssignModule() {
+    var result$ = (this.offering.id) ? this.offeringService.update(this.offering) : this.offeringService.create(this.offering);
+
+    result$.subscribe(() => {
+      this.toastyService.success({
+        title: 'Success', 
+        msg: 'Module was sucessfully assigned to semester.',
+        theme: 'bootstrap',
+        showClose: true,
+        timeout: 3000
+      });
+      this.redirectTo('/pages/modules');
+      // here, set the tab to Modules Offered
+    },
+    err => {
+      if (err.status == 409) {
+        console.log(err.error);
+        // this.requiredAlert = false;
+        // this.error = err.error;
+        // this.existAlert = true;
+      }
+      else if (err.status == 400) {
+        console.log(err.error);
+        // this.existAlert = false;
+        // this.requiredAlert = true;
+      }
+    })
+  }
+
   onClose() {
     this.existAlert = false;
     this.requiredAlert = false;
@@ -143,7 +173,7 @@ export class ModuleListComponent implements OnInit {
   }
 
   editModuleOffering(id) {
-    this.offeringService.getModuleOffering(id)
+    this.offeringService.getOffering(id)
     .subscribe(
       m => {
         this.setActiveSemester = false;
@@ -170,7 +200,7 @@ export class ModuleListComponent implements OnInit {
         .subscribe(x => {
           this.toastyService.success({
             title: 'Success', 
-            msg: 'Module was sucessfully deleted.',
+            msg: 'Module was sucessfully removed from semester.',
             theme: 'bootstrap',
             showClose: true,
             timeout: 3000
@@ -196,8 +226,8 @@ export class ModuleListComponent implements OnInit {
     }
   }
 
-  selectModuleOffering(id) {
-    this.offeringService.getModuleOffering(id)
+  selectOffering(id) {
+    this.offeringService.getOffering(id)
       .subscribe(
         m => {
           this.moduleDetails = null;
@@ -210,6 +240,21 @@ export class ModuleListComponent implements OnInit {
           }
         });
   }
+
+  // selectModuleOffering(id) {
+  //   this.offeringService.getModuleOffering(id)
+  //     .subscribe(
+  //       m => {
+  //         this.moduleDetails = null;
+  //         this.moduleOfferingDetails = m;
+  //       },
+  //       err => {
+  //         if (err.status == 404) {
+  //           this.redirectTo('/pages/modules');
+  //           return; 
+  //         }
+  //       });
+  // }
 
   selectModule(id) {
     this.moduleService.getModule(id)

@@ -18,10 +18,10 @@ export class OfferingService {
       .pipe(map(response => response));
   }
 
-  getModuleOffering(id) {
-    return this.http.get(this.offeringsEndpoint + '/module/' + id)
-      .pipe(map(response => response));
-  }
+  // getModuleOffering(id) {
+  //   return this.http.get(this.offeringsEndpoint + '/module/' + id)
+  //     .pipe(map(response => response));
+  // }
 
   getAllOfferings() {
     return this.http.get('/api/allofferings')

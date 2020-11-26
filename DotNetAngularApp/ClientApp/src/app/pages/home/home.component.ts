@@ -133,8 +133,8 @@ export class HomeComponent {
       this.allOfferings = data[3];
       this.bookings = this.allBookings = data[4];
 
-      this.populateCalendar(); // show all events on init
-      this.refresh.next(); // refresh calendar after loading
+      this.populateCalendar();
+      this.refresh.next();
     }, error => {
       console.log(error);
     });
@@ -225,28 +225,40 @@ export class HomeComponent {
 
   // * Filter by lecturers ---------------------------------------------------------------
 
-  // onLecturerChange() {
-  //   this.resetCalendar();
-  //   var bookings = this.allBookings;
+  onLecturerChange() {
+    this.resetCalendar();
+    var bookings = this.allBookings;
+    var offerings = this.allOfferings;
 
-  //   if (this.filter.lecturerId)
-  //     bookings = bookings
-  //       .filter(booking => booking.offerings
-  //         .find(offering => offering.modules
-  //           .find(module => module.lecturers
-  //             .find(lecturer => lecturer.id == this.filter.lecturerId))));
+    // if (this.filter.lecturerId) {
+    //   bookings = bookings
+    //     .filter(booking => booking.offerings
+    //       .find(offering => offering.modules
+    //         .find(module => module.lecturers
+    //           .find(lecturer => lecturer.id == this.filter.lecturerId))));
+    // }
 
-  //   this.bookings = bookings;
-  //   this.populateCalendar();
-  // }
+    if (this.filter.lecturerId) {
+      // * From lecturerId, filter Offerings
+      offerings = offerings.filter(offering => offering.lecturers.find(l => l.id == this.filter.lecturerId));
+      
+      // * From Offerings, filter Bookings
+      offerings.forEach(o => {
+        bookings = bookings.filter(b => b.offerings.find(bo => bo.id == o.id));
+      });
+    }
+    
+    this.bookings = bookings;
+    this.populateCalendar();
+  }
 
-  // resetLecturerFilter() {
-  //   this.filter = {};
-  //   this.lecturers = [];
-  //   delete this.filter.lecturers;
-  //   this.resetCalendar();
-  //   this.showAllBookings();
-  // }
+  resetLecturerFilter() {
+    this.filter = {};
+    // this.lecturers = [];
+    delete this.filter.lecturers;
+    this.resetCalendar();
+    this.showAllBookings();
+  }
 
   showAllBookings() {
     this.bookings = this.allBookings;
