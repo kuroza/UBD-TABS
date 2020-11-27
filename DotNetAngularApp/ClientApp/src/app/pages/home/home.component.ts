@@ -232,11 +232,17 @@ export class HomeComponent {
 
     if (this.filter.lecturerId) {
       // * From lecturerId, filter Offerings
-      var offeringIds = offerings.filter(offering => offering.lecturers.find(l => l.id == this.filter.lecturerId)).map(offering => offering.id);
+      var offeringIds = offerings
+        .filter(offering => offering.lecturers
+        .find(l => l.id == this.filter.lecturerId))
+        .map(offering => offering.id);
 
       // * From Offerings, filter Bookings
       offeringIds.forEach(offeringId => {
-        this.bookings = this.allBookings.filter(b => b.offerings.find(bo => bo.id == offeringId));
+        this.bookings = this.allBookings
+          .filter(b => b.offerings
+          .find(bo => bo.id == offeringId));
+
         this.populateCalendar();
       });
     }
@@ -260,6 +266,8 @@ export class HomeComponent {
     for (let b of this.bookings) {
       //  * Get Offering Id
       var offeringId = b.offerings[0].id; // ! assuming the lecturers for all the modules are the same
+      // var offeringIds = b.offerings.map(offering => offering.id);
+
       // * Filter allOfferings based on the offerings Id
       var filteredOffering = this.allOfferings.find(o => o.id == offeringId);
       var lecturers: string = `${filteredOffering.lecturers[0].name} (${filteredOffering.lecturers[0].title})`;

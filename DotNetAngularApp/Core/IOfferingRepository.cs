@@ -9,6 +9,7 @@ namespace DotNetAngularApp.Core
     {
         void Add(Offering offering);
         void Remove(Offering offering);
+        bool ModuleOfferingExist(Offering offering);
         // bool EditOfferingExist(Offering offering);
         Task<IEnumerable<Offering>> GetAllOfferings();
         Task<Offering> GetOffering(int id, bool includeRelated = true);

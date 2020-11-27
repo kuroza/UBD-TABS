@@ -69,6 +69,20 @@ namespace DotNetAngularApp.Persistence
             context.Remove(offering);
         }
 
+        public bool ModuleOfferingExist(Offering offering)
+        {
+            var result = context.Offerings
+                .Where(o => o.SemesterId == offering.SemesterId)
+                .Where(o => o.ModuleId == offering.ModuleId)
+                // .Where(o => o.Lecturers.Select(lo => lo.LecturerId).Any(x => offering.Lecturers.Select(lo => lo.LecturerId).Contains(x)))
+                .Count();
+
+            if (result > 0)
+                return true;
+            else
+                return false;
+        }
+
         // public bool EditBookingExist(Booking booking)
         // {
         //     var result = context.Bookings

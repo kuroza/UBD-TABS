@@ -212,13 +212,11 @@
                     placeholder="Session title">
                 </div>
               </ng-container>
-
               <div class="form-group" style="margin-top: 10px;">
                 <label>Pick date range *</label>
                 <input nbInput filled fullWidth placeholder="Pick Date Range" [nbDatepicker]="formpicker">
                 <nb-rangepicker #formpicker></nb-rangepicker>
               </div>
-
               <div style="margin-top: 10px;">
                 <button *ngIf="!semester.id" nbButton fullWidth [disabled]="!h.valid">Add</button>
                 <button *ngIf="semester.id" nbButton fullWidth [disabled]="!h.valid">Save</button>

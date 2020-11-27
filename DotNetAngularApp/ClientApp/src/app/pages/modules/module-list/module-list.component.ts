@@ -159,14 +159,13 @@ export class ModuleListComponent implements OnInit {
     err => {
       if (err.status == 409) {
         console.log(err.error);
-        // this.requiredAlert = false;
-        // this.error = err.error;
-        // this.existAlert = true;
+        this.requiredAlert = false;
+        this.error = err.error;
+        this.existAlert = true;
       }
-      else if (err.status == 400) {
-        console.log(err.error);
-        // this.existAlert = false;
-        // this.requiredAlert = true;
+      else if (err.status == 400 || err.status == 500) {
+        this.existAlert = false;
+        this.requiredAlert = true;
       }
     })
   }
