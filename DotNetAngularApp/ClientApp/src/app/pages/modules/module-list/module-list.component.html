@@ -4,9 +4,9 @@
       <nb-card-body>
         <nb-tabset fullWidth>
           <nb-tab tabTitle="Modules Offered"> <!-- active="{{ setActiveModuleList }}" -->
-            <div class="alert alert-danger" *ngIf="!filter.semesterId" style="text-align: center;">
+            <!-- <div class="alert alert-danger" *ngIf="!filter.semesterId" style="text-align: center;">
               Please select a semester
-            </div>
+            </div> -->
             <div style="margin-top: 10px;">
               <nb-card-header style="border-bottom: none;">
                 <h4 style="float: left;" *ngIf="!filter.semesterId">Modules Offered</h4>
@@ -128,11 +128,11 @@
             <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
               Please enter the required fields!
             </nb-alert>
-            <h4 *ngIf="module.id" style="margin-top: 10px;">Edit Module
-              <!-- <button nbButton size="small" status="basic" ghost (click)="onClickBack()" nbTooltip="Return to Add"
+            <h4 *ngIf="offering.id" style="margin-top: 10px;">Edit Assigned Modules
+              <button nbButton size="small" status="basic" ghost (click)="onClickBackAssign()" nbTooltip="Return to Add"
                 style="float: right;">
                 <nb-icon icon="arrow-back-outline"></nb-icon>Back
-              </button> -->
+              </button>
             </h4>
             <h4 *ngIf="!offering.id" style="margin-top: 10px;">Assign Module to a Semester</h4>
              <form #g="ngForm" (ngSubmit)="submitAssignModule()" novalidate>
@@ -202,6 +202,7 @@
             </form>
           </nb-tab>
 
+          <!-- * Add/edit Semester -->
           <nb-tab *ngIf="hasAccess" tabTitle="Semester" active="{{ setActiveSemester }}">
             <h4 style="margin-top: 10px;">Add Semester</h4>
             <form #h="ngForm" (ngSubmit)="submitSemester()" novalidate>
@@ -221,7 +222,7 @@
                 <button *ngIf="!semester.id" nbButton fullWidth [disabled]="!h.valid">Add</button>
                 <button *ngIf="semester.id" nbButton fullWidth [disabled]="!h.valid">Save</button>
               </div>
-              <br><pre>{{ semester | json }}</pre>
+              <!-- <br><pre>{{ semester | json }}</pre> -->
             </form>
           </nb-tab>
         </nb-tabset>

@@ -17,10 +17,8 @@ export interface Booking {
         facultyId: number;
         name: string;
         shortName: string;
-        // modules: any[];
       }
     };
-    // lecturers: any[];
   }[];
   bookDates: {
     date: string
@@ -50,5 +48,5 @@ export interface SaveBooking {
   timeSlots: number[];
   bookDates: string[];
   purpose: string;
-  buildingId: number; // redundant?
+  buildingId: number;
 }

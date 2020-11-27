@@ -1,4 +1,4 @@
-export interface Room { // from resource
+export interface Room {
     id: number;
     name: string;
     capacity: number;

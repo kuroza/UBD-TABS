@@ -1,10 +1,10 @@
 export interface SaveMajor {
     id: number;
     name: string;
-    facultyId: number; // !
+    facultyId: number;
 }
 
-export interface Major { // from resource
+export interface Major {
     id: number;
     name: string;
     faculty: { id: number, name: string }

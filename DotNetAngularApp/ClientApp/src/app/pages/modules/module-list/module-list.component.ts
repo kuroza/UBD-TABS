@@ -98,15 +98,17 @@ export class ModuleListComponent implements OnInit {
       });
   }
 
-  private setModuleOffering(m) {
-
+  private setModuleOffering(mo) {
+    this.offering.id = mo.id;
+    this.offering.semesterId = mo.semesterId;
+    this.offering.moduleId = mo.moduleId;
+    this.offering.lecturers = _.pluck(mo.lecturers, 'id');
   }
 
   private setModule(m) {
     this.module.id = m.id;
     this.module.name = m.name;
     this.module.code = m.code;
-    // this.module.lecturers = _.pluck(m.lecturers, 'id');
   }
 
   onSemesterFilter() {
@@ -284,7 +286,13 @@ export class ModuleListComponent implements OnInit {
     this.module.name = '';
     this.module.code = '';
     this.module.majorId = 0;
-    // this.module.lecturers = [];
+  }
+
+  onClickBackAssign() {
+    this.offering.id = 0;
+    this.offering.semesterId = 0;
+    this.offering.moduleId = 0;
+    this.offering.lecturers = [];
   }
 
   onClickClose() {

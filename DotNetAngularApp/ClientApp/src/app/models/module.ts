@@ -3,5 +3,4 @@ export interface SaveModule {
     name: string;
     code: string;
     majorId: number;
-    // lecturers: number[];
 }

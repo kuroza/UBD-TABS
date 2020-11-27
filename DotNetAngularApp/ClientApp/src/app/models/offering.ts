@@ -1,6 +1,6 @@
 export interface Offering {
   id: number;
-  semesterId: number; // change to a Semester? no need. I just need it for displaying on booking event
+  semesterId: number;
   module: {
     id: number;
     name: string;
@@ -10,7 +10,6 @@ export interface Offering {
       facultyId: number;
       name: string;
       shortName: string;
-      // modules: any[];
     };
   };
   lecturers: {

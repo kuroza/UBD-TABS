@@ -1,4 +1,4 @@
-export interface Lecturer { // from resource
+export interface Lecturer {
     id: number;
     name: string;
     title: string;
