@@ -119,6 +119,7 @@
     <nb-card *ngIf="hasAccess">
       <nb-card-body>
         <nb-tabset fullWidth>
+
           <!-- * Assign Module to Semester -->
           <nb-tab *ngIf="hasAccess" tabTitle="Assign Modules" active="{{ setActiveAddAssignModules }}">
             <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert" style="text-align: center;">
@@ -193,29 +194,37 @@
                 <input id="name" type="text" class="form-control" [(ngModel)]="module.name" name="name"
                   placeholder="Module name">
               </div>
-              <!-- <div style="margin-top: 10px;">
-                <label>Lecturers *</label>
-                <nb-select filled multiple fullWidth placeholder="Select lecturers" [(selected)]="module.lecturers">
-                  <nb-option *ngFor="let l of lecturers" value="{{ l.id }}">{{ l.title }} {{ l.name }}</nb-option>
-                </nb-select><br>
-              </div> -->
               <div style="margin-top: 10px;">
                 <button *ngIf="!module.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="module.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
               </div>
-              <!-- <div style="margin-top: 10px;">
-                <button *ngIf="module.id" nbButton fullWidth status="basic">Back to add module</button>
-              </div> -->
               <!-- <br><pre>{{ module | json }}</pre> -->
             </form>
           </nb-tab>
 
           <nb-tab *ngIf="hasAccess" tabTitle="Semester" active="{{ setActiveSemester }}">
             <h4 style="margin-top: 10px;">Add Semester</h4>
-            <!-- 
-              semester session
-              range datepicker
-             -->
+            <form #h="ngForm" (ngSubmit)="submitSemester()" novalidate>
+              <ng-container class="form-group">
+                <div style="margin-top: 10px;">
+                  <label>Session title *</label>
+                  <input id="session" type="text" class="form-control" [(ngModel)]="semester.session" name="session"
+                    placeholder="Session title">
+                </div>
+              </ng-container>
+
+              <div class="form-group" style="margin-top: 10px;">
+                <label>Pick date range *</label>
+                <input nbInput filled fullWidth placeholder="Pick Date Range" [nbDatepicker]="formpicker">
+                <nb-rangepicker #formpicker></nb-rangepicker>
+              </div>
+
+              <div style="margin-top: 10px;">
+                <button *ngIf="!semester.id" nbButton fullWidth [disabled]="!h.valid">Add</button>
+                <button *ngIf="semester.id" nbButton fullWidth [disabled]="!h.valid">Save</button>
+              </div>
+              <br><pre>{{ semester | json }}</pre>
+            </form>
           </nb-tab>
         </nb-tabset>
       </nb-card-body>

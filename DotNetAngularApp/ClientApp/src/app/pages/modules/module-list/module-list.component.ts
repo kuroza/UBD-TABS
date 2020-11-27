@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as _ from 'underscore';
 import { UserService } from '../../../services/user.service';
+import { SaveSemester } from '../../../models/semester';
 
 @Component({
   selector: 'module-list',
@@ -51,6 +52,13 @@ export class ModuleListComponent implements OnInit {
     semesterId: 0,
     moduleId: 0,
     lecturers: []
+  };
+
+  semester: SaveSemester = {
+    id: 0,
+    session: '',
+    startDate: '',
+    endDate: ''
   };
 
   constructor(

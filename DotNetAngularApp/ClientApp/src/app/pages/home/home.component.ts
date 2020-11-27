@@ -1,5 +1,6 @@
-
-import { OfferingService } from './../../services/offering.service';
+import {
+  OfferingService
+} from './../../services/offering.service';
 import {
   LecturerService
 } from './../../services/lecturer.service';
@@ -227,34 +228,22 @@ export class HomeComponent {
 
   onLecturerChange() {
     this.resetCalendar();
-    var bookings = this.allBookings;
     var offerings = this.allOfferings;
-
-    // if (this.filter.lecturerId) {
-    //   bookings = bookings
-    //     .filter(booking => booking.offerings
-    //       .find(offering => offering.modules
-    //         .find(module => module.lecturers
-    //           .find(lecturer => lecturer.id == this.filter.lecturerId))));
-    // }
 
     if (this.filter.lecturerId) {
       // * From lecturerId, filter Offerings
-      offerings = offerings.filter(offering => offering.lecturers.find(l => l.id == this.filter.lecturerId));
-      
+      var offeringIds = offerings.filter(offering => offering.lecturers.find(l => l.id == this.filter.lecturerId)).map(offering => offering.id);
+
       // * From Offerings, filter Bookings
-      offerings.forEach(o => {
-        bookings = bookings.filter(b => b.offerings.find(bo => bo.id == o.id));
+      offeringIds.forEach(offeringId => {
+        this.bookings = this.allBookings.filter(b => b.offerings.find(bo => bo.id == offeringId));
+        this.populateCalendar();
       });
     }
-    
-    this.bookings = bookings;
-    this.populateCalendar();
   }
 
   resetLecturerFilter() {
     this.filter = {};
-    // this.lecturers = [];
     delete this.filter.lecturers;
     this.resetCalendar();
     this.showAllBookings();
@@ -275,7 +264,7 @@ export class HomeComponent {
       var filteredOffering = this.allOfferings.find(o => o.id == offeringId);
       var lecturers: string = `${filteredOffering.lecturers[0].name} (${filteredOffering.lecturers[0].title})`;
       if (filteredOffering.lecturers.length > 1) {
-        for (var i=1; i<filteredOffering.lecturers.length; i++) {
+        for (var i = 1; i < filteredOffering.lecturers.length; i++) {
           lecturers += `, ${filteredOffering.lecturers[i].name} (${filteredOffering.lecturers[i].title})`;
         }
       }
@@ -300,7 +289,7 @@ export class HomeComponent {
         purpose = `(${b.purpose})`;
       else
         purpose = '';
-      
+
       for (let bd of b.bookDates) { // * for multiple bookDates
         var dateFormat = require('dateformat');
         var bookDate = dateFormat(bd.date, 'yyyy-mm-dd'); // * format date
