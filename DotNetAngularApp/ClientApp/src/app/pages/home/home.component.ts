@@ -264,16 +264,21 @@ export class HomeComponent {
     this.nbSpinner = true;
 
     for (let b of this.bookings) {
-      //  * Get Offering Id
-      var offeringId = b.offerings[0].id; // ! assuming the lecturers for all the modules are the same
-      // var offeringIds = b.offerings.map(offering => offering.id);
-
-      // * Filter allOfferings based on the offerings Id
-      var filteredOffering = this.allOfferings.find(o => o.id == offeringId);
-      var lecturers: string = `${filteredOffering.lecturers[0].name} (${filteredOffering.lecturers[0].title})`;
-      if (filteredOffering.lecturers.length > 1) {
-        for (var i = 1; i < filteredOffering.lecturers.length; i++) {
-          lecturers += `, ${filteredOffering.lecturers[i].name} (${filteredOffering.lecturers[i].title})`;
+      // * Getting Lecturers for Offerings
+      var offeringIds: number[] = b.offerings.map(offering => offering.id);
+      var offering: any;
+      var moduleLecturers = new Set();
+      for (let id of offeringIds) {
+        offering = this.allOfferings.find(o => o.id == id);
+        for (let lecturer of offering.lecturers)
+          moduleLecturers.add(lecturer);
+      }
+      
+      var lecturerArray: any = Array.from(moduleLecturers);
+      var lecturers: string = `${lecturerArray[0].name} (${lecturerArray[0].title})`;
+      if (lecturerArray.length > 1) {
+        for (var i = 1; i < lecturerArray.length; i++) {
+          lecturers += `, ${lecturerArray[i].name} (${lecturerArray[i].title})`;
         }
       }
 
