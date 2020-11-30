@@ -1,3 +1,4 @@
+import { SaveTimeSlot } from './../../../models/timeSlot';
 import { ToastyService } from 'ng2-toasty';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TimeSlotService } from '../../../services/timeSlot.service';
@@ -13,6 +14,12 @@ export class TimeSlotListComponent implements OnInit {
   hasAccess = false;
 
   timeSlots: any;
+
+  timeSlot: SaveTimeSlot = {
+    id: 0,
+    startTime: '',
+    endTime: '',
+  };
 
   constructor(
     private timeSlotService: TimeSlotService,

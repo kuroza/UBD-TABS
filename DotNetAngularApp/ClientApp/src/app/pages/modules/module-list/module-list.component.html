@@ -261,9 +261,9 @@
           </nb-card>
 
           <div class="inline" *ngIf="hasAccess">
-            <button nbButton status="warning" style="margin-top: 10px;" (click)="edit(moduleOfferingDetails.id)">Edit</button>
+            <button nbButton status="warning" style="margin-top: 10px;" (click)="editModuleOffering(moduleOfferingDetails.id)">Edit</button>
             <button nbButton status="danger" style="margin-left: 5px; margin-top: 10px;"
-              (click)="delete(moduleOfferingDetails.id)">Delete</button>
+              (click)="deleteModuleOffering(moduleOfferingDetails.id)">Delete</button>
           </div>
         </div>
         <div *ngIf="!moduleOfferingDetails" style="margin-top: 10px;">
@@ -294,9 +294,9 @@
           </nb-card> -->
 
           <div class="inline" *ngIf="hasAccess">
-            <button nbButton status="warning" style="margin-top: 10px;" (click)="edit(moduleDetails.id)">Edit</button>
+            <button nbButton status="warning" style="margin-top: 10px;" (click)="editModule(moduleDetails.id)">Edit</button>
             <button nbButton status="danger" style="margin-left: 5px; margin-top: 10px;"
-              (click)="delete(moduleDetails.id)">Delete</button>
+              (click)="deleteModule(moduleDetails.id)">Delete</button>
           </div>
         </div>
         <!-- <div *ngIf="!moduleDetails" style="margin-top: 10px;">

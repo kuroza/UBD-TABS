@@ -47,7 +47,23 @@
         <h4>Add Time Slot</h4>
       </nb-card-header>
       <nb-card-body>
-
+        <form #k="ngForm" (ngSubmit)="submit()" novalidate>
+          <div class="form-group" style="margin-top: 10px;">
+            <label>Start time *</label>
+            <input id="startTime" type="text" class="form-control" [(ngModel)]="timeSlot.startTime" name="start time"
+              placeholder="Start time">
+          </div>
+          <div class="form-group" style="margin-top: 10px;">
+            <label>End time *</label>
+            <input id="endTime" type="text" class="form-control" [(ngModel)]="timeSlot.endTime" name="end time"
+              placeholder="End time">
+          </div>
+          <div style="margin-top: 10px;">
+            <button *ngIf="!timeSlot.id" nbButton fullWidth [disabled]="!k.valid">Add</button>
+            <button *ngIf="timeSlot.id" nbButton fullWidth [disabled]="!k.valid">Save</button>
+          </div>
+          <!-- <br><pre>{{ timeSlot | json }}</pre> -->
+        </form>
       </nb-card-body>
     </nb-card>
   </div>
