@@ -1,12 +1,10 @@
 import { formatDate } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Injectable, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbDateAdapter, NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBeforeRenderEvent } from 'angular-calendar';
-import { WeekViewHour, WeekViewHourColumn } from 'calendar-utils';
+import { WeekViewHourColumn } from 'calendar-utils';
 import { ToastyService } from 'ng2-toasty';
-import { forkJoin, from, Observable } from 'rxjs';
-import { map, mergeMap, toArray } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import * as _ from 'underscore';
 import { SaveBooking } from '../../../models/booking';
 import { BookingService } from '../../../services/booking.service';
@@ -25,7 +23,7 @@ import { TimeSlotService } from '../../../services/timeSlot.service';
         background-color: lightblue !important;
       }
     `,
-  ], // #FFCCCB
+  ],
   encapsulation: ViewEncapsulation.None,
 })
 export class NewBookingComponent implements OnInit {
@@ -183,6 +181,8 @@ export class NewBookingComponent implements OnInit {
   // * Booking form ---------------------------------------------------------------------
 
   resetBookingField() {
+    delete this.selectedMonthViewDay.cssClass;
+    this.semesterSelect = 0;
     this.booking.id = 0;
     this.booking.offerings = [];
     this.booking.rooms = [];
@@ -192,7 +192,6 @@ export class NewBookingComponent implements OnInit {
     this.booking.buildingId = 0;
   }
 
-  // * for editing
   private setBooking(b) {
     this.booking.id = b.id;
     this.booking.offerings = _.pluck(b.offerings, 'id');
@@ -220,23 +219,31 @@ export class NewBookingComponent implements OnInit {
     this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
   }
 
-  validSubmitForm(): boolean {
-    if (
-      this.booking.offerings.length != 0 &&
+  private lengthIsNotZero() {
+    return this.booking.offerings.length != 0 &&
       this.booking.timeSlots.length != 0 &&
       this.booking.rooms.length != 0 &&
-      this.booking.bookDates.length != 0
-      ) {
-      return true;
-    } else {
-      return false;
-    }
+      this.booking.bookDates.length != 0;
+  }
+
+  validSubmitForm(): boolean {
+    if (this.lengthIsNotZero()) return true;
+    else return false;
+  }
+
+  successToasty(message: string) {
+    this.toastyService.success({
+      title: 'Success', 
+      msg: message,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 5000
+    });
   }
 
   submit() {
     this.nbSpinner = true;
-
-    if (this.validSubmitForm() == false) {
+    if (!this.validSubmitForm()) {
       this.requiredAlert = true;
       this.nbSpinner = false;
       return false;
@@ -245,35 +252,22 @@ export class NewBookingComponent implements OnInit {
     if (!this.booking.id) {
       this.bookingService.create(this.booking)
         .subscribe(res => {
-          this.toastyService.success({
-            title: 'Success', 
-            msg: 'All bookings were sucessfully saved.',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 5000
-          });
+          this.successToasty('All bookings were sucessfully saved');
           this.redirectTo('/pages/calendar');
         },
         err => {
-          if (err.status === 409) {
-            console.log(err.error);
+          if (err.status == 409) {
             this.error = err.error;
             this.existAlert = true;
             this.nbSpinner = false;
             if (confirm(`${err.error} Are you sure you want to add another event to this room?`)) {
               this.bookingService.confirmCreate(this.booking)
                 .subscribe(() => {
-                  this.toastyService.success({
-                    title: 'Success', 
-                    msg: 'All bookings were sucessfully saved.',
-                    theme: 'bootstrap',
-                    showClose: true,
-                    timeout: 3000
-                  });
+                  this.successToasty('All bookings were sucessfully saved');
                   this.redirectTo('/pages/calendar');
                 });
             }
-          } else if (err.status === 400) {
+          } else if (err.status == 400) {
             this.existAlert = false;
             this.requiredAlert = true;
             this.nbSpinner = false;
@@ -283,35 +277,28 @@ export class NewBookingComponent implements OnInit {
     else if (this.booking.id) {
       this.bookingService.update(this.booking)
         .subscribe(() => {
-          this.toastyService.success({
-            title: 'Success', 
-            msg: 'Booking was sucessfully saved.',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 3000
-          });
+          this.successToasty('Booking was sucessfully saved');
           this.resetBookingField();
           this.redirectTo('/pages/bookings/');
         },
         err => {
-          if (err.status == 409) {
+          if (err.status == 409)
             this.existAlert = true;
-          } else if (err.status == 400) {
+          else if (err.status == 400)
             this.requiredAlert = true;
-          }
         });
     }
 
-    this.onClose(); // ? redundant?
+    this.onCloseAlert();
   }
 
-  onClose() {
+  onCloseAlert() {
     this.existAlert = false;
     this.requiredAlert = false;
   }
 
-  redirectTo(uri:string){
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+  redirectTo(uri:string) {
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
     this.router.navigate([uri]));
  }
 }

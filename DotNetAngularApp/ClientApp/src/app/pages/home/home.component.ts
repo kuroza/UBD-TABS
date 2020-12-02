@@ -1,63 +1,17 @@
-import {
-  OfferingService
-} from './../../services/offering.service';
-import {
-  LecturerService
-} from './../../services/lecturer.service';
-import {
-  ModuleService
-} from './../../services/module.service';
-import {
-  FacultyService
-} from './../../services/faculty.service';
-import {
-  MajorService
-} from '../../services/major.service';
-import {
-  SemesterService
-} from './../../services/semester.service';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit
-} from '@angular/core';
-import {
-  BookingService
-} from '../../services/booking.service';
-import {
-  Router,
-  ActivatedRoute
-} from '@angular/router';
-import {
-  ToastyService
-} from 'ng2-toasty';
-import {
-  BuildingService
-} from '../../services/building.service';
-import {
-  CalendarEvent,
-  CalendarEventTitleFormatter,
-  CalendarView,
-  DAYS_OF_WEEK
-} from 'angular-calendar';
-import {
-  CustomEventTitleFormatter
-} from './custom-event-title-formatter.provider';
-import {
-  Observable,
-  Subject
-} from 'rxjs';
-import {
-  isSameDay,
-  isSameMonth,
-} from 'date-fns';
-import {
-  colors
-} from '../../@theme/components/calendar-header/colors';
-import {
-  UserService
-} from '../../services/user.service';
+import { OfferingService } from './../../services/offering.service';
+import { LecturerService } from './../../services/lecturer.service';
+import { FacultyService } from './../../services/faculty.service';
+import { Component } from '@angular/core';
+import { BookingService } from '../../services/booking.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ToastyService } from 'ng2-toasty';
+import { BuildingService } from '../../services/building.service';
+import { CalendarEvent, CalendarEventTitleFormatter, CalendarView, DAYS_OF_WEEK } from 'angular-calendar';
+import { CustomEventTitleFormatter } from './custom-event-title-formatter.provider';
+import { Observable, Subject } from 'rxjs';
+import { isSameDay, isSameMonth } from 'date-fns';
+import { colors } from '../../@theme/components/calendar-header/colors';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'ngx-home',
@@ -108,10 +62,7 @@ export class HomeComponent {
     private bookingService: BookingService,
     private buildingService: BuildingService,
     private userService: UserService,
-    private semesterService: SemesterService,
-    private majorService: MajorService,
     private facultyService: FacultyService,
-    private moduleService: ModuleService,
     private lecturerService: LecturerService,
     private offeringService: OfferingService
   ) {}
@@ -192,13 +143,11 @@ export class HomeComponent {
   // * Filter by rooms ---------------------------------------------------------------
 
   onBuildingChange() {
-    // cascade rooms drop down
     var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
     this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
     this.resetCalendar();
     delete this.filter.rooms;
 
-    // filter events by building
     var bookings = this.allBookings;
     this.bookings = bookings.filter(b => b.rooms.find(r => r.building.id == this.filter.buildingId));
     this.populateCalendar();
@@ -207,9 +156,7 @@ export class HomeComponent {
   onRoomChange() {
     this.resetCalendar();
     var bookings = this.allBookings;
-
     if (this.filter.rooms)
-      // show bookings from the selected Room
       bookings = bookings.filter(b => b.rooms.find(r => r.id == this.filter.rooms));
 
     this.bookings = bookings;
@@ -217,11 +164,11 @@ export class HomeComponent {
   }
 
   resetRoomFilter() {
-    this.filter = {}; // empty filter drop down
-    this.rooms = []; // clear room dropdown
-    delete this.filter.rooms; // ? clear selected rooms
+    this.filter = {};
+    this.rooms = [];
+    delete this.filter.rooms;
     this.resetCalendar();
-    this.showAllBookings(); // show all if reset
+    this.showAllBookings();
   }
 
   // * Filter by lecturers ---------------------------------------------------------------
@@ -231,13 +178,11 @@ export class HomeComponent {
     var offerings = this.allOfferings;
 
     if (this.filter.lecturerId) {
-      // * From lecturerId, filter Offerings
       var offeringIds = offerings
         .filter(offering => offering.lecturers
         .find(l => l.id == this.filter.lecturerId))
         .map(offering => offering.id);
 
-      // * From Offerings, filter Bookings
       offeringIds.forEach(offeringId => {
         this.bookings = this.allBookings
           .filter(b => b.offerings
@@ -261,85 +206,112 @@ export class HomeComponent {
   }
 
   private populateCalendar() {
-    this.nbSpinner = true;
+    for (let b of this.bookings) {      
+      var lecturerArray: any = this.convertLecturerSetToArray(b);
+      var lecturers: string = this.bookingLecturers(lecturerArray);
+      var modules: string = this.bookingModules(b);
+      var rooms: string = this.bookingRooms(b);
+      var purpose: string = this.bookingPurpose(b);
 
-    for (let b of this.bookings) {
-      // * Getting Lecturers for Offerings
-      var offeringIds: number[] = b.offerings.map(offering => offering.id);
-      var offering: any;
-      var moduleLecturers = new Set();
-      for (let id of offeringIds) {
-        offering = this.allOfferings.find(o => o.id == id);
-        for (let lecturer of offering.lecturers)
-          moduleLecturers.add(lecturer);
-      }
-      
-      var lecturerArray: any = Array.from(moduleLecturers);
-      var lecturers: string = `${lecturerArray[0].name} (${lecturerArray[0].title})`;
-      if (lecturerArray.length > 1) {
-        for (var i = 1; i < lecturerArray.length; i++) {
-          lecturers += `, ${lecturerArray[i].name} (${lecturerArray[i].title})`;
-        }
-      }
-
-      // * Iterate Modules and Lecturers
-      var modules: string = `${b.offerings[0].module.code}: ${b.offerings[0].module.name}`;
-      if (b.offerings.length > 1) {
-        for (var i = 1; i < b.offerings.length; i++) {
-          modules += `, ${b.offerings[i].module.code}: ${b.offerings[i].module.name}`;
-        }
-      }
-
-      // * Iterate Rooms
-      var rooms: string = `${b.rooms[0].name}`;
-      if (b.rooms.length > 1) {
-        for (var i = 1; i < b.rooms.length; i++)
-          rooms += `, ${b.rooms[i].name}`;
-      }
-
-      var purpose: string;
-      if (b.purpose != '')
-        purpose = `(${b.purpose})`;
-      else
-        purpose = '';
-
-      for (let bd of b.bookDates) { // * for multiple bookDates
-        var dateFormat = require('dateformat');
-        var bookDate = dateFormat(bd.date, 'yyyy-mm-dd'); // * format date
-
-        // * nested loop for each time slots under each booking
+      for (let bd of b.bookDates) {
+        var bookDate = this.formatBookDateToDisplayOnTimetable(bd);
         for (let timeSlot of b.timeSlots) {
-          var timeFormat = require('dateformat');
-          this.startTime = timeFormat(timeSlot.startTime, 'HH:MM:ss');
-          this.startDateTime = bookDate + "T" + this.startTime;
-          this.endTime = timeFormat(timeSlot.endTime, 'HH:MM:ss');
-          this.endDateTime = bookDate + "T" + this.endTime;
-
-          // * push object into events[]
+          this.formatTimeToDisplayOnTimetable(timeSlot, bookDate);
           this.events = [
-            ...this.events,
-            {
+            ...this.events, {
               start: new Date(this.startDateTime),
               end: new Date(this.endDateTime),
               title: `<b>${ modules } ${ purpose }</b><br>${ rooms }<br>${ lecturers }`,
               color: colors.teal,
-              meta: {
-                id: b.id,
-              },
+              meta: { id: b.id },
             },
           ];
         }
       }
     }
-    this.nbSpinner = false;
     this.refresh.next();
   }
 
+  private convertLecturerSetToArray(b: any) {
+    var moduleLecturers = this.getUniqueLecturersFromOfferings(b);
+    var lecturerArray: any = Array.from(moduleLecturers);
+    return lecturerArray;
+  }
+
+  private getUniqueLecturersFromOfferings(b: any) {
+    var moduleLecturers = new Set();
+    var offering: any;
+    var offeringIds: number[] = b.offerings.map(offering => offering.id);
+    for (let id of offeringIds) {
+      offering = this.allOfferings.find(o => o.id == id);
+      for (let lecturer of offering.lecturers)
+        moduleLecturers.add(lecturer);
+    }
+    return moduleLecturers;
+  }
+
+  private bookingLecturers(lecturerArray: any) {
+    var lecturers: string = `${lecturerArray[0].name} (${lecturerArray[0].title})`;
+    if (lecturerArray.length > 1)
+      lecturers = this.appendLecturers(lecturerArray, lecturers);
+    return lecturers;
+  }
+
+  private appendLecturers(lecturerArray: any, lecturers: string) {
+    for (var i = 1; i < lecturerArray.length; i++)
+      lecturers += `, ${lecturerArray[i].name} (${lecturerArray[i].title})`;
+    return lecturers;
+  }
+
+  private bookingModules(b: any) {
+    var modules: string = `${b.offerings[0].module.code}: ${b.offerings[0].module.name}`;
+    if (b.offerings.length > 1)
+      modules = this.appendModules(b, modules);
+    return modules;
+  }
+
+  private appendModules(b: any, modules: string) {
+    for (var i = 1; i < b.offerings.length; i++)
+      modules += `, ${b.offerings[i].module.code}: ${b.offerings[i].module.name}`;
+    return modules;
+  }
+
+  private bookingRooms(b: any) {
+    var rooms: string = `${b.rooms[0].name}`;
+    if (b.rooms.length > 1)
+      rooms = this.appendRooms(b, rooms);
+    return rooms;
+  }
+
+  private appendRooms(b: any, rooms: string) {
+    for (var i = 1; i < b.rooms.length; i++)
+      rooms += `, ${b.rooms[i].name}`;
+    return rooms;
+  }
+
+  private bookingPurpose(b: any) {
+    var purpose: string;
+    if (b.purpose != '')
+      return purpose = `(${b.purpose})`;
+    else
+      return purpose = '';
+  }
+
+  private formatBookDateToDisplayOnTimetable(bd: any) {
+    var dateFormat = require('dateformat');
+    var bookDate = dateFormat(bd.date, 'yyyy-mm-dd');
+    return bookDate;
+  }
+
+  private formatTimeToDisplayOnTimetable(timeSlot: any, bookDate: any) {
+    var timeFormat = require('dateformat');
+    this.startTime = timeFormat(timeSlot.startTime, 'HH:MM:ss');
+    this.startDateTime = bookDate + "T" + this.startTime;
+    this.endTime = timeFormat(timeSlot.endTime, 'HH:MM:ss');
+    this.endDateTime = bookDate + "T" + this.endTime;
+  }
+
   refreshCalendar() {
-    // this.resetCalendar();
-    // this.resetLecturerFilter();
-    // this.resetModuleFilter();
-    // this.resetRoomFilter();
     window.location.reload();
   }
 
@@ -362,24 +334,19 @@ export class HomeComponent {
     }
   }
 
-  onClick() {
-    this.detailsAlert = false;
-  }
-
-  eventClicked({
-    event
-  }: {
-    event: CalendarEvent
-  }): void {
+  eventClicked({event}: {event: CalendarEvent}): void {
     this.bookingService.getBooking(event.meta.id)
-      .subscribe(b => this.booking = b);
+      .subscribe(b => {
+        this.booking = b;
+        console.log(this.booking.offerings.map(o => o.id));
+      });
   }
 
   setView(view: CalendarView) {
     this.view = view;
   }
 
-  closeOpenMonthViewDay() { // for calendar-header.. click next to close slide animation
+  closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
 
@@ -392,26 +359,31 @@ export class HomeComponent {
     if (confirm("Are you sure?")) {
       this.bookingService.delete(this.booking.id)
         .subscribe(x => {
-          this.redirectTo('/pages/bookings');
-          window.location.reload(); // sometimes the page refreshes
+          window.location.reload();
+          this.warningToasty('Success', 'Booking event was successfully deleted')
         });
     }
   }
 
-  onCloseDetails() {
+  warningToasty(title: string, message: string) {
+    this.toasty.warning({
+      title: title, 
+      msg: message,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 3000
+    });
+  }
+
+  onCloseDetailsAlert() {
     this.detailsAlert = false;
   }
 
-  // onSuccessBooking() {
-  //   this.successAlert = true;
-  //   // setTimeout()
-  // }
-
-  onClickClose() {
+  onCloseBookingDetails() {
     this.booking = null;
   }
 
-  onCloseSuccess() {
+  onCloseSuccessAlert() {
     this.successAlert = false;
   }
 

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-8">
-    <!-- <nb-alert status="success" closable (close)="onCloseSuccess()" *ngIf="successAlert" style="text-align: center;">
+    <!-- <nb-alert status="success" closable (close)="onCloseSuccessAlert()" *ngIf="successAlert" style="text-align: center;">
       All bookings have been saved successfully!
     </nb-alert> -->
     <nb-card [nbSpinner]="nbSpinner ? true : false" nbSpinnerStatus="success">
@@ -70,29 +70,6 @@
                 </nb-select>
               </div>
 
-              <!-- <div class="mr-2" style="margin-top: 20px">
-                <label>Filter Programme</label>
-                <nb-select
-                  filled
-                  fullWidth
-                  required
-                  placeholder="Select Major"
-                  [(selected)]="filter.majorId"
-                  (selectedChange)="onFilterModuleChange()"
-                >
-                  <nb-option *ngFor="let m of majors" value="{{ m.id }}">{{ m.name }}</nb-option>
-                </nb-select>
-                <nb-radio-group [(ngModel)]="selectedOption" status="primary">
-                  <nb-radio value="1">All</nb-radio>
-                  <nb-radio value="2">Bachelor's degree</nb-radio>
-                  <nb-radio value="3">Master's degree</nb-radio>
-                  <nb-radio value="4">PhD</nb-radio>
-                </nb-radio-group>
-              </div> -->
-
-              <!-- <pre>{{ filter | json }}</pre> -->
-              <!-- <button [useExistingCss]="true" printSectionId="print-section" ngxPrint style="margin-top: 20px; float: left;"
-              nbButton size="small" status="primary"><nb-icon icon="printer-outline"></nb-icon>Print</button> -->
               <button nbButton size="small" status="basic" hero (click)="resetModuleFilter()"
                 style="margin-top: 20px; float: right;">Reset</button>
             </div>
@@ -118,9 +95,7 @@
               <button nbButton size="small" status="basic" hero (click)="resetRoomFilter()"
                 style="margin-top: 20px; float: right;">Reset</button>
             </div>
-            <!-- <br>
-            <pre>{{ filter | json }}</pre>
-            <pre>{{ rooms | json }}</pre> -->
+            <!-- <br><pre>{{ rooms | json }}</pre> -->
           </nb-tab>
 
           <nb-tab tabTitle="Filter Lecturer">
@@ -135,8 +110,7 @@
               <button nbButton size="small" status="basic" hero (click)="resetLecturerFilter()"
                 style="margin-top: 20px; float: right;">Reset</button>
             </div>
-            <!-- <br>
-            <pre>{{ filter | json }}</pre> -->
+            <!-- <br><pre>{{ filter | json }}</pre> -->
           </nb-tab>
         </nb-tabset>
       </nb-card-body>
@@ -145,7 +119,7 @@
     <nb-card>
       <nb-card-header>
         <h4>Details
-          <button nbButton size="small" status="basic" ghost (click)="onClickClose()" nbTooltip="Clear Details"
+          <button nbButton size="small" status="basic" ghost (click)="onCloseBookingDetails()" nbTooltip="Clear Details"
             style="float: right;" *ngIf="booking">
             <nb-icon icon="close-outline"></nb-icon>
           </button>
@@ -153,29 +127,18 @@
       </nb-card-header>
       <nb-card-body>
         <div *ngIf="!booking">
-          <nb-alert status="basic" closable (close)="onCloseDetails()" *ngIf="detailsAlert" style="text-align: center;">
+          <nb-alert status="basic" closable (close)="onCloseDetailsAlert()" *ngIf="detailsAlert" style="text-align: center;">
             Click on a booking event from the calendar to show its details
           </nb-alert>
           <div class="row">
             <div class="col"></div>
             <div class="col-md-8">
-              <!-- <button nbButton status="primary" fullWidth [routerLink]="['/pages/bookings']">View All Bookings</button> -->
             </div>
             <div class="col"></div>
           </div>
         </div>
 
         <div *ngIf="booking" style="margin-left: 40px;">
-          <!-- <div style="margin-left: 20px;">
-            <nb-card class="nb-card-list">
-              <nb-card-header>
-                <h4>Semester</h4>
-              </nb-card-header>
-              <nb-card-body>
-                <span>{{booking.offerings.semesterId}}</span>
-              </nb-card-body>
-            </nb-card>
-          </div> -->
 
           <!-- * Modules -->
           <div style="margin-left: 20px; margin-top: 20px;">

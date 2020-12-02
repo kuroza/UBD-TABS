@@ -14,12 +14,6 @@
               <div class="alert alert-success" *ngIf="booking.bookDates.length > 0" style="text-align: center;">
                 <b>Good!</b>
               </div>
-              <!-- <nb-alert status="warning" closable (close)="onClose()" *ngIf="booking.bookDates.length == 0" style="text-align: center;">
-                <b>Click on any date to select it</b>
-              </nb-alert>
-              <nb-alert status="success" closable (close)="onClose()" *ngIf="booking.bookDates.length > 0" style="text-align: center;">
-                <b>Good!</b>
-              </nb-alert> -->
 
               <div [ngSwitch]="view">
               <mwl-calendar-month-view
@@ -49,14 +43,14 @@
             </button>
           </h4></nb-card-header>
           <nb-card-body>
-            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert" style="text-align: center;">
+            <nb-alert status="danger" closable (close)="onCloseAlert()" *ngIf="existAlert" style="text-align: center;">
               {{error}}
             </nb-alert>
-            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
+            <nb-alert status="warning" closable (close)="onCloseAlert()" *ngIf="requiredAlert" style="text-align: center;">
               Please enter the required fields!
             </nb-alert>
-            <form #f="ngForm" (ngSubmit)="submit()" novalidate>
-              
+
+            <form #f="ngForm" (ngSubmit)="submit()" novalidate>  
               <!-- * Semester form -->
               <div class="form-group">
                 <label>Semester *</label>
