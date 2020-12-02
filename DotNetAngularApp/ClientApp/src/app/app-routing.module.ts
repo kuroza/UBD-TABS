@@ -1,15 +1,6 @@
 // import { AuthGuard } from './services/auth.guard';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import {
-  NbAuthComponent,
-  NbLoginComponent,
-  NbLogoutComponent,
-  NbRegisterComponent,
-  NbRequestPasswordComponent,
-  NbResetPasswordComponent,
-} from '@nebular/auth';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AccountComponent } from './account/account.component';
 import { RegistrationComponent } from './account/registration/registration.component';
 import { LoginComponent } from './account/login/login.component';

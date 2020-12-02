@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { SaveLecturer } from '../../../models/lecturer';
 import { ToastyService } from 'ng2-toasty';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModuleService } from '../../../services/module.service';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -24,7 +23,6 @@ export class LecturerListComponent implements OnInit {
   requiredAlert: boolean = false;
   detailsAlert: boolean = true;
   
-  // lecturerModules: any;
   lecturerDetails: any;
   lecturers: any;
   lecturer: SaveLecturer = {
@@ -70,19 +68,12 @@ export class LecturerListComponent implements OnInit {
     var result$ = (this.lecturer.id) ? this.lecturerService.update(this.lecturer) : this.lecturerService.create(this.lecturer); 
 
     result$.subscribe(() => {
-      this.toastyService.success({
-        title: 'Success', 
-        msg: 'Lecturer was sucessfully saved.',
-        theme: 'bootstrap',
-        showClose: true,
-        timeout: 3000
-      });
+      this.successToasty('Lecturer was sucessfully saved');
       this.redirectTo('/pages/lecturers');
     },
     err => {
       if (err.status == 409) {
         this.requiredAlert = false;
-        console.log(err.error);
         this.error = err.error;
         this.existAlert = true;
       }
@@ -103,16 +94,30 @@ export class LecturerListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.lecturerService.delete(id)
         .subscribe(() => {
-          this.toastyService.success({
-            title: 'Success', 
-            msg: 'Lecturer was sucessfully deleted.',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 3000
-          });
+          this.warningToasty('Lecturer was sucessfully deleted');
           this.redirectTo('/pages/lecturers');
         });
     }
+  }
+
+  private successToasty(message: string) {
+    this.toastyService.success({
+      title: 'Success',
+      msg: message,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 3000
+    });
+  }
+
+  private warningToasty(message: string) {
+    this.toastyService.warning({
+      title: 'Success',
+      msg: message,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 3000
+    });
   }
 
   selectLecturer(id) {

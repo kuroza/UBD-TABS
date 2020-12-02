@@ -9,19 +9,12 @@ export class UserProfileComponent implements OnInit {
   
   userDetails;
 
-  constructor(
-    private userService: UserService
-  ) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.userService.getUserProfile()
       .subscribe(
-        res => {
-          this.userDetails = res;
-        },
-        err => {
-          console.log(err);
-        });
+        res => this.userDetails = res,
+        err => console.log(err));
   }
-
 }

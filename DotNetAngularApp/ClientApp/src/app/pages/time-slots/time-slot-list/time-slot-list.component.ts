@@ -51,16 +51,20 @@ export class TimeSlotListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.timeSlotService.delete(id)
         .subscribe(x => {
-          this.toasty.success({
-            title: 'Success', 
-            msg: 'Time slot was sucessfully deleted.',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 3000
-          });
+          this.warningToasty('Time slot was sucessfully deleted.');
           this.redirectTo('/pages/timeslots');
         });
     }
+  }
+
+  private warningToasty(message: string) {
+    this.toasty.success({
+      title: 'Success',
+      msg: message,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 3000
+    });
   }
 
   redirectTo(uri:string){

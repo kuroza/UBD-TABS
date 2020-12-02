@@ -23,23 +23,6 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
-  getBookings(filter) {
-    return this.http.get(this.bookingsEndpoint + '?' + this.toQueryString(filter))
-      .pipe(map(response => response));
-  }
-
-  // * for multiple query strings eg. 'buildingId=1&roomId=2'
-  toQueryString(obj) {
-    var parts = [];
-    for (var property in obj) {
-      var value = obj[property];
-      if (value != null && value != undefined)
-        parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(value));
-    }
-
-    return parts.join('&');
-  }
-
   create(booking: SaveBooking) {
     return this.http.post(this.bookingsEndpoint, booking)
       .pipe(map(response => response));

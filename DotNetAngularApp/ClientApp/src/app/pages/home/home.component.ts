@@ -315,12 +315,7 @@ export class HomeComponent {
     window.location.reload();
   }
 
-  dayClicked({
-    date,
-    events
-  }: {
-    date: Date;events: CalendarEvent[]
-  }): void {
+  dayClicked({date, events}: {date: Date; events: CalendarEvent[]}): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -338,7 +333,6 @@ export class HomeComponent {
     this.bookingService.getBooking(event.meta.id)
       .subscribe(b => {
         this.booking = b;
-        console.log(this.booking.offerings.map(o => o.id));
       });
   }
 

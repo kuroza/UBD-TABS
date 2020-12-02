@@ -1,5 +1,4 @@
 import { ToastyService } from 'ng2-toasty';
-import { BookingService } from '../../../services/booking.service';
 import { Component, OnInit } from '@angular/core';
 import { FacultyService } from '../../../services/faculty.service';
 import { UserService } from '../../../services/user.service';
@@ -39,7 +38,6 @@ export class FacultyListComponent implements OnInit {
   detailsAlert: boolean = true;
 
   constructor(
-    private bookingService: BookingService,
     private facultyService: FacultyService,
     private userService: UserService,
     private majorService: MajorService,
@@ -61,13 +59,7 @@ export class FacultyListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.majorService.delete(id)
         .subscribe(() => {
-          this.toasty.success({
-            title: 'Success', 
-            msg: 'Major was sucessfully deleted.',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 3000
-          });
+          this.warningToasty('Major was sucessfully deleted');
           this.redirectTo('/pages/faculties');
         });
     }
@@ -77,16 +69,20 @@ export class FacultyListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.facultyService.delete(id)
         .subscribe(() => {
-          this.toasty.success({
-            title: 'Success', 
-            msg: 'Faculty was sucessfully deleted.',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 3000
-          });
+          this.warningToasty('Faculty was sucessfully deleted');
           this.redirectTo('/pages/faculties');
         });
     }
+  }
+
+  private warningToasty(message: string) {
+    this.toasty.warning({
+      title: 'Success',
+      msg: message,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 3000
+    });
   }
 
   private setMajor(m) {
@@ -161,19 +157,12 @@ export class FacultyListComponent implements OnInit {
     var result$ = (this.major.id) ? this.majorService.update(this.major) : this.majorService.create(this.major); 
 
     result$.subscribe(() => {
-      this.toasty.success({
-        title: 'Success', 
-        msg: 'Major was sucessfully saved.',
-        theme: 'bootstrap',
-        showClose: true,
-        timeout: 3000
-      });
+      this.successToasty('Major was sucessfully saved');
       this.redirectTo('/pages/faculties');
     },
     err => {
       if (err.status == 409) {
         this.requiredAlert = false;
-        console.log(err.error);
         this.error = err.error;
         this.existMajorAlert = true;
       }
@@ -197,13 +186,7 @@ export class FacultyListComponent implements OnInit {
     var result$ = (this.faculty.id) ? this.facultyService.update(this.faculty) : this.facultyService.create(this.faculty);
 
     result$.subscribe(() => {
-      this.toasty.success({
-        title: 'Success', 
-        msg: 'Faculty was sucessfully saved.',
-        theme: 'bootstrap',
-        showClose: true,
-        timeout: 3000
-      });
+      this.successToasty('Faculty was sucessfully saved');
       this.redirectTo('/pages/faculties');
     },
     err => {
@@ -220,6 +203,16 @@ export class FacultyListComponent implements OnInit {
     });
 
     this.onClose();
+  }
+
+  private successToasty(message: string) {
+    this.toasty.success({
+      title: 'Success',
+      msg: message,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 3000
+    });
   }
 
   onClickBack() {

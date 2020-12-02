@@ -1,8 +1,6 @@
 import { ToastyService } from 'ng2-toasty';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -24,29 +22,26 @@ export class AuthGuard implements CanActivate {
                 if(roles){
                   if(this.userService.roleMatch(roles)) return true;
                   else{
-                    // this.router.navigate(['/pages/forbidden']);
-                    this.toasty.error({
-                        title: 'User not authorized', 
-                        msg: 'User does not have the privileges to access this page',
-                        theme: 'bootstrap',
-                        showClose: true,
-                        timeout: 4000
-                      });
+                    this.errorToasty('User not authorized', 'User does not have the privileges to access this page');
                     return false;
                   }
                 }
                 return true;
             }
             else {
-                this.toasty.error({
-                    title: 'User not authorized', 
-                    msg: 'Please login as admin',
-                    theme: 'bootstrap',
-                    showClose: true,
-                    timeout: 4000
-                  });
-                this.router.navigate(['/pages/user/login']);
-                return false;
+              this.errorToasty('User not authorized', 'Please login as admin');
+              this.router.navigate(['/pages/user/login']);
+              return false;
         }
     }
+
+  private errorToasty(title: string, message: string) {
+    this.toasty.error({
+      title: title,
+      msg: message,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 3000
+    });
+  }
 }

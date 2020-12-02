@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
+import { stringify } from 'querystring';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -27,29 +28,35 @@ export class LoginComponent implements OnInit {
     this.service.login(form.value).subscribe(
       (res: any) => {
         localStorage.setItem('token', res.token);
+        this.successToasty('Login successful', 'User successfully logged in');
         this.router.navigateByUrl('/pages/home');
-        // window.location.reload();
-        this.toasty.success({
-          title: 'Login successful', 
-          msg: 'User successfully logged in!',
-          theme: 'bootstrap',
-          showClose: true,
-          timeout: 3000
-        });
       },
       err => {
         if (err.status == 400)
-          this.toasty.error({
-            title: 'Authentication failed', 
-            msg: 'Incorrect email or password!',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 3000
-          });
+          this.errorToasty('Authentication failed', 'Incorrect email or password!');
         else
           console.log(err);
       }
     );
   }
 
+  private errorToasty(title: string, message: string) {
+    this.toasty.error({
+      title: title,
+      msg: message,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 3000
+    });
+  }
+
+  private successToasty(title: string, message: string) {
+    this.toasty.success({
+      title: title,
+      msg: message,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 3000
+    });
+  }
 }

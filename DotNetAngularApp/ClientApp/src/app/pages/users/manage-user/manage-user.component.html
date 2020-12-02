@@ -40,7 +40,7 @@
         <h4>Edit User Role</h4>
       </nb-card-header>
       <nb-card-body>
-        <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert">
+        <nb-alert status="warning" closable (close)="onCloseAlert()" *ngIf="requiredAlert">
           Select a user and role!
         </nb-alert>
         <form #f="ngForm" (ngSubmit)="submit()" novalidate>
@@ -62,8 +62,7 @@
             <button nbButton fullWidth [disabled]="!f.valid">Save</button>
           </div>
         </form>
-        <!-- <br>
-        <pre>{{ userRole | json }}</pre> -->
+        <!-- <br><pre>{{ userRole | json }}</pre> -->
       </nb-card-body>
     </nb-card>
   </div>

@@ -8,8 +8,6 @@ import { NbCalendarRange } from '@nebular/theme';
 })
 export class SemestersComponent implements OnInit {
 
-  range: NbCalendarRange<Date>;
-
   constructor() { }
 
   ngOnInit() {

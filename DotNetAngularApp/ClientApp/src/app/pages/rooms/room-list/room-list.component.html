@@ -6,9 +6,7 @@
 
 <div class="row">
   <div class="col-md-8">
-    <!-- todo: change to send data to side details component -->
     <nb-accordion>
-      <!-- * include 'multi' to open multiple body -->
       <nb-accordion-item *ngFor="let b of buildings">
         <nb-accordion-item-header>
           {{ b.name }}
@@ -26,7 +24,6 @@
           <table class="table table-hover text-center">
             <thead>
               <tr>
-                <!-- <th style="width: 10%" scope="col">Id</th> -->
                 <th style="width: 50%" scope="col">Room</th>
                 <th style="width: 40%" scope="col">Capacity</th>
                 <th style="width: 5%" scope="col"></th>
@@ -35,7 +32,6 @@
             </thead>
             <tbody>
               <tr *ngFor="let room of b.rooms">
-                <!-- <th scope="row">{{ room.id }}</th> -->
                 <td scope="row" (click)="selectRoom(room.id)">{{ room.name }}</td>
                 <td (click)="selectRoom(room.id)">{{ room.capacity }}</td>
                 <td><a href="javascript:void(0);" (click)="editRoom(room.id)" *ngIf="hasAccess">
@@ -143,18 +139,6 @@
                   (click)="deleteRoom(roomDetails.id)">Delete</button>
               </div>
             </div>
-            <!-- <div *ngIf="buildingDetails && !roomDetails">
-              <p>
-                <b>Name:</b> {{ buildingDetails.name }}<br>
-              </p>
-
-              <div class="inline" *ngIf="hasAccess">
-                <button style="margin-left: 10px; margin-top: 10px;" nbButton status="warning"
-                  (click)="editBuilding(buildingDetails.id)">Edit</button>
-                <button style="margin-left: 10px; margin-top: 10px;" nbButton status="danger"
-                  (click)="delete(buildingDetails.id)">Delete</button>
-              </div>
-            </div> -->
           </nb-tab>
         </nb-tabset>
       </nb-card-body>

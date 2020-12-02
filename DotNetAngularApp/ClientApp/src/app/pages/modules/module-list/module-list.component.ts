@@ -5,7 +5,6 @@ import { MajorService } from '../../../services/major.service';
 import { ModuleService } from './../../../services/module.service';
 import { Component, OnInit } from '@angular/core';
 import { SaveModule } from '../../../models/module';
-import { BookingService } from '../../../services/booking.service';
 import { LecturerService } from '../../../services/lecturer.service';
 import { ToastyService } from 'ng2-toasty';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -120,20 +119,13 @@ export class ModuleListComponent implements OnInit {
     var result$ = (this.module.id) ? this.moduleService.update(this.module) : this.moduleService.create(this.module);
 
     result$.subscribe(() => {
-      this.toastyService.success({
-        title: 'Success', 
-        msg: 'Module was sucessfully saved.',
-        theme: 'bootstrap',
-        showClose: true,
-        timeout: 3000
-      });
+      this.successToasty('Module was sucessfully saved');
       this.redirectTo('/pages/modules');
-      // here, set the tab to Modules List
+      // todo here, set the tab to Modules List
     },
     err => {
       if (err.status == 409) {
         this.requiredAlert = false;
-        console.log(err.error);
         this.error = err.error;
         this.existAlert = true;
       }
@@ -144,23 +136,36 @@ export class ModuleListComponent implements OnInit {
     });
   }
 
+  private successToasty(message: string) {
+    this.toastyService.success({
+      title: 'Success',
+      msg: message,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 3000
+    });
+  }
+
+  private warningToasty(message: string) {
+    this.toastyService.warning({
+      title: 'Success',
+      msg: message,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 3000
+    });
+  }
+
   submitAssignModule() {
     var result$ = (this.offering.id) ? this.offeringService.update(this.offering) : this.offeringService.create(this.offering);
 
     result$.subscribe(() => {
-      this.toastyService.success({
-        title: 'Success', 
-        msg: 'Module was sucessfully assigned to semester.',
-        theme: 'bootstrap',
-        showClose: true,
-        timeout: 3000
-      });
+      this.successToasty('Module was sucessfully assigned to semester');
       this.redirectTo('/pages/modules');
-      // here, set the tab to Modules Offered
+      // todo here, set the tab to Modules Offered
     },
     err => {
       if (err.status == 409) {
-        console.log(err.error);
         this.requiredAlert = false;
         this.error = err.error;
         this.existAlert = true;
@@ -206,14 +211,8 @@ export class ModuleListComponent implements OnInit {
   deleteModuleOffering(id) {
     if (confirm("Are you sure?")) {
       this.offeringService.delete(id)
-        .subscribe(x => {
-          this.toastyService.success({
-            title: 'Success', 
-            msg: 'Module was sucessfully removed from semester.',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 3000
-          });
+        .subscribe(() => {
+          this.warningToasty('Module was sucessfully removed from semester');
           this.redirectTo('/pages/modules');
         });
     }
@@ -222,14 +221,8 @@ export class ModuleListComponent implements OnInit {
   deleteModule(id) {
     if (confirm("Are you sure?")) {
       this.moduleService.delete(id)
-        .subscribe(x => {
-          this.toastyService.success({
-            title: 'Success', 
-            msg: 'Module was sucessfully deleted.',
-            theme: 'bootstrap',
-            showClose: true,
-            timeout: 3000
-          });
+        .subscribe(() => {
+          this.warningToasty('Module was sucessfully deleted');
           this.redirectTo('/pages/modules');
         });
     }
@@ -249,21 +242,6 @@ export class ModuleListComponent implements OnInit {
           }
         });
   }
-
-  // selectModuleOffering(id) {
-  //   this.offeringService.getModuleOffering(id)
-  //     .subscribe(
-  //       m => {
-  //         this.moduleDetails = null;
-  //         this.moduleOfferingDetails = m;
-  //       },
-  //       err => {
-  //         if (err.status == 404) {
-  //           this.redirectTo('/pages/modules');
-  //           return; 
-  //         }
-  //       });
-  // }
 
   selectModule(id) {
     this.moduleService.getModule(id)
@@ -298,7 +276,6 @@ export class ModuleListComponent implements OnInit {
   onClickClose() {
     this.moduleOfferingDetails = null;
     this.moduleDetails = null;
-
   }
 
   redirectTo(uri:string){

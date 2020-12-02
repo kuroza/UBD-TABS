@@ -1,4 +1,3 @@
-// import * as Sentry from "@sentry/browser";
 import { ToastyService } from 'ng2-toasty';
 import { ErrorHandler, Inject, NgZone, isDevMode } from '@angular/core';
 
@@ -18,7 +17,7 @@ export class AppErrorHandler implements ErrorHandler {
                 showClose: true,
                 timeout: 3000
             });
-            // console.log("An unexpected error happened.", error);
+            console.log("An unexpected error happened.", error);
         });
     }
 }

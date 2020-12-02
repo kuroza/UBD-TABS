@@ -4,9 +4,6 @@
       <nb-card-body>
         <nb-tabset fullWidth>
           <nb-tab tabTitle="Modules Offered"> <!-- active="{{ setActiveModuleList }}" -->
-            <!-- <div class="alert alert-danger" *ngIf="!filter.semesterId" style="text-align: center;">
-              Please select a semester
-            </div> -->
             <div style="margin-top: 10px;">
               <nb-card-header style="border-bottom: none;">
                 <h4 style="float: left;" *ngIf="!filter.semesterId">Modules Offered</h4>
@@ -96,7 +93,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let semester of semesters">
-                    <td>{{ semester.session }}</td> <!-- (click)="selectSemester(semester.id)" -->
+                    <td>{{ semester.session }}</td>
                     <td>{{ semester.startDate | date:'dd/MM/yyyy' }}</td>
                     <td>{{ semester.endDate | date:'dd/MM/yyyy' }}</td>
                     <td><a href="javascript:void(0);" (click)="editSemester(semester.id)" *ngIf="hasAccess">
@@ -282,28 +279,12 @@
             <br>
           </p>
 
-          <!-- <nb-card class="nb-card-list" style="margin-top: 10px">
-            <nb-card-header>
-              <b>Lecturers</b>
-            </nb-card-header>
-            <nb-list>
-              <nb-list-item *ngFor="let l of moduleDetails.lecturers">
-                {{ l.title }} {{ l.name }}
-              </nb-list-item>
-            </nb-list>
-          </nb-card> -->
-
           <div class="inline" *ngIf="hasAccess">
             <button nbButton status="warning" style="margin-top: 10px;" (click)="editModule(moduleDetails.id)">Edit</button>
             <button nbButton status="danger" style="margin-left: 5px; margin-top: 10px;"
               (click)="deleteModule(moduleDetails.id)">Delete</button>
           </div>
         </div>
-        <!-- <div *ngIf="!moduleDetails" style="margin-top: 10px;">
-          <nb-alert status="basic" closable (close)="onCloseDetails()" *ngIf="detailsAlert" style="text-align: center;">
-            Click on table row to show its details
-          </nb-alert>
-        </div> -->
       </nb-card-body>
     </nb-card>
   </div>

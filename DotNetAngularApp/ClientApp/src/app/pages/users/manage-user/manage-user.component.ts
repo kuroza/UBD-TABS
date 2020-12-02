@@ -33,13 +33,7 @@ export class ManageUserComponent implements OnInit {
     var result$ = this.userService.updateUserRole(this.userRole);
 
     result$.subscribe(() => {
-      this.toasty.success({
-        title: 'Success', 
-        msg: 'User role was sucessfully saved.',
-        theme: 'bootstrap',
-        showClose: true,
-        timeout: 3000
-      });
+      this.successToasty('User role was sucessfully saved');
       this.redirectTo('/pages/users/manage');
     },
     err => {
@@ -49,7 +43,17 @@ export class ManageUserComponent implements OnInit {
     });
   }
 
-  onClose() {
+  private successToasty(message: string) {
+    this.toasty.success({
+      title: 'Success',
+      msg: message,
+      theme: 'bootstrap',
+      showClose: true,
+      timeout: 3000
+    });
+  }
+
+  onCloseAlert() {
     this.requiredAlert = false;
   }
 

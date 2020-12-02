@@ -24,7 +24,6 @@
           <table class="table table-hover text-center">
             <thead>
               <tr>
-                <!-- <th style="width: 10%" scope="col">Id</th> -->
                 <th style="width: 90%" scope="col">Major</th>
                 <th style="width: 5%" scope="col"></th>
                 <th style="width: 5%" scope="col"></th>
@@ -32,7 +31,6 @@
             </thead>
             <tbody>
               <tr *ngFor="let major of f.majors">
-                <!-- <th scope="row">{{ major.id }}</th> -->
                 <td scope="row" (click)="selectMajor(major.id)">{{ major.name }}</td>
                 <td><a href="javascript:void(0);" (click)="editMajor(major.id)" *ngIf="hasAccess">
                     <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
@@ -78,11 +76,6 @@
                 <input id="name" type="text" class="form-control" [(ngModel)]="major.name" name="name"
                   placeholder="Major name">
               </div>
-              <!-- <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
-                <label>Programme *</label>
-                <input id="programme" type="text" class="form-control" [(ngModel)]="" name="programme"
-                  placeholder="Programme">
-              </div> -->
               <div style="margin-left: 10px; margin-top: 10px;">
                 <button *ngIf="!major.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="major.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
@@ -126,11 +119,6 @@
               </nb-alert>
             </div>
             <div *ngIf="majorDetails">
-              <!-- <p>
-                <b>Faculty Id:</b> {{ majorDetails.facultyId }}<br>
-                <b>Major name:</b> {{ majorDetails.name }}<br>
-              </p> -->
-
               <h4 style="margin-top: 10px;">{{ majorDetails.name }}</h4>
 
               <div class="card" style="width: 85%; margin-top: 10px;">
