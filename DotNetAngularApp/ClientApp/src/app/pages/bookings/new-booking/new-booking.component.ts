@@ -132,10 +132,13 @@ export class NewBookingComponent implements OnInit {
       this.selectedDays.push(this.selectedMonthViewDay);
       day.cssClass = 'cal-day-selected';
       this.selectedMonthViewDay = day;
-
-      var dateFromClicked = formatDate(this.selectedMonthViewDay.date, 'yyyy-MM-dd', 'en-us', '+0800');
-      this.booking.bookDates.push(dateFromClicked);
+      this.formatSelectedDateAndPushToBookDates();
     }
+  }
+
+  private formatSelectedDateAndPushToBookDates() {
+    var dateFromClicked = formatDate(this.selectedMonthViewDay.date, 'yyyy-MM-dd', 'en-us', '+0800');
+    this.booking.bookDates.push(dateFromClicked);
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
@@ -190,11 +193,11 @@ export class NewBookingComponent implements OnInit {
   private setBooking(b) {
     this.booking.id = b.id;
     this.booking.offerings = _.pluck(b.offerings, 'id');
-    this.booking.bookDates = b.bookDates; // ! maybe it's different since using selectedDate[]
+    this.booking.bookDates = _.pluck(b.bookDates, 'date'); // b.bookDates.map(bd => bd.date); // maybe need to format date[]
     this.booking.rooms = _.pluck(b.rooms, 'id');
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
     this.booking.purpose = b.purpose;
-    this.booking.buildingId = b.building.id;
+    // this.booking.buildingId = b.rooms.buildingId;
   }
 
   onSemesterChange() {
@@ -236,7 +239,7 @@ export class NewBookingComponent implements OnInit {
     });
   }
 
-  submit() {
+  submitBooking() {
     this.nbSpinner = true;
     if (!this.validSubmitForm()) {
       this.invalidOrBadRequestAlert();
@@ -252,16 +255,9 @@ export class NewBookingComponent implements OnInit {
         err => {
           if (err.status == 409) {
             this.conflictErrorAlert(err);
-            if (confirm(`${err.error} Are you sure you want to add another event to this room?`)) {
-              this.bookingService.confirmCreate(this.booking)
-                .subscribe(() => {
-                  this.successToasty('All bookings were sucessfully saved');
-                  this.redirectTo('/pages/calendar');
-                });
-            }
-          } else if (err.status == 400) {
-            this.invalidOrBadRequestAlert();
-          }
+            this.confirmAddAnotherRoomDialog(err);
+          } else if (err.status == 400)
+            this.invalidOrBadRequestAlert()
         });
     }
     else if (this.booking.id) {
@@ -280,6 +276,16 @@ export class NewBookingComponent implements OnInit {
     }
 
     this.onCloseAlert();
+  }
+
+  private confirmAddAnotherRoomDialog(err: any) {
+    if (confirm(`${err.error} Are you sure you want to add another event to this room?`)) {
+      this.bookingService.confirmCreate(this.booking)
+        .subscribe(() => {
+          this.successToasty('All bookings were sucessfully saved');
+          this.redirectTo('/pages/calendar');
+        });
+    }
   }
 
   private conflictErrorAlert(err: any) {

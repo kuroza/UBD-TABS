@@ -3,7 +3,7 @@ import { SemesterService } from './../../../services/semester.service';
 import { OfferingService } from './../../../services/offering.service';
 import { MajorService } from '../../../services/major.service';
 import { ModuleService } from './../../../services/module.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { SaveModule } from '../../../models/module';
 import { LecturerService } from '../../../services/lecturer.service';
 import { ToastyService } from 'ng2-toasty';
@@ -12,6 +12,10 @@ import { Observable } from 'rxjs';
 import * as _ from 'underscore';
 import { UserService } from '../../../services/user.service';
 import { SaveSemester } from '../../../models/semester';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl } from '@angular/forms';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'module-list',
@@ -38,6 +42,8 @@ export class ModuleListComponent implements OnInit {
   offerings: any = [];
   majors: any;
   lecturers: any;
+  
+  ngModelDate = new Date();
   
   module: SaveModule = {
     id: 0,
@@ -98,7 +104,7 @@ export class ModuleListComponent implements OnInit {
   private setModuleOffering(mo) {
     this.offering.id = mo.id;
     this.offering.semesterId = mo.semesterId;
-    this.offering.moduleId = mo.moduleId;
+    this.offering.moduleId = mo.module.id;
     this.offering.lecturers = _.pluck(mo.lecturers, 'id');
   }
 
@@ -176,15 +182,10 @@ export class ModuleListComponent implements OnInit {
       // todo here, set the tab to Modules Offered
     },
     err => {
-      if (err.status == 409) {
-        this.requiredAlert = false;
-        this.error = err.error;
-        this.existAlert = true;
-      }
-      else if (err.status == 400 || err.status == 500) {
-        this.existAlert = false;
-        this.requiredAlert = true;
-      }
+      if (err.status == 409)
+        this.conflictErrorAlert(err);
+      else if (err.status == 400 || err.status == 500)
+        this.invalidOrBadRequestAlert();
     })
   }
 
@@ -201,22 +202,30 @@ export class ModuleListComponent implements OnInit {
     this.offeringService.getOffering(id)
     .subscribe(
       m => {
-        this.setActiveSemester = false;
-        this.setActiveAddModule = false;
-        this.setActiveAddAssignModule = true;
+        this.changeToAssignModuleTab();
         this.setModuleOffering(m);
       });
+  }
+
+  private changeToAssignModuleTab() {
+    this.setActiveSemester = false;
+    this.setActiveAddModule = false;
+    this.setActiveAddAssignModule = true;
   }
 
   editModule(id) {
     this.moduleService.getModule(id)
     .subscribe(
       m => {
-        this.setActiveAddAssignModule = false;
-        this.setActiveSemester = false;
-        this.setActiveAddModule = true;
+        this.changeToAddModuleTab();
         this.setModule(m);
       });
+  }
+
+  private changeToAddModuleTab() {
+    this.setActiveSemester = false;
+    this.setActiveAddModule = true;
+    this.setActiveAddAssignModule = false;
   }
 
   deleteModuleOffering(id) {
@@ -241,11 +250,24 @@ export class ModuleListComponent implements OnInit {
 
   selectOffering(id) {
     this.offeringService.getOffering(id)
+    .subscribe(m => this.displayOfferingDetails(m),
+    err => {
+      if (err.status == 404) {
+        this.redirectTo('/pages/modules');
+        return; 
+      }
+    });
+  }
+
+  private displayOfferingDetails(m: Object) {
+    this.moduleDetails = null;
+    this.moduleOfferingDetails = m;
+  }
+
+  selectModule(id) {
+    this.moduleService.getModule(id)
       .subscribe(
-        m => {
-          this.moduleDetails = null;
-          this.moduleOfferingDetails = m;
-        },
+        m => this.displayModuleDetails(m),
         err => {
           if (err.status == 404) {
             this.redirectTo('/pages/modules');
@@ -254,20 +276,10 @@ export class ModuleListComponent implements OnInit {
         });
   }
 
-  selectModule(id) {
-    this.moduleService.getModule(id)
-      .subscribe(
-        m => {
-          this.detailsAlert = false;
-          this.moduleOfferingDetails = null;
-          this.moduleDetails = m;
-        },
-        err => {
-          if (err.status == 404) {
-            this.redirectTo('/pages/modules');
-            return; 
-          }
-        });
+  private displayModuleDetails(m: Object) {
+    this.detailsAlert = false;
+    this.moduleOfferingDetails = null;
+    this.moduleDetails = m;
   }
 
   onClickBack() {

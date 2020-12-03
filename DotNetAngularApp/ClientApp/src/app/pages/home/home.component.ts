@@ -149,22 +149,28 @@ export class HomeComponent {
   onBuildingChange() {
     var selectedBuilding = this.buildings.find(b => b.id == this.filter.buildingId);
     this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
-    this.resetCalendar();
     delete this.filter.rooms;
+    this.resetCalendar();
+    this.filterBookingsByBuildingId();
+    this.populateCalendar();
+  }
 
+  private filterBookingsByBuildingId() {
     var bookings = this.allBookings;
     this.bookings = bookings.filter(b => b.rooms.find(r => r.building.id == this.filter.buildingId));
-    this.populateCalendar();
   }
 
   onRoomChange() {
     this.resetCalendar();
+    this.bookings = this.filterBookingsBySelectedRooms();
+    this.populateCalendar();
+  }
+
+  private filterBookingsBySelectedRooms() {
     var bookings = this.allBookings;
     if (this.filter.rooms)
       bookings = bookings.filter(b => b.rooms.find(r => r.id == this.filter.rooms));
-
-    this.bookings = bookings;
-    this.populateCalendar();
+    return bookings;
   }
 
   resetRoomFilter() {
@@ -341,9 +347,7 @@ export class HomeComponent {
 
   eventClicked({event}: {event: CalendarEvent}): void {
     this.bookingService.getBooking(event.meta.id)
-      .subscribe(b => {
-        this.booking = b;
-      });
+      .subscribe(b => this.booking = b);
   }
 
   setView(view: CalendarView) {

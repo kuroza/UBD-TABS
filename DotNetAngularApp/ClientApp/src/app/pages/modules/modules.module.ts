@@ -1,7 +1,7 @@
 import { NbCardModule, NbTabsetModule, NbAccordionModule, NbButtonModule, NbInputModule, NbSelectModule, NbAlertModule, NbIconModule, NbTooltipModule, NbListModule, NbDatepickerModule } from '@nebular/theme';
 import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ModuleListComponent } from './module-list/module-list.component';
 
@@ -21,6 +21,7 @@ import { ModuleListComponent } from './module-list/module-list.component';
       ThemeModule,
       FormsModule,
       RouterModule,
+      ReactiveFormsModule
     ],
     declarations: [
         ModuleListComponent,

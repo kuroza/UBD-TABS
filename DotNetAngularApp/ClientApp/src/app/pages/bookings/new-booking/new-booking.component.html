@@ -50,7 +50,7 @@
               Please enter the required fields!
             </nb-alert>
 
-            <form #f="ngForm" (ngSubmit)="submit()" novalidate>  
+            <form #f="ngForm" (ngSubmit)="submitBooking()" novalidate>  
               <!-- * Semester form -->
               <div class="form-group">
                 <label>Semester *</label>
@@ -153,8 +153,8 @@
                 <button nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>
               </div>
             
-              <!-- <br>
-              <pre>{{ booking | json }}</pre> -->
+              <br><pre>{{ selectedDays | json }}</pre>
+              <br><pre>{{ booking | json }}</pre>
             </form>
           </nb-card-body>
       </nb-card>
