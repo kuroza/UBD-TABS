@@ -4,9 +4,11 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ModuleListComponent } from './module-list/module-list.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
     imports: [
+      NgMultiSelectDropDownModule,
       NbDatepickerModule,
       NbListModule,
       NbTooltipModule,

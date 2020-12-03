@@ -46,6 +46,7 @@ import { UserService } from './services/user.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ShowHidePasswordModule,
     NgxSpinnerModule,
     
+    NgMultiSelectDropDownModule.forRoot(),
     ToastyModule.forRoot(),
     ThemeModule.forRoot(),
     NbDatepickerModule.forRoot(),

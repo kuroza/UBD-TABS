@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'module-list',
@@ -35,14 +36,25 @@ export class ModuleListComponent implements OnInit {
   filter: any = {};
   moduleOfferingDetails: any;
   moduleDetails: any;
-  modules: any;
-  semesters: any;
-  selectedSemester: any;
   allOfferings: any;
   offerings: any = [];
-  majors: any;
-  lecturers: any;
   
+  semesters: any;
+  semesterSettings: IDropdownSettings = {};
+  selectedSemester: any = [];
+  
+  modules: any;
+  moduleSettings: IDropdownSettings = {};
+  selectedModule: any = [];
+  
+  lecturers: any;
+  lecturersSettings: IDropdownSettings = {};
+  selectedLecturers: any = [];
+
+  majors: any;
+  majorSettings: IDropdownSettings = {};
+  selectedMajor: any = [];
+
   ngModelDate = new Date();
   
   module: SaveModule = {
@@ -79,9 +91,8 @@ export class ModuleListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (localStorage.getItem('token') != null) {
+    if (localStorage.getItem('token') != null)
       this.hasAccess = this.userService.hasAccess();
-    }
 
     var sources = [
       this.semesterService.getAllSemesters(),
@@ -99,20 +110,87 @@ export class ModuleListComponent implements OnInit {
         this.lecturers = data[3];
         this.modules = data[4];
       }, err => console.log(err));
+
+      this.semesterSettings = {
+        singleSelection: true,
+        idField: 'id',
+        textField: 'session',
+        allowSearchFilter: true
+      };
+
+      this.moduleSettings = {
+        singleSelection: true,
+        idField: 'id',
+        textField: 'code',
+        allowSearchFilter: true
+      };
+
+      this.lecturersSettings = {
+        singleSelection: false,
+        idField: 'id',
+        textField: 'name',
+        allowSearchFilter: true,
+        enableCheckAll: false
+      };
+
+      this.majorSettings = {
+        singleSelection: true,
+        idField: 'id',
+        textField: 'name',
+        allowSearchFilter: true
+      };
+  }
+
+  onSemesterSelect(item: any) {
+    this.offering.semesterId = item.id;
+  }
+
+  onSemesterDeSelect(item: any) {
+    this.offering.semesterId = 0;
+  }
+
+  onModuleSelect(item: any) {
+    this.offering.moduleId = item.id;
+  }
+
+  onModuleDeSelect(item: any) {
+    this.offering.moduleId = 0;
+  }
+
+  onLecturerSelect(item: any) {
+    // this.offering.lecturers
+    // push item.id to lecturers
+  }
+
+  onnLecturerDeSelect(item: any) {
+    // this.offering.lecturers
+  }
+
+  onMajorSelect(item: any) {
+    this.module.majorId = item.id;
   }
 
   private setModuleOffering(mo) {
     this.offering.id = mo.id;
+
+    this.selectedSemester = [];
+    this.selectedSemester.push(this.semesters.find(semester => semester.id == mo.semesterId));
     this.offering.semesterId = mo.semesterId;
+    
+    this.selectedModule = [];
+    this.selectedModule.push(this.modules.find(module => module.id == mo.module.id));
     this.offering.moduleId = mo.module.id;
+    
     this.offering.lecturers = _.pluck(mo.lecturers, 'id');
   }
 
   private setModule(m) {
+    this.selectedMajor = [];
+    this.selectedMajor.push(this.majors.find(major => major.id == m.major.id));
+    this.module.majorId = m.major.id;
     this.module.id = m.id;
     this.module.name = m.name;
     this.module.code = m.code;
-    this.module.majorId = m.major.id;
   }
 
   onSemesterFilter() {
