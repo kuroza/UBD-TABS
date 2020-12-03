@@ -158,16 +158,21 @@ export class ModuleListComponent implements OnInit {
   }
 
   onLecturerSelect(item: any) {
-    // this.offering.lecturers
-    // push item.id to lecturers
+    this.offering.lecturers.push(item.id);
   }
-
-  onnLecturerDeSelect(item: any) {
-    // this.offering.lecturers
+  
+  onLecturerDeSelect(item: any) {
+    this.offering.lecturers.forEach( (lecturer, index) => {
+      if (lecturer == item.id) this.offering.lecturers.splice(index, 1);
+    });
   }
-
+  
   onMajorSelect(item: any) {
     this.module.majorId = item.id;
+  }
+
+  onMajorDeSelect(item: any) {
+    this.module.majorId = 0;
   }
 
   private setModuleOffering(mo) {
@@ -181,7 +186,11 @@ export class ModuleListComponent implements OnInit {
     this.selectedModule.push(this.modules.find(module => module.id == mo.module.id));
     this.offering.moduleId = mo.module.id;
     
+    this.selectedLecturers = [];
     this.offering.lecturers = _.pluck(mo.lecturers, 'id');
+    this.offering.lecturers.forEach(lecturerId => {
+      this.selectedLecturers.push(this.lecturers.find(lecturer => lecturer.id == lecturerId));
+    });
   }
 
   private setModule(m) {
@@ -252,7 +261,8 @@ export class ModuleListComponent implements OnInit {
   }
 
   submitAssignModule() {
-    var result$ = (this.offering.id) ? this.offeringService.update(this.offering) : this.offeringService.create(this.offering);
+    var result$ = (this.offering.id) ? 
+      this.offeringService.update(this.offering) : this.offeringService.create(this.offering);
 
     result$.subscribe(() => {
       this.successToasty('Module was sucessfully assigned to semester');
@@ -260,10 +270,8 @@ export class ModuleListComponent implements OnInit {
       // todo here, set the tab to Modules Offered
     },
     err => {
-      if (err.status == 409)
-        this.conflictErrorAlert(err);
-      else if (err.status == 400 || err.status == 500)
-        this.invalidOrBadRequestAlert();
+      if (err.status == 409) this.conflictErrorAlert(err);
+      else if (err.status == 400 || err.status == 500) this.invalidOrBadRequestAlert();
     })
   }
 

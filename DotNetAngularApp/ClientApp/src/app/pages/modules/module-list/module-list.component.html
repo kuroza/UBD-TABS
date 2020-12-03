@@ -161,11 +161,8 @@
               </div>
               <div style="margin-top: 10px;">
                 <label>Lecturers *</label>
-                <!-- <nb-select filled multiple fullWidth placeholder="Select lecturers" [(selected)]="offering.lecturers">
-                  <nb-option *ngFor="let l of lecturers" value="{{ l.id }}">{{ l.title }} {{ l.name }}</nb-option>
-                </nb-select><br> -->
                 <ng-multiselect-dropdown
-                  [placeholder]="'Select lecturer'"
+                  [placeholder]="'Select lecturers'"
                   [data]="lecturers"
                   [(ngModel)]="selectedLecturers"
                   [settings]="lecturersSettings"
@@ -207,6 +204,7 @@
                   [(ngModel)]="selectedMajor"
                   [settings]="majorSettings"
                   (onSelect)="onMajorSelect($event)"
+                  (onDeSelect)="onMajorDeSelect($event)"
                   name="major"
                 >
                 </ng-multiselect-dropdown>
