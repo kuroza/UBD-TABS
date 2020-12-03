@@ -55,7 +55,7 @@
               <div class="form-group">
                 <label>Semester *</label>
                 <br>
-                <nb-select
+                <!-- <nb-select
                   filled
                   required
                   placeholder="Select Semester"
@@ -64,7 +64,17 @@
                   fullWidth="true"
                 >
                   <nb-option *ngFor="let s of semesters" value="{{ s.id }}">{{ s.session }}</nb-option>
-                </nb-select>
+                </nb-select> -->
+                <ng-multiselect-dropdown
+                  [placeholder]="'Select Semester'"
+                  [data]="semesters"
+                  [(ngModel)]="selectedSemester"
+                  [settings]="semesterSettings"
+                  (onSelect)="onSemesterSelect($event)"
+                  (onDeSelect)="onSemesterDeSelect($event)"
+                  name="semester"
+                >
+                </ng-multiselect-dropdown>
                 <br>
               </div>
 

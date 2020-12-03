@@ -13,9 +13,11 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BookingCalendarHeaderModule } from './new-booking/booking-calendar-header/booking-calendar-header.module';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   imports: [
+    NgMultiSelectDropDownModule,
     Ng2TableModule,
     NbTooltipModule,
     NbSpinnerModule,

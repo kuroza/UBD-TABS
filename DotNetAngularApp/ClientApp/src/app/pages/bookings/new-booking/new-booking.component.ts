@@ -3,6 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CalendarEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBeforeRenderEvent } from 'angular-calendar';
 import { WeekViewHourColumn } from 'calendar-utils';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ToastyService } from 'ng2-toasty';
 import { Observable } from 'rxjs';
 import * as _ from 'underscore';
@@ -43,10 +44,12 @@ export class NewBookingComponent implements OnInit {
   buildings: any;
   rooms: any;
   timeSlots: any;
-  semesters: any;
-  semesterSelect: number = 0;
   allOfferings: any;
   offerings: any = [];
+
+  semesters: any;
+  semesterSettings: IDropdownSettings = {};
+  selectedSemester: any = []; // number = 0
 
   booking: SaveBooking = {
     id: 0,
@@ -98,6 +101,13 @@ export class NewBookingComponent implements OnInit {
     }, err => {
       if (err.status == 404) this.router.navigate(['/']);
     });
+
+    this.semesterSettings = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'session',
+      allowSearchFilter: true
+    };
   }
 
   // * angular-calendar ---------------------------------------------------------------------
@@ -180,7 +190,7 @@ export class NewBookingComponent implements OnInit {
 
   resetBookingField() {
     delete this.selectedMonthViewDay.cssClass;
-    this.semesterSelect = 0;
+    this.selectedSemester = 0;
     this.booking.id = 0;
     this.booking.offerings = [];
     this.booking.rooms = [];
@@ -200,11 +210,12 @@ export class NewBookingComponent implements OnInit {
     // this.booking.buildingId = b.rooms.buildingId;
   }
 
-  onSemesterChange() {
-    if (this.semesterSelect) 
-      this.offerings = this.allOfferings.filter(o => o.semesterId == this.semesterSelect);
-    else
-      this.offerings = [];
+  onSemesterSelect(item: any) {
+    this.offerings = this.allOfferings.filter(o => o.semesterId == item.id);
+  }
+
+  onSemesterDeSelect(item: any) {
+    this.offerings = [];
   }
 
   onBuildingChange() {
