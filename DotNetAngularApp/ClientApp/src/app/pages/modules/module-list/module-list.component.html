@@ -76,7 +76,7 @@
             </div>
           </nb-tab>
 
-          <nb-tab tabTitle="Semester List">
+          <nb-tab tabTitle="Semesters List">
             <div style="margin-top: -16px;">
               <nb-card-header style="border-bottom: none;">
                 <h4>All Semesters</h4>
@@ -118,7 +118,7 @@
         <nb-tabset fullWidth>
 
           <!-- * Assign Module to Semester -->
-          <nb-tab *ngIf="hasAccess" tabTitle="Assign Modules" active="{{ setActiveAddAssignModules }}">
+          <nb-tab *ngIf="hasAccess" tabTitle="Assign Module" active="{{ setActiveAddAssignModule }}">
             <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert" style="text-align: center;">
               {{error}}
             </nb-alert>
@@ -195,7 +195,7 @@
                 <button *ngIf="!module.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="module.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
               </div>
-              <!-- <br><pre>{{ module | json }}</pre> -->
+              <br><pre>{{ module | json }}</pre>
             </form>
           </nb-tab>
 

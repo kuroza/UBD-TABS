@@ -20,7 +20,7 @@ import { SaveSemester } from '../../../models/semester';
 })
 export class ModuleListComponent implements OnInit {
   hasAccess = false;
-  setActiveAddAssignModules: boolean;
+  setActiveAddAssignModule: boolean;
   setActiveAddModule: boolean;
   setActiveSemester: boolean;
   error: string;
@@ -69,7 +69,7 @@ export class ModuleListComponent implements OnInit {
     private userService: UserService,
     private majorService: MajorService,
     private offeringService: OfferingService,
-    private semesterService: SemesterService
+    private semesterService: SemesterService,
   ) { }
 
   ngOnInit() {
@@ -92,9 +92,7 @@ export class ModuleListComponent implements OnInit {
         this.majors = data[2];
         this.lecturers = data[3];
         this.modules = data[4];
-      }, err => {
-        console.log(err);
-      });
+      }, err => console.log(err));
   }
 
   private setModuleOffering(mo) {
@@ -108,11 +106,16 @@ export class ModuleListComponent implements OnInit {
     this.module.id = m.id;
     this.module.name = m.name;
     this.module.code = m.code;
+    this.module.majorId = m.major.id;
   }
 
   onSemesterFilter() {
-    this.offerings = this.allOfferings.filter(o => o.semesterId == this.filter.semesterId);
+    this.filterOfferingsBySemesterId();
     this.selectedSemester = this.semesters.find(s => s.id == this.filter.semesterId);
+  }
+
+  private filterOfferingsBySemesterId() {
+    this.offerings = this.allOfferings.filter(o => o.semesterId == this.filter.semesterId);
   }
 
   submitModule() {
@@ -125,15 +128,23 @@ export class ModuleListComponent implements OnInit {
     },
     err => {
       if (err.status == 409) {
-        this.requiredAlert = false;
-        this.error = err.error;
-        this.existAlert = true;
+        this.conflictErrorAlert(err);
       }
-      else if (err.status == 400) {
-        this.existAlert = false;
-        this.requiredAlert = true;
+      else if (err.status == 400 || 500) {
+        this.invalidOrBadRequestAlert();
       }
     });
+  }
+
+  private invalidOrBadRequestAlert() {
+    this.existAlert = false;
+    this.requiredAlert = true;
+  }
+
+  private conflictErrorAlert(err: any) {
+    this.error = err.error;
+    this.existAlert = true;
+    this.requiredAlert = false;
   }
 
   private successToasty(message: string) {
@@ -192,7 +203,7 @@ export class ModuleListComponent implements OnInit {
       m => {
         this.setActiveSemester = false;
         this.setActiveAddModule = false;
-        this.setActiveAddAssignModules = true;
+        this.setActiveAddAssignModule = true;
         this.setModuleOffering(m);
       });
   }
@@ -201,7 +212,7 @@ export class ModuleListComponent implements OnInit {
     this.moduleService.getModule(id)
     .subscribe(
       m => {
-        this.setActiveAddAssignModules = false;
+        this.setActiveAddAssignModule = false;
         this.setActiveSemester = false;
         this.setActiveAddModule = true;
         this.setModule(m);

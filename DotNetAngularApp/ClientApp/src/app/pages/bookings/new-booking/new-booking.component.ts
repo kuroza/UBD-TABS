@@ -81,7 +81,6 @@ export class NewBookingComponent implements OnInit {
       this.offeringService.getAllOfferings(),
     ];
 
-    // * for editing Booking events
     if (this.booking.id)
       sources.push(this.bookingService.getBooking(this.booking.id));
 
@@ -97,8 +96,7 @@ export class NewBookingComponent implements OnInit {
         this.populateRooms();
       }
     }, err => {
-      if (err.status == 404)
-        this.router.navigate(['/']);
+      if (err.status == 404) this.router.navigate(['/']);
     });
   }
 
@@ -142,11 +140,8 @@ export class NewBookingComponent implements OnInit {
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     body.forEach((day) => {
-      if (
-        this.selectedDays.some(
-          (selectedDay) => selectedDay.date.getTime() === day.date.getTime()
-        )
-      ) {
+      if (this.selectedDays.some((selectedDay) => 
+      selectedDay.date.getTime() === day.date.getTime())) {
         day.cssClass = 'cal-day-selected';
       }
     });
@@ -244,8 +239,7 @@ export class NewBookingComponent implements OnInit {
   submit() {
     this.nbSpinner = true;
     if (!this.validSubmitForm()) {
-      this.requiredAlert = true;
-      this.nbSpinner = false;
+      this.invalidOrBadRequestAlert();
       return false;
     }
 
@@ -257,9 +251,7 @@ export class NewBookingComponent implements OnInit {
         },
         err => {
           if (err.status == 409) {
-            this.error = err.error;
-            this.existAlert = true;
-            this.nbSpinner = false;
+            this.conflictErrorAlert(err);
             if (confirm(`${err.error} Are you sure you want to add another event to this room?`)) {
               this.bookingService.confirmCreate(this.booking)
                 .subscribe(() => {
@@ -268,9 +260,7 @@ export class NewBookingComponent implements OnInit {
                 });
             }
           } else if (err.status == 400) {
-            this.existAlert = false;
-            this.requiredAlert = true;
-            this.nbSpinner = false;
+            this.invalidOrBadRequestAlert();
           }
         });
     }
@@ -283,13 +273,26 @@ export class NewBookingComponent implements OnInit {
         },
         err => {
           if (err.status == 409)
-            this.existAlert = true;
+            this.conflictErrorAlert(err);
           else if (err.status == 400)
-            this.requiredAlert = true;
+            this.invalidOrBadRequestAlert();
         });
     }
 
     this.onCloseAlert();
+  }
+
+  private conflictErrorAlert(err: any) {
+    this.error = err.error;
+    this.existAlert = true;
+    this.requiredAlert = false;
+    this.nbSpinner = false;
+  }
+
+  private invalidOrBadRequestAlert() {
+    this.existAlert = false;
+    this.requiredAlert = true;
+    this.nbSpinner = false;
   }
 
   onCloseAlert() {

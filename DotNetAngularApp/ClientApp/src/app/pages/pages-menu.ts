@@ -74,7 +74,7 @@ export const MENU_ITEMS_ADMIN: NbMenuItem[] = [
     link: '/pages/users/manage',
   },
   {
-    title: 'Modules',
+    title: 'Modules and Semesters',
     icon: 'book-open-outline',
     link: '/pages/modules',
   },

@@ -68,9 +68,8 @@ export class HomeComponent {
   ) {}
 
   ngOnInit() {
-    if (localStorage.getItem('token') != null) {
+    if (localStorage.getItem('token') != null)
       this.hasAccess = this.userService.hasAccess();
-    }
 
     Observable.forkJoin([
       this.facultyService.getAllFaculties(),
@@ -87,22 +86,27 @@ export class HomeComponent {
 
       this.populateCalendar();
       this.refresh.next();
-    }, error => {
-      console.log(error);
-    });
+    }, error => console.log(error));
   }
 
   // * Filter by modules ---------------------------------------------------------------
 
   onFacultyChange() {
-    var selectedFaculty = this.faculties.find(faculty => faculty.id == this.filter.facultyId);
-    this.majors = selectedFaculty ? selectedFaculty.majors : [];
+    this.populateMajorsDropdown();
     this.resetCalendar();
     delete this.filter.majorId;
+    this.filterBookingsByFacultyId();
+    this.populateCalendar();
+  }
 
+  private filterBookingsByFacultyId() {
     var bookings = this.allBookings;
     this.bookings = bookings.filter(b => b.offerings.find(o => o.module.major.facultyId == this.filter.facultyId));
-    this.populateCalendar();
+  }
+
+  private populateMajorsDropdown() {
+    var selectedFaculty = this.faculties.find(faculty => faculty.id == this.filter.facultyId);
+    this.majors = selectedFaculty ? selectedFaculty.majors : [];
   }
 
   onMajorChange() {
@@ -178,19 +182,25 @@ export class HomeComponent {
     var offerings = this.allOfferings;
 
     if (this.filter.lecturerId) {
-      var offeringIds = offerings
-        .filter(offering => offering.lecturers
-        .find(l => l.id == this.filter.lecturerId))
-        .map(offering => offering.id);
-
+      var offeringIds = this.mapOfferingIdsFromOfferings(offerings);
       offeringIds.forEach(offeringId => {
-        this.bookings = this.allBookings
-          .filter(b => b.offerings
-          .find(bo => bo.id == offeringId));
-
+        this.filterBookingsByOfferingId(offeringId);
         this.populateCalendar();
       });
     }
+  }
+
+  private mapOfferingIdsFromOfferings(offerings: any) {
+    return offerings
+      .filter(offering => offering.lecturers
+        .find(l => l.id == this.filter.lecturerId))
+      .map(offering => offering.id);
+  }
+
+  private filterBookingsByOfferingId(offeringId: any) {
+    this.bookings = this.allBookings
+      .filter(b => b.offerings
+        .find(bo => bo.id == offeringId));
   }
 
   resetLecturerFilter() {
