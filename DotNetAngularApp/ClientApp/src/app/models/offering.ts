@@ -1,6 +1,7 @@
 export interface Offering {
   id: number;
   semesterId: number;
+  moduleCodeAndName: string;
   module: {
     id: number;
     name: string;

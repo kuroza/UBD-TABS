@@ -54,17 +54,6 @@
               <!-- * Semester form -->
               <div class="form-group">
                 <label>Semester *</label>
-                <br>
-                <!-- <nb-select
-                  filled
-                  required
-                  placeholder="Select Semester"
-                  [(selected)]="semesterSelect"
-                  (selectedChange)="onSemesterChange()"
-                  fullWidth="true"
-                >
-                  <nb-option *ngFor="let s of semesters" value="{{ s.id }}">{{ s.session }}</nb-option>
-                </nb-select> -->
                 <ng-multiselect-dropdown
                   [placeholder]="'Select Semester'"
                   [data]="semesters"
@@ -75,30 +64,27 @@
                   name="semester"
                 >
                 </ng-multiselect-dropdown>
-                <br>
               </div>
 
               <!-- * Module form -->
               <div class="form-group">
                 <label>Modules *</label>
-                <br>
-                <nb-select
-                  filled
-                  multiple
-                  required
-                  placeholder="Select Modules"
-                  [(selected)]="booking.offerings"
-                  fullWidth="true"
+                <ng-multiselect-dropdown
+                  [placeholder]="'Select Modules'"
+                  [data]="offerings"
+                  [(ngModel)]="selectedOfferings"
+                  [settings]="offeringSettings"
+                  (onSelect)="onOfferingSelect($event)"
+                  (onDeSelect)="onOfferingDeSelect($event)"
+                  name="offerings"
                 >
-                  <nb-option *ngFor="let offering of offerings" value="{{ offering.id }}">{{ offering.module.code }}: {{ offering.module.name }}</nb-option>
-                </nb-select>
-                <br>
+                </ng-multiselect-dropdown>
               </div>
             
               <!-- * Time slot multiple select -->
               <div class="form-group">
                 <label>Time slots *</label>
-                <br>
+                <!-- <br>
                 <nb-select
                   filled
                   multiple
@@ -111,7 +97,17 @@
                     {{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}
                   </nb-option>
                 </nb-select>
-                <br>
+                <br> -->
+                <ng-multiselect-dropdown
+                  [placeholder]="'Select Time Slots'"
+                  [data]="timeSlots"
+                  [(ngModel)]="selectedTimeSlots"
+                  [settings]="timeSlotSettings"
+                  (onSelect)="onTimeSlotSelect($event)"
+                  (onDeSelect)="onTimeSlotDeSelect($event)"
+                  name="timeSlots"
+                >
+                </ng-multiselect-dropdown>
               </div>
             
               <!-- * Building drop down list -->

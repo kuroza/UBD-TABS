@@ -11,6 +11,8 @@ namespace DotNetAngularApp.Controllers.Resources
         public string Name { get; set; }
 
         public string Code { get; set; }
+        
+        public string ModuleCodeAndName => $"{Code}: {Name}";
 
         public MajorResource Major { get; set; }
     }

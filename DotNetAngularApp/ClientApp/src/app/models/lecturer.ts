@@ -2,6 +2,7 @@ export interface Lecturer {
     id: number;
     name: string;
     title: string;
+    lecturerNameAndTitle: string;
     modules: {
         id: number;
         name: string;

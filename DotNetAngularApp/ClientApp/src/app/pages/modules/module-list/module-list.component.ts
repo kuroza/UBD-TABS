@@ -121,14 +121,14 @@ export class ModuleListComponent implements OnInit {
       this.moduleSettings = {
         singleSelection: true,
         idField: 'id',
-        textField: 'code',
+        textField: 'moduleCodeAndName',
         allowSearchFilter: true
       };
 
       this.lecturersSettings = {
         singleSelection: false,
         idField: 'id',
-        textField: 'name',
+        textField: 'lecturerNameAndTitle',
         allowSearchFilter: true,
         enableCheckAll: false
       };

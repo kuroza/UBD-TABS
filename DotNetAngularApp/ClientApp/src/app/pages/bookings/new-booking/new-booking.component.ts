@@ -43,13 +43,16 @@ export class NewBookingComponent implements OnInit {
   
   buildings: any;
   rooms: any;
-  timeSlots: any;
-  allOfferings: any;
-  offerings: any = [];
-
   semesters: any;
   semesterSettings: IDropdownSettings = {};
-  selectedSemester: any = []; // number = 0
+  selectedSemester: any = [];
+  allOfferings: any;
+  offerings: any = [];
+  offeringSettings: IDropdownSettings = {};
+  selectedOfferings: any = [];
+  timeSlots: any;
+  timeSlotSettings: IDropdownSettings = {};
+  selectedTimeSlots: any = [];
 
   booking: SaveBooking = {
     id: 0,
@@ -107,6 +110,22 @@ export class NewBookingComponent implements OnInit {
       idField: 'id',
       textField: 'session',
       allowSearchFilter: true
+    };
+
+    this.offeringSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'moduleCodeAndName',
+      allowSearchFilter: true,
+      enableCheckAll: false
+    };
+
+    this.timeSlotSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'startAndEndTime',
+      allowSearchFilter: false,
+      enableCheckAll: false
     };
   }
 
@@ -216,6 +235,26 @@ export class NewBookingComponent implements OnInit {
 
   onSemesterDeSelect(item: any) {
     this.offerings = [];
+  }
+
+  onOfferingSelect(item: any) {
+    this.booking.offerings.push(item.id);
+  }
+
+  onOfferingDeSelect(item: any) {
+    this.booking.offerings.forEach( (offering, index) => {
+      if (offering == item.id) this.booking.offerings.splice(index, 1);
+    });
+  }
+
+  onTimeSlotSelect(item: any) {
+    this.booking.timeSlots.push(item.id);
+  }
+
+  onTimeSlotDeSelect(item: any) {
+    this.booking.timeSlots.forEach( (timeSlot, index) => {
+      if (timeSlot == item.id) this.booking.timeSlots.splice(index, 1);
+    });
   }
 
   onBuildingChange() {
