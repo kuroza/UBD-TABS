@@ -41,7 +41,6 @@ export class NewBookingComponent implements OnInit {
   year: number;
   datePicker: string;
   
-  buildings: any;
   rooms: any;
   semesters: any;
   semesterSettings: IDropdownSettings = {};
@@ -53,6 +52,9 @@ export class NewBookingComponent implements OnInit {
   timeSlots: any;
   timeSlotSettings: IDropdownSettings = {};
   selectedTimeSlots: any = [];
+  buildings: any;
+  buildingSettings: IDropdownSettings = {};
+  selectedBuilding: any = [];
 
   booking: SaveBooking = {
     id: 0,
@@ -99,7 +101,7 @@ export class NewBookingComponent implements OnInit {
 
       if (this.booking.id) {
         this.setBooking(data[4]);
-        this.populateRooms();
+        // this.populateRooms();
       }
     }, err => {
       if (err.status == 404) this.router.navigate(['/']);
@@ -109,7 +111,8 @@ export class NewBookingComponent implements OnInit {
       singleSelection: true,
       idField: 'id',
       textField: 'session',
-      allowSearchFilter: true
+      allowSearchFilter: true,
+      enableCheckAll: false
     };
 
     this.offeringSettings = {
@@ -125,6 +128,14 @@ export class NewBookingComponent implements OnInit {
       idField: 'id',
       textField: 'startAndEndTime',
       allowSearchFilter: false,
+      enableCheckAll: false
+    };
+
+    this.buildingSettings = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'name',
+      allowSearchFilter: true,
       enableCheckAll: false
     };
   }
@@ -194,10 +205,8 @@ export class NewBookingComponent implements OnInit {
       column.hours.forEach((hourSegment) => {
         hourSegment.segments.forEach((segment) => {
           delete segment.cssClass;
-          if (
-            this.selectedDayViewDate &&
-            segment.date.getTime() === this.selectedDayViewDate.getTime()
-          ) {
+          if (this.selectedDayViewDate &&
+          segment.date.getTime() === this.selectedDayViewDate.getTime()) {
             segment.cssClass = 'cal-day-selected';
           }
         });
@@ -257,13 +266,16 @@ export class NewBookingComponent implements OnInit {
     });
   }
 
-  onBuildingChange() {
-    this.populateRooms();
-    // delete this.booking.rooms; // ? with this, Rooms not showing
+  onBuildingSelect(item: any) {
+    this.populateRooms(item);
   }
 
-  private populateRooms() {
-    var selectedBuilding = this.buildings.find(b => b.id == this.booking.buildingId);
+  onBuildingDeSelect(item: any) {
+    delete this.rooms;
+  }
+
+  private populateRooms(item: any) {
+    var selectedBuilding = this.buildings.find(building => building.id == item.id);
     this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
   }
 

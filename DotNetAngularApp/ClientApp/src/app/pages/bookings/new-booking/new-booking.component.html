@@ -84,20 +84,6 @@
               <!-- * Time slot multiple select -->
               <div class="form-group">
                 <label>Time slots *</label>
-                <!-- <br>
-                <nb-select
-                  filled
-                  multiple
-                  required
-                  placeholder="Select Time Slots"
-                  [(selected)]="booking.timeSlots"
-                  fullWidth="true"
-                >  
-                  <nb-option *ngFor="let t of timeSlots" value="{{ t.id }}">
-                    {{ t.startTime | date:'shortTime' }} - {{ t.endTime | date:'shortTime' }}
-                  </nb-option>
-                </nb-select>
-                <br> -->
                 <ng-multiselect-dropdown
                   [placeholder]="'Select Time Slots'"
                   [data]="timeSlots"
@@ -113,17 +99,16 @@
               <!-- * Building drop down list -->
               <div class="form-group">
                 <label for="building">Building *</label>
-                <br>
-                <nb-select
-                  filled
-                  required
-                  placeholder="Select Building"
-                  [(selected)]="booking.buildingId"
-                  fullWidth="true"
-                  (selectedChange)="onBuildingChange()"
+                <ng-multiselect-dropdown
+                  [placeholder]="'Select Building'"
+                  [data]="buildings"
+                  [(ngModel)]="selectedBuilding"
+                  [settings]="buildingSettings"
+                  (onSelect)="onBuildingSelect($event)"
+                  (onDeSelect)="onBuildingDeSelect($event)"
+                  name="building"
                 >
-                  <nb-option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</nb-option>
-                </nb-select>
+                </ng-multiselect-dropdown>
               </div>
             
               <!-- * Room drop down list -->
@@ -140,6 +125,7 @@
                 >
                   <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
                 </nb-select>
+                <!-- FIXME: -->
               </div>
               <!-- <br>
               <pre>{{ rooms | json }}</pre> -->
