@@ -41,7 +41,6 @@ export class NewBookingComponent implements OnInit {
   year: number;
   datePicker: string;
   
-  rooms: any;
   semesters: any;
   semesterSettings: IDropdownSettings = {};
   selectedSemester: any = [];
@@ -55,6 +54,9 @@ export class NewBookingComponent implements OnInit {
   buildings: any;
   buildingSettings: IDropdownSettings = {};
   selectedBuilding: any = [];
+  rooms: any;
+  roomSettings: IDropdownSettings = {};
+  selectedRoom: any = [];
 
   booking: SaveBooking = {
     id: 0,
@@ -63,7 +65,7 @@ export class NewBookingComponent implements OnInit {
     bookDates: [],
     timeSlots: [],
     purpose: '',
-    buildingId: 0,
+    // buildingId: 0,
   };
 
   constructor(
@@ -133,6 +135,14 @@ export class NewBookingComponent implements OnInit {
 
     this.buildingSettings = {
       singleSelection: true,
+      idField: 'id',
+      textField: 'name',
+      allowSearchFilter: true,
+      enableCheckAll: false
+    };
+
+    this.roomSettings = {
+      singleSelection: false,
       idField: 'id',
       textField: 'name',
       allowSearchFilter: true,
@@ -225,7 +235,7 @@ export class NewBookingComponent implements OnInit {
     this.booking.bookDates = [];
     this.booking.timeSlots = [];
     this.booking.purpose = '';
-    this.booking.buildingId = 0;
+    // this.booking.buildingId = 0;
   }
 
   private setBooking(b) {
@@ -251,8 +261,8 @@ export class NewBookingComponent implements OnInit {
   }
 
   onOfferingDeSelect(item: any) {
-    this.booking.offerings.forEach( (offering, index) => {
-      if (offering == item.id) this.booking.offerings.splice(index, 1);
+    this.booking.offerings.forEach( (offeringId, index) => {
+      if (offeringId == item.id) this.booking.offerings.splice(index, 1);
     });
   }
 
@@ -261,8 +271,8 @@ export class NewBookingComponent implements OnInit {
   }
 
   onTimeSlotDeSelect(item: any) {
-    this.booking.timeSlots.forEach( (timeSlot, index) => {
-      if (timeSlot == item.id) this.booking.timeSlots.splice(index, 1);
+    this.booking.timeSlots.forEach( (timeSlotId, index) => {
+      if (timeSlotId == item.id) this.booking.timeSlots.splice(index, 1);
     });
   }
 
@@ -274,9 +284,19 @@ export class NewBookingComponent implements OnInit {
     delete this.rooms;
   }
 
+  onRoomSelect(item: any) {
+    this.booking.rooms.push(item.id);
+  }
+
+  onRoomDeSelect(item: any) {
+    this.booking.rooms.forEach( (roomId, index) => {
+      if (roomId == item.id) this.booking.rooms.splice(index, 1);
+    });
+  }
+
   private populateRooms(item: any) {
-    var selectedBuilding = this.buildings.find(building => building.id == item.id);
-    this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
+    this.selectedBuilding = this.buildings.find(building => building.id == item.id);
+    this.rooms = this.selectedBuilding ? this.selectedBuilding.rooms : [];
   }
 
   private lengthIsNotZero() {

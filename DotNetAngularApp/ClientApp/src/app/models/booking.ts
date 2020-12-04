@@ -48,5 +48,5 @@ export interface SaveBooking {
   timeSlots: number[];
   bookDates: string[];
   purpose: string;
-  buildingId: number;
+  // buildingId: number;
 }

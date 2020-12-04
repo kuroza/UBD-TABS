@@ -114,7 +114,7 @@
               <!-- * Room drop down list -->
               <div class="form-group">
                 <label>Rooms *</label>
-                <br>
+                <!-- <br>
                 <nb-select
                 filled
                 required
@@ -124,8 +124,18 @@
                 fullWidth="true"
                 >
                   <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
-                </nb-select>
+                </nb-select> -->
                 <!-- FIXME: -->
+                <ng-multiselect-dropdown
+                  [placeholder]="'Select Rooms'"
+                  [data]="rooms"
+                  [(ngModel)]="selectedRoom"
+                  [settings]="roomSettings"
+                  (onSelect)="onRoomSelect($event)"
+                  (onDeSelect)="onRoomDeSelect($event)"
+                  name="rooms"
+                >
+                </ng-multiselect-dropdown>
               </div>
               <!-- <br>
               <pre>{{ rooms | json }}</pre> -->
