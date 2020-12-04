@@ -102,6 +102,7 @@
                 <ng-multiselect-dropdown
                   [placeholder]="'Select Building'"
                   [data]="buildings"
+                  [(ngModel)]="selectedBuilding"
                   [settings]="buildingSettings"
                   (onSelect)="onBuildingSelect($event)"
                   (onDeSelect)="onBuildingDeSelect($event)"
@@ -116,7 +117,7 @@
                 <ng-multiselect-dropdown
                   [placeholder]="'Select Rooms'"
                   [data]="rooms"
-                  [(ngModel)]="selectedRoom"
+                  [(ngModel)]="selectedRooms"
                   [settings]="roomSettings"
                   (onSelect)="onRoomSelect($event)"
                   (onDeSelect)="onRoomDeSelect($event)"
@@ -134,11 +135,10 @@
               </div>
               
               <div *ngIf="!booking.id">
-                <!-- <button style="margin-bottom: 10px;" nbButton fullWidth status="default" outline (click)="resetBookingField()">Reset</button> -->
+                <button style="margin-bottom: 10px;" nbButton fullWidth status="default" outline (click)="resetBookingField()">Reset</button>
                 <button nbButton fullWidth status="primary" [disabled]="!f.valid">Submit</button>
               </div>
               <div *ngIf="booking.id">
-                <!-- <button style="margin-bottom: 10px;" nbButton fullWidth status="default" (click)="resetBookingField()">Reset</button> -->
                 <button nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>
               </div>
             

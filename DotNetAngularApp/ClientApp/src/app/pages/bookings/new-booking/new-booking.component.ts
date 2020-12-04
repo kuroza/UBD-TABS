@@ -13,6 +13,7 @@ import { BuildingService } from '../../../services/building.service';
 import { OfferingService } from '../../../services/offering.service';
 import { SemesterService } from '../../../services/semester.service';
 import { TimeSlotService } from '../../../services/timeSlot.service';
+import { RoomService } from './../../../services/room.service';
 
 @Component({
   selector: 'ngx-new-booking',
@@ -53,9 +54,10 @@ export class NewBookingComponent implements OnInit {
   selectedTimeSlots: any = [];
   buildings: any;
   buildingSettings: IDropdownSettings = {};
+  selectedBuilding: any =[];
   rooms: any;
   roomSettings: IDropdownSettings = {};
-  selectedRoom: any = [];
+  selectedRooms: any = [];
 
   booking: SaveBooking = {
     id: 0,
@@ -64,7 +66,6 @@ export class NewBookingComponent implements OnInit {
     bookDates: [],
     timeSlots: [],
     purpose: '',
-    // buildingId: 0,
   };
 
   constructor(
@@ -75,6 +76,7 @@ export class NewBookingComponent implements OnInit {
     private semesterService: SemesterService,
     private timeSlotService: TimeSlotService,
     private offeringService: OfferingService,
+    private roomService: RoomService,
     private toastyService: ToastyService
   ) {
     route.params.subscribe(p => {
@@ -88,6 +90,7 @@ export class NewBookingComponent implements OnInit {
       this.timeSlotService.getAllTimeSlots(),
       this.semesterService.getAllSemesters(),
       this.offeringService.getAllOfferings(),
+      this.roomService.getAllRooms()
     ];
 
     if (this.booking.id)
@@ -99,9 +102,10 @@ export class NewBookingComponent implements OnInit {
       this.timeSlots = data[1];
       this.semesters = data[2];
       this.allOfferings = data[3];
+      this.rooms = data[4];
 
       if (this.booking.id) {
-        this.setBooking(data[4]);
+        this.setBooking(data[5]);
         // this.populateRooms();
       }
     }, err => {
@@ -230,25 +234,47 @@ export class NewBookingComponent implements OnInit {
   // * Booking form ---------------------------------------------------------------------
 
   resetBookingField() {
-    delete this.selectedMonthViewDay.cssClass;
-    this.selectedSemester = 0;
     this.booking.id = 0;
+    this.selectedSemester = [];
     this.booking.offerings = [];
-    this.booking.rooms = [];
-    this.booking.bookDates = [];
+    this.selectedOfferings = [];
     this.booking.timeSlots = [];
+    this.selectedTimeSlots = [];
+    this.selectedBuilding =[];
+    this.booking.rooms = [];
+    this.selectedRooms = [];
     this.booking.purpose = '';
-    // this.booking.buildingId = 0;
+    this.booking.bookDates = [];
+    // delete this.selectedMonthViewDay.cssClass;
   }
 
   private setBooking(b) {
     this.booking.id = b.id;
+
+    this.selectedOfferings = [];
     this.booking.offerings = _.pluck(b.offerings, 'id');
-    this.booking.bookDates = _.pluck(b.bookDates, 'date'); // b.bookDates.map(bd => bd.date); // maybe need to format date[]
-    this.booking.rooms = _.pluck(b.rooms, 'id');
+    this.booking.offerings.forEach(offeringId => 
+      this.selectedOfferings.push(this.allOfferings.find(offering => offering.id == offeringId)));
+    
+    this.selectedSemester = [];
+    var offeringObject = this.allOfferings.find(offering => offering.id == this.booking.offerings[0]);
+    this.selectedSemester.push(this.semesters.find(semester => semester.id == offeringObject.semesterId));
+
+    this.selectedTimeSlots = [];
     this.booking.timeSlots = _.pluck(b.timeSlots, 'id');
+    this.booking.timeSlots.forEach(timeSlotId =>
+      this.selectedTimeSlots.push(this.timeSlots.find(timeSlot => timeSlot.id == timeSlotId)));
+
+    this.selectedRooms = [];
+    this.booking.rooms = _.pluck(b.rooms, 'id');
+    this.booking.rooms.forEach(roomId => {
+      this.selectedRooms.push(this.rooms.find(room => room.id == roomId));
+    });
+
     this.booking.purpose = b.purpose;
-    // this.booking.buildingId = b.rooms.buildingId;
+    
+    // FIXME:
+    this.booking.bookDates = _.pluck(b.bookDates, 'date'); // b.bookDates.map(bd => bd.date); // maybe need to format date[]
   }
 
   onSemesterSelect(item: any) {

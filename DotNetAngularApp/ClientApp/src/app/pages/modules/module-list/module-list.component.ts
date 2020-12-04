@@ -188,9 +188,8 @@ export class ModuleListComponent implements OnInit {
     
     this.selectedLecturers = [];
     this.offering.lecturers = _.pluck(mo.lecturers, 'id');
-    this.offering.lecturers.forEach(lecturerId => {
-      this.selectedLecturers.push(this.lecturers.find(lecturer => lecturer.id == lecturerId));
-    });
+    this.offering.lecturers.forEach(lecturerId => 
+      this.selectedLecturers.push(this.lecturers.find(lecturer => lecturer.id == lecturerId)));
   }
 
   private setModule(m) {
