@@ -53,7 +53,6 @@ export class NewBookingComponent implements OnInit {
   selectedTimeSlots: any = [];
   buildings: any;
   buildingSettings: IDropdownSettings = {};
-  selectedBuilding: any = [];
   rooms: any;
   roomSettings: IDropdownSettings = {};
   selectedRoom: any = [];
@@ -114,7 +113,8 @@ export class NewBookingComponent implements OnInit {
       idField: 'id',
       textField: 'session',
       allowSearchFilter: true,
-      enableCheckAll: false
+      enableCheckAll: false,
+      closeDropDownOnSelection: true
     };
 
     this.offeringSettings = {
@@ -122,7 +122,8 @@ export class NewBookingComponent implements OnInit {
       idField: 'id',
       textField: 'moduleCodeAndName',
       allowSearchFilter: true,
-      enableCheckAll: false
+      enableCheckAll: false,
+      noDataAvailablePlaceholderText: 'Please select a semester'
     };
 
     this.timeSlotSettings = {
@@ -138,7 +139,8 @@ export class NewBookingComponent implements OnInit {
       idField: 'id',
       textField: 'name',
       allowSearchFilter: true,
-      enableCheckAll: false
+      enableCheckAll: false,
+      closeDropDownOnSelection: true
     };
 
     this.roomSettings = {
@@ -146,7 +148,8 @@ export class NewBookingComponent implements OnInit {
       idField: 'id',
       textField: 'name',
       allowSearchFilter: true,
-      enableCheckAll: false
+      enableCheckAll: false,
+      noDataAvailablePlaceholderText: 'Please select a building'
     };
   }
 
@@ -295,8 +298,8 @@ export class NewBookingComponent implements OnInit {
   }
 
   private populateRooms(item: any) {
-    this.selectedBuilding = this.buildings.find(building => building.id == item.id);
-    this.rooms = this.selectedBuilding ? this.selectedBuilding.rooms : [];
+    var selectedBuilding = this.buildings.find(building => building.id == item.id);
+    this.rooms = selectedBuilding ? selectedBuilding.rooms : [];
   }
 
   private lengthIsNotZero() {

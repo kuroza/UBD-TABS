@@ -102,7 +102,6 @@
                 <ng-multiselect-dropdown
                   [placeholder]="'Select Building'"
                   [data]="buildings"
-                  [(ngModel)]="selectedBuilding"
                   [settings]="buildingSettings"
                   (onSelect)="onBuildingSelect($event)"
                   (onDeSelect)="onBuildingDeSelect($event)"
@@ -114,18 +113,6 @@
               <!-- * Room drop down list -->
               <div class="form-group">
                 <label>Rooms *</label>
-                <!-- <br>
-                <nb-select
-                filled
-                required
-                multiple
-                placeholder="Select Rooms"
-                [(selected)]="booking.rooms"
-                fullWidth="true"
-                >
-                  <nb-option *ngFor="let r of rooms" value="{{ r.id }}">{{ r.name }}</nb-option>
-                </nb-select> -->
-                <!-- FIXME: -->
                 <ng-multiselect-dropdown
                   [placeholder]="'Select Rooms'"
                   [data]="rooms"
@@ -142,8 +129,8 @@
             
               <div class="form-group">
                 <label>Purpose</label>
-                <input nbInput fullWidth id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose"
-                  placeholder="Purpose" filled>
+                <input id="purpose" type="text" class="form-control" [(ngModel)]="booking.purpose" name="purpose"
+                  placeholder="Purpose">
               </div>
               
               <div *ngIf="!booking.id">
