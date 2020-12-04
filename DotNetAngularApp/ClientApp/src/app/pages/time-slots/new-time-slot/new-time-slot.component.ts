@@ -38,7 +38,7 @@ export class NewTimeSlotComponent implements OnInit {
     result$.subscribe(() => {
       this.toastyService.success({
         title: 'Success', 
-        msg: 'Time slot was sucessfully added.',
+        msg: 'Time slot was successfully added.',
         theme: 'bootstrap',
         showClose: true,
         timeout: 5000

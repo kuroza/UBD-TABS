@@ -51,7 +51,7 @@ export class TimeSlotListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.timeSlotService.delete(id)
         .subscribe(x => {
-          this.warningToasty('Time slot was sucessfully deleted.');
+          this.warningToasty('Time slot was successfully deleted.');
           this.redirectTo('/pages/timeslots');
         });
     }

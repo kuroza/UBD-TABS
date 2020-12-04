@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ModuleListComponent } from './module-list/module-list.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
       ThemeModule,
       FormsModule,
       RouterModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      NgbModule
     ],
     declarations: [
         ModuleListComponent,

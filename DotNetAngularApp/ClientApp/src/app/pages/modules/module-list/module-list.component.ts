@@ -3,7 +3,7 @@ import { SemesterService } from './../../../services/semester.service';
 import { OfferingService } from './../../../services/offering.service';
 import { MajorService } from '../../../services/major.service';
 import { ModuleService } from './../../../services/module.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SaveModule } from '../../../models/module';
 import { LecturerService } from '../../../services/lecturer.service';
 import { ToastyService } from 'ng2-toasty';
@@ -12,11 +12,8 @@ import { Observable } from 'rxjs';
 import * as _ from 'underscore';
 import { UserService } from '../../../services/user.service';
 import { SaveSemester } from '../../../models/semester';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormControl } from '@angular/forms';
-import { formatDate } from '@angular/common';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'module-list',
@@ -24,6 +21,11 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
   styleUrls: ['./module-list.component.scss']
 })
 export class ModuleListComponent implements OnInit {
+
+  hoveredDate: NgbDate | null = null;
+  fromDate: NgbDate;
+  toDate: NgbDate | null = null;
+
   hasAccess = false;
   setActiveAddAssignModule: boolean;
   setActiveAddModule: boolean;
@@ -88,7 +90,11 @@ export class ModuleListComponent implements OnInit {
     private majorService: MajorService,
     private offeringService: OfferingService,
     private semesterService: SemesterService,
-  ) { }
+    private calendar: NgbCalendar
+  ) {
+    this.fromDate = calendar.getToday();
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+  }
 
   ngOnInit() {
     if (localStorage.getItem('token') != null)
@@ -201,6 +207,13 @@ export class ModuleListComponent implements OnInit {
     this.module.code = m.code;
   }
 
+  private setSemester(s) {
+    this.semester.id = s.id;
+    this.semester.session = s.session;
+    this.semester.startDate = s.startDate;
+    this.semester.endDate = s.endDate;
+  }
+
   onSemesterFilter() {
     this.filterOfferingsBySemesterId();
     this.selectedSemester = this.semesters.find(s => s.id == this.filter.semesterId);
@@ -214,7 +227,7 @@ export class ModuleListComponent implements OnInit {
     var result$ = (this.module.id) ? this.moduleService.update(this.module) : this.moduleService.create(this.module);
 
     result$.subscribe(() => {
-      this.successToasty('Module was sucessfully saved');
+      this.successToasty('Module was successfully saved');
       this.redirectTo('/pages/modules');
       // todo here, set the tab to Modules List
     },
@@ -264,14 +277,48 @@ export class ModuleListComponent implements OnInit {
       this.offeringService.update(this.offering) : this.offeringService.create(this.offering);
 
     result$.subscribe(() => {
-      this.successToasty('Module was sucessfully assigned to semester');
+      this.successToasty('Module was successfully assigned to semester');
       this.redirectTo('/pages/modules');
       // todo here, set the tab to Modules Offered
     },
     err => {
       if (err.status == 409) this.conflictErrorAlert(err);
       else if (err.status == 400 || err.status == 500) this.invalidOrBadRequestAlert();
+    });
+  }
+
+  // TODO:
+  submitSemester() {
+    var result$ = (this.semester.id) ? this.semesterService.update(this.semester) : this.semesterService.create(this.semester);
+
+    result$.subscribe(() => {
+      this.successToasty('Semester was successfully saved');
+      this.redirectTo('/pages/modules');
+    });
+  }
+
+  editSemester(id: number) {
+    this.semesterService.getSemester(id)
+    .subscribe(s => {
+      this.changeToSemesterTab();
+      this.setSemester(s);
     })
+  }
+
+  private changeToSemesterTab() {
+    this.setActiveSemester = true;
+    this.setActiveAddModule = false;
+    this.setActiveAddAssignModule = false;
+  }
+
+  deleteSemester(id: number) {
+    if (confirm("Deleting. Are you sure?")) {
+      this.semesterService.delete(id)
+        .subscribe(() => {
+          this.warningToasty('Semester was successfully deleted');
+          this.redirectTo('/pages/modules');
+        });
+    }
   }
 
   onClose() {
@@ -285,11 +332,10 @@ export class ModuleListComponent implements OnInit {
 
   editModuleOffering(id) {
     this.offeringService.getOffering(id)
-    .subscribe(
-      m => {
-        this.changeToAssignModuleTab();
-        this.setModuleOffering(m);
-      });
+    .subscribe(m => {
+      this.changeToAssignModuleTab();
+      this.setModuleOffering(m);
+    });
   }
 
   private changeToAssignModuleTab() {
@@ -317,7 +363,7 @@ export class ModuleListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.offeringService.delete(id)
         .subscribe(() => {
-          this.warningToasty('Module was sucessfully removed from semester');
+          this.warningToasty('Module was successfully removed from semester');
           this.redirectTo('/pages/modules');
         });
     }
@@ -327,7 +373,7 @@ export class ModuleListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.moduleService.delete(id)
         .subscribe(() => {
-          this.warningToasty('Module was sucessfully deleted');
+          this.warningToasty('Module was successfully deleted');
           this.redirectTo('/pages/modules');
         });
     }
@@ -390,4 +436,29 @@ export class ModuleListComponent implements OnInit {
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));
  }
+
+  onDateSelection(date: NgbDate) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
+      this.toDate = date;
+      this.semester.endDate = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+      this.semester.startDate = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
+    }
+  }
+
+  isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  }
+
+  isInside(date: NgbDate) {
+    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
+  }
 }

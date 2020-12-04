@@ -33,7 +33,7 @@ export class ManageUserComponent implements OnInit {
     var result$ = this.userService.updateUserRole(this.userRole);
 
     result$.subscribe(() => {
-      this.successToasty('User role was sucessfully saved');
+      this.successToasty('User role was successfully saved');
       this.redirectTo('/pages/users/manage');
     },
     err => {
@@ -63,7 +63,7 @@ export class ManageUserComponent implements OnInit {
     //     .subscribe(() => {
     //       this.toasty.success({
     //         title: 'Success', 
-    //         msg: 'User was sucessfully deleted.',
+    //         msg: 'User was successfully deleted.',
     //         theme: 'bootstrap',
     //         showClose: true,
     //         timeout: 3000

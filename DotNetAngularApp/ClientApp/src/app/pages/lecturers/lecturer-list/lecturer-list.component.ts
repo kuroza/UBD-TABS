@@ -68,7 +68,7 @@ export class LecturerListComponent implements OnInit {
     var result$ = (this.lecturer.id) ? this.lecturerService.update(this.lecturer) : this.lecturerService.create(this.lecturer); 
 
     result$.subscribe(() => {
-      this.successToasty('Lecturer was sucessfully saved');
+      this.successToasty('Lecturer was successfully saved');
       this.redirectTo('/pages/lecturers');
     },
     err => {
@@ -94,7 +94,7 @@ export class LecturerListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.lecturerService.delete(id)
         .subscribe(() => {
-          this.warningToasty('Lecturer was sucessfully deleted');
+          this.warningToasty('Lecturer was successfully deleted');
           this.redirectTo('/pages/lecturers');
         });
     }

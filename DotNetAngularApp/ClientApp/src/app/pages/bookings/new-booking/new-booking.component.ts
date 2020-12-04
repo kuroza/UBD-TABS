@@ -360,7 +360,7 @@ export class NewBookingComponent implements OnInit {
     if (!this.booking.id) {
       this.bookingService.create(this.booking)
         .subscribe(res => {
-          this.successToasty('All bookings were sucessfully saved');
+          this.successToasty('All bookings were successfully saved');
           this.redirectTo('/pages/calendar');
         },
         err => {
@@ -374,7 +374,7 @@ export class NewBookingComponent implements OnInit {
     else if (this.booking.id) {
       this.bookingService.update(this.booking)
         .subscribe(() => {
-          this.successToasty('Booking was sucessfully saved');
+          this.successToasty('Booking was successfully saved');
           this.resetBookingField();
           this.redirectTo('/pages/bookings/');
         },
@@ -393,7 +393,7 @@ export class NewBookingComponent implements OnInit {
     if (confirm(`${err.error} Are you sure you want to add another event to this room?`)) {
       this.bookingService.confirmCreate(this.booking)
         .subscribe(() => {
-          this.successToasty('All bookings were sucessfully saved');
+          this.successToasty('All bookings were successfully saved');
           this.redirectTo('/pages/calendar');
         });
     }

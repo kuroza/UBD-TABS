@@ -48,7 +48,7 @@
     "@nebular/eva-icons": "4.1.2",
     "@nebular/security": "4.1.2",
     "@nebular/theme": "4.1.2",
-    "@ng-bootstrap/ng-bootstrap": "~5.2.2",
+    "@ng-bootstrap/ng-bootstrap": "^5.3.1",
     "@ng-select/ng-select": "^3.7.3",
     "@sentry/browser": "^5.15.4",
     "@types/underscore": "^1.9.4",

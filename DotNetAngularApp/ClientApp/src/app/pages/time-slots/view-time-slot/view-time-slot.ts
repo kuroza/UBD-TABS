@@ -44,7 +44,7 @@ export class ViewTimeSlotComponent implements OnInit {
         .subscribe(() => {
           this.toastyService.success({
             title: 'Success', 
-            msg: 'Time slot was sucessfully deleted.',
+            msg: 'Time slot was successfully deleted.',
             theme: 'bootstrap',
             showClose: true,
             timeout: 5000

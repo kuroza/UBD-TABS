@@ -60,7 +60,7 @@ export class RoomListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.roomService.delete(id)
         .subscribe(() => {
-          this.warningToasty('Room was sucessfully deleted');
+          this.warningToasty('Room was successfully deleted');
           this.redirectTo('/pages/rooms');
         });
     }
@@ -80,7 +80,7 @@ export class RoomListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.buildingService.delete(id)
         .subscribe(() => {
-          this.warningToasty('Building was sucessfully deleted');
+          this.warningToasty('Building was successfully deleted');
           this.redirectTo('/pages/rooms');
         });
     }
@@ -158,7 +158,7 @@ export class RoomListComponent implements OnInit {
     var result$ = (this.room.id) ? this.roomService.update(this.room) : this.roomService.create(this.room); 
 
     result$.subscribe(() => {
-      this.successToasty('Room was sucessfully saved');
+      this.successToasty('Room was successfully saved');
       this.redirectTo('/pages/rooms');
     },
     err => {
@@ -197,7 +197,7 @@ export class RoomListComponent implements OnInit {
     var result$ = (this.building.id) ? this.buildingService.update(this.building) : this.buildingService.create(this.building);
 
     result$.subscribe(() => {
-      this.successToasty('Building was sucessfully saved');
+      this.successToasty('Building was successfully saved');
       this.redirectTo('/pages/rooms');
     },
     err => {

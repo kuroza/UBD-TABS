@@ -59,7 +59,7 @@ export class FacultyListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.majorService.delete(id)
         .subscribe(() => {
-          this.warningToasty('Major was sucessfully deleted');
+          this.warningToasty('Major was successfully deleted');
           this.redirectTo('/pages/faculties');
         });
     }
@@ -69,7 +69,7 @@ export class FacultyListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.facultyService.delete(id)
         .subscribe(() => {
-          this.warningToasty('Faculty was sucessfully deleted');
+          this.warningToasty('Faculty was successfully deleted');
           this.redirectTo('/pages/faculties');
         });
     }
@@ -157,7 +157,7 @@ export class FacultyListComponent implements OnInit {
     var result$ = (this.major.id) ? this.majorService.update(this.major) : this.majorService.create(this.major); 
 
     result$.subscribe(() => {
-      this.successToasty('Major was sucessfully saved');
+      this.successToasty('Major was successfully saved');
       this.redirectTo('/pages/faculties');
     },
     err => {
@@ -186,7 +186,7 @@ export class FacultyListComponent implements OnInit {
     var result$ = (this.faculty.id) ? this.facultyService.update(this.faculty) : this.facultyService.create(this.faculty);
 
     result$.subscribe(() => {
-      this.successToasty('Faculty was sucessfully saved');
+      this.successToasty('Faculty was successfully saved');
       this.redirectTo('/pages/faculties');
     },
     err => {
