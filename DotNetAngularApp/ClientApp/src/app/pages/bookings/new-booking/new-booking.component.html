@@ -135,7 +135,7 @@
               </div>
               
               <div *ngIf="!booking.id">
-                <button style="margin-bottom: 10px;" nbButton fullWidth status="default" outline (click)="resetBookingField()">Reset</button>
+                <button style="margin-bottom: 10px;" nbButton fullWidth status="default" filled (click)="resetBookingField()">Reset</button>
                 <button nbButton fullWidth status="primary" [disabled]="!f.valid">Submit</button>
               </div>
               <div *ngIf="booking.id">

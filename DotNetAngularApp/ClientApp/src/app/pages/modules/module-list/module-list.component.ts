@@ -279,7 +279,7 @@ export class ModuleListComponent implements OnInit {
     result$.subscribe(() => {
       this.successToasty('Module was successfully assigned to semester');
       this.redirectTo('/pages/modules');
-      // todo here, set the tab to Modules Offered
+      // todo here, set the tab to Modules Offered list
     },
     err => {
       if (err.status == 409) this.conflictErrorAlert(err);
@@ -287,13 +287,21 @@ export class ModuleListComponent implements OnInit {
     });
   }
 
-  // TODO:
   submitSemester() {
     var result$ = (this.semester.id) ? this.semesterService.update(this.semester) : this.semesterService.create(this.semester);
 
     result$.subscribe(() => {
       this.successToasty('Semester was successfully saved');
       this.redirectTo('/pages/modules');
+      // todo here, set the tab to Semesters list
+    },
+    err => {
+      if (err.status == 409) { // TODO:
+        this.conflictErrorAlert(err);
+      }
+      else if (err.status == 400 || 500) {
+        this.invalidOrBadRequestAlert();
+      }
     });
   }
 
@@ -413,18 +421,29 @@ export class ModuleListComponent implements OnInit {
     this.moduleDetails = m;
   }
 
-  onClickBack() {
+  onClickBackModule() {
     this.module.id = 0;
     this.module.name = '';
     this.module.code = '';
     this.module.majorId = 0;
+    this.selectedMajor = [];
   }
 
-  onClickBackAssign() {
+  onClickBackOffering() {
     this.offering.id = 0;
     this.offering.semesterId = 0;
+    this.selectedSemester = [];
     this.offering.moduleId = 0;
+    this.selectedModule = [];
     this.offering.lecturers = [];
+    this.selectedLecturers = [];
+  }
+
+  onClickBackSemester() {
+    this.semester.id = 0;
+    this.semester.session = '';
+    this.semester.startDate = '';
+    this.semester.endDate = '';
   }
 
   onClickClose() {
