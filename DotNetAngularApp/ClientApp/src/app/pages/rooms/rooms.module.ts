@@ -6,9 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { RoomListComponent } from './room-list/room-list.component';
 import { RouterModule } from '@angular/router';
 import { RoomDetailsModule } from '../../@theme/components/room-details/room-details.module';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
     imports: [
+      NgMultiSelectDropDownModule,
       NbTooltipModule,
       NbIconModule,
       NbAlertModule,

@@ -6,6 +6,7 @@ import { RoomService } from '../../../services/room.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SaveRoom } from '../../../models/room';
 import { SaveBuilding } from '../../../models/building';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'ngx-view-rooms',
@@ -19,6 +20,8 @@ export class RoomListComponent implements OnInit {
     name: '',
   };
   buildings: any;
+  buildingSettings: IDropdownSettings = {};
+  selectedBuilding: any = [];
   roomDetails: any;
   roomId: number;
   room: SaveRoom = {
@@ -48,12 +51,19 @@ export class RoomListComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    if (localStorage.getItem('token') != null) {
+    if (localStorage.getItem('token') != null)
       this.hasAccess = this.userService.hasAccess();
-    }
 
     this.buildingService.getAllBuildings()
       .subscribe(buildings => this.buildings = buildings);
+
+      this.buildingSettings = {
+        singleSelection: true,
+        idField: 'id',
+        textField: 'name',
+        allowSearchFilter: true,
+        enableCheckAll: false
+      };
   }
 
   deleteRoom(id) {
@@ -91,11 +101,21 @@ export class RoomListComponent implements OnInit {
     this.room.name = r.name;
     this.room.capacity = r.capacity;
     this.room.buildingId = r.buildingId;
+    this.selectedBuilding = [];
+    this.selectedBuilding.push(this.buildings.find(building => building.id == r.building.id));
   }
 
   private setBuilding(b) {
     this.building.id = b.id;
     this.building.name = b.name;
+  }
+
+  onBuildingSelect(item: any) {
+    this.room.buildingId = item.id;
+  }
+
+  onBuildingDeSelect(item: any) {
+    this.room.buildingId = 0;
   }
 
   editRoom(id) {
@@ -220,6 +240,7 @@ export class RoomListComponent implements OnInit {
     this.room.name = '';
     this.room.capacity = null;
     this.room.buildingId = 0;
+    this.selectedBuilding = [];
 
     this.building.id = 0;
     this.building.name = '';

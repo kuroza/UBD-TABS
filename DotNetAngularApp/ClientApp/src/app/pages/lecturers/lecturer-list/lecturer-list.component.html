@@ -19,7 +19,7 @@
             <tr *ngFor="let lecturer of lecturers">
               <td (click)="selectLecturer(lecturer.id)">{{ lecturer.title }}</td>
               <td (click)="selectLecturer(lecturer.id)">{{ lecturer.name }}</td>
-              <td (click)="selectLecturer(lecturer.id)"></td>
+              <td (click)="selectLecturer(lecturer.id)">{{ lecturer.email }}</td>
               <td><a href="javascript:void(0);" (click)="edit(lecturer.id)" *ngIf="hasAccess">
                   <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
                 </a></td>
@@ -62,6 +62,11 @@
                 <input id="name" type="text" class="form-control" [(ngModel)]="lecturer.name" name="name"
                   placeholder="Lecturer name">
               </div>
+              <div class="form-group" style="margin-top: 10px;">
+                <label>Email</label>
+                <input id="email" type="email" class="form-control" [(ngModel)]="lecturer.email" name="email"
+                  placeholder="Email">
+              </div>
               <div style="margin-top: 10px;">
                 <button *ngIf="!lecturer.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="lecturer.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
@@ -76,7 +81,7 @@
                 <b>Name:</b> {{ lecturerDetails.title }} {{ lecturerDetails.name }}<br>
                 <b>Faculty:</b> <br>
                 <b>Office:</b> <br>
-                <b>Email:</b> <br>
+                <b>Email:</b> {{ lecturerDetails.email }}<br>
 
                 <!-- * add modules that the lecturer is teaching -->
                 <!-- <div class="card" style="width: 18rem;">

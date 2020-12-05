@@ -6,6 +6,7 @@ import { MajorService } from '../../../services/major.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SaveMajor } from '../../../models/major';
 import { SaveFaculty } from '../../../models/faculty';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'ngx-faculty-list',
@@ -19,6 +20,8 @@ export class FacultyListComponent implements OnInit {
     shortName: '',
   };
   faculties: any;
+  facultySettings: IDropdownSettings = {};
+  selectedFaculty: any = [];
   majorDetails: any;
   majorId: number;
   major: SaveMajor = {
@@ -47,12 +50,19 @@ export class FacultyListComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    if (localStorage.getItem('token') != null) {
+    if (localStorage.getItem('token') != null)
       this.hasAccess = this.userService.hasAccess();
-    }
 
     this.facultyService.getAllFaculties()
       .subscribe(faculties => this.faculties = faculties);
+
+    this.facultySettings = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'name',
+      allowSearchFilter: true,
+      enableCheckAll: false
+    };
   }
 
   deleteMajor(id) {
@@ -89,6 +99,8 @@ export class FacultyListComponent implements OnInit {
     this.major.id = m.id;
     this.major.name = m.name;
     this.major.facultyId = m.facultyId;
+    this.selectedFaculty = [];
+    this.selectedFaculty.push(this.faculties.find(faculty => faculty.id == m.facultyId));
   }
 
   private setFaculty(f) {
@@ -175,6 +187,14 @@ export class FacultyListComponent implements OnInit {
     this.onClose();
   }
 
+  onFacultySelect(item: any) {
+    this.major.facultyId = item.id;
+  }
+
+  onFacultyDeSelect(item: any) {
+    this.major.facultyId = 0;
+  }
+
   onClose() {
     this.existMajorAlert = false;
     this.existFacultyAlert = false;
@@ -219,6 +239,7 @@ export class FacultyListComponent implements OnInit {
     this.major.id = 0;
     this.major.name = '';
     this.major.facultyId = 0;
+    this.selectedFaculty = [];
 
     this.faculty.id = 0;
     this.faculty.name = '';

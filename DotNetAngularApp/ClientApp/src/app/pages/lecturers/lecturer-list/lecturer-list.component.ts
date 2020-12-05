@@ -29,6 +29,7 @@ export class LecturerListComponent implements OnInit {
     id: 0,
     name: '',
     title: '',
+    email: ''
   };
 
   constructor(
@@ -52,6 +53,7 @@ export class LecturerListComponent implements OnInit {
     this.lecturer.id = l.id;
     this.lecturer.name = l.name;
     this.lecturer.title = l.title;
+    this.lecturer.email = l.email;
   }
 
   edit(id) {
@@ -140,6 +142,7 @@ export class LecturerListComponent implements OnInit {
     this.lecturer.id = 0;
     this.lecturer.name = '';
     this.lecturer.title = '';
+    this.lecturer.email = '';
   }
 
   redirectTo(uri:string){

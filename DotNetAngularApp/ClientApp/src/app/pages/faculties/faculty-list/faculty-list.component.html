@@ -67,9 +67,19 @@
             <form #f="ngForm" (ngSubmit)="submitMajor()" novalidate>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
                 <label>Faculty *</label>
-                <nb-select filled fullWidth placeholder="Select faculty" [(selected)]="major.facultyId">
+                <!-- <nb-select filled fullWidth placeholder="Select faculty" [(selected)]="major.facultyId">
                   <nb-option *ngFor="let f of faculties" value="{{ f.id }}">{{ f.name }}</nb-option>
-                </nb-select><br>
+                </nb-select><br> -->
+                <ng-multiselect-dropdown
+                  [placeholder]="'Select Faculty'"
+                  [data]="faculties"
+                  [(ngModel)]="selectedFaculty"
+                  [settings]="facultySettings"
+                  (onSelect)="onFacultySelect($event)"
+                  (onDeSelect)="onFacultyDeSelect($event)"
+                  name="faculty"
+                >
+                </ng-multiselect-dropdown>
               </div>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
                 <label>Major name *</label>
@@ -80,7 +90,7 @@
                 <button *ngIf="!major.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="major.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
               </div>
-              <!-- <br><pre>{{ major | json }}</pre> -->
+              <br><pre>{{ major | json }}</pre>
             </form>
           </nb-tab>
 
@@ -136,7 +146,7 @@
               <br>
               <div class="inline" *ngIf="hasAccess">
                 <button style="margin-top: 5px;" nbButton status="warning"
-                  (click)="editMajor(majorDetails.id)">Edit</button>
+                  (click)="editMajor(majorDetails.id)">Edit Major</button>
                 <button style="margin-left: 5px; margin-top: 5px;" nbButton status="danger"
                   (click)="deleteMajor(majorDetails.id)">Delete</button>
               </div>

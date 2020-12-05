@@ -69,9 +69,16 @@
             <form #f="ngForm" (ngSubmit)="submitRoom()" novalidate>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
                 <label>Building *</label>
-                <nb-select filled fullWidth placeholder="Select building" [(selected)]="room.buildingId">
-                  <nb-option *ngFor="let b of buildings" value="{{ b.id }}">{{ b.name }}</nb-option>
-                </nb-select><br>
+                <ng-multiselect-dropdown
+                  [placeholder]="'Select building'"
+                  [data]="buildings"
+                  [(ngModel)]="selectedBuilding"
+                  [settings]="buildingSettings"
+                  (onSelect)="onBuildingSelect($event)"
+                  (onDeSelect)="onBuildingDeSelect($event)"
+                  name="building"
+                >
+                </ng-multiselect-dropdown>
               </div>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
                 <label>Room name *</label>
@@ -87,7 +94,7 @@
                 <button *ngIf="!room.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="room.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
               </div>
-              <!-- <br><pre>{{ room | json }}</pre> -->
+              <br><pre>{{ room | json }}</pre>
             </form>
           </nb-tab>
 
