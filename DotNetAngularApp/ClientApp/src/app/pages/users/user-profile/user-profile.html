@@ -23,7 +23,6 @@
           <span>Full name: <b>{{userDetails.fullName}}</b></span><br>
           <span>Email: <b>{{userDetails.email}}</b></span><br>
           <span>User role: </span><br>
-          <span>Phone no.: </span><br>
         </div>
 
         <div class="inline">
@@ -40,9 +39,29 @@
   <div class="col-md-4">
     <nb-card>
       <nb-card-header>
-        <h4>Reset Password</h4>
+        <h4>Change Password</h4>
       </nb-card-header>
       <nb-card-body>
+        <form #f="ngForm" (ngSubmit)="submit()" novalidate>
+          <div class="form-group">
+            <label>Current password *</label>
+            <input disabled id="currentPassword" type="password" class="form-control" name="currentPassword"
+              placeholder="Current password">
+          </div>
+          <div class="form-group">
+            <label>New password *</label>
+            <input disabled id="newPassword" type="password" class="form-control" name="newPassword"
+              placeholder="New password">
+          </div>
+          <div class="form-group">
+            <label>Confirm password *</label>
+            <input disabled id="confirmPassword" type="password" class="form-control" name="confirmPassword"
+              placeholder="Confirm password">
+          </div>
+          <div style="margin-top: 10px;">
+            <button nbButton fullWidth [disabled]="!f.valid">Submit</button>
+          </div>
+        </form>
       </nb-card-body>
     </nb-card>
   </div>

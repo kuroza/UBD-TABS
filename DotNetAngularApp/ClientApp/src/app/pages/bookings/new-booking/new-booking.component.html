@@ -17,18 +17,18 @@
 
               <div [ngSwitch]="view">
               <mwl-calendar-month-view
-                  *ngSwitchCase="'month'"
-                  [viewDate]="viewDate"
-                  [events]="events"
-                  (beforeViewRender)="beforeMonthViewRender($event)"
-                  (dayClicked)="dayClicked($event.day)"
-                  [excludeDays]="excludeDays"
+                [viewDate]="viewDate"
+                [events]="events"
+                (beforeViewRender)="beforeMonthViewRender($event)"
+                [refresh]="refresh"
+                (dayClicked)="dayClicked($event.day)"
+                [excludeDays]="excludeDays"
               >
               </mwl-calendar-month-view>
               </div>
 
-              <!-- <br>
-              <pre>{{ selectedDate | json }}</pre> -->
+              <!-- <br><pre>{{ selectedDate | json }}</pre> -->
+              <br><pre>selectedDays: {{ selectedDays | json }}</pre>
           </nb-card-body>
       </nb-card>
   </div>
@@ -142,8 +142,8 @@
                 <button nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>
               </div>
             
-              <br><pre>{{ selectedDays | json }}</pre>
-              <br><pre>{{ booking | json }}</pre>
+              <br><pre>bookDates: {{ booking.bookDates | json }}</pre>
+              <!-- <br><pre>{{ booking | json }}</pre> -->
             </form>
           </nb-card-body>
       </nb-card>

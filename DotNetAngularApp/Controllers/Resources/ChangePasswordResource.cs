@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DotNetAngularApp.Controllers.Resources
 {
-    public class ResetPasswordResource
+    public class ChangePasswordResource
     {
         [Required]
         [EmailAddress]

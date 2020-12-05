@@ -5,7 +5,7 @@ import { CalendarEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBefo
 import { WeekViewHourColumn } from 'calendar-utils';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ToastyService } from 'ng2-toasty';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import * as _ from 'underscore';
 import { SaveBooking } from '../../../models/booking';
 import { BookingService } from '../../../services/booking.service';
@@ -41,6 +41,11 @@ export class NewBookingComponent implements OnInit {
   month: number;
   year: number;
   datePicker: string;
+  markedDates: any = [];
+  marking: any = {
+    day: 0,
+    month: 0
+  };
   
   semesters: any;
   semesterSettings: IDropdownSettings = {};
@@ -160,37 +165,38 @@ export class NewBookingComponent implements OnInit {
   // * angular-calendar ---------------------------------------------------------------------
 
   view: CalendarView = CalendarView.Month;
-
   viewDate: Date = new Date();
-
   selectedMonthViewDay: CalendarMonthViewDay;
-
   selectedDayViewDate: Date;
-
   hourColumns: WeekViewHourColumn[];
-
   events: CalendarEvent[] = [];
-
   selectedDays: any = [];
-
   excludeDays: number[] = [0, 5];
+  refresh: Subject<any> = new Subject();
 
   dayClicked(day: CalendarMonthViewDay): void {
     this.selectedMonthViewDay = day;
     const selectedDateTime = this.selectedMonthViewDay.date.getTime();
-    const dateIndex = this.selectedDays.findIndex(
-      (selectedDay) => selectedDay.date.getTime() === selectedDateTime
-    );
-    if (dateIndex > -1) {
-      delete this.selectedMonthViewDay.cssClass; // removes the date timetable marking
-      this.selectedDays.splice(dateIndex, 1); // removes from array
-      this.booking.bookDates.splice(dateIndex, 1);
-    } else {
-      this.selectedDays.push(this.selectedMonthViewDay);
-      day.cssClass = 'cal-day-selected';
-      this.selectedMonthViewDay = day;
-      this.formatSelectedDateAndPushToBookDates();
-    }
+    const dateIndex = this.selectedDays.findIndex((selectedDay) => 
+      selectedDay.date.getTime() === selectedDateTime);
+
+    if (dateIndex > -1)
+      this.removeDayBookDateAndMarking(dateIndex);
+    else
+      this.addDayBookDateAndMarking(day);
+  }
+
+  private removeDayBookDateAndMarking(dateIndex: any) {
+    delete this.selectedMonthViewDay.cssClass;
+    this.selectedDays.splice(dateIndex, 1);
+    this.booking.bookDates.splice(dateIndex, 1);
+  }
+
+  private addDayBookDateAndMarking(day: CalendarMonthViewDay<any>) {
+    day.cssClass = 'cal-day-selected';
+    this.selectedDays.push(this.selectedMonthViewDay);
+    this.selectedMonthViewDay = day;
+    this.formatSelectedDateAndPushToBookDates();
   }
 
   private formatSelectedDateAndPushToBookDates() {
@@ -199,12 +205,36 @@ export class NewBookingComponent implements OnInit {
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    this.markedDates = [];
+    var newDate: Date;
+
+    this.iterateBookDatesForMarking(newDate);
     body.forEach((day) => {
-      if (this.selectedDays.some((selectedDay) => 
-      selectedDay.date.getTime() === day.date.getTime())) {
-        day.cssClass = 'cal-day-selected';
-      }
+      const dayOfMonth = day.date.getDate();
+      const month = day.date.getMonth();
+      this.markedDates.forEach(markedDate => 
+        this.markDayAndPushToSelectedDays(dayOfMonth, markedDate, month, day));
     });
+  }
+
+  private iterateBookDatesForMarking(newDate: Date) {
+    this.booking.bookDates.forEach(bookDate => {
+      newDate = new Date(bookDate);
+      this.markedDates.push(this.marking = {
+        day: newDate.getDate(),
+        month: newDate.getMonth()
+      });
+    });
+    return newDate;
+  }
+
+  private markDayAndPushToSelectedDays(dayOfMonth: number,
+  markedDate: any, month: number, day: CalendarMonthViewDay<any>) {
+    if (dayOfMonth == markedDate.day && month == markedDate.month && day.inMonth) {
+      day.cssClass = 'cal-day-selected';
+      this.selectedMonthViewDay = day;
+      this.selectedDays.push(this.selectedMonthViewDay);
+    }
   }
 
   hourSegmentClicked(date: Date) {
@@ -249,6 +279,10 @@ export class NewBookingComponent implements OnInit {
   }
 
   private setBooking(b) {
+    this.booking.bookDates = _.pluck(b.bookDates, 'date');
+    for (var i=0; i<this.booking.bookDates.length; i++)
+      this.booking.bookDates[i] = this.booking.bookDates[i].substring(0, 10);
+
     this.booking.id = b.id;
 
     this.selectedOfferings = [];
@@ -267,14 +301,12 @@ export class NewBookingComponent implements OnInit {
 
     this.selectedRooms = [];
     this.booking.rooms = _.pluck(b.rooms, 'id');
-    this.booking.rooms.forEach(roomId => {
-      this.selectedRooms.push(this.rooms.find(room => room.id == roomId));
-    });
+    this.booking.rooms.forEach(roomId =>
+      this.selectedRooms.push(this.rooms.find(room => room.id == roomId)));
 
     this.booking.purpose = b.purpose;
     
-    // FIXME:
-    this.booking.bookDates = _.pluck(b.bookDates, 'date'); // b.bookDates.map(bd => bd.date); // maybe need to format date[]
+    this.refresh.next();
   }
 
   onSemesterSelect(item: any) {

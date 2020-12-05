@@ -86,10 +86,8 @@ export class UserService {
   hasAccess() {
     let roles = ['SuperAdmin', 'Admin'];
     if(roles){
-      if(this.roleMatch(roles)) return true;
-      else{
-        return false;
-      }
+      if (this.roleMatch(roles)) return true;
+      else return false;
     }
     return false;
   }

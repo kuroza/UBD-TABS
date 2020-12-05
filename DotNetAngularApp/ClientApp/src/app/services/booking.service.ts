@@ -18,6 +18,10 @@ export class BookingService {
       .pipe(map(response => response));
   }
 
+  // async getBooking(id) {
+  //   return this.http.get(this.bookingsEndpoint + '/' + id).toPromise();
+  // }
+
   getAllBookings() {
     return this.http.get('/api/allbookings')
       .pipe(map(response => response));

@@ -17,4 +17,8 @@ export class UserProfileComponent implements OnInit {
         res => this.userDetails = res,
         err => console.log(err));
   }
+
+  submit() {
+    
+  }
 }

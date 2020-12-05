@@ -47,17 +47,17 @@ namespace DotNetAngularApp.Controllers
         // todo: Delete profile
 
         [HttpPost]
-        [Route("ResetPassword")]
+        [Route("ChangePassword")]
         [Authorize]
-        public async Task<IActionResult> ResetPassword(ResetPasswordResource model)
+        public async Task<IActionResult> ChangePassword(ChangePasswordResource model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user != null)
             {
-                var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+                var result = await _userManager.ChangePasswordAsync(user, model.Token, model.Password);
                 
                 if (!result.Succeeded)
-                    return BadRequest(new { message = "Cannot reset password" });
+                    return BadRequest(new { message = "Cannot change password" });
 
                 return Ok(result);
             }
