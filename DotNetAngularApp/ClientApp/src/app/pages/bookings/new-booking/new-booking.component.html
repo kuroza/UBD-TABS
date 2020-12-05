@@ -53,7 +53,7 @@
             <form #f="ngForm" (ngSubmit)="submitBooking()" novalidate>  
               <!-- * Semester form -->
               <div class="form-group">
-                <label>Semester *</label>
+                <label>Semester*</label>
                 <ng-multiselect-dropdown
                   [placeholder]="'Select Semester'"
                   [data]="semesters"
@@ -68,7 +68,7 @@
 
               <!-- * Module form -->
               <div class="form-group">
-                <label>Modules *</label>
+                <label>Modules*</label>
                 <ng-multiselect-dropdown
                   [placeholder]="'Select Modules'"
                   [data]="offerings"
@@ -83,7 +83,7 @@
             
               <!-- * Time slot multiple select -->
               <div class="form-group">
-                <label>Time slots *</label>
+                <label>Time slots*</label>
                 <ng-multiselect-dropdown
                   [placeholder]="'Select Time Slots'"
                   [data]="timeSlots"
@@ -98,7 +98,7 @@
             
               <!-- * Building drop down list -->
               <div class="form-group">
-                <label for="building">Building *</label>
+                <label for="building">Building</label>
                 <ng-multiselect-dropdown
                   [placeholder]="'Select Building'"
                   [data]="buildings"
@@ -113,7 +113,7 @@
             
               <!-- * Room drop down list -->
               <div class="form-group">
-                <label>Rooms *</label>
+                <label>Rooms*</label>
                 <ng-multiselect-dropdown
                   [placeholder]="'Select Rooms'"
                   [data]="rooms"
@@ -135,10 +135,12 @@
               </div>
               
               <div *ngIf="!booking.id">
+                <p>* - required fields</p>
                 <button style="margin-bottom: 10px;" nbButton fullWidth status="default" filled (click)="resetBookingField()">Reset</button>
                 <button nbButton fullWidth status="primary" [disabled]="!f.valid">Submit</button>
               </div>
               <div *ngIf="booking.id">
+                <p>* - required fields</p>
                 <button nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>
               </div>
             

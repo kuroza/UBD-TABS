@@ -206,9 +206,11 @@ export class NewBookingComponent implements OnInit {
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     this.markedDates = [];
+    this.selectedDays = [];
     var newDate: Date;
 
     this.iterateBookDatesForMarking(newDate);
+
     body.forEach((day) => {
       const dayOfMonth = day.date.getDate();
       const month = day.date.getMonth();
