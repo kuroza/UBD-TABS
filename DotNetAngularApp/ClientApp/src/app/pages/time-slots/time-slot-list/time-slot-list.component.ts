@@ -18,8 +18,8 @@ export class TimeSlotListComponent implements OnInit {
   requiredAlert: boolean = false;
 
   timeSlots: any;
-  startTime = {hour: null, minute: null};
-  endTime = {hour: null, minute: null};
+  startTime = {hour: 0, minute: 0};
+  endTime = {hour: 0, minute: 0};
   timeSlot: SaveTimeSlot = {
     id: 0,
     startTime: '',
@@ -136,11 +136,11 @@ export class TimeSlotListComponent implements OnInit {
   onClickBackTimeSlot() {
     this.timeSlot.id = 0;
     this.timeSlot.startTime = '';
-    this.startTime.hour = null;
-    this.startTime.minute = null;
+    this.startTime.hour = 0;
+    this.startTime.minute = 0;
     this.timeSlot.endTime = '';
-    this.endTime.hour = null;
-    this.endTime.minute = null;
+    this.endTime.hour = 0;
+    this.endTime.minute = 0;
   }
 
   redirectTo(uri:string){

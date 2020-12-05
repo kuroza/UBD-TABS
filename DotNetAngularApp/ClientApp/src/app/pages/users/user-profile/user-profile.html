@@ -44,21 +44,22 @@
       <nb-card-body>
         <form #f="ngForm" (ngSubmit)="submit()" novalidate>
           <div class="form-group">
-            <label>Current password *</label>
+            <label>Current password*</label>
             <input disabled id="currentPassword" type="password" class="form-control" name="currentPassword"
               placeholder="Current password">
           </div>
           <div class="form-group">
-            <label>New password *</label>
+            <label>New password*</label>
             <input disabled id="newPassword" type="password" class="form-control" name="newPassword"
               placeholder="New password">
           </div>
           <div class="form-group">
-            <label>Confirm password *</label>
+            <label>Confirm password*</label>
             <input disabled id="confirmPassword" type="password" class="form-control" name="confirmPassword"
               placeholder="Confirm password">
           </div>
           <div style="margin-top: 10px;">
+            <p>* - required fields</p>
             <button nbButton fullWidth [disabled]="!f.valid">Submit</button>
           </div>
         </form>

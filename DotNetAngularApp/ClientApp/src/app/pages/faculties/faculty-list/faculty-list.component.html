@@ -66,10 +66,7 @@
             <h4 *ngIf="!major.id" style="margin-top: 10px;">Add Major</h4>
             <form #f="ngForm" (ngSubmit)="submitMajor()" novalidate>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
-                <label>Faculty *</label>
-                <!-- <nb-select filled fullWidth placeholder="Select faculty" [(selected)]="major.facultyId">
-                  <nb-option *ngFor="let f of faculties" value="{{ f.id }}">{{ f.name }}</nb-option>
-                </nb-select><br> -->
+                <label>Faculty*</label>
                 <ng-multiselect-dropdown
                   [placeholder]="'Select Faculty'"
                   [data]="faculties"
@@ -82,15 +79,16 @@
                 </ng-multiselect-dropdown>
               </div>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
-                <label>Major name *</label>
+                <label>Major name*</label>
                 <input id="name" type="text" class="form-control" [(ngModel)]="major.name" name="name"
                   placeholder="Major name">
               </div>
               <div style="margin-left: 10px; margin-top: 10px;">
+                <p>* - required fields</p>
                 <button *ngIf="!major.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="major.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
               </div>
-              <br><pre>{{ major | json }}</pre>
+              <!-- <br><pre>major: {{ major | json }}</pre> -->
             </form>
           </nb-tab>
 
@@ -110,15 +108,16 @@
             <h4 *ngIf="!faculty.id" style="margin-top: 10px;">Add Faculty</h4>
             <form #f="ngForm" (ngSubmit)="submitFaculty()" novalidate>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
-                <label>Faculty *</label>
+                <label>Faculty*</label>
                 <input id="name" type="text" class="form-control" [(ngModel)]="faculty.name" name="name"
                   placeholder="Faculty name">
               </div>
               <div style="margin-left: 10px; margin-top: 10px;">
+                <p>* - required fields</p>
                 <button *ngIf="!faculty.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="faculty.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
               </div>
-              <!-- <br><pre>{{ faculty | json }}</pre> -->
+              <!-- <br><pre>faculty: {{ faculty | json }}</pre> -->
             </form>
           </nb-tab>
 
@@ -139,10 +138,7 @@
                   <li *ngFor="let module of majorDetails.modules" class="list-group-item">{{ module.code }}: {{ module.name }}</li>
                 </ul>
               </div>
-
-              <!-- <br>
-              <pre>{{ majorDetails | json }}</pre> -->
-
+              <!-- <br><pre>majorDetails: {{ majorDetails | json }}</pre> -->
               <br>
               <div class="inline" *ngIf="hasAccess">
                 <button style="margin-top: 5px;" nbButton status="warning"

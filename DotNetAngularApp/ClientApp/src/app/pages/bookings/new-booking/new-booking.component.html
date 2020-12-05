@@ -28,7 +28,7 @@
               </div>
 
               <!-- <br><pre>{{ selectedDate | json }}</pre> -->
-              <br><pre>selectedDays: {{ selectedDays | json }}</pre>
+              <!-- <br><pre>selectedDays: {{ selectedDays | json }}</pre> -->
           </nb-card-body>
       </nb-card>
   </div>
@@ -125,8 +125,7 @@
                 >
                 </ng-multiselect-dropdown>
               </div>
-              <!-- <br>
-              <pre>{{ rooms | json }}</pre> -->
+              <!-- <br><pre>rooms: {{ rooms | json }}</pre> -->
             
               <div class="form-group">
                 <label>Purpose</label>
@@ -134,18 +133,15 @@
                   placeholder="Purpose">
               </div>
               
-              <div *ngIf="!booking.id">
+              <div>
                 <p>* - required fields</p>
                 <button style="margin-bottom: 10px;" nbButton fullWidth status="default" filled (click)="resetBookingField()">Reset</button>
-                <button nbButton fullWidth status="primary" [disabled]="!f.valid">Submit</button>
-              </div>
-              <div *ngIf="booking.id">
-                <p>* - required fields</p>
-                <button nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>
+                <button *ngIf="!booking.id" nbButton fullWidth status="primary" [disabled]="!f.valid">Submit</button>
+                <button *ngIf="booking.id" nbButton fullWidth status="primary" [disabled]="!f.valid">Save</button>
               </div>
             
-              <br><pre>bookDates: {{ booking.bookDates | json }}</pre>
-              <!-- <br><pre>{{ booking | json }}</pre> -->
+              <!-- <br><pre>bookDates: {{ booking.bookDates | json }}</pre> -->
+              <!-- <br><pre>booking: {{ booking | json }}</pre> -->
             </form>
           </nb-card-body>
       </nb-card>

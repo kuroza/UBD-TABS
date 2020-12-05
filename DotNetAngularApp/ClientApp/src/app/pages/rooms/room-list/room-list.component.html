@@ -68,7 +68,7 @@
             <h5 *ngIf="!room.id" style="margin-top: 10px;">Add Room</h5>
             <form #f="ngForm" (ngSubmit)="submitRoom()" novalidate>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
-                <label>Building *</label>
+                <label>Building*</label>
                 <ng-multiselect-dropdown
                   [placeholder]="'Select building'"
                   [data]="buildings"
@@ -81,20 +81,21 @@
                 </ng-multiselect-dropdown>
               </div>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
-                <label>Room name *</label>
+                <label>Room name*</label>
                 <input id="name" type="text" class="form-control" [(ngModel)]="room.name" name="name"
                   placeholder="Room name">
               </div>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
-                <label>Room capacity *</label>
+                <label>Room capacity*</label>
                 <input id="capacity" type="text" class="form-control" [(ngModel)]="room.capacity" name="capacity"
                   placeholder="Room capacity">
               </div>
               <div style="margin-left: 10px; margin-top: 10px;">
+                <p>* - required fields</p>
                 <button *ngIf="!room.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="room.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
               </div>
-              <br><pre>{{ room | json }}</pre>
+              <!-- <br><pre>room: {{ room | json }}</pre> -->
             </form>
           </nb-tab>
 
@@ -114,15 +115,16 @@
             <h5 *ngIf="!building.id" style="margin-top: 10px;">Add Building</h5>
             <form #f="ngForm" (ngSubmit)="submitBuilding()" novalidate>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
-                <label>Building *</label>
+                <label>Building*</label>
                 <input id="name" type="text" class="form-control" [(ngModel)]="building.name" name="name"
                   placeholder="Building name">
               </div>
               <div style="margin-left: 10px; margin-top: 10px;">
+                <p>* - required fields</p>
                 <button *ngIf="!building.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="building.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
               </div>
-              <!-- <br><pre>{{ building | json }}</pre> -->
+              <!-- <br><pre>building: {{ building | json }}</pre> -->
             </form>
           </nb-tab>
 

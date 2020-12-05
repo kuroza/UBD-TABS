@@ -176,31 +176,29 @@ export class NewBookingComponent implements OnInit {
 
   dayClicked(day: CalendarMonthViewDay): void {
     this.selectedMonthViewDay = day;
+    const dateFromClicked: string = formatDate(day.date, 'yyyy-MM-dd', 'en-us', '+0800');
     const selectedDateTime = this.selectedMonthViewDay.date.getTime();
     const dateIndex = this.selectedDays.findIndex((selectedDay) => 
       selectedDay.date.getTime() === selectedDateTime);
 
     if (dateIndex > -1)
-      this.removeDayBookDateAndMarking(dateIndex);
+      this.removeDayBookDateAndMarking(dateIndex, dateFromClicked);
     else
-      this.addDayBookDateAndMarking(day);
+      this.addDayBookDateAndMarking(day, dateFromClicked);
   }
 
-  private removeDayBookDateAndMarking(dateIndex: any) {
+  private removeDayBookDateAndMarking(dateIndex: any, dateFromClicked: string) {
     delete this.selectedMonthViewDay.cssClass;
     this.selectedDays.splice(dateIndex, 1);
-    this.booking.bookDates.splice(dateIndex, 1);
+    var index = this.booking.bookDates.indexOf(dateFromClicked);
+    if (index > -1)
+      this.booking.bookDates.splice(index, 1);
   }
 
-  private addDayBookDateAndMarking(day: CalendarMonthViewDay<any>) {
+  private addDayBookDateAndMarking(day: CalendarMonthViewDay<any>, dateFromClicked: string) {
     day.cssClass = 'cal-day-selected';
     this.selectedDays.push(this.selectedMonthViewDay);
     this.selectedMonthViewDay = day;
-    this.formatSelectedDateAndPushToBookDates();
-  }
-
-  private formatSelectedDateAndPushToBookDates() {
-    var dateFromClicked = formatDate(this.selectedMonthViewDay.date, 'yyyy-MM-dd', 'en-us', '+0800');
     this.booking.bookDates.push(dateFromClicked);
   }
 

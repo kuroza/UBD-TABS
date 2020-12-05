@@ -368,18 +368,18 @@ export class HomeComponent {
       this.bookingService.delete(this.booking.id)
         .subscribe(x => {
           window.location.reload();
-          this.warningToasty('Success', 'Booking event was successfully deleted')
+          this.defaultToasty('Success', 'Booking event was successfully deleted')
         });
     }
   }
 
-  warningToasty(title: string, message: string) {
-    this.toasty.warning({
+  defaultToasty(title: string, message: string) {
+    this.toasty.default({
       title: title, 
       msg: message,
       theme: 'bootstrap',
       showClose: true,
-      timeout: 3000
+      timeout: 3000,
     });
   }
 

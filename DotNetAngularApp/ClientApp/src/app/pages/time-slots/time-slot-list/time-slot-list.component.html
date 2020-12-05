@@ -61,24 +61,30 @@
         </nb-alert>
         <form #k="ngForm" (ngSubmit)="submitTimeSlot()" novalidate>
           <div class="form-group" style="margin-top: 10px;">
-            <label>Start time *</label>
-            <div style="margin-left: 180px;">
+            <label>Start time*</label>
+            <div style="margin-left: 160px;">
               <ngb-timepicker [(ngModel)]="startTime" name="startTime"></ngb-timepicker>
             </div>
           </div>
           <div class="form-group" style="margin-top: 10px;">
-            <label>End time *</label>
-            <div style="margin-left: 180px;">
+            <label>End time*</label>
+            <div style="margin-left: 160px;">
               <ngb-timepicker [(ngModel)]="endTime" name="endTime"></ngb-timepicker>
             </div>
           </div>
+          <div *ngIf="timeSlot.id">
+            <hr>
+            <p>Start time: {{ timeSlot.startTime | date:'shortTime' }}</p>
+            <p>End time: {{ timeSlot.endTime | date:'shortTime' }}</p>
+          </div>
           <div style="margin-top: 10px;">
+            <p>* - required fields</p>
             <button *ngIf="!timeSlot.id" nbButton fullWidth [disabled]="!k.valid">Add</button>
             <button *ngIf="timeSlot.id" nbButton fullWidth [disabled]="!k.valid">Save</button>
           </div>
-          <br><pre>Start time: {{ startTime | json }}</pre>
+          <!-- <br><pre>Start time: {{ startTime | json }}</pre>
           <pre>End time: {{ endTime | json }}</pre>
-          <br><pre>Time slot: {{ timeSlot | json }}</pre>
+          <pre>Time slot: {{ timeSlot | json }}</pre> -->
         </form>
       </nb-card-body>
     </nb-card>
