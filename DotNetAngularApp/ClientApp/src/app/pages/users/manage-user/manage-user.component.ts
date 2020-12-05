@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ToastyService } from 'ng2-toasty';
 import { SaveUserRole } from '../../../models/user-role';
 import { UserService } from '../../../services/user.service';
@@ -14,6 +15,8 @@ export class ManageUserComponent implements OnInit {
   requiredAlert: boolean = false;
 
   users: any;
+  userSettings: IDropdownSettings = {};
+  selectedUser: any = [];
   userRole: SaveUserRole = {
     id: '',
     role: ''
@@ -27,6 +30,14 @@ export class ManageUserComponent implements OnInit {
 
   async ngOnInit() {
     this.users = await this.userService.getAllUsers();
+
+    this.userSettings = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'fullName',
+      allowSearchFilter: true,
+      enableCheckAll: false
+    };
   }
 
   submit() {
@@ -75,6 +86,16 @@ export class ManageUserComponent implements OnInit {
 
   edit(id) {
     this.userRole.id = id;
+    this.selectedUser = [];
+    this.selectedUser.push(this.users.find(user => user.id == id));
+  }
+
+  onUserSelect(item: any) {
+    this.userRole.id = item.id;
+  }
+
+  onUserDeSelect(item: any) {
+    this.userRole.id = '';
   }
 
   redirectTo(uri:string){
