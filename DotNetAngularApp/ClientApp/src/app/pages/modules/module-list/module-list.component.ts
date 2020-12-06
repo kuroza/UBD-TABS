@@ -15,6 +15,7 @@ import { SaveSemester } from '../../../models/semester';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { Toasty } from './../../toasty';
 
 @Component({
   selector: 'module-list',
@@ -89,7 +90,7 @@ export class ModuleListComponent implements OnInit {
   constructor(
     private moduleService: ModuleService,
     private lecturerService: LecturerService,
-    private toastyService: ToastyService,
+    private toastyService: Toasty,
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
@@ -234,7 +235,7 @@ export class ModuleListComponent implements OnInit {
     var result$ = (this.module.id) ? this.moduleService.update(this.module) : this.moduleService.create(this.module);
 
     result$.subscribe(() => {
-      this.successToasty('Module was successfully saved');
+      this.toastyService.successToasty('Module was successfully saved');
       this.redirectTo('/pages/modules');
       // todo here, set the tab to Modules List
     },
@@ -259,32 +260,12 @@ export class ModuleListComponent implements OnInit {
     this.requiredAlert = false;
   }
 
-  private successToasty(message: string) {
-    this.toastyService.success({
-      title: 'Success',
-      msg: message,
-      theme: 'bootstrap',
-      showClose: true,
-      timeout: 3000
-    });
-  }
-
-  private defaultToasty(message: string) {
-    this.toastyService.default({
-      title: 'Success',
-      msg: message,
-      theme: 'bootstrap',
-      showClose: true,
-      timeout: 3000
-    });
-  }
-
   submitAssignModule() {
     var result$ = (this.offering.id) ? 
       this.offeringService.update(this.offering) : this.offeringService.create(this.offering);
 
     result$.subscribe(() => {
-      this.successToasty('Module was successfully assigned to semester');
+      this.toastyService.successToasty('Module was successfully assigned to semester');
       this.redirectTo('/pages/modules');
       // todo here, set the tab to Modules Offered list
     },
@@ -298,7 +279,7 @@ export class ModuleListComponent implements OnInit {
     var result$ = (this.semester.id) ? this.semesterService.update(this.semester) : this.semesterService.create(this.semester);
 
     result$.subscribe(() => {
-      this.successToasty('Semester was successfully saved');
+      this.toastyService.successToasty('Semester was successfully saved');
       this.redirectTo('/pages/modules');
       // todo here, set the tab to Semesters list
     },
@@ -350,7 +331,7 @@ export class ModuleListComponent implements OnInit {
         .subscribe(() => {
           this.closeDialog();
           this.offeringToBeDeleted = 0;
-          this.defaultToasty('Module was successfully removed from semester');
+          this.toastyService.defaultToasty('Module was successfully removed from semester');
           this.redirectTo('/pages/modules');
         });
     }
@@ -360,7 +341,7 @@ export class ModuleListComponent implements OnInit {
         .subscribe(() => {
           this.closeDialog();
           this.moduleToBeDeleted = 0;
-          this.defaultToasty('Module was successfully deleted');
+          this.toastyService.defaultToasty('Module was successfully deleted');
           this.redirectTo('/pages/modules');
         });
     }
@@ -370,7 +351,7 @@ export class ModuleListComponent implements OnInit {
         .subscribe(() => {
           this.closeDialog();
           this.semesterToBeDeleted = 0;
-          this.defaultToasty('Semester was successfully deleted');
+          this.toastyService.defaultToasty('Semester was successfully deleted');
           this.redirectTo('/pages/modules');
         });
     }

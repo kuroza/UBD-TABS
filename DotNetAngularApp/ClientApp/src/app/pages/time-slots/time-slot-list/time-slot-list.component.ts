@@ -1,5 +1,5 @@
+import { Toasty } from './../../toasty';
 import { SaveTimeSlot } from './../../../models/timeSlot';
-import { ToastyService } from 'ng2-toasty';
 import { Component, OnInit, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { TimeSlotService } from '../../../services/timeSlot.service';
 import { UserService } from '../../../services/user.service';
@@ -34,7 +34,7 @@ export class TimeSlotListComponent implements OnInit {
   constructor(
     private timeSlotService: TimeSlotService,
     private userService: UserService,
-    private toasty: ToastyService,
+    private toasty: Toasty,
     private router: Router,
     private route: ActivatedRoute,
     private config: NgbTimepickerConfig,
@@ -58,11 +58,11 @@ export class TimeSlotListComponent implements OnInit {
     var result$ = (this.timeSlot.id) ? this.timeSlotService.update(this.timeSlot) : this.timeSlotService.create(this.timeSlot);
 
     result$.subscribe(() => {
-      this.successToasty('Time slot was successfully saved');
+      this.toasty.successToasty('Time slot was successfully saved');
       this.redirectTo('/pages/timeslots');
     },
     err => {
-      if (err.status == 409) { // TODO:
+      if (err.status == 409) {
         this.conflictErrorAlert(err);
       }
       else if (err.status == 400 || 500) {
@@ -112,33 +112,13 @@ export class TimeSlotListComponent implements OnInit {
       .subscribe(() => {
         this.closeDialog();
         this.timeSlotToBeDeleted = 0;
-        this.defaultToasty('Time slot was successfully deleted');
+        this.toasty.defaultToasty('Time slot was successfully deleted');
         this.redirectTo('/pages/timeslots');
       });
   }
 
   closeDialog(): void {
     if (this.dialogRef) this.dialogRef.close();
-  }
-
-  private successToasty(message: string) {
-    this.toasty.success({
-      title: 'Success',
-      msg: message,
-      theme: 'bootstrap',
-      showClose: true,
-      timeout: 3000
-    });
-  }
-
-  private defaultToasty(message: string) {
-    this.toasty.default({
-      title: 'Success',
-      msg: message,
-      theme: 'bootstrap',
-      showClose: true,
-      timeout: 3000
-    });
   }
 
   private conflictErrorAlert(err: any) {

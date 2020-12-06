@@ -1,7 +1,7 @@
+import { Toasty } from './../../toasty';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { ToastyService } from 'ng2-toasty';
 import { SaveUserRole } from '../../../models/user-role';
 import { UserService } from '../../../services/user.service';
 
@@ -26,7 +26,7 @@ export class ManageUserComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
-    private toasty: ToastyService) { }
+    private toasty: Toasty) { }
 
   async ngOnInit() {
     this.users = await this.userService.getAllUsers();
@@ -44,23 +44,13 @@ export class ManageUserComponent implements OnInit {
     var result$ = this.userService.updateUserRole(this.userRole);
 
     result$.subscribe(() => {
-      this.successToasty('User role was successfully saved');
+      this.toasty.successToasty('User role was successfully saved');
       this.redirectTo('/pages/users/manage');
     },
     err => {
       if (err.status == 400) {
         this.requiredAlert = true;
       }
-    });
-  }
-
-  private successToasty(message: string) {
-    this.toasty.success({
-      title: 'Success',
-      msg: message,
-      theme: 'bootstrap',
-      showClose: true,
-      timeout: 3000
     });
   }
 

@@ -1,4 +1,4 @@
-import { ToastyService } from 'ng2-toasty';
+import { Toasty } from './../../toasty';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BuildingService } from '../../../services/building.service';
 import { UserService } from '../../../services/user.service';
@@ -51,7 +51,7 @@ export class RoomListComponent implements OnInit {
     private buildingService: BuildingService,
     private userService: UserService,
     private roomService: RoomService,
-    private toasty: ToastyService,
+    private toasty: Toasty,
     private route: ActivatedRoute, 
     private router: Router,
     private dialogService: NbDialogService
@@ -79,16 +79,6 @@ export class RoomListComponent implements OnInit {
     this.dialogRef = this.dialogService.open(dialog, { context: 'Are you sure you want delete room?' });
   }
 
-  private defaultToasty(message: string) {
-    this.toasty.default({
-      title: 'Success',
-      msg: message,
-      theme: 'bootstrap',
-      showClose: true,
-      timeout: 3000
-    });
-  }
-
   deleteBuilding(id, dialog: TemplateRef<any>) {
     this.buildingToBeDeleted = id;
     this.dialogHeaderTitle = "Deleting building"
@@ -101,7 +91,7 @@ export class RoomListComponent implements OnInit {
         .subscribe(() => {
           this.closeDialog();
           this.roomToBeDeleted = 0;
-          this.defaultToasty('Room was successfully deleted');
+          this.toasty.defaultToasty('Room was successfully deleted');
           this.redirectTo('/pages/rooms');
         });
     }
@@ -111,7 +101,7 @@ export class RoomListComponent implements OnInit {
         .subscribe(() => {
           this.closeDialog();
           this.buildingToBeDeleted = 0;
-          this.defaultToasty('Building was successfully deleted');
+          this.toasty.defaultToasty('Building was successfully deleted');
           this.redirectTo('/pages/rooms');
         });
     }
@@ -203,7 +193,7 @@ export class RoomListComponent implements OnInit {
     var result$ = (this.room.id) ? this.roomService.update(this.room) : this.roomService.create(this.room); 
 
     result$.subscribe(() => {
-      this.successToasty('Room was successfully saved');
+      this.toasty.successToasty('Room was successfully saved');
       this.redirectTo('/pages/rooms');
     },
     err => {
@@ -221,16 +211,6 @@ export class RoomListComponent implements OnInit {
     this.onClose();
   }
 
-  private successToasty(message: string) {
-    this.toasty.success({
-      title: 'Success',
-      msg: message,
-      theme: 'bootstrap',
-      showClose: true,
-      timeout: 3000
-    });
-  }
-
   onClose() {
     this.existRoomAlert = false;
     this.existBuildingAlert = false;
@@ -242,7 +222,7 @@ export class RoomListComponent implements OnInit {
     var result$ = (this.building.id) ? this.buildingService.update(this.building) : this.buildingService.create(this.building);
 
     result$.subscribe(() => {
-      this.successToasty('Building was successfully saved');
+      this.toasty.successToasty('Building was successfully saved');
       this.redirectTo('/pages/rooms');
     },
     err => {

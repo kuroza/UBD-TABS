@@ -1,3 +1,4 @@
+import { Toasty } from './../../toasty';
 import { ToastyService } from 'ng2-toasty';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FacultyService } from '../../../services/faculty.service';
@@ -50,7 +51,7 @@ export class FacultyListComponent implements OnInit {
     private facultyService: FacultyService,
     private userService: UserService,
     private majorService: MajorService,
-    private toasty: ToastyService,
+    private toasty: Toasty,
     private route: ActivatedRoute, 
     private router: Router,
     private dialogService: NbDialogService
@@ -90,7 +91,7 @@ export class FacultyListComponent implements OnInit {
         .subscribe(() => {
           this.closeDialog();
           this.facultyToBeDeleted = 0;
-          this.defaultToasty('Faculty was successfully deleted');
+          this.toasty.defaultToasty('Faculty was successfully deleted');
           this.redirectTo('/pages/faculties');
         });
     }
@@ -100,7 +101,7 @@ export class FacultyListComponent implements OnInit {
         .subscribe(() => {
           this.closeDialog();
           this.majorToBeDeleted = 0;
-          this.defaultToasty('Major was successfully deleted');
+          this.toasty.defaultToasty('Major was successfully deleted');
           this.redirectTo('/pages/faculties');
         });
     }
@@ -108,16 +109,6 @@ export class FacultyListComponent implements OnInit {
 
   closeDialog(): void {
     if (this.dialogRef) this.dialogRef.close();
-  }
-
-  private defaultToasty(message: string) {
-    this.toasty.default({
-      title: 'Success',
-      msg: message,
-      theme: 'bootstrap',
-      showClose: true,
-      timeout: 3000
-    });
   }
 
   private setMajor(m) {
@@ -194,7 +185,7 @@ export class FacultyListComponent implements OnInit {
     var result$ = (this.major.id) ? this.majorService.update(this.major) : this.majorService.create(this.major); 
 
     result$.subscribe(() => {
-      this.successToasty('Major was successfully saved');
+      this.toasty.successToasty('Major was successfully saved');
       this.redirectTo('/pages/faculties');
     },
     err => {
@@ -231,7 +222,7 @@ export class FacultyListComponent implements OnInit {
     var result$ = (this.faculty.id) ? this.facultyService.update(this.faculty) : this.facultyService.create(this.faculty);
 
     result$.subscribe(() => {
-      this.successToasty('Faculty was successfully saved');
+      this.toasty.successToasty('Faculty was successfully saved');
       this.redirectTo('/pages/faculties');
     },
     err => {
@@ -247,16 +238,6 @@ export class FacultyListComponent implements OnInit {
     });
 
     this.onClose();
-  }
-
-  private successToasty(message: string) {
-    this.toasty.success({
-      title: 'Success',
-      msg: message,
-      theme: 'bootstrap',
-      showClose: true,
-      timeout: 3000
-    });
   }
 
   onClickBack() {

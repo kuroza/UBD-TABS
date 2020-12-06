@@ -1,10 +1,10 @@
+import { Toasty } from './../toasty';
 import { OfferingService } from './../../services/offering.service';
 import { LecturerService } from './../../services/lecturer.service';
 import { FacultyService } from './../../services/faculty.service';
 import { Component, TemplateRef } from '@angular/core';
 import { BookingService } from '../../services/booking.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ToastyService } from 'ng2-toasty';
 import { BuildingService } from '../../services/building.service';
 import { CalendarEvent, CalendarEventTitleFormatter, CalendarView, DAYS_OF_WEEK } from 'angular-calendar';
 import { CustomEventTitleFormatter } from './custom-event-title-formatter.provider';
@@ -62,7 +62,7 @@ export class HomeComponent {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private toasty: ToastyService,
+    private toasty: Toasty,
     private bookingService: BookingService,
     private buildingService: BuildingService,
     private userService: UserService,
@@ -90,7 +90,6 @@ export class HomeComponent {
       this.bookings = this.allBookings = data[4];
 
       this.populateCalendar();
-      this.refresh.next();
     }, error => console.log(error));
   }
 
@@ -332,7 +331,7 @@ export class HomeComponent {
     this.endDateTime = bookDate + "T" + this.endTime;
   }
 
-  refreshCalendar() {
+  refreshPage() {
     window.location.reload();
   }
 
@@ -376,24 +375,19 @@ export class HomeComponent {
   onConfirmDelete() {
     this.bookingService.delete(this.booking.id)
       .subscribe(() => {
+        this.toasty.defaultToasty('Booking was successfully deleted');
+        this.refreshPage();
         this.closeDialog();
-        window.location.reload();
-        this.defaultToasty('Success', 'Booking event was successfully deleted');
+
+        // this.bookingService.getAllBookings()
+        //   .subscribe(bookings => this.allBookings = bookings);
+        // this.bookings = this.allBookings;
+        // this.populateCalendar();
       });
   }
 
   closeDialog(): void {
     if (this.dialogRef) this.dialogRef.close();
-  }
-
-  defaultToasty(title: string, message: string) {
-    this.toasty.default({
-      title: title, 
-      msg: message,
-      theme: 'bootstrap',
-      showClose: true,
-      timeout: 3000,
-    });
   }
 
   onCloseDetailsAlert() {

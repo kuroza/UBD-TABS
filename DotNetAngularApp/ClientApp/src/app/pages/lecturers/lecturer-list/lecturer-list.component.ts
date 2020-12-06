@@ -1,7 +1,7 @@
+import { Toasty } from './../../toasty';
 import { LecturerService } from './../../../services/lecturer.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { SaveLecturer } from '../../../models/lecturer';
-import { ToastyService } from 'ng2-toasty';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
@@ -40,7 +40,7 @@ export class LecturerListComponent implements OnInit {
   constructor(
     private userService: UserService,
     private lecturerService: LecturerService,
-    private toastyService: ToastyService,
+    private toastyService: Toasty,
     private router: Router,
     private route: ActivatedRoute,
     private dialogService: NbDialogService
@@ -76,7 +76,7 @@ export class LecturerListComponent implements OnInit {
     var result$ = (this.lecturer.id) ? this.lecturerService.update(this.lecturer) : this.lecturerService.create(this.lecturer); 
 
     result$.subscribe(() => {
-      this.successToasty('Lecturer was successfully saved');
+      this.toastyService.successToasty('Lecturer was successfully saved');
       this.redirectTo('/pages/lecturers');
     },
     err => {
@@ -108,33 +108,13 @@ export class LecturerListComponent implements OnInit {
     this.lecturerService.delete(this.lecturerToBeDeleted)
         .subscribe(() => {
           this.closeDialog();
-          this.defaultToasty('Lecturer was successfully deleted');
+          this.toastyService.defaultToasty('Lecturer was successfully deleted');
           this.redirectTo('/pages/lecturers');
         });
   }
 
   closeDialog(): void {
     if (this.dialogRef) this.dialogRef.close();
-  }
-
-  private successToasty(message: string) {
-    this.toastyService.success({
-      title: 'Success',
-      msg: message,
-      theme: 'bootstrap',
-      showClose: true,
-      timeout: 3000
-    });
-  }
-
-  private defaultToasty(message: string) {
-    this.toastyService.default({
-      title: 'Success',
-      msg: message,
-      theme: 'bootstrap',
-      showClose: true,
-      timeout: 3000
-    });
   }
 
   selectLecturer(id) {

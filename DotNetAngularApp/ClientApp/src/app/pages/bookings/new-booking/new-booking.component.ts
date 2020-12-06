@@ -1,3 +1,4 @@
+import { Toasty } from './../../toasty';
 import { formatDate } from '@angular/common';
 import { Component, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -84,7 +85,7 @@ export class NewBookingComponent implements OnInit {
     private timeSlotService: TimeSlotService,
     private offeringService: OfferingService,
     private roomService: RoomService,
-    private toastyService: ToastyService,
+    private toastyService: Toasty,
     private dialogService: NbDialogService
   ) {
     route.params.subscribe(p => {
@@ -374,16 +375,6 @@ export class NewBookingComponent implements OnInit {
     else return false;
   }
 
-  successToasty(message: string) {
-    this.toastyService.success({
-      title: 'Success', 
-      msg: message,
-      theme: 'bootstrap',
-      showClose: true,
-      timeout: 5000
-    });
-  }
-
   submitBooking(dialog: TemplateRef<any>) {
     this.nbSpinner = true;
     if (!this.validSubmitForm()) {
@@ -394,7 +385,7 @@ export class NewBookingComponent implements OnInit {
     if (!this.booking.id) {
       this.bookingService.create(this.booking)
         .subscribe(res => {
-          this.successToasty('All bookings were successfully saved');
+          this.toastyService.successToasty('All bookings were successfully saved');
           this.redirectTo('/pages/calendar');
         },
         err => {
@@ -409,7 +400,7 @@ export class NewBookingComponent implements OnInit {
     else if (this.booking.id) {
       this.bookingService.update(this.booking)
         .subscribe(() => {
-          this.successToasty('Booking was successfully saved');
+          this.toastyService.successToasty('Booking was successfully saved');
           this.resetBookingField();
           this.redirectTo('/pages/bookings/');
         },
@@ -431,7 +422,7 @@ export class NewBookingComponent implements OnInit {
     this.bookingService.confirmCreate(this.booking)
       .subscribe(() => {
         this.closeDialog();
-        this.successToasty('All bookings were successfully saved');
+        this.toastyService.successToasty('All bookings were successfully saved');
         this.redirectTo('/pages/calendar');
       });
   }
