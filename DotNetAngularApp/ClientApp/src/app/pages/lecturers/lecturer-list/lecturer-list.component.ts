@@ -1,9 +1,10 @@
 import { LecturerService } from './../../../services/lecturer.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { SaveLecturer } from '../../../models/lecturer';
 import { ToastyService } from 'ng2-toasty';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'lecturer-list',
@@ -15,6 +16,10 @@ import { UserService } from '../../../services/user.service';
   `]
 })
 export class LecturerListComponent implements OnInit {
+  private dialogRef: NbDialogRef<any>;
+  dialogHeaderTitle: string;
+  lecturerToBeDeleted: number;
+
   hasAccess = false;
   setActiveAddLecturer: boolean;
   setActiveDetails: boolean;
@@ -37,7 +42,8 @@ export class LecturerListComponent implements OnInit {
     private lecturerService: LecturerService,
     private toastyService: ToastyService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialogService: NbDialogService
     ) { }
 
   ngOnInit() {
@@ -75,13 +81,13 @@ export class LecturerListComponent implements OnInit {
     },
     err => {
       if (err.status == 409) {
-        this.requiredAlert = false;
         this.error = err.error;
+        this.requiredAlert = false;
         this.existAlert = true;
       }
       else if (err.status == 400) {
-        this.existAlert = false;
         this.requiredAlert = true;
+        this.existAlert = false;
       }
     });
   }
@@ -92,14 +98,23 @@ export class LecturerListComponent implements OnInit {
     this.detailsAlert = false;
   }
 
-  delete(id) {
-    if (confirm("Are you sure?")) {
-      this.lecturerService.delete(id)
+  deleteLecturer(id, dialog: TemplateRef<any>) {
+    this.lecturerToBeDeleted = id;
+    this.dialogHeaderTitle = "Deleting lecturer"
+    this.dialogRef = this.dialogService.open(dialog, { context: 'Are you sure you want delete lecturer?' });
+  }
+
+  onConfirmDelete() {
+    this.lecturerService.delete(this.lecturerToBeDeleted)
         .subscribe(() => {
-          this.warningToasty('Lecturer was successfully deleted');
+          this.closeDialog();
+          this.defaultToasty('Lecturer was successfully deleted');
           this.redirectTo('/pages/lecturers');
         });
-    }
+  }
+
+  closeDialog(): void {
+    if (this.dialogRef) this.dialogRef.close();
   }
 
   private successToasty(message: string) {
@@ -112,8 +127,8 @@ export class LecturerListComponent implements OnInit {
     });
   }
 
-  private warningToasty(message: string) {
-    this.toastyService.warning({
+  private defaultToasty(message: string) {
+    this.toastyService.default({
       title: 'Success',
       msg: message,
       theme: 'bootstrap',

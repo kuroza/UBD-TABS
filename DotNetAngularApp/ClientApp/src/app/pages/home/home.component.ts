@@ -1,7 +1,7 @@
 import { OfferingService } from './../../services/offering.service';
 import { LecturerService } from './../../services/lecturer.service';
 import { FacultyService } from './../../services/faculty.service';
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { BookingService } from '../../services/booking.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastyService } from 'ng2-toasty';
@@ -12,6 +12,7 @@ import { Observable, Subject } from 'rxjs';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { colors } from '../../@theme/components/calendar-header/colors';
 import { UserService } from '../../services/user.service';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-home',
@@ -23,6 +24,9 @@ import { UserService } from '../../services/user.service';
   }, ],
 })
 export class HomeComponent {
+  private dialogRef: NbDialogRef<any>;
+  dialogHeaderTitle: string;
+
   hasAccess = true;
   detailsAlert: boolean = true;
   successAlert: boolean = false;
@@ -64,7 +68,8 @@ export class HomeComponent {
     private userService: UserService,
     private facultyService: FacultyService,
     private lecturerService: LecturerService,
-    private offeringService: OfferingService
+    private offeringService: OfferingService,
+    private dialogService: NbDialogService
   ) {}
 
   ngOnInit() {
@@ -363,14 +368,22 @@ export class HomeComponent {
     this.view = CalendarView.Day;
   }
 
-  delete() {
-    if (confirm("Are you sure?")) {
-      this.bookingService.delete(this.booking.id)
-        .subscribe(x => {
-          window.location.reload();
-          this.defaultToasty('Success', 'Booking event was successfully deleted')
-        });
-    }
+  deleteBooking(dialog: TemplateRef<any>) {
+    this.dialogHeaderTitle = "Deleting booking"
+    this.dialogRef = this.dialogService.open(dialog, { context: 'Are you sure you want delete booking?' });
+  }
+
+  onConfirmDelete() {
+    this.bookingService.delete(this.booking.id)
+      .subscribe(() => {
+        this.closeDialog();
+        window.location.reload();
+        this.defaultToasty('Success', 'Booking event was successfully deleted');
+      });
+  }
+
+  closeDialog(): void {
+    if (this.dialogRef) this.dialogRef.close();
   }
 
   defaultToasty(title: string, message: string) {

@@ -48,7 +48,7 @@
                 <td><a href="javascript:void(0);" (click)="editMajor(major.id)" *ngIf="hasAccess">
                     <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
                   </a></td>
-                <td><a href="javascript:void(0);" (click)="deleteMajor(major.id)" *ngIf="hasAccess">
+                <td><a href="javascript:void(0);" (click)="deleteMajor(major.id, dialog)" *ngIf="hasAccess">
                     <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
                   </a></td>
               </tr>
@@ -157,7 +157,7 @@
                 <button style="margin-top: 5px;" nbButton status="warning"
                   (click)="editMajor(majorDetails.id)">Edit Major</button>
                 <button style="margin-left: 5px; margin-top: 5px;" nbButton status="danger"
-                  (click)="deleteMajor(majorDetails.id)">Delete</button>
+                  (click)="deleteMajor(majorDetails.id, dialog)">Delete</button>
               </div>
             </div>
           </nb-tab>

@@ -3,7 +3,7 @@ import { SemesterService } from './../../../services/semester.service';
 import { OfferingService } from './../../../services/offering.service';
 import { MajorService } from '../../../services/major.service';
 import { ModuleService } from './../../../services/module.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { SaveModule } from '../../../models/module';
 import { LecturerService } from '../../../services/lecturer.service';
 import { ToastyService } from 'ng2-toasty';
@@ -14,6 +14,7 @@ import { UserService } from '../../../services/user.service';
 import { SaveSemester } from '../../../models/semester';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'module-list',
@@ -21,6 +22,11 @@ import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./module-list.component.scss']
 })
 export class ModuleListComponent implements OnInit {
+  private dialogRef: NbDialogRef<any>;
+  dialogHeaderTitle: string;
+  offeringToBeDeleted: number;
+  moduleToBeDeleted: number;
+  semesterToBeDeleted: number;
 
   hoveredDate: NgbDate | null = null;
   fromDate: NgbDate;
@@ -90,7 +96,8 @@ export class ModuleListComponent implements OnInit {
     private majorService: MajorService,
     private offeringService: OfferingService,
     private semesterService: SemesterService,
-    private calendar: NgbCalendar
+    private calendar: NgbCalendar,
+    private dialogService: NbDialogService
   ) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
@@ -296,7 +303,7 @@ export class ModuleListComponent implements OnInit {
       // todo here, set the tab to Semesters list
     },
     err => {
-      if (err.status == 409) { // TODO:
+      if (err.status == 409) {
         this.conflictErrorAlert(err);
       }
       else if (err.status == 400 || 500) {
@@ -319,14 +326,58 @@ export class ModuleListComponent implements OnInit {
     this.setActiveAddAssignModule = false;
   }
 
-  deleteSemester(id: number) {
-    if (confirm("Deleting. Are you sure?")) {
-      this.semesterService.delete(id)
+  deleteModuleOffering(id: number, dialog: TemplateRef<any>) {
+    this.offeringToBeDeleted = id;
+    this.dialogHeaderTitle = "Deleting module offering"
+    this.dialogRef = this.dialogService.open(dialog, { context: 'Are you sure you want remove this module from semester?' });
+  }
+
+  deleteModule(id: number, dialog: TemplateRef<any>) {
+    this.moduleToBeDeleted = id;
+    this.dialogHeaderTitle = "Deleting module"
+    this.dialogRef = this.dialogService.open(dialog, { context: 'Are you sure you want delete module?' });
+  }
+
+  deleteSemester(id: number, dialog: TemplateRef<any>) {
+    this.semesterToBeDeleted = id;
+    this.dialogHeaderTitle = "Deleting semester"
+    this.dialogRef = this.dialogService.open(dialog, { context: 'Are you sure you want delete semester?' });
+  }
+
+  onConfirmDelete() {
+    if (this.offeringToBeDeleted) {
+      this.offeringService.delete(this.offeringToBeDeleted)
         .subscribe(() => {
+          this.closeDialog();
+          this.offeringToBeDeleted = 0;
+          this.defaultToasty('Module was successfully removed from semester');
+          this.redirectTo('/pages/modules');
+        });
+    }
+
+    if (this.moduleToBeDeleted) {
+      this.moduleService.delete(this.moduleToBeDeleted)
+        .subscribe(() => {
+          this.closeDialog();
+          this.moduleToBeDeleted = 0;
+          this.defaultToasty('Module was successfully deleted');
+          this.redirectTo('/pages/modules');
+        });
+    }
+
+    if (this.semesterToBeDeleted) {
+      this.semesterService.delete(this.semesterToBeDeleted)
+        .subscribe(() => {
+          this.closeDialog();
+          this.semesterToBeDeleted = 0;
           this.defaultToasty('Semester was successfully deleted');
           this.redirectTo('/pages/modules');
         });
     }
+  }
+
+  closeDialog(): void {
+    if (this.dialogRef) this.dialogRef.close();
   }
 
   onClose() {
@@ -365,26 +416,6 @@ export class ModuleListComponent implements OnInit {
     this.setActiveSemester = false;
     this.setActiveAddModule = true;
     this.setActiveAddAssignModule = false;
-  }
-
-  deleteModuleOffering(id) {
-    if (confirm("Are you sure?")) {
-      this.offeringService.delete(id)
-        .subscribe(() => {
-          this.defaultToasty('Module was successfully removed from semester');
-          this.redirectTo('/pages/modules');
-        });
-    }
-  }
-
-  deleteModule(id) {
-    if (confirm("Are you sure?")) {
-      this.moduleService.delete(id)
-        .subscribe(() => {
-          this.defaultToasty('Module was successfully deleted');
-          this.redirectTo('/pages/modules');
-        });
-    }
   }
 
   selectOffering(id) {

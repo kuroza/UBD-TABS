@@ -1,3 +1,16 @@
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>{{ dialogHeaderTitle }}</nb-card-header>
+    <nb-card-body>{{ data }}</nb-card-body>
+    <nb-card-footer>
+      <div style="float: right;">
+        <button nbButton status="basic" ghost (click)="ref.close()" style="margin-right: 10px;">Cancel</button>
+        <button nbButton status="primary" (click)="onConfirmDelete()">Confirm Delete</button>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
 <div class="row">
   <div class="col-md-8">
     <nb-card>
@@ -38,7 +51,7 @@
                   <td><a href="javascript:void(0);" (click)="editModuleOffering(offering.id)" *ngIf="hasAccess">
                       <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
                     </a></td>
-                  <td><a href="javascript:void(0);" (click)="deleteModuleOffering(offering.id)" *ngIf="hasAccess">
+                  <td><a href="javascript:void(0);" (click)="deleteModuleOffering(offering.id, dialog)" *ngIf="hasAccess">
                       <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
                     </a></td>
                 </tr>
@@ -70,7 +83,7 @@
                     <td><a href="javascript:void(0);" (click)="editModule(module.id)" *ngIf="hasAccess">
                         <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
                       </a></td>
-                    <td><a href="javascript:void(0);" (click)="deleteModule(module.id)" *ngIf="hasAccess">
+                    <td><a href="javascript:void(0);" (click)="deleteModule(module.id, dialog)" *ngIf="hasAccess">
                         <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
                       </a></td>
                   </tr>
@@ -102,7 +115,7 @@
                     <td><a href="javascript:void(0);" (click)="editSemester(semester.id)" *ngIf="hasAccess">
                         <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
                       </a></td>
-                    <td><a href="javascript:void(0);" (click)="deleteSemester(semester.id)" *ngIf="hasAccess">
+                    <td><a href="javascript:void(0);" (click)="deleteSemester(semester.id, dialog)" *ngIf="hasAccess">
                         <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
                       </a></td>
                   </tr>
@@ -318,7 +331,7 @@
           <div class="inline" *ngIf="hasAccess">
             <button nbButton status="warning" style="margin-top: 10px;" (click)="editModuleOffering(moduleOfferingDetails.id)">Edit</button>
             <button nbButton status="danger" style="margin-left: 5px; margin-top: 10px;"
-              (click)="deleteModuleOffering(moduleOfferingDetails.id)">Delete</button>
+              (click)="deleteModuleOffering(moduleOfferingDetails.id, dialog)">Delete</button>
           </div>
         </div>
         <div *ngIf="!moduleOfferingDetails" style="margin-top: 10px;">
@@ -340,7 +353,7 @@
           <div class="inline" *ngIf="hasAccess">
             <button nbButton status="warning" style="margin-top: 10px;" (click)="editModule(moduleDetails.id)">Edit</button>
             <button nbButton status="danger" style="margin-left: 5px; margin-top: 10px;"
-              (click)="deleteModule(moduleDetails.id)">Delete</button>
+              (click)="deleteModule(moduleDetails.id, dialog)">Delete</button>
           </div>
         </div>
       </nb-card-body>

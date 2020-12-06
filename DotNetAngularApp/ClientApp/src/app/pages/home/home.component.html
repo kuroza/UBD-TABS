@@ -1,3 +1,16 @@
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>{{ dialogHeaderTitle }}</nb-card-header>
+    <nb-card-body>{{ data }}</nb-card-body>
+    <nb-card-footer>
+      <div style="float: right;">
+        <button nbButton status="basic" ghost (click)="ref.close()" style="margin-right: 10px;">Cancel</button>
+        <button nbButton status="primary" (click)="onConfirmDelete()">Confirm Delete</button>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
 <div class="row">
   <div class="col-md-8">
     <!-- <nb-alert status="success" closable (close)="onCloseSuccessAlert()" *ngIf="successAlert" style="text-align: center;">
@@ -208,10 +221,10 @@
           </div>
 
           <div class="inline" style="margin-left: 20px;">
-            <button *ngIf="hasAccess" style="margin-left: 5px; margin-top: 10px;" nbButton status="warning"
+            <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="warning"
               [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
-            <button *ngIf="hasAccess" style="margin-left: 5px; margin-top: 10px;" nbButton status="danger"
-              (click)="delete()">Delete</button>
+            <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="danger"
+              (click)="deleteBooking(dialog)">Delete</button>
             <!-- <button style="margin-left: 5px; margin-top: 10px;" nbButton status="primary"
               [routerLink]="['/pages/bookings']">View All Bookings</button> -->
           </div>

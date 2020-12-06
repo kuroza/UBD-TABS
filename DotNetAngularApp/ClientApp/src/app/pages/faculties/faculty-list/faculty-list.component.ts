@@ -17,6 +17,7 @@ export class FacultyListComponent implements OnInit {
   private dialogRef: NbDialogRef<any>;
   dialogHeaderTitle: string;
   facultyToBeDeleted: number;
+  majorToBeDeleted: number;
   
   facultyDetails: any;
   faculty: SaveFaculty = {
@@ -71,14 +72,10 @@ export class FacultyListComponent implements OnInit {
     };
   }
 
-  deleteMajor(id) {
-    if (confirm("Are you sure?")) {
-      this.majorService.delete(id)
-        .subscribe(() => {
-          this.defaultToasty('Major was successfully deleted');
-          this.redirectTo('/pages/faculties');
-        });
-    }
+  deleteMajor(id, dialog: TemplateRef<any>) {
+    this.majorToBeDeleted = id;
+    this.dialogHeaderTitle = "Deleting major"
+    this.dialogRef = this.dialogService.open(dialog, { context: 'Are you sure you want delete major?' });
   }
 
   deleteFaculty(id, dialog: TemplateRef<any>) {
@@ -92,9 +89,19 @@ export class FacultyListComponent implements OnInit {
       this.facultyService.delete(this.facultyToBeDeleted)
         .subscribe(() => {
           this.closeDialog();
+          this.facultyToBeDeleted = 0;
           this.defaultToasty('Faculty was successfully deleted');
           this.redirectTo('/pages/faculties');
-          this.facultyToBeDeleted = 0;
+        });
+    }
+
+    if (this.majorToBeDeleted) {
+      this.majorService.delete(this.majorToBeDeleted)
+        .subscribe(() => {
+          this.closeDialog();
+          this.majorToBeDeleted = 0;
+          this.defaultToasty('Major was successfully deleted');
+          this.redirectTo('/pages/faculties');
         });
     }
   }
@@ -229,14 +236,13 @@ export class FacultyListComponent implements OnInit {
     },
     err => {
       if (err.status == 409) {
-        this.requiredAlert = false;
-        console.log(err.error);
         this.error = err.error;
+        this.requiredAlert = false;
         this.existFacultyAlert = true;
       }
       else if (err.status == 400) {
-        this.existFacultyAlert = false;
         this.requiredAlert = true;
+        this.existFacultyAlert = false;
       }
     });
 

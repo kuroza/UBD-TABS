@@ -1,3 +1,16 @@
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>{{ dialogHeaderTitle }}</nb-card-header>
+    <nb-card-body>{{ data }}</nb-card-body>
+    <nb-card-footer>
+      <div style="float: right;">
+        <button nbButton status="basic" ghost (click)="ref.close()" style="margin-right: 10px;">Cancel</button>
+        <button nbButton status="primary" (click)="onConfirmDelete()">Confirm Delete</button>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
 <div class="row">
   <div class="col-md-8">
     <nb-card>
@@ -23,7 +36,7 @@
               <td><a href="javascript:void(0);" (click)="edit(lecturer.id)" *ngIf="hasAccess">
                   <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
                 </a></td>
-              <td><a href="javascript:void(0);" (click)="delete(lecturer.id)" *ngIf="hasAccess">
+              <td><a href="javascript:void(0);" (click)="deleteLecturer(lecturer.id, dialog)" *ngIf="hasAccess">
                   <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
                 </a></td>
             </tr>
@@ -102,7 +115,7 @@
                   <button style="margin-left: 10px; margin-top: 10px;" nbButton status="warning"
                     (click)="edit(lecturerDetails.id)">Edit</button>
                   <button style="margin-left: 10px; margin-top: 10px;" nbButton status="danger"
-                    (click)="delete(lecturerDetails.id)">Delete</button>
+                    (click)="deleteLecturer(lecturerDetails.id, dialog)">Delete</button>
                 </div>
             </div>
             <div *ngIf="!lecturerDetails" style="margin-top: 10px;">
