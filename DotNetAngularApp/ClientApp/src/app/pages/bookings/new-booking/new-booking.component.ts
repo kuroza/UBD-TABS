@@ -111,7 +111,6 @@ export class NewBookingComponent implements OnInit {
 
       if (this.booking.id) {
         this.setBooking(data[5]);
-        // this.populateRooms();
       }
     }, err => {
       if (err.status == 404) this.router.navigate(['/']);

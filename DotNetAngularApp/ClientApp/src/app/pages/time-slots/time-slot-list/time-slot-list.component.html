@@ -44,48 +44,55 @@
   <div class="col-md-4">
     <nb-card>
       <nb-card-header>
-        <h4 *ngIf="timeSlot.id" style="margin-top: 10px;">Edit Time Slot
-          <button nbButton size="small" status="basic" ghost (click)="onClickBackTimeSlot()" nbTooltip="Return to Add"
+        <h4 style="margin-top: 10px;">Edit Time Slot
+          <!-- <button nbButton size="small" status="basic" ghost (click)="onClickBackTimeSlot()" nbTooltip="Return to Add"
             style="float: right;">
             <nb-icon icon="arrow-back-outline"></nb-icon>Back
-          </button>
+          </button> -->
         </h4>
-        <h4 *ngIf="!timeSlot.id" style="margin-top: 10px;">Add Time Slot</h4>
+        <!-- <h4 *ngIf="!timeSlot.id" style="margin-top: 10px;">Add Time Slot</h4> -->
       </nb-card-header>
       <nb-card-body>
-        <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert" style="text-align: center;">
-          {{error}}
-        </nb-alert>
-        <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
-          Please enter the required fields!
-        </nb-alert>
-        <form #k="ngForm" (ngSubmit)="submitTimeSlot()" novalidate>
-          <div class="form-group" style="margin-top: 10px;">
-            <label>Start time*</label>
-            <div style="margin-left: 160px;">
-              <ngb-timepicker [(ngModel)]="startTime" name="startTime"></ngb-timepicker>
+        <div *ngIf="!timeSlot.id">
+          <nb-alert status="basic" closable (close)="onCloseAlert()" *ngIf="detailsAlert" style="text-align: center;">
+            Select a time slot to edit
+          </nb-alert>
+        </div>
+        <div *ngIf="timeSlot.id">
+          <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert" style="text-align: center;">
+            {{error}}
+          </nb-alert>
+          <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
+            Please enter the required fields!
+          </nb-alert>
+          <form #k="ngForm" (ngSubmit)="submitTimeSlot()" novalidate>
+            <div class="form-group" style="margin-top: 10px;">
+              <label>Start time*</label>
+              <div style="margin-left: 160px;">
+                <ngb-timepicker [(ngModel)]="startTime" name="startTime"></ngb-timepicker>
+              </div>
             </div>
-          </div>
-          <div class="form-group" style="margin-top: 10px;">
-            <label>End time*</label>
-            <div style="margin-left: 160px;">
-              <ngb-timepicker [(ngModel)]="endTime" name="endTime"></ngb-timepicker>
+            <div class="form-group" style="margin-top: 10px;">
+              <label>End time*</label>
+              <div style="margin-left: 160px;">
+                <ngb-timepicker [(ngModel)]="endTime" name="endTime"></ngb-timepicker>
+              </div>
             </div>
-          </div>
-          <div *ngIf="timeSlot.id">
-            <hr>
-            <p>Start time: {{ timeSlot.startTime | date:'shortTime' }}</p>
-            <p>End time: {{ timeSlot.endTime | date:'shortTime' }}</p>
-          </div>
-          <div style="margin-top: 10px;">
-            <p>* - required fields</p>
-            <button *ngIf="!timeSlot.id" nbButton fullWidth [disabled]="!k.valid">Add</button>
-            <button *ngIf="timeSlot.id" nbButton fullWidth [disabled]="!k.valid">Save</button>
-          </div>
-          <!-- <br><pre>Start time: {{ startTime | json }}</pre>
-          <pre>End time: {{ endTime | json }}</pre>
-          <pre>Time slot: {{ timeSlot | json }}</pre> -->
-        </form>
+            <div *ngIf="timeSlot.id">
+              <hr>
+              <p>Start time: {{ timeSlot.startTime | date:'shortTime' }}</p>
+              <p>End time: {{ timeSlot.endTime | date:'shortTime' }}</p>
+            </div>
+            <div style="margin-top: 10px;">
+              <p>* - required fields</p>
+              <!-- <button *ngIf="!timeSlot.id" nbButton fullWidth [disabled]="!k.valid">Add</button> -->
+              <button *ngIf="timeSlot.id" nbButton fullWidth [disabled]="!k.valid">Save</button>
+            </div>
+            <!-- <br><pre>Start time: {{ startTime | json }}</pre>
+            <pre>End time: {{ endTime | json }}</pre>
+            <pre>Time slot: {{ timeSlot | json }}</pre> -->
+          </form>
+        </div>
       </nb-card-body>
     </nb-card>
   </div>

@@ -8,7 +8,7 @@ namespace DotNetAngularApp.Controllers.Resources
     {
         public int Id { get; set; }
         
-        public ICollection<OfferingResource> Offerings { get; set; } // ! Maybe just send the OfferingId
+        public ICollection<OfferingResource> Offerings { get; set; }
 
         public ICollection<BookDateResource> BookDates { get; set; }
 

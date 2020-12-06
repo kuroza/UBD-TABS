@@ -16,6 +16,7 @@ export class TimeSlotListComponent implements OnInit {
   error: string;
   existAlert: boolean = false;
   requiredAlert: boolean = false;
+  detailsAlert: boolean = true;
 
   timeSlots: any;
   startTime = {hour: 0, minute: 0};
@@ -75,12 +76,21 @@ export class TimeSlotListComponent implements OnInit {
   }
 
   private setTimeSlot(ts) {
-    // maybe binding to client not supported
-    var fullHour: string = ts.startTime.replace('1900-01-01T', '');
-    var hour: number = +fullHour.slice(0, 2);
-    var minute: number = +fullHour.slice(3, 5);
+    var fullHour: string;
+    var hour: number;
+    var minute: number;
+
+    fullHour = ts.startTime.replace('1900-01-01T', '');
+    hour = +fullHour.slice(0, 2);
+    minute = +fullHour.slice(3, 5);
     this.startTime.hour = hour;
     this.startTime.minute = minute;
+    
+    fullHour = ts.endTime.replace('1900-01-01T', '');
+    hour = +fullHour.slice(0, 2);
+    minute = +fullHour.slice(3, 5);
+    this.endTime.hour = hour;
+    this.endTime.minute = minute;
 
     this.timeSlot.id = ts.id;
     this.timeSlot.startTime = ts.startTime;
@@ -141,6 +151,10 @@ export class TimeSlotListComponent implements OnInit {
     this.timeSlot.endTime = '';
     this.endTime.hour = 0;
     this.endTime.minute = 0;
+  }
+
+  onCloseAlert() {
+    this.detailsAlert = false;
   }
 
   redirectTo(uri:string){
