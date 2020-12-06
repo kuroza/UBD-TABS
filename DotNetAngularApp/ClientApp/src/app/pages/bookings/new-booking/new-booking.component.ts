@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { CalendarEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBeforeRenderEvent } from 'angular-calendar';
 import { WeekViewHourColumn } from 'calendar-utils';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
@@ -29,6 +30,7 @@ import { RoomService } from './../../../services/room.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class NewBookingComponent implements OnInit {
+  private dialogRef: NbDialogRef<any>;
 
   readonly DELIMITER = '-';
   nbSpinner;
@@ -82,7 +84,8 @@ export class NewBookingComponent implements OnInit {
     private timeSlotService: TimeSlotService,
     private offeringService: OfferingService,
     private roomService: RoomService,
-    private toastyService: ToastyService
+    private toastyService: ToastyService,
+    private dialogService: NbDialogService
   ) {
     route.params.subscribe(p => {
       this.booking.id = +p['id'] || 0;
@@ -381,7 +384,7 @@ export class NewBookingComponent implements OnInit {
     });
   }
 
-  submitBooking() {
+  submitBooking(dialog: TemplateRef<any>) {
     this.nbSpinner = true;
     if (!this.validSubmitForm()) {
       this.invalidOrBadRequestAlert();
@@ -396,8 +399,9 @@ export class NewBookingComponent implements OnInit {
         },
         err => {
           if (err.status == 409) {
+            this.error = err.error;
             this.conflictErrorAlert(err);
-            this.confirmAddAnotherRoomDialog(err);
+            this.openDialog(dialog);
           } else if (err.status == 400)
             this.invalidOrBadRequestAlert()
         });
@@ -411,8 +415,9 @@ export class NewBookingComponent implements OnInit {
         },
         err => {
           if (err.status == 409) {
+            this.error = err.error;
             this.conflictErrorAlert(err);
-            this.confirmAddAnotherRoomDialog(err);
+            this.openDialog(dialog);
           }
           else if (err.status == 400)
             this.invalidOrBadRequestAlert();
@@ -422,14 +427,21 @@ export class NewBookingComponent implements OnInit {
     this.onCloseAlert();
   }
 
-  private confirmAddAnotherRoomDialog(err: any) {
-    if (confirm(`${err.error}. Are you sure you want to add another event to this room?`)) {
-      this.bookingService.confirmCreate(this.booking)
-        .subscribe(() => {
-          this.successToasty('All bookings were successfully saved');
-          this.redirectTo('/pages/calendar');
-        });
-    }
+  onConfirmSubmit() {
+    this.bookingService.confirmCreate(this.booking)
+      .subscribe(() => {
+        this.closeDialog();
+        this.successToasty('All bookings were successfully saved');
+        this.redirectTo('/pages/calendar');
+      });
+  }
+
+  openDialog(dialog: TemplateRef<any>) {
+    this.dialogRef = this.dialogService.open(dialog, { context: 'Are you sure you want to add another event to this slot?' });
+  }
+
+  closeDialog(): void {
+    if (this.dialogRef) this.dialogRef.close();
   }
 
   private conflictErrorAlert(err: any) {

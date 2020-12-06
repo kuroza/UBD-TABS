@@ -1,3 +1,16 @@
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>{{ error }}</nb-card-header>
+    <nb-card-body>{{ data }}</nb-card-body>
+    <nb-card-footer>
+      <div style="float: right;">
+        <button nbButton status="basic" ghost (click)="ref.close()" style="margin-right: 10px;">Cancel</button>
+        <button nbButton status="primary" (click)="onConfirmSubmit()">Confirm</button>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
 <div class="row">
   <div class="col-md-8">
       <nb-card>
@@ -50,7 +63,7 @@
               Please enter the required fields!
             </nb-alert>
 
-            <form #f="ngForm" (ngSubmit)="submitBooking()" novalidate>  
+            <form #f="ngForm" (ngSubmit)="submitBooking(dialog)" novalidate>  
               <!-- * Semester form -->
               <div class="form-group">
                 <label>Semester*</label>
