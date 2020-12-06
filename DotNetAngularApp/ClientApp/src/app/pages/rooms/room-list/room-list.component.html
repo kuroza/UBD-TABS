@@ -1,3 +1,16 @@
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>{{ dialogHeaderTitle }}</nb-card-header>
+    <nb-card-body>{{ data }}</nb-card-body>
+    <nb-card-footer>
+      <div style="float: right;">
+        <button nbButton status="basic" ghost (click)="ref.close()" style="margin-right: 10px;">Cancel</button>
+        <button nbButton status="primary" (click)="onConfirmDelete()">Confirm Delete</button>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
 <nb-card>
   <nb-card-body>
     <h3>Buildings and Rooms List</h3>
@@ -16,7 +29,7 @@
             <button href="javascript:void(0);" (click)="editBuilding(b.id)" size="small" class="mr-2 mb-2" nbButton
               status="warning">Edit building
               details</button>
-            <button href="javascript:void(0);" (click)="deleteBuilding(b.id)" size="small" class="mb-2" nbButton
+            <button href="javascript:void(0);" (click)="deleteBuilding(b.id, dialog)" size="small" class="mb-2" nbButton
               status="danger">Delete
               building</button>
           </div>
@@ -37,7 +50,7 @@
                 <td><a href="javascript:void(0);" (click)="editRoom(room.id)" *ngIf="hasAccess">
                     <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
                   </a></td>
-                <td><a href="javascript:void(0);" (click)="deleteRoom(room.id)" *ngIf="hasAccess">
+                <td><a href="javascript:void(0);" (click)="deleteRoom(room.id, dialog)" *ngIf="hasAccess">
                     <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
                   </a></td>
               </tr>
@@ -145,7 +158,7 @@
                 <button style="margin-top: 10px;" nbButton status="warning"
                   (click)="editRoom(roomDetails.id)">Edit</button>
                 <button style="margin-left: 5px; margin-top: 10px;" nbButton status="danger"
-                  (click)="deleteRoom(roomDetails.id)">Delete</button>
+                  (click)="deleteRoom(roomDetails.id, dialog)">Delete</button>
               </div>
             </div>
           </nb-tab>

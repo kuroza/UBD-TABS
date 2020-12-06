@@ -1,16 +1,20 @@
 import { SaveTimeSlot } from './../../../models/timeSlot';
 import { ToastyService } from 'ng2-toasty';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { TimeSlotService } from '../../../services/timeSlot.service';
 import { UserService } from '../../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-view-time-slots',
   templateUrl: './time-slot-list.component.html',
 })
 export class TimeSlotListComponent implements OnInit {
+  private dialogRef: NbDialogRef<any>;
+  dialogHeaderTitle: string;
+  timeSlotToBeDeleted: number;
 
   hasAccess = false;
   error: string;
@@ -33,15 +37,15 @@ export class TimeSlotListComponent implements OnInit {
     private toasty: ToastyService,
     private router: Router,
     private route: ActivatedRoute,
-    private config: NgbTimepickerConfig
+    private config: NgbTimepickerConfig,
+    private dialogService: NbDialogService
   ) {
     // config.spinners = false;
   }
 
   ngOnInit() {
-    if (localStorage.getItem('token') != null) {
+    if (localStorage.getItem('token') != null)
       this.hasAccess = this.userService.hasAccess();
-    }
 
     this.timeSlotService.getAllTimeSlots()
       .subscribe(timeSlots => this.timeSlots = timeSlots);
@@ -97,14 +101,24 @@ export class TimeSlotListComponent implements OnInit {
     this.timeSlot.endTime = ts.endTime;
   }
 
-  delete(id) {
-    if (confirm("Are you sure?")) {
-      this.timeSlotService.delete(id)
-        .subscribe(x => {
-          this.warningToasty('Time slot was successfully deleted.');
-          this.redirectTo('/pages/timeslots');
-        });
-    }
+  deleteTimeSlot(id: number, dialog: TemplateRef<any>) {
+    this.timeSlotToBeDeleted = id;
+    this.dialogHeaderTitle = "Deleting time slot"
+    this.dialogRef = this.dialogService.open(dialog, { context: 'Are you sure you want delete time slot?' });
+  }
+
+  onConfirmDelete() {
+    this.timeSlotService.delete(this.timeSlotToBeDeleted)
+      .subscribe(() => {
+        this.closeDialog();
+        this.timeSlotToBeDeleted = 0;
+        this.defaultToasty('Time slot was successfully deleted');
+        this.redirectTo('/pages/timeslots');
+      });
+  }
+
+  closeDialog(): void {
+    if (this.dialogRef) this.dialogRef.close();
   }
 
   private successToasty(message: string) {
@@ -117,8 +131,8 @@ export class TimeSlotListComponent implements OnInit {
     });
   }
 
-  private warningToasty(message: string) {
-    this.toasty.warning({
+  private defaultToasty(message: string) {
+    this.toasty.default({
       title: 'Success',
       msg: message,
       theme: 'bootstrap',

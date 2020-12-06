@@ -1,5 +1,5 @@
 import { ToastyService } from 'ng2-toasty';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BuildingService } from '../../../services/building.service';
 import { UserService } from '../../../services/user.service';
 import { RoomService } from '../../../services/room.service';
@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SaveRoom } from '../../../models/room';
 import { SaveBuilding } from '../../../models/building';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-view-rooms',
@@ -14,6 +15,11 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
   styleUrls: ['./room-list.component.scss']
 })
 export class RoomListComponent implements OnInit {
+  private dialogRef: NbDialogRef<any>;
+  dialogHeaderTitle: string;
+  roomToBeDeleted: number;
+  buildingToBeDeleted: number;
+
   buildingDetails: any;
   building: SaveBuilding = {
     id: 0,
@@ -48,6 +54,7 @@ export class RoomListComponent implements OnInit {
     private toasty: ToastyService,
     private route: ActivatedRoute, 
     private router: Router,
+    private dialogService: NbDialogService
     ) { }
 
   ngOnInit() {
@@ -66,18 +73,14 @@ export class RoomListComponent implements OnInit {
       };
   }
 
-  deleteRoom(id) {
-    if (confirm("Are you sure?")) {
-      this.roomService.delete(id)
-        .subscribe(() => {
-          this.warningToasty('Room was successfully deleted');
-          this.redirectTo('/pages/rooms');
-        });
-    }
+  deleteRoom(id, dialog: TemplateRef<any>) {
+    this.roomToBeDeleted = id;
+    this.dialogHeaderTitle = "Deleting room"
+    this.dialogRef = this.dialogService.open(dialog, { context: 'Are you sure you want delete room?' });
   }
 
-  private warningToasty(message: string) {
-    this.toasty.warning({
+  private defaultToasty(message: string) {
+    this.toasty.default({
       title: 'Success',
       msg: message,
       theme: 'bootstrap',
@@ -86,14 +89,36 @@ export class RoomListComponent implements OnInit {
     });
   }
 
-  deleteBuilding(id) {
-    if (confirm("Are you sure?")) {
-      this.buildingService.delete(id)
+  deleteBuilding(id, dialog: TemplateRef<any>) {
+    this.buildingToBeDeleted = id;
+    this.dialogHeaderTitle = "Deleting building"
+    this.dialogRef = this.dialogService.open(dialog, { context: 'Are you sure you want delete building?' });
+  }
+
+  onConfirmDelete() {
+    if (this.roomToBeDeleted) {
+      this.roomService.delete(this.roomToBeDeleted)
         .subscribe(() => {
-          this.warningToasty('Building was successfully deleted');
+          this.closeDialog();
+          this.roomToBeDeleted = 0;
+          this.defaultToasty('Room was successfully deleted');
           this.redirectTo('/pages/rooms');
         });
     }
+
+    if (this.buildingToBeDeleted) {
+      this.buildingService.delete(this.buildingToBeDeleted)
+        .subscribe(() => {
+          this.closeDialog();
+          this.buildingToBeDeleted = 0;
+          this.defaultToasty('Building was successfully deleted');
+          this.redirectTo('/pages/rooms');
+        });
+    }
+  }
+
+  closeDialog(): void {
+    if (this.dialogRef) this.dialogRef.close();
   }
 
   private setRoom(r) {
