@@ -1,5 +1,5 @@
 import { ToastyService } from 'ng2-toasty';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FacultyService } from '../../../services/faculty.service';
 import { UserService } from '../../../services/user.service';
 import { MajorService } from '../../../services/major.service';
@@ -7,12 +7,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SaveMajor } from '../../../models/major';
 import { SaveFaculty } from '../../../models/faculty';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { NbDialogRef, NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-faculty-list',
   templateUrl: './faculty-list.component.html'
 })
 export class FacultyListComponent implements OnInit {
+  private dialogRef: NbDialogRef<any>;
+  dialogHeaderTitle: string;
+  facultyToBeDeleted: number;
+  
   facultyDetails: any;
   faculty: SaveFaculty = {
     id: 0,
@@ -46,7 +51,8 @@ export class FacultyListComponent implements OnInit {
     private majorService: MajorService,
     private toasty: ToastyService,
     private route: ActivatedRoute, 
-    private router: Router
+    private router: Router,
+    private dialogService: NbDialogService
     ) { }
 
   ngOnInit() {
@@ -69,24 +75,36 @@ export class FacultyListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.majorService.delete(id)
         .subscribe(() => {
-          this.warningToasty('Major was successfully deleted');
+          this.defaultToasty('Major was successfully deleted');
           this.redirectTo('/pages/faculties');
         });
     }
   }
 
-  deleteFaculty(id) {
-    if (confirm("Are you sure?")) {
-      this.facultyService.delete(id)
+  deleteFaculty(id, dialog: TemplateRef<any>) {
+    this.facultyToBeDeleted = id;
+    this.dialogHeaderTitle = "Deleting faculty"
+    this.dialogRef = this.dialogService.open(dialog, { context: 'Are you sure you want delete faculty?' });
+  }
+
+  onConfirmDelete() {
+    if (this.facultyToBeDeleted) {
+      this.facultyService.delete(this.facultyToBeDeleted)
         .subscribe(() => {
-          this.warningToasty('Faculty was successfully deleted');
+          this.closeDialog();
+          this.defaultToasty('Faculty was successfully deleted');
           this.redirectTo('/pages/faculties');
+          this.facultyToBeDeleted = 0;
         });
     }
   }
 
-  private warningToasty(message: string) {
-    this.toasty.warning({
+  closeDialog(): void {
+    if (this.dialogRef) this.dialogRef.close();
+  }
+
+  private defaultToasty(message: string) {
+    this.toasty.default({
       title: 'Success',
       msg: message,
       theme: 'bootstrap',

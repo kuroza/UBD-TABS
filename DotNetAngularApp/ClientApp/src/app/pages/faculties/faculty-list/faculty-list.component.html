@@ -1,3 +1,16 @@
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>{{ dialogHeaderTitle }}</nb-card-header>
+    <nb-card-body>{{ data }}</nb-card-body>
+    <nb-card-footer>
+      <div style="float: right;">
+        <button nbButton status="basic" ghost (click)="ref.close()" style="margin-right: 10px;">Cancel</button>
+        <button nbButton status="primary" (click)="onConfirmDelete()">Confirm Delete</button>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
 <nb-card>
   <nb-card-body>
     <h3>Faculties and Majors List</h3>
@@ -16,7 +29,7 @@
             <button href="javascript:void(0);" (click)="editFaculty(f.id)" size="small" class="mr-2 mb-2" nbButton
               status="warning">Edit faculty
               details</button>
-            <button href="javascript:void(0);" (click)="deleteFaculty(f.id)" size="small" class="mb-2" nbButton
+            <button href="javascript:void(0);" (click)="deleteFaculty(f.id, dialog)" size="small" class="mb-2" nbButton
               status="danger">Delete
               faculty</button>
           </div>
