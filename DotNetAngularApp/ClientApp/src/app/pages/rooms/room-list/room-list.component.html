@@ -130,7 +130,7 @@
 
           <nb-tab tabTitle="Details" active="{{ setActiveDetails }}">
             <div *ngIf="!roomDetails" style="margin-top: 10px;">
-              <nb-alert status="basic" closable (close)="onClose()" *ngIf="detailsAlert">
+              <nb-alert status="basic" closable (close)="onClose()" *ngIf="detailsAlert" style="text-align: center;">
                 Click on a room from the table to show its details
               </nb-alert>
             </div>
