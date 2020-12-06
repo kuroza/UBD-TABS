@@ -54,9 +54,9 @@ namespace DotNetAngularApp.Controllers
 
             var room = mapper.Map<SaveRoomResource, Room>(roomResource);
 
-            var existName = await repository.RoomNameExist(room);
-            if (existName != null)
-                return Conflict("Room name already exists.");
+            var nameExist = await repository.RoomNameExist(room);
+            if (nameExist != null)
+                return Conflict("Room name already exists");
 
             repository.Add(room);
             await unitOfWork.CompleteAsync();
@@ -97,9 +97,9 @@ namespace DotNetAngularApp.Controllers
 
             room = mapper.Map<SaveRoomResource, Room>(roomResource, room);
 
-            var exist = await repository.EditRoomExist(room);
-            if (exist != null)
-                return Conflict("Room name already exists.");
+            var nameExist = await repository.EditRoomExist(room);
+            if (nameExist != null)
+                return Conflict("Room name already exists");
 
             await unitOfWork.CompleteAsync();
 

@@ -10,5 +10,7 @@ namespace DotNetAngularApp.Core
         void Remove(Semester semester);
         Task<IEnumerable<Semester>> GetAllSemesters();
         Task<Semester> GetSemester(int id, bool includeRelated = true);
+        Task<Semester> SemesterSessionExist(Semester semester);
+        Task<Semester> EditSemesterSessionExist(Semester semester);
     }
 }

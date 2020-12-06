@@ -81,33 +81,48 @@ namespace DotNetAngularApp.Persistence
                 return false;
         }
 
-        // public bool BookingModuleExist(Booking booking)
-        // {
-        //     var result = context.Bookings
-        //         .Where(b => b.Modules.Select(bm => bm.Module.Id).Any(x => booking.Modules.Select(bm => bm.ModuleId).Contains(x)))
-        //         .Where(b => b.BookDates.Select(bd => bd.Date).Any(x => booking.BookDates.Select(bd => bd.Date).Contains(x)))
-        //         .Where(b => b.TimeSlots.Select(bt => bt.TimeSlot.Id).Any(x => booking.TimeSlots.Select(bt => bt.TimeSlotId).Contains(x)))
-        //         .Count();
+        public bool BookingOfferingExist(Booking booking)
+        {
+            var result = context.Bookings
+                .Where(b => b.Offerings.Select(bo => bo.OfferingId).Any(x => booking.Offerings.Select(bo => bo.OfferingId).Contains(x)))
+                .Where(b => b.BookDates.Select(bd => bd.Date).Any(x => booking.BookDates.Select(bd => bd.Date).Contains(x)))
+                .Where(b => b.TimeSlots.Select(bt => bt.TimeSlot.Id).Any(x => booking.TimeSlots.Select(bt => bt.TimeSlotId).Contains(x)))
+                .Count();
 
-        //     if (result > 0)
-        //         return true;
-        //     else
-        //         return false;
-        // }
+            if (result > 0)
+                return true;
+            else
+                return false;
+        }
 
-        // public bool EditBookingExist(Booking booking)
-        // {
-        //     var result = context.Bookings
-        //         .Where(b => b.Id != booking.Id)
-        //         .Where(b => b.Modules.Select(bm => bm.Module.Id).Any(x => booking.Modules.Select(bm => bm.ModuleId).Contains(x)))
-        //         .Where(b => b.BookDates.Select(bd => bd.Date).Any(x => booking.BookDates.Select(bd => bd.Date).Contains(x)))
-        //         .Where(b => b.TimeSlots.Select(bt => bt.TimeSlot.Id).Any(x => booking.TimeSlots.Select(bt => bt.TimeSlotId).Contains(x)))
-        //         .Count();
+        public bool EditBookingRoomExist(Booking booking)
+        {
+            var result = context.Bookings
+                .Where(b => b.Id != booking.Id)
+                .Where(b => b.Rooms.Select(bm => bm.RoomId).Any(x => booking.Rooms.Select(bm => bm.RoomId).Contains(x)))
+                .Where(b => b.BookDates.Select(bd => bd.Date).Any(x => booking.BookDates.Select(bd => bd.Date).Contains(x)))
+                .Where(b => b.TimeSlots.Select(bt => bt.TimeSlot.Id).Any(x => booking.TimeSlots.Select(bt => bt.TimeSlotId).Contains(x)))
+                .Count();
 
-        //     if (result > 0)
-        //         return true;
-        //     else
-        //         return false;
-        // }
+            if (result > 0)
+                return true;
+            else
+                return false;
+        }
+        
+        public bool EditBookingOfferingExist(Booking booking)
+        {
+            var result = context.Bookings
+                .Where(b => b.Id != booking.Id)
+                .Where(b => b.Offerings.Select(bo => bo.OfferingId).Any(x => booking.Offerings.Select(bo => bo.OfferingId).Contains(x)))
+                .Where(b => b.BookDates.Select(bd => bd.Date).Any(x => booking.BookDates.Select(bd => bd.Date).Contains(x)))
+                .Where(b => b.TimeSlots.Select(bt => bt.TimeSlot.Id).Any(x => booking.TimeSlots.Select(bt => bt.TimeSlotId).Contains(x)))
+                .Count();
+
+            if (result > 0)
+                return true;
+            else
+                return false;
+        }
     }
 }

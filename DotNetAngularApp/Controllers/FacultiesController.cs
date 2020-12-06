@@ -56,10 +56,10 @@ namespace DotNetAngularApp.Controllers
 
             var faculty = mapper.Map<SaveFacultyResource, Faculty>(facultyResource);
 
-            var existName = await repository.FacultyNameExist(faculty);
+            var nameExist = await repository.FacultyNameExist(faculty);
             
-            if (existName != null)
-                return Conflict("Faculty name already exists.");
+            if (nameExist != null)
+                return Conflict("Faculty name already exists");
 
             repository.Add(faculty);
             await unitOfWork.CompleteAsync();
@@ -100,9 +100,9 @@ namespace DotNetAngularApp.Controllers
 
             faculty = mapper.Map<SaveFacultyResource, Faculty>(facultyResource, faculty);
             
-            var exist = await repository.EditFacultyExist(faculty);
-            if (exist != null)
-                return Conflict("Faculty details already exist.");
+            var nameExist = await repository.EditFacultyExist(faculty);
+            if (nameExist != null)
+                return Conflict("Faculty details already exist");
 
             await unitOfWork.CompleteAsync();
             

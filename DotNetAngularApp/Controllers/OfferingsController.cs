@@ -32,9 +32,9 @@ namespace DotNetAngularApp.Controllers
 
             var offering = mapper.Map<SaveOfferingResource, Offering>(offeringResource);
 
-            var moduleExist = repository.ModuleOfferingExist(offering);
-            if (moduleExist)
-                return Conflict("The module is already assigned to the semester.");
+            var offeringExist = repository.OfferingExist(offering);
+            if (offeringExist)
+                return Conflict("The module is already assigned to the semester");
 
             repository.Add(offering);
             await unitOfWork.CompleteAsync();
@@ -79,9 +79,9 @@ namespace DotNetAngularApp.Controllers
 
             mapper.Map<SaveOfferingResource, Offering>(offeringResource, offering);
 
-            // var exist = repository.EditBookingExist(booking);
-            // if (exist)
-            //     return Conflict("The room in this time slot is already taken.");
+            var exist = repository.EditOfferingExist(offering);
+            if (exist)
+                return Conflict("The module is already assigned to the semester");
 
             await unitOfWork.CompleteAsync();
             
@@ -119,19 +119,6 @@ namespace DotNetAngularApp.Controllers
 
             return Ok(offeringResource);
         }
-
-        // [HttpGet("/api/offerings/module/{id}")]
-        // public async Task<IActionResult> GetModuleOffering(int id)
-        // {
-        //     var moduleOffering = await repository.GetModuleOffering(id);
-
-        //     if (moduleOffering == null)
-        //         return NotFound();
-
-        //     var offeringResource = mapper.Map<Offering, OfferingResource>(moduleOffering);
-
-        //     return Ok(offeringResource);
-        // }
 
         [HttpGet("/api/allofferings")]
         public async Task<IEnumerable<OfferingResource>> GetAllOfferings()

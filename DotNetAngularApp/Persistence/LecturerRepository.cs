@@ -18,7 +18,6 @@ namespace DotNetAngularApp.Persistence
         public async Task<IEnumerable<Lecturer>> GetAllLecturers()
         {
             return await context.Lecturers
-                // .Include(l => l.Modules.Where(m => m.Lecturers.Select(ml => ml.Lecturer.Id).Contains(l.Id)))
                 .OrderBy(l => l.Name)
                 .ToListAsync();
         }

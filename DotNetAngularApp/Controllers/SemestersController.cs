@@ -54,6 +54,10 @@ namespace DotNetAngularApp.Controllers
 
             var semester = mapper.Map<SaveSemesterResource, Semester>(semesterResource);
 
+            var sessionExist = await repository.SemesterSessionExist(semester);
+            if (sessionExist != null)
+                return Conflict("Session title already exists");
+
             repository.Add(semester);
             await unitOfWork.CompleteAsync();
 
@@ -92,6 +96,10 @@ namespace DotNetAngularApp.Controllers
                 return NotFound();
 
             mapper.Map<SaveSemesterResource, Semester>(semesterResource, semester);
+
+            var sessionExist = await repository.EditSemesterSessionExist(semester);
+            if (sessionExist != null)
+                return Conflict("Session title already exists");
 
             await unitOfWork.CompleteAsync();
 

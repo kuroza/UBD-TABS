@@ -275,7 +275,7 @@ export class NewBookingComponent implements OnInit {
     this.selectedRooms = [];
     this.booking.purpose = '';
     this.booking.bookDates = [];
-    // delete this.selectedMonthViewDay.cssClass;
+    // delete this.selectedMonthViewDay.cssClass; // !
   }
 
   private setBooking(b) {
@@ -411,8 +411,10 @@ export class NewBookingComponent implements OnInit {
           this.redirectTo('/pages/bookings/');
         },
         err => {
-          if (err.status == 409)
+          if (err.status == 409) {
             this.conflictErrorAlert(err);
+            this.confirmAddAnotherRoomDialog(err);
+          }
           else if (err.status == 400)
             this.invalidOrBadRequestAlert();
         });
@@ -422,7 +424,7 @@ export class NewBookingComponent implements OnInit {
   }
 
   private confirmAddAnotherRoomDialog(err: any) {
-    if (confirm(`${err.error} Are you sure you want to add another event to this room?`)) {
+    if (confirm(`${err.error}. Are you sure you want to add another event to this room?`)) {
       this.bookingService.confirmCreate(this.booking)
         .subscribe(() => {
           this.successToasty('All bookings were successfully saved');

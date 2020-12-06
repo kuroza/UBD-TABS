@@ -262,8 +262,8 @@ export class ModuleListComponent implements OnInit {
     });
   }
 
-  private warningToasty(message: string) {
-    this.toastyService.warning({
+  private defaultToasty(message: string) {
+    this.toastyService.default({
       title: 'Success',
       msg: message,
       theme: 'bootstrap',
@@ -323,7 +323,7 @@ export class ModuleListComponent implements OnInit {
     if (confirm("Deleting. Are you sure?")) {
       this.semesterService.delete(id)
         .subscribe(() => {
-          this.warningToasty('Semester was successfully deleted');
+          this.defaultToasty('Semester was successfully deleted');
           this.redirectTo('/pages/modules');
         });
     }
@@ -371,7 +371,7 @@ export class ModuleListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.offeringService.delete(id)
         .subscribe(() => {
-          this.warningToasty('Module was successfully removed from semester');
+          this.defaultToasty('Module was successfully removed from semester');
           this.redirectTo('/pages/modules');
         });
     }
@@ -381,7 +381,7 @@ export class ModuleListComponent implements OnInit {
     if (confirm("Are you sure?")) {
       this.moduleService.delete(id)
         .subscribe(() => {
-          this.warningToasty('Module was successfully deleted');
+          this.defaultToasty('Module was successfully deleted');
           this.redirectTo('/pages/modules');
         });
     }

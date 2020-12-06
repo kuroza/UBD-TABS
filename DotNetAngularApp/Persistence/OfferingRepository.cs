@@ -33,20 +33,6 @@ namespace DotNetAngularApp.Persistence
                 .SingleOrDefaultAsync(o => o.Id == id);
         }
 
-        public async Task<Offering> GetModuleOffering(int id, bool includeRelated = true)
-        {
-            if (!includeRelated)
-                return await context.Offerings.FindAsync(id);
-
-            return await context.Offerings
-                .Include(o => o.Semester)
-                .Include(o => o.Module)
-                    .ThenInclude(o => o.Major)
-                .Include(o => o.Lecturers)
-                    .ThenInclude(o => o.Lecturer)
-                .SingleOrDefaultAsync(o => o.ModuleId == id);
-        }
-
         public async Task<IEnumerable<Offering>> GetAllOfferings()
         {
             return await context.Offerings
@@ -69,12 +55,11 @@ namespace DotNetAngularApp.Persistence
             context.Remove(offering);
         }
 
-        public bool ModuleOfferingExist(Offering offering)
+        public bool OfferingExist(Offering offering)
         {
             var result = context.Offerings
                 .Where(o => o.SemesterId == offering.SemesterId)
                 .Where(o => o.ModuleId == offering.ModuleId)
-                // .Where(o => o.Lecturers.Select(lo => lo.LecturerId).Any(x => offering.Lecturers.Select(lo => lo.LecturerId).Contains(x)))
                 .Count();
 
             if (result > 0)
@@ -83,19 +68,18 @@ namespace DotNetAngularApp.Persistence
                 return false;
         }
 
-        // public bool EditBookingExist(Booking booking)
-        // {
-        //     var result = context.Bookings
-        //         .Where(b => b.Id != booking.Id)
-        //         .Where(b => b.Modules.Select(bm => bm.Module.Id).Any(x => booking.Modules.Select(bm => bm.ModuleId).Contains(x)))
-        //         .Where(b => b.BookDates.Select(bd => bd.Date).Any(x => booking.BookDates.Select(bd => bd.Date).Contains(x)))
-        //         .Where(b => b.TimeSlots.Select(bt => bt.TimeSlot.Id).Any(x => booking.TimeSlots.Select(bt => bt.TimeSlotId).Contains(x)))
-        //         .Count();
+        public bool EditOfferingExist(Offering offering)
+        {
+            var result = context.Offerings
+                .Where(o => o.Id != offering.Id)
+                .Where(o => o.SemesterId == offering.SemesterId)
+                .Where(o => o.ModuleId == offering.ModuleId)
+                .Count();
 
-        //     if (result > 0)
-        //         return true;
-        //     else
-        //         return false;
-        // }
+            if (result > 0)
+                return true;
+            else
+                return false;
+        }
     }
 }

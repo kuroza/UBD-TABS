@@ -56,10 +56,10 @@ namespace DotNetAngularApp.Controllers
 
             var major = mapper.Map<SaveMajorResource, Major>(majorResource);
 
-            var existName = await repository.MajorNameExist(major);
+            var nameExist = await repository.MajorNameExist(major);
             
-            if (existName != null)
-                return Conflict("Major name already exists.");
+            if (nameExist != null)
+                return Conflict("Major name already exists");
 
             repository.Add(major);
             await unitOfWork.CompleteAsync();
@@ -100,9 +100,9 @@ namespace DotNetAngularApp.Controllers
 
             major = mapper.Map<SaveMajorResource, Major>(majorResource, major);
             
-            var exist = await repository.EditMajorExist(major);
-            if (exist != null)
-                return Conflict("Major details already exist.");
+            var nameExist = await repository.EditMajorExist(major);
+            if (nameExist != null)
+                return Conflict("Major details already exist");
 
             await unitOfWork.CompleteAsync();
             

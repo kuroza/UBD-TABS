@@ -26,15 +26,6 @@ namespace DotNetAngularApp.Controllers
             this.mapper = mapper;
         }
 
-        // [HttpGet]
-        // public async Task<QueryResultResource<ModuleResource>> GetModules(ModuleQueryResource filterResource)
-        // {
-        //     var filter = mapper.Map<ModuleQueryResource, ModuleQuery>(filterResource);
-        //     var queryResult = await repository.GetModules(filter);
-
-        //     return mapper.Map<QueryResult<Module>, QueryResultResource<ModuleResource>>(queryResult);
-        // }
-
         [HttpGet("/api/allmodules")]
         public async Task<IEnumerable<ModuleResource>> GetAllModules()
         {

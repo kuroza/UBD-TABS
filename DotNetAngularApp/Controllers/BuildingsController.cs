@@ -54,9 +54,9 @@ namespace DotNetAngularApp.Controllers
 
             var building = mapper.Map<SaveBuildingResource, Building>(buildingResource);
 
-            var existName = await repository.BuildingNameExist(building);
-            if (existName != null)
-                return Conflict("Building name already exists.");
+            var nameExist = await repository.BuildingNameExist(building);
+            if (nameExist != null)
+                return Conflict("Building name already exists");
 
             repository.Add(building);
             await unitOfWork.CompleteAsync();
@@ -97,9 +97,9 @@ namespace DotNetAngularApp.Controllers
 
             mapper.Map<SaveBuildingResource, Building>(buildingResource, building);
 
-            var exist = await repository.EditBuildingExist(building);
-            if (exist != null)
-                return Conflict("Building name already exists.");
+            var nameExist = await repository.EditBuildingExist(building);
+            if (nameExist != null)
+                return Conflict("Building name already exists");
 
             await unitOfWork.CompleteAsync();
 

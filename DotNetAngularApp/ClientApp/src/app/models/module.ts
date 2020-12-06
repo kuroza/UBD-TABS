@@ -3,6 +3,7 @@ export interface Module {
     name: string;
     code: string;
     moduleCodeAndName: string;
+    // faculty: string;
     major: {
         id: number;
         name: string;

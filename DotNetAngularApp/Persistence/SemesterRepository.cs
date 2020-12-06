@@ -40,5 +40,17 @@ namespace DotNetAngularApp.Persistence
         {
             context.Remove(semester);
         }
+
+        public async Task<Semester> SemesterSessionExist(Semester semester)
+        {
+            return await context.Semesters.FirstOrDefaultAsync(s => s.Session == semester.Session);
+        }
+
+        public async Task<Semester> EditSemesterSessionExist(Semester semester)
+        {
+            return await context.Semesters.FirstOrDefaultAsync(s => s.Session == semester.Session && s.Id != semester.Id);
+        }
+
+        // todo: check if the date overlaps other semester date
     }
 }
