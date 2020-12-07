@@ -135,10 +135,10 @@
 
           <!-- * Assign Module to a Semester -->
           <nb-tab *ngIf="hasAccess" tabTitle="Assign Module" active="{{ setActiveAddAssignModule }}">
-            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert" style="text-align: center;">
+            <nb-alert status="danger" closable (close)="onCloseAlert()" *ngIf="existAlert" style="text-align: center;">
               {{error}}
             </nb-alert>
-            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
+            <nb-alert status="warning" closable (close)="onCloseAlert()" *ngIf="requiredAlert" style="text-align: center;">
               Please enter the required fields!
             </nb-alert>
             <h4 *ngIf="offering.id" style="margin-top: 10px;">Edit Assigned Modules
@@ -199,10 +199,10 @@
 
           <!-- * Add/edit Module -->
           <nb-tab *ngIf="hasAccess" tabTitle="Module" active="{{ setActiveAddModule }}">
-            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert" style="text-align: center;">
+            <nb-alert status="danger" closable (close)="onCloseAlert()" *ngIf="existAlert" style="text-align: center;">
               {{error}}
             </nb-alert>
-            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
+            <nb-alert status="warning" closable (close)="onCloseAlert()" *ngIf="requiredAlert" style="text-align: center;">
               Please enter the required fields!
             </nb-alert>
             <h4 *ngIf="module.id" style="margin-top: 10px;">Edit Module
@@ -248,10 +248,10 @@
 
           <!-- * Add/edit Semester -->
           <nb-tab *ngIf="hasAccess" tabTitle="Semester" active="{{ setActiveSemester }}">
-            <nb-alert status="danger" closable (close)="onClose()" *ngIf="existAlert" style="text-align: center;">
+            <nb-alert status="danger" closable (close)="onCloseAlert()" *ngIf="existAlert" style="text-align: center;">
               {{error}}
             </nb-alert>
-            <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
+            <nb-alert status="warning" closable (close)="onCloseAlert()" *ngIf="requiredAlert" style="text-align: center;">
               Please enter the required fields!
             </nb-alert>
             <h4 *ngIf="semester.id" style="margin-top: 10px;">Edit Semester
@@ -282,8 +282,8 @@
                   </span>
                 </ng-template>
                 <hr>
-                <p>Start date: {{ semester.startDate | date:'longDate' }}</p>
-                <p>End date: {{ semester.endDate | date:'longDate' }}</p>
+                <p>Start date: <b>{{ semester.startDate | date:'EEEE, d MMMM y' }}</b></p>
+                <p>End date: <b>{{ semester.endDate | date:'EEEE, d MMMM y' }}</b></p>
               </div>
               <div style="margin-top: 10px;">
                 <p>* - required fields</p>

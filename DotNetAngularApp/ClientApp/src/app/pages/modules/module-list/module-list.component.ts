@@ -6,7 +6,6 @@ import { ModuleService } from './../../../services/module.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { SaveModule } from '../../../models/module';
 import { LecturerService } from '../../../services/lecturer.service';
-import { ToastyService } from 'ng2-toasty';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as _ from 'underscore';
@@ -218,8 +217,44 @@ export class ModuleListComponent implements OnInit {
   private setSemester(s) {
     this.semester.id = s.id;
     this.semester.session = s.session;
-    this.semester.startDate = s.startDate;
-    this.semester.endDate = s.endDate;
+
+    var startDate = s.startDate;
+    var endDate = s.endDate;
+    this.semester.startDate = startDate;
+    this.semester.endDate = endDate;
+
+    this.fromDate.year = parseInt(startDate.slice(0, 4));
+    this.fromDate.month = parseInt(startDate.slice(5, 7));
+    this.fromDate.day = parseInt(startDate.slice(8, 10));
+    
+    this.toDate.year = parseInt(endDate.slice(0, 4));
+    this.toDate.month = parseInt(endDate.slice(5, 7));
+    this.toDate.day = parseInt(endDate.slice(8, 10));
+  }
+
+  onDateSelection(date: NgbDate) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
+      this.toDate = date;
+      this.semester.endDate = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+      this.semester.startDate = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
+    }
+  }
+
+  isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  }
+
+  isInside(date: NgbDate) {
+    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
   }
 
   onSemesterFilter() {
@@ -361,7 +396,7 @@ export class ModuleListComponent implements OnInit {
     if (this.dialogRef) this.dialogRef.close();
   }
 
-  onClose() {
+  onCloseAlert() {
     this.existAlert = false;
     this.requiredAlert = false;
   }
@@ -456,6 +491,9 @@ export class ModuleListComponent implements OnInit {
     this.semester.session = '';
     this.semester.startDate = '';
     this.semester.endDate = '';
+
+    delete this.fromDate;
+    delete this.toDate;
   }
 
   onClickClose() {
@@ -467,29 +505,4 @@ export class ModuleListComponent implements OnInit {
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));
  }
-
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
-      this.toDate = date;
-      this.semester.endDate = `${this.toDate.year}-${this.toDate.month}-${this.toDate.day}`;
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
-      this.semester.startDate = `${this.fromDate.year}-${this.fromDate.month}-${this.fromDate.day}`;
-    }
-  }
-
-  isHovered(date: NgbDate) {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
-  }
-
-  isInside(date: NgbDate) {
-    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
-  }
-
-  isRange(date: NgbDate) {
-    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
-  }
 }
