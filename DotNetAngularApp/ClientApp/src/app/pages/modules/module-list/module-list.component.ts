@@ -103,7 +103,7 @@ export class ModuleListComponent implements OnInit {
     private dialogService: NbDialogService
   ) {
     this.fromDate = calendar.getToday();
-    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+    // this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
   }
 
   ngOnInit() {
@@ -223,12 +223,31 @@ export class ModuleListComponent implements OnInit {
     this.semester.startDate = s.startDate;
     this.semester.endDate = s.endDate;
 
+    this.emptyOrDeselectSemesterDatepicker();
+
     this.fromDate.year = parseInt(s.startDate.slice(0, 4));
     this.fromDate.month = parseInt(s.startDate.slice(5, 7));
     this.fromDate.day = parseInt(s.startDate.slice(8, 10));
     this.toDate.year = parseInt(s.endDate.slice(0, 4));
     this.toDate.month = parseInt(s.endDate.slice(5, 7));
     this.toDate.day = parseInt(s.endDate.slice(8, 10));
+  }
+
+  private emptyOrDeselectSemesterDatepicker() {
+    this.fromDate.year = 0;
+    this.fromDate.month = 0;
+    this.fromDate.day = 0;
+    this.toDate.year = 0;
+    this.toDate.month = 0;
+    this.toDate.day = 0;
+  }
+
+  private resetSemesterForm() {
+    this.emptyOrDeselectSemesterDatepicker();
+    this.semester.id = 0;
+    this.semester.session = '';
+    this.semester.startDate = '';
+    this.semester.endDate = '';
   }
 
   onDateSelection(date: NgbDate) {
@@ -271,9 +290,9 @@ export class ModuleListComponent implements OnInit {
     result$.subscribe(() => {
       this.moduleService.getAllModules()
         .subscribe(modules => {
+          this.changeToModuleListTab();
           this.modules = modules;
           this.toastyService.successToasty('Module was successfully saved');
-          this.changeToModuleListTab();
           this.resetModuleForm();
         });
     },
@@ -339,7 +358,7 @@ export class ModuleListComponent implements OnInit {
           this.semesters = semesters;
           this.toastyService.successToasty('Semester was successfully saved');
           this.changeToSemesterListTab();
-          // todo: reset Semester form
+          this.resetSemesterForm();
         });
     },
     err => {
@@ -539,9 +558,7 @@ export class ModuleListComponent implements OnInit {
     this.semester.session = '';
     this.semester.startDate = '';
     this.semester.endDate = '';
-
-    delete this.fromDate;
-    delete this.toDate;
+    this.emptyOrDeselectSemesterDatepicker();
   }
 
   onClickClose() {

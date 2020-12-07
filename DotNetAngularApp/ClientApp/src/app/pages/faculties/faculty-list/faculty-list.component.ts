@@ -12,7 +12,12 @@ import { NbDialogRef, NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-faculty-list',
-  templateUrl: './faculty-list.component.html'
+  templateUrl: './faculty-list.component.html',
+  styles: [`
+    .table tr {
+      cursor: pointer;
+    }
+  `]
 })
 export class FacultyListComponent implements OnInit {
   private dialogRef: NbDialogRef<any>;

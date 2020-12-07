@@ -5,6 +5,8 @@ import { SaveLecturer } from '../../../models/lecturer';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { FacultyService } from '../../../services/faculty.service';
 
 @Component({
   selector: 'lecturer-list',
@@ -34,12 +36,18 @@ export class LecturerListComponent implements OnInit {
     id: 0,
     name: '',
     title: '',
-    email: ''
+    email: '',
+    // facultyId: 0
   };
+
+  faculties: any;
+  facultySettings: IDropdownSettings = {};
+  selectedFaculty: any = [];
 
   constructor(
     private userService: UserService,
     private lecturerService: LecturerService,
+    private facultyService: FacultyService,
     private toastyService: Toasty,
     private router: Router,
     private route: ActivatedRoute,
@@ -53,6 +61,17 @@ export class LecturerListComponent implements OnInit {
     
     this.lecturerService.getAllLecturers()
       .subscribe(lecturers => this.lecturers = lecturers);
+
+    this.facultyService.getAllFaculties()
+      .subscribe(faculties => this.faculties = faculties);
+
+    this.facultySettings = {
+      singleSelection: true,
+      idField: 'id',
+      textField: 'name',
+      allowSearchFilter: true,
+      enableCheckAll: false
+    };
   }
 
   private setLecturer(l) {
@@ -60,6 +79,7 @@ export class LecturerListComponent implements OnInit {
     this.lecturer.name = l.name;
     this.lecturer.title = l.title;
     this.lecturer.email = l.email;
+    // this.lecturer.facultyId = l.facultyId;
   }
 
   edit(id) {
@@ -90,6 +110,14 @@ export class LecturerListComponent implements OnInit {
         this.existAlert = false;
       }
     });
+  }
+
+  onFacultySelect(item: any) {
+    // this.lecturer.facultyId = item.id;
+  }
+
+  onFacultyDeSelect(item: any) {
+    // this.lecturer.facultyId = 0;
   }
 
   onClose() {

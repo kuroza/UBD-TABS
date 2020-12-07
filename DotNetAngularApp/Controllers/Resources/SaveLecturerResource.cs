@@ -14,5 +14,7 @@ namespace DotNetAngularApp.Controllers.Resources
         public string Title { get; set; }
 
         public string Email { get; set; }
+
+        // public int FacultyId { get; set; }
     }
 }

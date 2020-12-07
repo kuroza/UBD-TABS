@@ -9,6 +9,7 @@ export interface Lecturer {
         name: string;
         code: string;
     }[];
+    // facultyId: number;
 }
 
 export interface SaveLecturer {
@@ -16,4 +17,5 @@ export interface SaveLecturer {
     name: string;
     title: string;
     email: string;
+    // facultyId: number;
 }

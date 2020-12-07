@@ -80,12 +80,25 @@
                 <input id="email" type="email" class="form-control" [(ngModel)]="lecturer.email" name="email"
                   placeholder="Email">
               </div>
+              <div class="form-group" style="margin-top: 10px;">
+                <label>Faculty</label>
+                <ng-multiselect-dropdown
+                  [placeholder]="'Select faculty'"
+                  [data]="faculties"
+                  [(ngModel)]="selectedFaculty"
+                  [settings]="facultySettings"
+                  (onSelect)="onFacultySelect($event)"
+                  (onDeSelect)="onFacultyDeSelect($event)"
+                  name="faculty"
+                >
+                </ng-multiselect-dropdown>
+              </div>
               <div style="margin-top: 10px;">
                 <p>* - required fields</p>
                 <button *ngIf="!lecturer.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="lecturer.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
               </div>
-              <!-- <br><pre>lecturer: {{ lecturer | json }}</pre> -->
+              <br><pre>lecturer: {{ lecturer | json }}</pre>
             </form>
           </nb-tab>
 

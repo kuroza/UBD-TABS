@@ -43,7 +43,7 @@
         <nb-alert status="warning" closable (close)="onCloseAlert()" *ngIf="requiredAlert">
           Select a user and role!
         </nb-alert>
-        <form #f="ngForm" (ngSubmit)="submit()" novalidate>
+        <form #f="ngForm" (ngSubmit)="submit()" novalidate style="margin-left: 30px; margin-right: 30px; margin-bottom: 20px;">
           <div class="form-group">
             <label>User*</label>
             <ng-multiselect-dropdown

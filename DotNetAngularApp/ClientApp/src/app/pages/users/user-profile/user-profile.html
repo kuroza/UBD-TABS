@@ -6,7 +6,7 @@
         <h4>Account Profile</h4>
       </nb-card-header>
       <nb-card-body>
-        <div style="margin-top: 10px;">
+        <div>
           <nb-user size="giant" [name]="userDetails?.fullName" [title]="userDetails?.email" color="#cccccc">
           </nb-user>
         </div>
@@ -18,17 +18,29 @@
         <h4>My Information</h4>
       </nb-card-header>
       <nb-card-body>
-        <div *ngIf="userDetails" style="margin-top: 10px;">
-          <span>Username: <b>{{userDetails.userName}}</b></span><br>
-          <span>Full name: <b>{{userDetails.fullName}}</b></span><br>
-          <span>Email: <b>{{userDetails.email}}</b></span><br>
-          <span>User role: </span><br>
+        <div *ngIf="userDetails">
+          <div class="row">
+            <label class="col-sm-3">Username:</label>
+            <span class="col-sm-9"><b>{{userDetails.userName}}</b></span>
+          </div>
+          <div class="row">
+            <label class="col-sm-3">Full name:</label>
+            <span class="col-sm-9"><b>{{userDetails.fullName}}</b></span>
+          </div>
+          <div class="row">
+            <label class="col-sm-3">Email:</label>
+            <span class="col-sm-9"><b>{{userDetails.email}}</b></span>
+          </div>
+          <div class="row">
+            <label class="col-sm-3">User role:</label>
+            <span class="col-sm-9"><b></b></span>
+          </div>
         </div>
 
         <div class="inline">
-          <button nbButton size="small" status="warning" style="margin-right: 10px; margin-top: 10px;">Edit
+          <button disabled nbButton size="small" status="warning" style="margin-right: 10px; margin-top: 10px;">Edit
             profile</button>
-          <button nbButton size="small" status="danger" style="margin-right: 10px; margin-top: 10px;">Delete
+          <button disabled nbButton size="small" status="danger" style="margin-right: 10px; margin-top: 10px;">Delete
             profile</button>
         </div>
       </nb-card-body>
@@ -42,7 +54,7 @@
         <h4>Change Password</h4>
       </nb-card-header>
       <nb-card-body>
-        <form #f="ngForm" (ngSubmit)="submit()" novalidate>
+        <form #f="ngForm" (ngSubmit)="submit()" novalidate style="margin-left: 30px; margin-right: 30px; margin-bottom: 20px;">
           <div class="form-group">
             <label>Current password*</label>
             <input disabled id="currentPassword" type="password" class="form-control" name="currentPassword"
@@ -60,7 +72,8 @@
           </div>
           <div style="margin-top: 10px;">
             <p>* - required fields</p>
-            <button nbButton fullWidth [disabled]="!f.valid">Submit</button>
+            <button nbButton fullWidth disabled>Submit</button>
+            <!-- <button nbButton fullWidth [disabled]="!f.valid">Submit</button> -->
           </div>
         </form>
       </nb-card-body>
