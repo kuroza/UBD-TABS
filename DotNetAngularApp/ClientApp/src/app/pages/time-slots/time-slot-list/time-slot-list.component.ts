@@ -80,21 +80,10 @@ export class TimeSlotListComponent implements OnInit {
   }
 
   private setTimeSlot(ts) {
-    var fullHour: string;
-    var hour: number;
-    var minute: number;
-
-    fullHour = ts.startTime.replace('1900-01-01T', '');
-    hour = +fullHour.slice(0, 2);
-    minute = +fullHour.slice(3, 5);
-    this.startTime.hour = hour;
-    this.startTime.minute = minute;
-    
-    fullHour = ts.endTime.replace('1900-01-01T', '');
-    hour = +fullHour.slice(0, 2);
-    minute = +fullHour.slice(3, 5);
-    this.endTime.hour = hour;
-    this.endTime.minute = minute;
+    this.startTime.hour = parseInt(ts.startTime.slice(11, 13));
+    this.startTime.minute = parseInt(ts.startTime.slice(14, 16));
+    this.endTime.hour = parseInt(ts.endTime.slice(11, 13));
+    this.endTime.minute = parseInt(ts.endTime.slice(14, 16));
 
     this.timeSlot.id = ts.id;
     this.timeSlot.startTime = ts.startTime;

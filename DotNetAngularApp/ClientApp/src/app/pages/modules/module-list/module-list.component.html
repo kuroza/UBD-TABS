@@ -16,7 +16,7 @@
     <nb-card>
       <nb-card-body>
         <nb-tabset fullWidth>
-          <nb-tab tabTitle="Modules Offered"> <!-- active="{{ setActiveModuleList }}" -->
+          <nb-tab tabTitle="Modules Offered" active="{{ setActiveOfferingList }}">
             <div style="margin-top: 10px;">
               <nb-card-header style="border-bottom: none;">
                 <h4 style="float: left;" *ngIf="!filter.semesterId">Modules Offered</h4>
@@ -35,34 +35,39 @@
               </nb-card-header>
             </div>
 
-            <table class="table table-hover" style="margin-top: 30px;">
-              <thead>
-                <tr>
-                  <th style="width: 20%" scope="col">Module Code</th>
-                  <th style="width: 70%" scope="col">Module Name</th>
-                  <th style="width: 5%" scope="col"></th>
-                  <th style="width: 5%" scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let offering of offerings">
-                  <td (click)="selectOffering(offering.id)">{{ offering.module.code }}</td>
-                  <td (click)="selectOffering(offering.id)">{{ offering.module.name }}</td>
-                  <td><a href="javascript:void(0);" (click)="editModuleOffering(offering.id)" *ngIf="hasAccess">
-                      <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
-                    </a></td>
-                  <td><a href="javascript:void(0);" (click)="deleteModuleOffering(offering.id, dialog)" *ngIf="hasAccess">
-                      <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
-                    </a></td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="alert alert-danger" *ngIf="!filter.semesterId" style="text-align: center;">
-              Please select a semester
+            <div *ngIf="filter.semesterId">
+              <table class="table table-hover" style="margin-top: 30px;">
+                <thead>
+                  <tr>
+                    <th style="width: 20%" scope="col">Module Code</th>
+                    <th style="width: 70%" scope="col">Module Name</th>
+                    <th style="width: 5%" scope="col"></th>
+                    <th style="width: 5%" scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let offering of offerings">
+                    <td (click)="selectOffering(offering.id)">{{ offering.module.code }}</td>
+                    <td (click)="selectOffering(offering.id)">{{ offering.module.name }}</td>
+                    <td><a href="javascript:void(0);" (click)="editModuleOffering(offering.id)" *ngIf="hasAccess">
+                        <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
+                      </a></td>
+                    <td><a href="javascript:void(0);" (click)="deleteModuleOffering(offering.id, dialog)" *ngIf="hasAccess">
+                        <nb-icon icon="trash-2-outline" status="danger" nbTooltip="Delete"></nb-icon>
+                      </a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div *ngIf="!filter.semesterId" style="margin-top: 30px;">
+              <hr>
+              <div class="alert alert-danger" style="text-align: center;">
+                Please select a semester
+              </div>
             </div>
           </nb-tab>
 
-          <nb-tab tabTitle="Modules List">
+          <nb-tab tabTitle="Modules List" active="{{ setActiveModuleList }}">
             <div style="margin-top: -16px;">
               <nb-card-header style="border-bottom: none;">
                 <h4>All Modules</h4>
@@ -92,7 +97,7 @@
             </div>
           </nb-tab>
 
-          <nb-tab tabTitle="Semesters List">
+          <nb-tab tabTitle="Semesters List" active="{{ setActiveSemesterList }}">
             <div style="margin-top: -16px;">
               <nb-card-header style="border-bottom: none;">
                 <h4>All Semesters</h4>
@@ -241,8 +246,7 @@
                 <button *ngIf="!module.id" nbButton fullWidth [disabled]="!f.valid">Add</button>
                 <button *ngIf="module.id" nbButton fullWidth [disabled]="!f.valid">Save</button>
               </div>
-              <!-- <br><pre>selectedMajor: {{ selectedMajor | json }}</pre>
-              <pre>module: {{ module | json }}</pre> -->
+              <!-- <pre>module: {{ module | json }}</pre> -->
             </form>
           </nb-tab>
 

@@ -36,6 +36,9 @@ export class ModuleListComponent implements OnInit {
   setActiveAddAssignModule: boolean;
   setActiveAddModule: boolean;
   setActiveSemester: boolean;
+  setActiveOfferingList: boolean;
+  setActiveModuleList: boolean;
+  setActiveSemesterList: boolean;
   error: string;
   existAlert: boolean = false;
   requiredAlert: boolean = false;
@@ -217,19 +220,15 @@ export class ModuleListComponent implements OnInit {
   private setSemester(s) {
     this.semester.id = s.id;
     this.semester.session = s.session;
+    this.semester.startDate = s.startDate;
+    this.semester.endDate = s.endDate;
 
-    var startDate = s.startDate;
-    var endDate = s.endDate;
-    this.semester.startDate = startDate;
-    this.semester.endDate = endDate;
-
-    this.fromDate.year = parseInt(startDate.slice(0, 4));
-    this.fromDate.month = parseInt(startDate.slice(5, 7));
-    this.fromDate.day = parseInt(startDate.slice(8, 10));
-    
-    this.toDate.year = parseInt(endDate.slice(0, 4));
-    this.toDate.month = parseInt(endDate.slice(5, 7));
-    this.toDate.day = parseInt(endDate.slice(8, 10));
+    this.fromDate.year = parseInt(s.startDate.slice(0, 4));
+    this.fromDate.month = parseInt(s.startDate.slice(5, 7));
+    this.fromDate.day = parseInt(s.startDate.slice(8, 10));
+    this.toDate.year = parseInt(s.endDate.slice(0, 4));
+    this.toDate.month = parseInt(s.endDate.slice(5, 7));
+    this.toDate.day = parseInt(s.endDate.slice(8, 10));
   }
 
   onDateSelection(date: NgbDate) {
@@ -270,9 +269,13 @@ export class ModuleListComponent implements OnInit {
     var result$ = (this.module.id) ? this.moduleService.update(this.module) : this.moduleService.create(this.module);
 
     result$.subscribe(() => {
-      this.toastyService.successToasty('Module was successfully saved');
-      this.redirectTo('/pages/modules');
-      // todo here, set the tab to Modules List
+      this.moduleService.getAllModules()
+        .subscribe(modules => {
+          this.modules = modules;
+          this.toastyService.successToasty('Module was successfully saved');
+          this.changeToModuleListTab();
+          this.resetModuleForm();
+        });
     },
     err => {
       if (err.status == 409) {
@@ -282,6 +285,12 @@ export class ModuleListComponent implements OnInit {
         this.invalidOrBadRequestAlert();
       }
     });
+  }
+
+  private resetModuleForm() {
+    this.selectedMajor = [];
+    this.module.code = '';
+    this.module.name = '';
   }
 
   private invalidOrBadRequestAlert() {
@@ -300,9 +309,13 @@ export class ModuleListComponent implements OnInit {
       this.offeringService.update(this.offering) : this.offeringService.create(this.offering);
 
     result$.subscribe(() => {
-      this.toastyService.successToasty('Module was successfully assigned to semester');
-      this.redirectTo('/pages/modules');
-      // todo here, set the tab to Modules Offered list
+      this.offeringService.getAllOfferings()
+        .subscribe(offerings => {
+          this.allOfferings = offerings;
+          this.toastyService.successToasty('Module was successfully assigned to semester');
+          this.changeToOfferingListTab();
+          this.resetOfferingForm();
+        });
     },
     err => {
       if (err.status == 409) this.conflictErrorAlert(err);
@@ -310,13 +323,24 @@ export class ModuleListComponent implements OnInit {
     });
   }
 
+  private resetOfferingForm() {
+    this.selectedSemester = [];
+    this.selectedModule = [];
+    this.selectedLecturers = [];
+    this.filter.semesterId = 0;
+  }
+
   submitSemester() {
     var result$ = (this.semester.id) ? this.semesterService.update(this.semester) : this.semesterService.create(this.semester);
 
     result$.subscribe(() => {
-      this.toastyService.successToasty('Semester was successfully saved');
-      this.redirectTo('/pages/modules');
-      // todo here, set the tab to Semesters list
+      this.semesterService.getAllSemesters()
+        .subscribe(semesters => {
+          this.semesters = semesters;
+          this.toastyService.successToasty('Semester was successfully saved');
+          this.changeToSemesterListTab();
+          // todo: reset Semester form
+        });
     },
     err => {
       if (err.status == 409) {
@@ -362,33 +386,42 @@ export class ModuleListComponent implements OnInit {
 
   onConfirmDelete() {
     if (this.offeringToBeDeleted) {
-      this.offeringService.delete(this.offeringToBeDeleted)
-        .subscribe(() => {
-          this.closeDialog();
-          this.offeringToBeDeleted = 0;
-          this.toastyService.defaultToasty('Module was successfully removed from semester');
-          this.redirectTo('/pages/modules');
-        });
+      this.offeringService.delete(this.offeringToBeDeleted).subscribe(() => {
+        this.offeringService.getAllOfferings()
+          .subscribe(offerings => {
+            this.allOfferings = offerings;
+            this.toastyService.defaultToasty('Module was successfully removed from semester');
+            this.closeDialog();
+            this.offeringToBeDeleted = 0;
+            this.changeToOfferingListTab();
+            this.filter.semesterId = 0;
+          });
+      });
     }
 
     if (this.moduleToBeDeleted) {
-      this.moduleService.delete(this.moduleToBeDeleted)
-        .subscribe(() => {
-          this.closeDialog();
-          this.moduleToBeDeleted = 0;
-          this.toastyService.defaultToasty('Module was successfully deleted');
-          this.redirectTo('/pages/modules');
-        });
+      this.moduleService.delete(this.moduleToBeDeleted).subscribe(() => {
+        this.moduleService.getAllModules()
+          .subscribe(modules => {
+            this.modules = modules;
+            this.toastyService.defaultToasty('Module was successfully deleted');
+            this.closeDialog();
+            this.moduleToBeDeleted = 0;
+            this.changeToModuleListTab();
+          });
+      });
     }
 
     if (this.semesterToBeDeleted) {
-      this.semesterService.delete(this.semesterToBeDeleted)
-        .subscribe(() => {
+      this.semesterService.delete(this.semesterToBeDeleted).subscribe(() => {
+        this.semesterService.getAllSemesters().subscribe(semesters => {
+          this.semesters = semesters;
+          this.toastyService.defaultToasty('Semester was successfully deleted');
           this.closeDialog();
           this.semesterToBeDeleted = 0;
-          this.toastyService.defaultToasty('Semester was successfully deleted');
-          this.redirectTo('/pages/modules');
+          this.changeToSemesterListTab();
         });
+      });
     }
   }
 
@@ -406,8 +439,7 @@ export class ModuleListComponent implements OnInit {
   }
 
   editModuleOffering(id) {
-    this.offeringService.getOffering(id)
-    .subscribe(m => {
+    this.offeringService.getOffering(id).subscribe(m => {
       this.changeToAssignModuleTab();
       this.setModuleOffering(m);
     });
@@ -420,12 +452,10 @@ export class ModuleListComponent implements OnInit {
   }
 
   editModule(id) {
-    this.moduleService.getModule(id)
-    .subscribe(
-      m => {
-        this.changeToAddModuleTab();
-        this.setModule(m);
-      });
+    this.moduleService.getModule(id).subscribe(m => {
+      this.changeToAddModuleTab();
+      this.setModule(m);
+    });
   }
 
   private changeToAddModuleTab() {
@@ -434,15 +464,33 @@ export class ModuleListComponent implements OnInit {
     this.setActiveAddAssignModule = false;
   }
 
+  private changeToOfferingListTab() {
+    this.setActiveOfferingList = true;
+    this.setActiveModuleList = false;
+    this.setActiveSemesterList = false;
+  }
+
+  private changeToModuleListTab() {
+    this.setActiveOfferingList = false;
+    this.setActiveModuleList = true;
+    this.setActiveSemesterList = false;
+  }
+
+  private changeToSemesterListTab() {
+    this.setActiveOfferingList = false;
+    this.setActiveModuleList = false;
+    this.setActiveSemesterList = true;
+  }
+
   selectOffering(id) {
-    this.offeringService.getOffering(id)
-    .subscribe(m => this.displayOfferingDetails(m),
-    err => {
-      if (err.status == 404) {
-        this.redirectTo('/pages/modules');
-        return; 
-      }
-    });
+    this.offeringService.getOffering(id).subscribe(m => 
+      this.displayOfferingDetails(m),
+      err => {
+        if (err.status == 404) {
+          this.redirectTo('/pages/modules');
+          return; 
+        }
+      });
   }
 
   private displayOfferingDetails(m: Object) {
