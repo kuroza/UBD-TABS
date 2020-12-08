@@ -6,8 +6,7 @@ import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { CalendarEvent, CalendarMonthViewDay, CalendarView, CalendarWeekViewBeforeRenderEvent } from 'angular-calendar';
 import { WeekViewHourColumn } from 'calendar-utils';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { ToastyService } from 'ng2-toasty';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, forkJoin } from 'rxjs';
 import * as _ from 'underscore';
 import { SaveBooking } from '../../../models/booking';
 import { BookingService } from '../../../services/booking.service';
@@ -16,6 +15,7 @@ import { OfferingService } from '../../../services/offering.service';
 import { SemesterService } from '../../../services/semester.service';
 import { TimeSlotService } from '../../../services/timeSlot.service';
 import { RoomService } from './../../../services/room.service';
+import 'rxjs/add/observable/forkJoin';
 
 @Component({
   selector: 'ngx-new-booking',

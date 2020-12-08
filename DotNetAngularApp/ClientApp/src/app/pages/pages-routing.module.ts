@@ -11,8 +11,6 @@ import { RoomListComponent } from './rooms/room-list/room-list.component';
 import { UserProfileComponent } from './users/user-profile/user-profile';
 import { ModuleListComponent } from './modules/module-list/module-list.component';
 import { TimeSlotListComponent } from './time-slots/time-slot-list/time-slot-list.component';
-import { NewTimeSlotComponent } from './time-slots/new-time-slot/new-time-slot.component';
-import { ViewTimeSlotComponent } from './time-slots/view-time-slot/view-time-slot';
 import { LecturerListComponent } from './lecturers/lecturer-list/lecturer-list.component';
 import { SemestersComponent } from './semesters/semesters.component';
 import { FacultyListComponent } from './faculties/faculty-list/faculty-list.component';
@@ -30,14 +28,11 @@ const routes: Routes = [{
     // { path: 'bookings', component: BookingListComponent },
     { path: 'calendar', component: HomeComponent },
     { path: 'faculties', component: FacultyListComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
-    { path: 'lecturers', component: LecturerListComponent },
-    { path: 'modules', component: ModuleListComponent },
-    { path: 'rooms', component: RoomListComponent },
-    { path: 'semesters', component: SemestersComponent },
-    { path: 'timeslots', component: TimeSlotListComponent },
-    { path: 'timeslots/new', component: NewTimeSlotComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
-    { path: 'timeslots/:id', component: ViewTimeSlotComponent },
-    { path: 'timeslots/edit/:id', component: NewTimeSlotComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
+    { path: 'lecturers', component: LecturerListComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
+    { path: 'modules', component: ModuleListComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
+    { path: 'rooms', component: RoomListComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
+    { path: 'semesters', component: SemestersComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
+    { path: 'timeslots', component: TimeSlotListComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin', 'Admin'] } },
     { path: 'users/manage', component: ManageUserComponent, canActivate: [AuthGuard], data: { permittedRoles:['SuperAdmin'] } },
   ],
 }];

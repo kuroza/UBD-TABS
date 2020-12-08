@@ -70,13 +70,13 @@
             <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
               Please enter the required fields!
             </nb-alert>
-            <h4 *ngIf="major.id" style="margin-top: 10px;">Edit Major
+            <h4 *ngIf="major.id" style="margin-left: 10px; margin-top: 10px;">Edit Major
               <button nbButton size="small" status="basic" ghost (click)="onClickBack()" nbTooltip="Return to Add"
                 style="float: right;">
                 <nb-icon icon="arrow-back-outline"></nb-icon>Back
               </button>
             </h4>
-            <h4 *ngIf="!major.id" style="margin-top: 10px;">Add Major</h4>
+            <h4 *ngIf="!major.id" style="margin-left: 10px; margin-top: 10px;">Add Major</h4>
             <form #f="ngForm" (ngSubmit)="submitMajor()" novalidate>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
                 <label>Faculty*</label>
@@ -112,13 +112,13 @@
             <nb-alert status="warning" closable (close)="onClose()" *ngIf="requiredAlert" style="text-align: center;">
               Please enter the required fields!
             </nb-alert>
-            <h4 *ngIf="faculty.id" style="margin-top: 10px;">Edit Faculty
+            <h4 *ngIf="faculty.id" style="margin-left: 10px; margin-top: 10px;">Edit Faculty
               <button nbButton size="small" status="basic" ghost (click)="onClickBack()" nbTooltip="Return to Add"
                 style="float: right;">
                 <nb-icon icon="arrow-back-outline"></nb-icon>Back
               </button>
             </h4>
-            <h4 *ngIf="!faculty.id" style="margin-top: 10px;">Add Faculty</h4>
+            <h4 *ngIf="!faculty.id" style="margin-left: 10px; margin-top: 10px;">Add Faculty</h4>
             <form #f="ngForm" (ngSubmit)="submitFaculty()" novalidate>
               <div class="form-group" style="margin-left: 10px; margin-top: 10px;">
                 <label>Faculty*</label>

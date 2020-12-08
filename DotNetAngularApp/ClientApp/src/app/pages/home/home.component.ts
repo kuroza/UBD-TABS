@@ -13,6 +13,7 @@ import { isSameDay, isSameMonth } from 'date-fns';
 import { colors } from '../../@theme/components/calendar-header/colors';
 import { UserService } from '../../services/user.service';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
+import 'rxjs/add/observable/forkJoin';
 
 @Component({
   selector: 'ngx-home',

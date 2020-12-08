@@ -1,4 +1,3 @@
-import { BuildingsModule } from './buildings/buildings.module';
 import { UsersModule } from './users/users.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { NgModule } from '@angular/core';
@@ -12,7 +11,6 @@ import { FacultiesModule } from './faculties/faculties.module';
 import { ModulesModule } from './modules/modules.module';
 import { LecturersModule } from './lecturers/lecturers.module';
 import { SemestersModule } from './semesters/semesters.module';
-import { CoursesModule } from './courses/courses.module';
 import { TimeSlotsModule } from './time-slots/time-slots.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -33,9 +31,7 @@ import { DatePipe } from '@angular/common';
     ModulesModule,
     LecturersModule,
     SemestersModule,
-    CoursesModule,
     TimeSlotsModule,
-    BuildingsModule,
     FormsModule,
     ReactiveFormsModule,
   ],

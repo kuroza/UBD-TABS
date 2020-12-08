@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 import { ThemeModule } from '../../@theme/theme.module';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ViewTimeSlotComponent } from './view-time-slot/view-time-slot';
-import { NewTimeSlotComponent } from './new-time-slot/new-time-slot.component';
 import { TimeSlotListComponent } from './time-slot-list/time-slot-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -26,8 +24,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ],
     declarations: [
       TimeSlotListComponent,
-      NewTimeSlotComponent,
-      ViewTimeSlotComponent,
     ],
   })
   export class TimeSlotsModule { }

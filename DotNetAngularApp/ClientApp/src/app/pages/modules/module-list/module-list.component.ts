@@ -15,6 +15,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 import { NbDialogRef, NbDialogService } from '@nebular/theme';
 import { Toasty } from './../../toasty';
+import 'rxjs/add/observable/forkJoin';
 
 @Component({
   selector: 'module-list',
