@@ -228,11 +228,11 @@ export class HomeComponent {
 
   private populateCalendar() {
     for (let b of this.bookings) {      
-      var lecturerArray: any = this.convertLecturerSetToArray(b);
-      var lecturers: string = this.bookingLecturers(lecturerArray);
-      var modules: string = this.bookingModules(b);
-      var rooms: string = this.bookingRooms(b);
-      var purpose: string = this.bookingPurpose(b);
+      var lecturerArray: any = convertLecturerSetToArray(b);
+      var lecturers: string = bookingLecturers(lecturerArray);
+      var modules: string = bookingModules(b);
+      var rooms: string = bookingRooms(b);
+      var purpose: string = bookingPurpose(b);
 
       for (let bd of b.bookDates) {
         var bookDate = this.formatBookDateToDisplayOnTimetable(bd);
@@ -251,71 +251,6 @@ export class HomeComponent {
       }
     }
     this.refresh.next();
-  }
-
-  private convertLecturerSetToArray(b: any) {
-    var moduleLecturers = this.getUniqueLecturersFromOfferings(b);
-    var lecturerArray: any = Array.from(moduleLecturers);
-    return lecturerArray;
-  }
-
-  private getUniqueLecturersFromOfferings(b: any) {
-    var moduleLecturers = new Set();
-    var offering: any;
-    var offeringIds: number[] = b.offerings.map(offering => offering.id);
-    for (let id of offeringIds) {
-      offering = this.allOfferings.find(o => o.id == id);
-      for (let lecturer of offering.lecturers)
-        moduleLecturers.add(lecturer);
-    }
-    return moduleLecturers;
-  }
-
-  private bookingLecturers(lecturerArray: any) {
-    var lecturers: string = `${lecturerArray[0].name} (${lecturerArray[0].title})`;
-    if (lecturerArray.length > 1)
-      lecturers = this.appendLecturers(lecturerArray, lecturers);
-    return lecturers;
-  }
-
-  private appendLecturers(lecturerArray: any, lecturers: string) {
-    for (var i = 1; i < lecturerArray.length; i++)
-      lecturers += `, ${lecturerArray[i].name} (${lecturerArray[i].title})`;
-    return lecturers;
-  }
-
-  private bookingModules(b: any) {
-    var modules: string = `${b.offerings[0].module.code}: ${b.offerings[0].module.name}`;
-    if (b.offerings.length > 1)
-      modules = this.appendModules(b, modules);
-    return modules;
-  }
-
-  private appendModules(b: any, modules: string) {
-    for (var i = 1; i < b.offerings.length; i++)
-      modules += `, ${b.offerings[i].module.code}: ${b.offerings[i].module.name}`;
-    return modules;
-  }
-
-  private bookingRooms(b: any) {
-    var rooms: string = `${b.rooms[0].name}`;
-    if (b.rooms.length > 1)
-      rooms = this.appendRooms(b, rooms);
-    return rooms;
-  }
-
-  private appendRooms(b: any, rooms: string) {
-    for (var i = 1; i < b.rooms.length; i++)
-      rooms += `, ${b.rooms[i].name}`;
-    return rooms;
-  }
-
-  private bookingPurpose(b: any) {
-    var purpose: string;
-    if (b.purpose != '')
-      return purpose = `(${b.purpose})`;
-    else
-      return purpose = '';
   }
 
   private formatBookDateToDisplayOnTimetable(bd: any) {
@@ -404,4 +339,52 @@ export class HomeComponent {
     }).then(() =>
       this.router.navigate([uri]));
   }
+}
+
+export function convertLecturerSetToArray(b: any) {
+  var moduleLecturers = new Set();
+  var offering: any;
+  var offeringIds: number[];
+  
+  offeringIds = b.offerings.map(offering => offering.id);
+  for (let id of offeringIds) {
+    offering = this.allOfferings.find(o => o.id == id);
+    for (let lecturer of offering.lecturers)
+      moduleLecturers.add(lecturer);
+  }
+
+  return Array.from(moduleLecturers);
+}
+
+export function bookingLecturers(lecturerArray: any) {
+  var lecturers: string = `${lecturerArray[0].name} (${lecturerArray[0].title})`;
+  if (lecturerArray.length > 1) {
+    for (var i = 1; i < lecturerArray.length; i++)
+    lecturers += `, ${lecturerArray[i].name} (${lecturerArray[i].title})`;
+  }
+  return lecturers;
+}
+
+export function bookingModules(b: any) {
+  var modules: string = `${b.offerings[0].module.code}: ${b.offerings[0].module.name}`;
+  if (b.offerings.length > 1) {
+    for (var i = 1; i < b.offerings.length; i++)
+    modules += `, ${b.offerings[i].module.code}: ${b.offerings[i].module.name}`;
+  }
+  return modules;
+}
+
+export function bookingRooms(b: any) {
+  var rooms: string = `${b.rooms[0].name}`;
+  if (b.rooms.length > 1)
+  for (var i = 1; i < b.rooms.length; i++)
+    rooms += `, ${b.rooms[i].name}`;
+  return rooms;
+}
+
+export function bookingPurpose(b: any) {
+  if (b.purpose != '')
+    return `(${b.purpose})`;
+  else
+    return '';
 }
