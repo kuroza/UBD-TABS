@@ -17,7 +17,7 @@
     <nb-action class="control-item" icon="calendar-outline" (click)="onClickCalendar()" nbTooltip="Calendar Timetable"
       nbTooltipPlacement="bottom"></nb-action>
     <nb-action class="user-action">
-      <nb-user [nbContextMenu]="userMenu" nbContextMenuTrigger="hover" [onlyPicture]="userPictureOnly"
+      <nb-user [nbContextMenu]="userMenu" nbContextMenuTrigger="hover" [onlyPicture]="false"
         [name]="userDetails?.fullName" size="large">
       </nb-user>
     </nb-action>

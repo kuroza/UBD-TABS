@@ -312,14 +312,18 @@
       </nb-card-header>
       <nb-card-body>
         <div *ngIf="moduleOfferingDetails">
-          <p>
-            <span><b>Major:</b> {{ moduleOfferingDetails.module.major.name }}</span>
-            <br>
-            <span><b>Module code:</b> {{ moduleOfferingDetails.module.code }}</span>
-            <br>
-            <span><b>Module name:</b> {{ moduleOfferingDetails.module.name }}</span>
-            <br>
-          </p>
+          <div class="row">
+            <label class="col-sm-3">Major:</label>
+            <span class="col-sm-9"><b>{{ moduleOfferingDetails.module.major.name }}</b></span>
+          </div>
+          <div class="row">
+            <label class="col-sm-3">Module code:</label>
+            <span class="col-sm-9"><b>{{ moduleOfferingDetails.module.code }}</b></span>
+          </div>
+          <div class="row">
+            <label class="col-sm-3">Module name:</label>
+            <span class="col-sm-9"><b>{{ moduleOfferingDetails.module.name }}</b></span>
+          </div>
 
           <nb-card class="nb-card-list" style="margin-top: 10px">
             <nb-card-header>
@@ -345,14 +349,18 @@
         </div>
 
         <div *ngIf="moduleDetails">
-          <p>
-            <span><b>Major:</b> {{ moduleDetails.major.name }}</span>
-            <br>
-            <span><b>Module code:</b> {{ moduleDetails.code }}</span>
-            <br>
-            <span><b>Module name:</b> {{ moduleDetails.name }}</span>
-            <br>
-          </p>
+          <div class="row">
+            <label class="col-sm-3">Major:</label>
+            <span class="col-sm-9"><b>{{ moduleDetails.major.name }}</b></span>
+          </div>
+          <div class="row">
+            <label class="col-sm-3">Module code:</label>
+            <span class="col-sm-9"><b>{{ moduleDetails.code }}</b></span>
+          </div>
+          <div class="row">
+            <label class="col-sm-3">Module name:</label>
+            <span class="col-sm-9"><b>{{ moduleDetails.name }}</b></span>
+          </div>
 
           <div class="inline" *ngIf="hasAccess">
             <button nbButton status="warning" style="margin-top: 10px;" (click)="editModule(moduleDetails.id)">Edit</button>

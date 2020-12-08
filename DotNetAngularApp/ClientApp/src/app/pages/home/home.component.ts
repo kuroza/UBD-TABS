@@ -378,11 +378,6 @@ export class HomeComponent {
         this.toasty.defaultToasty('Booking was successfully deleted');
         this.refreshPage();
         this.closeDialog();
-
-        // this.bookingService.getAllBookings()
-        //   .subscribe(bookings => this.allBookings = bookings);
-        // this.bookings = this.allBookings;
-        // this.populateCalendar();
       });
   }
 

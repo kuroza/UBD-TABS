@@ -104,32 +104,39 @@
 
           <nb-tab tabTitle="Details" active="{{ setActiveDetails }}">
             <div *ngIf="lecturerDetails">
-              <p>
-                <b>Name:</b> {{ lecturerDetails.title }} {{ lecturerDetails.name }}<br>
-                <b>Email:</b> {{ lecturerDetails.email }}<br>
-                <b>Faculty:</b> <br>
-                <b>Office:</b> <br>
+              <div class="row">
+                <label class="col-sm-2">Name:</label>
+                <span class="col-sm-10"><b>{{ lecturerDetails.title }} {{ lecturerDetails.name }}</b></span>
+              </div>
+              <div class="row">
+                <label class="col-sm-2">Email:</label>
+                <span class="col-sm-10"><b>{{ lecturerDetails.email }}</b></span>
+              </div>
+              <div class="row">
+                <label class="col-sm-2">Faculty:</label>
+                <span class="col-sm-10"><b></b></span>
+              </div>
 
-                <!-- * add modules that the lecturer is teaching -->
-                <!-- <div class="card" style="width: 18rem;">
-                    <div class="card-header">
-                      <h6>Modules</h6>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                      <li *ngFor="let m of lecturer.modules" class="list-group-item">{{ m.code }}</li>
-                    </ul>
+              <!-- todo: add modules that the lecturer is teaching -->
+              <!-- <div class="card" style="width: 18rem;">
+                  <div class="card-header">
+                    <h6>Modules</h6>
                   </div>
-                </p> -->
-
-                <!-- <br>
-                <pre>{{ lecturerDetails | json }}</pre> -->
-
-                <div class="inline" *ngIf="hasAccess">
-                  <button style="margin-left: 10px; margin-top: 10px;" nbButton status="warning"
-                    (click)="edit(lecturerDetails.id)">Edit</button>
-                  <button style="margin-left: 10px; margin-top: 10px;" nbButton status="danger"
-                    (click)="deleteLecturer(lecturerDetails.id, dialog)">Delete</button>
+                  <ul class="list-group list-group-flush">
+                    <li *ngFor="let m of lecturer.modules" class="list-group-item">{{ m.code }}</li>
+                  </ul>
                 </div>
+              </p> -->
+
+              <!-- <br>
+              <pre>{{ lecturerDetails | json }}</pre> -->
+
+              <div class="inline" *ngIf="hasAccess">
+                <button style="margin-left: 10px; margin-top: 10px;" nbButton status="warning"
+                  (click)="edit(lecturerDetails.id)">Edit</button>
+                <button style="margin-left: 10px; margin-top: 10px;" nbButton status="danger"
+                  (click)="deleteLecturer(lecturerDetails.id, dialog)">Delete</button>
+              </div>
             </div>
             <div *ngIf="!lecturerDetails" style="margin-top: 10px;">
               <nb-alert status="basic" closable (close)="onClose()" *ngIf="detailsAlert" style="text-align: center;">
