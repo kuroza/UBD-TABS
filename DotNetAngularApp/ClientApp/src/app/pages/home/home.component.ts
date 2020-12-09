@@ -228,7 +228,7 @@ export class HomeComponent {
 
   private populateCalendar() {
     for (let b of this.bookings) {      
-      var lecturerArray: any = convertLecturerSetToArray(b);
+      var lecturerArray: any = this.convertLecturerSetToArray(b);
       var lecturers: string = bookingLecturers(lecturerArray);
       var modules: string = bookingModules(b);
       var rooms: string = bookingRooms(b);
@@ -251,6 +251,22 @@ export class HomeComponent {
       }
     }
     this.refresh.next();
+  }
+
+  private convertLecturerSetToArray(b: any) {
+    var moduleLecturers = new Set();
+    var offering: any;
+    var offeringIds: number[];
+    
+    offeringIds = b.offerings.map(offering => offering.id);
+    for (let id of offeringIds) {
+      offering = this.allOfferings.find(o => o.id == id);
+      for (let lecturer of offering.lecturers)
+        moduleLecturers.add(lecturer);
+    }
+
+    var lecturersArray = Array.from(moduleLecturers);
+    return lecturersArray;
   }
 
   private formatBookDateToDisplayOnTimetable(bd: any) {
@@ -339,21 +355,6 @@ export class HomeComponent {
     }).then(() =>
       this.router.navigate([uri]));
   }
-}
-
-export function convertLecturerSetToArray(b: any) {
-  var moduleLecturers = new Set();
-  var offering: any;
-  var offeringIds: number[];
-  
-  offeringIds = b.offerings.map(offering => offering.id);
-  for (let id of offeringIds) {
-    offering = this.allOfferings.find(o => o.id == id);
-    for (let lecturer of offering.lecturers)
-      moduleLecturers.add(lecturer);
-  }
-
-  return Array.from(moduleLecturers);
 }
 
 export function bookingLecturers(lecturerArray: any) {

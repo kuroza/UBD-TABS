@@ -44,7 +44,7 @@ import { RegistrationComponent } from './account/registration/registration.compo
 import { AccountComponent } from './account/account.component';
 import { UserService } from './services/user.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ShowHidePasswordModule } from 'ngx-show-hide-password';
+import { ShowHidePasswordModule, ShowHideService } from 'ngx-show-hide-password';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
@@ -88,6 +88,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
   ],
   bootstrap: [ AppComponent ],
   providers: [
+    ShowHideService,
     BookingService,
     BuildingService,
     FacultyService,
