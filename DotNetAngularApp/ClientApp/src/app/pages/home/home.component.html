@@ -31,6 +31,8 @@
         </div>
       </nb-card-header>
       <nb-card-body>
+        <!-- <button (click)="scroll(target)">Button</button> -->
+
         <ngx-calendar-header [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
         </ngx-calendar-header>
 
@@ -42,7 +44,7 @@
           <mwl-calendar-week-view id="print-section" *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate"
             [events]="events" [refresh]="refresh" [weekStartsOn]="weekStartsOn" [hourSegments]="4" [dayStartHour]="7"
             [dayEndHour]="18" (dayHeaderClicked)="changeDay($event.day.date)" [excludeDays]="excludeDays"
-            (eventClicked)="eventClicked($event)">
+            (eventClicked)="eventClicked($event); scrollToDetailsCard(target);">
           </mwl-calendar-week-view>
           <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
             [hourSegments]="4" [dayStartHour]="7" [dayEndHour]="18" [refresh]="refresh"
@@ -129,109 +131,111 @@
       </nb-card-body>
     </nb-card>
 
-    <nb-card>
-      <nb-card-header>
-        <h4>Details
-          <button nbButton size="small" status="basic" ghost (click)="onCloseBookingDetails()" nbTooltip="Clear Details"
-            style="float: right;" *ngIf="booking">
-            <nb-icon icon="close-outline"></nb-icon>
-          </button>
-        </h4>
-      </nb-card-header>
-      <nb-card-body>
-        <div *ngIf="!booking">
-          <nb-alert status="basic" closable (close)="onCloseDetailsAlert()" *ngIf="detailsAlert" style="text-align: center;">
-            Click on a booking event from the calendar to show its details
-          </nb-alert>
-          <div class="row">
-            <div class="col"></div>
-            <div class="col-md-8">
+    <div #target>
+      <nb-card>
+        <nb-card-header>
+          <h4>Details
+            <button nbButton size="small" status="basic" ghost (click)="onCloseBookingDetails()" nbTooltip="Clear Details"
+              style="float: right;" *ngIf="booking">
+              <nb-icon icon="close-outline"></nb-icon>
+            </button>
+          </h4>
+        </nb-card-header>
+        <nb-card-body>
+          <div *ngIf="!booking">
+            <nb-alert status="basic" closable (close)="onCloseDetailsAlert()" *ngIf="detailsAlert" style="text-align: center;">
+              Click on a booking event from the calendar to show its details
+            </nb-alert>
+            <div class="row">
+              <div class="col"></div>
+              <div class="col-md-8">
+              </div>
+              <div class="col"></div>
             </div>
-            <div class="col"></div>
           </div>
-        </div>
-
-        <div *ngIf="booking" style="margin-left: 40px;">
-
-          <!-- * Modules -->
-          <div style="margin-left: 20px; margin-top: 20px;">
-            <nb-card class="nb-card-list">
-              <nb-card-header>
-                <h4>Modules</h4>
-              </nb-card-header>
-            </nb-card>
-          </div>
-          
-          <nb-accordion multi style="width: 84%; margin-top: -30px;">
-            <nb-accordion-item *ngFor="let offering of booking.offerings">
-              <nb-accordion-item-header>
-                {{ offering.module.code }}: {{ offering.module.name }}
-              </nb-accordion-item-header>
-              <nb-accordion-item-body>
-                <!-- <nb-list style="width: 100%">
-                  <nb-list-item *ngFor="let lecturer of module.lecturers">
-                    {{ lecturer.title }} {{ lecturer.name }}
+  
+          <div *ngIf="booking" style="margin-left: 40px;">
+  
+            <!-- * Modules -->
+            <div style="margin-left: 20px; margin-top: 20px;">
+              <nb-card class="nb-card-list">
+                <nb-card-header>
+                  <h4>Modules</h4>
+                </nb-card-header>
+              </nb-card>
+            </div>
+            
+            <nb-accordion multi style="width: 84%; margin-top: -30px;">
+              <nb-accordion-item *ngFor="let offering of booking.offerings">
+                <nb-accordion-item-header>
+                  {{ offering.module.code }}: {{ offering.module.name }}
+                </nb-accordion-item-header>
+                <nb-accordion-item-body>
+                  <!-- <nb-list style="width: 100%">
+                    <nb-list-item *ngFor="let lecturer of module.lecturers">
+                      {{ lecturer.title }} {{ lecturer.name }}
+                    </nb-list-item>
+                  </nb-list> -->
+                </nb-accordion-item-body>
+              </nb-accordion-item>
+            </nb-accordion>
+  
+            <!-- * TimeSlots -->
+            <div style="margin-left: 20px; margin-top: 20px;">
+              <nb-card class="nb-card-list">
+                <nb-card-header>
+                  <h4>Time slots</h4>
+                </nb-card-header>
+                <nb-list>
+                  <nb-list-item *ngFor="let t of booking.timeSlots">
+                    {{ t.startTime | date:'shortTime' }} -
+                    {{ t.endTime | date:'shortTime' }}
                   </nb-list-item>
-                </nb-list> -->
-              </nb-accordion-item-body>
-            </nb-accordion-item>
-          </nb-accordion>
-
-          <!-- * TimeSlots -->
-          <div style="margin-left: 20px; margin-top: 20px;">
-            <nb-card class="nb-card-list">
-              <nb-card-header>
-                <h4>Time slots</h4>
-              </nb-card-header>
-              <nb-list>
-                <nb-list-item *ngFor="let t of booking.timeSlots">
-                  {{ t.startTime | date:'shortTime' }} -
-                  {{ t.endTime | date:'shortTime' }}
-                </nb-list-item>
-              </nb-list>
-            </nb-card>
+                </nb-list>
+              </nb-card>
+            </div>
+  
+            <!-- * Venue -->
+            <div style="margin-left: 20px; margin-top: 20px;">
+              <nb-card class="nb-card-list">
+                <nb-card-header>
+                  <h4>Venue</h4>
+                </nb-card-header>
+                <nb-card-header>
+                  <b>Room:</b>
+                </nb-card-header>
+                <nb-list>
+                  <nb-list-item *ngFor="let r of booking.rooms">
+                    {{ r.name }}
+                  </nb-list-item>
+                </nb-list>
+              </nb-card>
+  
+              <nb-card class="nb-card-list" style="margin-top: -30px">
+                <nb-card-header>
+                  <b>Date:</b>
+                </nb-card-header>
+                <nb-list>
+                  <nb-list-item *ngFor="let bd of booking.bookDates">
+                    {{ bd.date | date:'dd/MM/yyyy' }}
+                  </nb-list-item>
+                </nb-list>
+              </nb-card>
+            </div>
+  
+            <div class="inline" style="margin-left: 20px;">
+              <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="warning"
+                [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
+              <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="danger"
+                (click)="deleteBooking(dialog)">Delete</button>
+              <!-- <button style="margin-left: 5px; margin-top: 10px;" nbButton status="primary"
+                [routerLink]="['/pages/bookings']">View All Bookings</button> -->
+            </div>
+  
+            <br>
           </div>
-
-          <!-- * Venue -->
-          <div style="margin-left: 20px; margin-top: 20px;">
-            <nb-card class="nb-card-list">
-              <nb-card-header>
-                <h4>Venue</h4>
-              </nb-card-header>
-              <nb-card-header>
-                <b>Room:</b>
-              </nb-card-header>
-              <nb-list>
-                <nb-list-item *ngFor="let r of booking.rooms">
-                  {{ r.name }}
-                </nb-list-item>
-              </nb-list>
-            </nb-card>
-
-            <nb-card class="nb-card-list" style="margin-top: -30px">
-              <nb-card-header>
-                <b>Date:</b>
-              </nb-card-header>
-              <nb-list>
-                <nb-list-item *ngFor="let bd of booking.bookDates">
-                  {{ bd.date | date:'dd/MM/yyyy' }}
-                </nb-list-item>
-              </nb-list>
-            </nb-card>
-          </div>
-
-          <div class="inline" style="margin-left: 20px;">
-            <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="warning"
-              [routerLink]="['/pages/bookings/edit/', booking.id]">Edit</button>
-            <button *ngIf="hasAccess" style="margin-left: 10px; margin-top: 10px;" nbButton status="danger"
-              (click)="deleteBooking(dialog)">Delete</button>
-            <!-- <button style="margin-left: 5px; margin-top: 10px;" nbButton status="primary"
-              [routerLink]="['/pages/bookings']">View All Bookings</button> -->
-          </div>
-
-          <br>
-        </div>
-      </nb-card-body>
-    </nb-card>
+        </nb-card-body>
+      </nb-card>
+    </div>
   </div>
 </div>

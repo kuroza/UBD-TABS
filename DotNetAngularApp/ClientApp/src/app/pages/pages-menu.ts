@@ -145,11 +145,11 @@ export const MENU_ITEMS_USER: NbMenuItem[] = [
     icon: 'book-open-outline',
     link: '/pages/modules',
   },
-  {
-    title: 'Time slots',
-    icon: 'clock-outline',
-    link: '/pages/timeslots',
-  },
+  // {
+  //   title: 'Time slots',
+  //   icon: 'clock-outline',
+  //   link: '/pages/timeslots',
+  // },
 ];
 
 class Pages implements OnInit {

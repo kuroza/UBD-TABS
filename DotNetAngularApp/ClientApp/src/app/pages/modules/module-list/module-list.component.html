@@ -47,8 +47,8 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let offering of offerings">
-                    <td (click)="selectOffering(offering.id)">{{ offering.module.code }}</td>
-                    <td (click)="selectOffering(offering.id)">{{ offering.module.name }}</td>
+                    <td (click)="selectOffering(offering.id); scrollToDetailsCard(target);">{{ offering.module.code }}</td>
+                    <td (click)="selectOffering(offering.id); scrollToDetailsCard(target);">{{ offering.module.name }}</td>
                     <td><a href="javascript:void(0);" (click)="editModuleOffering(offering.id)" *ngIf="hasAccess">
                         <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
                       </a></td>
@@ -83,8 +83,8 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let module of modules">
-                    <td (click)="selectModule(module.id)">{{ module.code }}</td>
-                    <td (click)="selectModule(module.id)">{{ module.name }}</td>
+                    <td (click)="selectModule(module.id); scrollToDetailsCard(target);">{{ module.code }}</td>
+                    <td (click)="selectModule(module.id); scrollToDetailsCard(target);">{{ module.name }}</td>
                     <td><a href="javascript:void(0);" (click)="editModule(module.id)" *ngIf="hasAccess">
                         <nb-icon icon="edit-outline" status="warning" nbTooltip="Edit"></nb-icon>
                       </a></td>
@@ -301,74 +301,76 @@
       </nb-card-body>
     </nb-card>
 
-    <nb-card>
-      <nb-card-header>
-        <h4>Details
-          <button nbButton size="small" status="basic" ghost (click)="onClickClose()" nbTooltip="Clear Details"
-            style="float: right;" *ngIf="moduleDetails || moduleOfferingDetails">
-            <nb-icon icon="close-outline"></nb-icon>
-          </button>
-        </h4>
-      </nb-card-header>
-      <nb-card-body>
-        <div *ngIf="moduleOfferingDetails">
-          <div class="row">
-            <label class="col-sm-3">Major:</label>
-            <span class="col-sm-9"><b>{{ moduleOfferingDetails.module.major.name }}</b></span>
+    <div #target>
+      <nb-card>
+        <nb-card-header>
+          <h4>Details
+            <button nbButton size="small" status="basic" ghost (click)="onClickClose()" nbTooltip="Clear Details"
+              style="float: right;" *ngIf="moduleDetails || moduleOfferingDetails">
+              <nb-icon icon="close-outline"></nb-icon>
+            </button>
+          </h4>
+        </nb-card-header>
+        <nb-card-body>
+          <div *ngIf="moduleOfferingDetails">
+            <div class="row">
+              <label class="col-sm-3">Major:</label>
+              <span class="col-sm-9"><b>{{ moduleOfferingDetails.module.major.name }}</b></span>
+            </div>
+            <div class="row">
+              <label class="col-sm-3">Module code:</label>
+              <span class="col-sm-9"><b>{{ moduleOfferingDetails.module.code }}</b></span>
+            </div>
+            <div class="row">
+              <label class="col-sm-3">Module name:</label>
+              <span class="col-sm-9"><b>{{ moduleOfferingDetails.module.name }}</b></span>
+            </div>
+  
+            <nb-card class="nb-card-list" style="margin-top: 10px">
+              <nb-card-header>
+                <b>Lecturers</b>
+              </nb-card-header>
+              <nb-list>
+                <nb-list-item *ngFor="let l of moduleOfferingDetails.lecturers">
+                  {{ l.title }} {{ l.name }}
+                </nb-list-item>
+              </nb-list>
+            </nb-card>
+  
+            <div class="inline" *ngIf="hasAccess">
+              <button nbButton status="warning" style="margin-top: 10px;" (click)="editModuleOffering(moduleOfferingDetails.id)">Edit</button>
+              <button nbButton status="danger" style="margin-left: 5px; margin-top: 10px;"
+                (click)="deleteModuleOffering(moduleOfferingDetails.id, dialog)">Delete</button>
+            </div>
           </div>
-          <div class="row">
-            <label class="col-sm-3">Module code:</label>
-            <span class="col-sm-9"><b>{{ moduleOfferingDetails.module.code }}</b></span>
+          <div *ngIf="!moduleOfferingDetails" style="margin-top: 10px;">
+            <nb-alert status="basic" closable (close)="onCloseDetails()" *ngIf="detailsAlert" style="text-align: center;">
+              Click on table row to show its details
+            </nb-alert>
           </div>
-          <div class="row">
-            <label class="col-sm-3">Module name:</label>
-            <span class="col-sm-9"><b>{{ moduleOfferingDetails.module.name }}</b></span>
+  
+          <div *ngIf="moduleDetails">
+            <div class="row">
+              <label class="col-sm-3">Major:</label>
+              <span class="col-sm-9"><b>{{ moduleDetails.major.name }}</b></span>
+            </div>
+            <div class="row">
+              <label class="col-sm-3">Module code:</label>
+              <span class="col-sm-9"><b>{{ moduleDetails.code }}</b></span>
+            </div>
+            <div class="row">
+              <label class="col-sm-3">Module name:</label>
+              <span class="col-sm-9"><b>{{ moduleDetails.name }}</b></span>
+            </div>
+  
+            <div class="inline" *ngIf="hasAccess">
+              <button nbButton status="warning" style="margin-top: 10px;" (click)="editModule(moduleDetails.id)">Edit</button>
+              <button nbButton status="danger" style="margin-left: 5px; margin-top: 10px;"
+                (click)="deleteModule(moduleDetails.id, dialog)">Delete</button>
+            </div>
           </div>
-
-          <nb-card class="nb-card-list" style="margin-top: 10px">
-            <nb-card-header>
-              <b>Lecturers</b>
-            </nb-card-header>
-            <nb-list>
-              <nb-list-item *ngFor="let l of moduleOfferingDetails.lecturers">
-                {{ l.title }} {{ l.name }}
-              </nb-list-item>
-            </nb-list>
-          </nb-card>
-
-          <div class="inline" *ngIf="hasAccess">
-            <button nbButton status="warning" style="margin-top: 10px;" (click)="editModuleOffering(moduleOfferingDetails.id)">Edit</button>
-            <button nbButton status="danger" style="margin-left: 5px; margin-top: 10px;"
-              (click)="deleteModuleOffering(moduleOfferingDetails.id, dialog)">Delete</button>
-          </div>
-        </div>
-        <div *ngIf="!moduleOfferingDetails" style="margin-top: 10px;">
-          <nb-alert status="basic" closable (close)="onCloseDetails()" *ngIf="detailsAlert" style="text-align: center;">
-            Click on table row to show its details
-          </nb-alert>
-        </div>
-
-        <div *ngIf="moduleDetails">
-          <div class="row">
-            <label class="col-sm-3">Major:</label>
-            <span class="col-sm-9"><b>{{ moduleDetails.major.name }}</b></span>
-          </div>
-          <div class="row">
-            <label class="col-sm-3">Module code:</label>
-            <span class="col-sm-9"><b>{{ moduleDetails.code }}</b></span>
-          </div>
-          <div class="row">
-            <label class="col-sm-3">Module name:</label>
-            <span class="col-sm-9"><b>{{ moduleDetails.name }}</b></span>
-          </div>
-
-          <div class="inline" *ngIf="hasAccess">
-            <button nbButton status="warning" style="margin-top: 10px;" (click)="editModule(moduleDetails.id)">Edit</button>
-            <button nbButton status="danger" style="margin-left: 5px; margin-top: 10px;"
-              (click)="deleteModule(moduleDetails.id, dialog)">Delete</button>
-          </div>
-        </div>
-      </nb-card-body>
-    </nb-card>
+        </nb-card-body>
+      </nb-card>
+    </div>
   </div>
 </div>

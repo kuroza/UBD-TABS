@@ -571,4 +571,8 @@ export class ModuleListComponent implements OnInit {
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
     this.router.navigate([uri]));
  }
+
+  scrollToDetailsCard(el: HTMLElement) {
+    el.scrollIntoView({behavior: 'smooth'});
+  }
 }

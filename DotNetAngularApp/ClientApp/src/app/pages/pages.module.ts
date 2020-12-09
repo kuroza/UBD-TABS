@@ -10,7 +10,6 @@ import { BookingsModule } from './bookings/bookings.module';
 import { FacultiesModule } from './faculties/faculties.module';
 import { ModulesModule } from './modules/modules.module';
 import { LecturersModule } from './lecturers/lecturers.module';
-import { SemestersModule } from './semesters/semesters.module';
 import { TimeSlotsModule } from './time-slots/time-slots.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -30,7 +29,6 @@ import { DatePipe } from '@angular/common';
     FacultiesModule,
     ModulesModule,
     LecturersModule,
-    SemestersModule,
     TimeSlotsModule,
     FormsModule,
     ReactiveFormsModule,

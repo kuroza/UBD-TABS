@@ -355,6 +355,10 @@ export class HomeComponent {
     }).then(() =>
       this.router.navigate([uri]));
   }
+
+  scrollToDetailsCard(el: HTMLElement) {
+    el.scrollIntoView({behavior: 'smooth'});
+  }
 }
 
 export function bookingLecturers(lecturerArray: any) {
