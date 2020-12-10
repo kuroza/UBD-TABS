@@ -228,7 +228,7 @@ export class HomeComponent {
 
   private populateCalendar() {
     for (let b of this.bookings) {      
-      var lecturerArray: any = this.convertLecturerSetToArray(b);
+      var lecturerArray: any = convertLecturerSetToArray(b, this.allOfferings);
       var lecturers: string = bookingLecturers(lecturerArray);
       var modules: string = bookingModules(b);
       var rooms: string = bookingRooms(b);
@@ -251,22 +251,6 @@ export class HomeComponent {
       }
     }
     this.refresh.next();
-  }
-
-  private convertLecturerSetToArray(b: any) {
-    var moduleLecturers = new Set();
-    var offering: any;
-    var offeringIds: number[];
-    
-    offeringIds = b.offerings.map(offering => offering.id);
-    for (let id of offeringIds) {
-      offering = this.allOfferings.find(o => o.id == id);
-      for (let lecturer of offering.lecturers)
-        moduleLecturers.add(lecturer);
-    }
-
-    var lecturersArray = Array.from(moduleLecturers);
-    return lecturersArray;
   }
 
   private formatBookDateToDisplayOnTimetable(bd: any) {
@@ -361,11 +345,27 @@ export class HomeComponent {
   }
 }
 
+export function convertLecturerSetToArray(b: any, allOfferings: any) {
+  var moduleLecturers = new Set();
+  var offering: any;
+  
+  const offeringIds: number[] = b.offerings.map(offering => offering.id);
+  
+  for (let id of offeringIds) {
+    offering = allOfferings.find(o => o.id == id);
+    for (let lecturer of offering.lecturers)
+      moduleLecturers.add(lecturer);
+  }
+
+  var lecturersArray = Array.from(moduleLecturers);
+  return lecturersArray;
+}
+
 export function bookingLecturers(lecturerArray: any) {
   var lecturers: string = `${lecturerArray[0].name} (${lecturerArray[0].title})`;
   if (lecturerArray.length > 1) {
     for (var i = 1; i < lecturerArray.length; i++)
-    lecturers += `, ${lecturerArray[i].name} (${lecturerArray[i].title})`;
+      lecturers += `, ${lecturerArray[i].name} (${lecturerArray[i].title})`;
   }
   return lecturers;
 }
@@ -374,16 +374,17 @@ export function bookingModules(b: any) {
   var modules: string = `${b.offerings[0].module.code}: ${b.offerings[0].module.name}`;
   if (b.offerings.length > 1) {
     for (var i = 1; i < b.offerings.length; i++)
-    modules += `, ${b.offerings[i].module.code}: ${b.offerings[i].module.name}`;
+      modules += `, ${b.offerings[i].module.code}: ${b.offerings[i].module.name}`;
   }
   return modules;
 }
 
 export function bookingRooms(b: any) {
   var rooms: string = `${b.rooms[0].name}`;
-  if (b.rooms.length > 1)
-  for (var i = 1; i < b.rooms.length; i++)
-    rooms += `, ${b.rooms[i].name}`;
+  if (b.rooms.length > 1) {
+    for (var i = 1; i < b.rooms.length; i++)
+      rooms += `, ${b.rooms[i].name}`;
+  }
   return rooms;
 }
 

@@ -39,7 +39,8 @@
         <div [ngSwitch]="view">
           <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
             [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
-            [weekStartsOn]="weekStartsOn" [excludeDays]="excludeDays" (eventClicked)="eventClicked($event)">
+            [weekStartsOn]="weekStartsOn" [excludeDays]="excludeDays" 
+            (eventClicked)="eventClicked($event); scrollToDetailsCard(target);">
           </mwl-calendar-month-view>
           <mwl-calendar-week-view id="print-section" *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate"
             [events]="events" [refresh]="refresh" [weekStartsOn]="weekStartsOn" [hourSegments]="4" [dayStartHour]="7"
@@ -48,7 +49,7 @@
           </mwl-calendar-week-view>
           <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
             [hourSegments]="4" [dayStartHour]="7" [dayEndHour]="18" [refresh]="refresh"
-            (eventClicked)="eventClicked($event)">
+            (eventClicked)="eventClicked($event); scrollToDetailsCard(target);">
           </mwl-calendar-day-view>
         </div>
       </nb-card-body>
