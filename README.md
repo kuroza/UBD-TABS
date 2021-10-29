@@ -1,6 +1,6 @@
-# ⚡ Timetabling and Room Booking System ⚡
+# Timetabling and Room Booking System
 
-![](DotNetAngularApp/images/dashboard.png)
+![](DotNetAngularApp/images/dashboard-2.png)
 
 ## To run Angular + ASP.NET Core Web API project:
 
